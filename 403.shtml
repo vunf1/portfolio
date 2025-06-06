@@ -9,8 +9,8 @@
     <title>We've got some trouble | 404 - Resource not found</title>
 
     <!-- Custom styles for this template -->
-    <link href="https://vunf1.coventry.domains/css/resume.min.css" rel="stylesheet">
-	<link rel="shortcut icon" href="https://vunf1.coventry.domains/favicon.ico" type="image/x-icon">
+    <link href="css/resume.min.css" rel="stylesheet">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
 
     <style type="text/css">
@@ -21,7 +21,7 @@
 			</style>
 </head>
 <body><div class="mydiv" >
-    		<span ><img style="margin-bottom: -5px;" class="transLogo newLang" id="pt" src="https://vunf1.coventry.domains/img/pt_logo.png" ><span> </span><img class="transLogo newLang" id="eng" src="https://vunf1.coventry.domains/img/eng_logo.png" ></span>
+    		<span ><img style="margin-bottom: -5px;" class="transLogo newLang" id="pt" src="img/pt_logo.png" ><span> </span><img class="transLogo newLang" id="eng" src="img/eng_logo.png" ></span>
 
 		    <div class="cover "><h1 style="text-align:center;">Resource not found <small style="color: red;"><sup>HTML Error</sup> 404</small></h1><p class="leads">The requested resource don't exist.</p> 
 		    	<div><a href="https://www.vunf1.coventry.domains">Click to return to main page</a>
@@ -32,7 +32,7 @@
 
 
 
-    <script src="https://vunf1.coventry.domains/vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
      
     <script type="text/javascript">
 
