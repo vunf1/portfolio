@@ -1,0 +1,402 @@
+{
+  "personal": {
+    "name": "João Maia",
+    "title": "Web & Software Developer (Student)",
+    "tagline": "Welcome to my Web-Portfolio",
+    "email": "jokass.workplace@gmail.com",
+    "phone": "+351 934 330 807; +44 7393 557259",
+    "location": "Porto, Portugal",
+    "website": "",
+    "profileImage": "img/profile.jpg",
+    "summary": "Cooperative, devoted, and enthusiastic developer with a willingness to learn and positive attitude. Fluent in English (written/spoken) with strong problem-solving skills and attention to detail. User feedback oriented with quality orientation and initiative."
+  },
+  "social": [
+    {
+      "name": "Messenger",
+      "url": "https://www.messenger.com/t/jokass.maia",
+      "icon": "fa-comment",
+      "color": "#0084FF"
+    },
+    {
+      "name": "Instagram",
+      "url": "https://www.instagram.com/jokassmaia/",
+      "icon": "fa-instagram",
+      "color": "#E4405F"
+    },
+    {
+      "name": "LinkedIn",
+      "url": "https://www.linkedin.com/in/joao-maia/",
+      "icon": "fa-linkedin",
+      "color": "#0077B5"
+    },
+    {
+      "name": "GitHub",
+      "url": "https://github.com/vunf1/",
+      "icon": "fa-github",
+      "color": "#333"
+    },
+    {
+      "name": "GitHub (Coventry)",
+      "url": "https://github.coventry.ac.uk/deoiveij/",
+      "icon": "fa-graduation-cap",
+      "color": "#2c5aa0"
+    }
+  ],
+  "experience": [
+    {
+      "title": "Autonomous Self‑Study in Computer Concepts",
+      "company": "Independent",
+      "location": "",
+      "period": "2010 - Present",
+      "description": "Continuous self‑directed learning across hardware, software, web, and networking. Medium knowledge across multiple areas to be prepared for varied needs.",
+      "technologies": ["Hardware", "Software", "Web Development", "Networking"],
+      "achievements": [
+        "Self-directed learning since 2010",
+        "Medium knowledge across multiple areas",
+        "Prepared for varied technical needs"
+      ]
+    },
+    {
+      "title": "Bartender / Hospitality / Kiosk Assistant / Logistics / Hotel",
+      "company": "Delaware North",
+      "location": "Coventry, UK",
+      "period": "2019 - Present",
+      "description": "Multi-role hospitality position with responsibilities across various service areas.",
+      "technologies": ["Customer Service", "Hospitality Management", "Logistics"],
+      "achievements": [
+        "Multi-role responsibilities",
+        "Customer service excellence",
+        "Operational efficiency"
+      ]
+    },
+    {
+      "title": "Bartender / Hospitality / Cleaner",
+      "company": "Contract Options & Genesis",
+      "location": "Coventry, UK",
+      "period": "2018 - 2019",
+      "description": "Started learning the job; later responsible for helping/teaching new and existing workers as needed.",
+      "technologies": ["Training", "Team Leadership", "Hospitality"],
+      "achievements": [
+        "Rapid skill development",
+        "Training and mentoring others",
+        "Team collaboration"
+      ]
+    },
+    {
+      "title": "Construction Servant",
+      "company": "Distintosaber",
+      "location": "Portugal",
+      "period": "2018",
+      "description": "Supported workers and project managers according to needs.",
+      "technologies": ["Construction Support", "Project Management"],
+      "achievements": [
+        "Project support",
+        "Team coordination"
+      ]
+    },
+    {
+      "title": "Call Center Communicator",
+      "company": "Maintarget / 4x4",
+      "location": "Portugal",
+      "period": "2018",
+      "description": "Training as a communicator/commercial for target audiences.",
+      "technologies": ["Communication", "Sales Training", "Customer Service"],
+      "achievements": [
+        "Commercial communication skills",
+        "Target audience understanding"
+      ]
+    },
+    {
+      "title": "Greenhouse of Raspberries",
+      "company": "Independent Company",
+      "location": "Portugal",
+      "period": "2018",
+      "description": "Collection and distribution of product to production area for marketing.",
+      "technologies": ["Agricultural Operations", "Logistics", "Production"],
+      "achievements": [
+        "Product collection and distribution",
+        "Production area coordination"
+      ]
+    },
+    {
+      "title": "Packing Bananas",
+      "company": "Fyffes",
+      "location": "Coventry, UK",
+      "period": "2018",
+      "description": "Organized/packed bananas into bags and boxes while maintaining housekeeping.",
+      "technologies": ["Packaging", "Quality Control", "Housekeeping"],
+      "achievements": [
+        "Efficient packaging operations",
+        "Quality maintenance"
+      ]
+    },
+    {
+      "title": "Picker / Stock Replenishment",
+      "company": "Toys\"R\"Us",
+      "location": "Coventry, UK",
+      "period": "2017 - 2018",
+      "description": "Fetched items for packing, repositioned stock, taught new workers; maintained housekeeping.",
+      "technologies": ["Inventory Management", "Training", "Operations"],
+      "achievements": [
+        "Stock management",
+        "New worker training",
+        "Operational efficiency"
+      ]
+    },
+    {
+      "title": "Software Developer (Internship)",
+      "company": "Medsky",
+      "location": "Vila Nova de Gaia, Portugal",
+      "period": "2017",
+      "description": "Developed license management system (RESTful) using CodeIgniter, jQuery/AlertifyJS, and Bootstrap.",
+      "technologies": ["CodeIgniter", "jQuery", "AlertifyJS", "Bootstrap", "RESTful API"],
+      "achievements": [
+        "RESTful license management system",
+        "Modern web technologies",
+        "Full-stack development"
+      ]
+    },
+    {
+      "title": "Software Developer (Internship)",
+      "company": "Medsky",
+      "location": "Vila Nova de Gaia, Portugal",
+      "period": "2016",
+      "description": "Updated software from C#/HTML to VB.NET to reduce memory usage (CD‑based). Supported Portuguese Red Cross campaign by mapping 3G/4G antennas and producing directional spreadsheets. Configured MikroTik RouterBoard RB750G.",
+      "technologies": ["C#", "VB.NET", "HTML", "MikroTik", "Network Configuration"],
+      "achievements": [
+        "Software migration and optimization",
+        "Red Cross campaign support",
+        "Network infrastructure configuration"
+      ]
+    },
+    {
+      "title": "Machine Operator",
+      "company": "Contecnica",
+      "location": "Vila Nova de Gaia, Portugal",
+      "period": "2012 - 2013",
+      "description": "Operated cutting/polishing machines (stainless steel/aluminium/iron) and performed maintenance.",
+      "technologies": ["CNC Machines", "Metal Working", "Maintenance"],
+      "achievements": [
+        "Machine operation",
+        "Precision cutting and polishing",
+        "Preventive maintenance"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Computing Science BSc (Hons) + Placement Year",
+      "school": "Coventry University",
+      "location": "Coventry, West Midlands, United Kingdom",
+      "period": "2017 - Current",
+      "gpa": "",
+      "description": "Bachelor of Computer Science with placement year opportunity.",
+      "relevantCourses": ["Computer Science", "Software Development", "Computing Fundamentals"]
+    },
+    {
+      "degree": "Technician of Management and Programming of Computer Systems",
+      "school": "Arquitecto Oliveira Ferreira School",
+      "location": "Arcozelo, V.N.G., Porto, Portugal",
+      "period": "2014 - 2017",
+      "gpa": "Top Grade",
+      "description": "Professional course covering programming in object‑oriented languages (local and web), OS, networks, and web server installation/configuration, information systems analysis, and DBMS analysis and implementation.",
+      "relevantCourses": [
+        "Object-Oriented Programming",
+        "Web Development",
+        "Operating Systems",
+        "Networks",
+        "Web Server Configuration",
+        "Information Systems Analysis",
+        "Database Management Systems"
+      ]
+    },
+    {
+      "degree": "Programming and Machining CNC",
+      "school": "GAIA Professional School",
+      "location": "V.N.G., Porto, Portugal",
+      "period": "2013 - 2014",
+      "gpa": "Not completed",
+      "description": "Professional course covering basic CNC programming and 2D/3D design with AutoCAD.",
+      "relevantCourses": ["CNC Programming", "AutoCAD", "2D/3D Design"]
+    },
+    {
+      "degree": "Technician of Management Informatics",
+      "school": "Arquitecto Oliveira Ferreira School",
+      "location": "Arcozelo, V.N.G., Porto, Portugal",
+      "period": "2012 - 2013",
+      "gpa": "Not completed",
+      "description": "Professional course in management informatics.",
+      "relevantCourses": ["Management Informatics", "Information Systems"]
+    },
+    {
+      "degree": "Basic Third Stage (7th–9th)",
+      "school": "EB3 Arquitecto Oliveira Ferreira School",
+      "location": "Arcozelo, V.N.G., Porto, Portugal",
+      "period": "2009 - 2012",
+      "gpa": "Math: 88%, Portuguese: 60%",
+      "description": "Basic education with strong performance in mathematics.",
+      "relevantCourses": ["Mathematics", "Portuguese", "General Education"]
+    },
+    {
+      "degree": "Basic Second Stage (5th–6th)",
+      "school": "EB2/3 Sophia De Mello Breyner School",
+      "location": "Arcozelo, V.N.G., Porto, Portugal",
+      "period": "2007 - 2009",
+      "gpa": "Math: 80%, Portuguese: 65%",
+      "description": "Basic education with good performance in mathematics.",
+      "relevantCourses": ["Mathematics", "Portuguese", "General Education"]
+    },
+    {
+      "degree": "Basic First Stage (2nd–4th)",
+      "school": "EB1 Morangal School",
+      "location": "Arcozelo, V.N.G., Porto, Portugal",
+      "period": "2004 - 2007",
+      "gpa": "",
+      "description": "Primary education foundation.",
+      "relevantCourses": ["Primary Education", "Basic Skills"]
+    },
+    {
+      "degree": "Basic First Stage (1st–2nd)",
+      "school": "EB1 Sá School",
+      "location": "Arcozelo, V.N.G., Porto, Portugal",
+      "period": "2002 - 2004",
+      "gpa": "",
+      "description": "Early primary education foundation.",
+      "relevantCourses": ["Early Education", "Basic Skills"]
+    }
+  ],
+  "skills": [
+    {
+      "category": "Web Development",
+      "items": [
+        {"name": "HTML5", "level": 90},
+        {"name": "CSS", "level": 85},
+        {"name": "JavaScript (Native)", "level": 80},
+        {"name": "PHP 7", "level": 85},
+        {"name": "jQuery", "level": 80},
+        {"name": "Bootstrap", "level": 85},
+        {"name": "CodeIgniter", "level": 80},
+        {"name": "WordPress", "level": 75},
+        {"name": "npm", "level": 70},
+        {"name": "Node.js", "level": 70},
+        {"name": "Grunt", "level": 65},
+        {"name": "Apache", "level": 75},
+        {"name": "SQL / NoSQL (MySQL)", "level": 80}
+      ]
+    },
+    {
+      "category": "Web Workflow",
+      "items": [
+        {"name": "Ubuntu (preferred)", "level": 85},
+        {"name": "Windows Server 2008", "level": 70},
+        {"name": "Responsive Design", "level": 85},
+        {"name": "Testing/Debugging", "level": 80},
+        {"name": "Sublime Text / VS Code", "level": 90},
+        {"name": "Agile / Scrum / Kanban", "level": 80},
+        {"name": "GitHub CLI", "level": 75}
+      ]
+    },
+    {
+      "category": "Software Development",
+      "items": [
+        {"name": "C++", "level": 70},
+        {"name": "Visual Basic", "level": 75},
+        {"name": "Python", "level": 70},
+        {"name": "C#", "level": 70},
+        {"name": "Java", "level": 65}
+      ]
+    },
+    {
+      "category": "Software Workflow",
+      "items": [
+        {"name": "Ubuntu", "level": 85},
+        {"name": "Windows 7/8.1/10", "level": 80},
+        {"name": "Responsive/Dynamic Design", "level": 80},
+        {"name": "Sublime Text / NetBeans / Visual Studio", "level": 85},
+        {"name": "Agile / Scrum / Kanban", "level": 80}
+      ]
+    },
+    {
+      "category": "Extra Tools",
+      "items": [
+        {"name": "Photoshop CS6 (basic 3D modeling)", "level": 60}
+      ]
+    }
+  ],
+  "certifications": [
+    {
+      "name": "LinkedIn Learning — Node.js Essential Training",
+      "issuer": "LinkedIn Learning",
+      "date": "",
+      "url": "",
+      "description": "Certificate of Completion for Node.js Essential Training"
+    }
+  ],
+  "projects": [
+    {
+      "name": "New root folder (UI action)",
+      "description": "Front‑end action button labelled 'new root folder' (onclick handler: rooty()).",
+      "technologies": ["JavaScript", "HTML", "UI Development"],
+      "url": "",
+      "image": "",
+      "highlights": [
+        "Interactive UI component",
+        "JavaScript functionality",
+        "User interface enhancement"
+      ]
+    },
+    {
+      "name": "Root folder of some projects",
+      "description": "Index of assorted projects (website link).",
+      "technologies": ["Web Development", "Project Management"],
+      "url": "root_folder_project/",
+      "image": "",
+      "highlights": [
+        "Project organization",
+        "Web-based index",
+        "Project showcase"
+      ]
+    }
+  ],
+  "interests": [
+    "Computers and Programming",
+    "Outdoor activities with friends",
+    "Think&Execute mindset",
+    "Teamwork and collaboration",
+    "Physics of motion & systems",
+    "Self‑learning since age 10"
+  ],
+  "awards": [
+    {
+      "title": "AppsForGood — Participation",
+      "issuer": "AppsForGood",
+      "date": "",
+      "description": "Participation in AppsForGood program"
+    },
+    {
+      "title": "Technician of Management and Programming of Computer Systems — Certificate",
+      "issuer": "Arquitecto Oliveira Ferreira School",
+      "date": "2017",
+      "description": "Professional certification with top grade"
+    },
+    {
+      "title": "LinkedIn Learning — Node.js Essential Training (Certificate of Completion)",
+      "issuer": "LinkedIn Learning",
+      "date": "",
+      "description": "Certificate of Completion for Node.js Essential Training"
+    }
+  ],
+  "contact": {
+    "email": "jokass.workplace@gmail.com",
+    "phone": "+351 934 330 807; +44 7393 557259",
+    "linkedin": "https://www.linkedin.com/in/joao-maia/",
+    "github": "https://github.com/vunf1/",
+    "website": "",
+    "location": "Porto, Portugal"
+  },
+  "meta": {
+    "lastUpdated": "2024-01-15",
+    "version": "1.0.0",
+    "author": "João Maia"
+  }
+}

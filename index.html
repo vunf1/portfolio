@@ -1,343 +1,198 @@
 <!DOCTYPE html>
-<html lang="en">
-
-  <head>
+<html lang="en" data-bs-theme="light">
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="João Maia - Full Stack Developer & Software Engineer Portfolio. Expert in modern web technologies, mobile development, and cloud solutions. Based in Porto, Portugal.">
+    <meta name="description" content="João Maia - Software Developer Portfolio">
     <meta name="author" content="João Maia">
-    <meta name="keywords" content="João Maia, Full Stack Developer, Software Engineer, Web Development, Mobile Development, Porto, Portugal, React, Node.js, Python, Java">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="João Maia - Full Stack Developer Portfolio">
-    <meta property="og:description" content="Professional portfolio showcasing web development, mobile apps, and software engineering projects. Expert in modern technologies and innovative solutions.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://vunf1.coventry.domains">
-    <meta property="og:image" content="img/profile.jpg">
-    <meta property="og:site_name" content="João Maia Portfolio">
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="João Maia - Full Stack Developer Portfolio">
-    <meta name="twitter:description" content="Professional portfolio showcasing web development, mobile apps, and software engineering projects.">
-    <meta name="twitter:image" content="img/profile.jpg">
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "João Maia",
-      "jobTitle": "Full Stack Developer",
-      "description": "Experienced software engineer specializing in web and mobile development",
-      "url": "https://vunf1.coventry.domains",
-      "image": "img/profile.jpg",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Porto",
-        "addressCountry": "PT"
-      },
-      "email": "jokass.workplace@gmail.com",
-      "telephone": "+351934330807",
-      "sameAs": [
-        "https://www.linkedin.com/in/joao-maia/",
-        "https://github.com/vunf1/",
-        "https://github.coventry.ac.uk/deoiveij/"
-      ],
-      "knowsAbout": [
-        "Web Development",
-        "Mobile Development",
-        "Software Engineering",
-        "Full Stack Development",
-        "Cloud Computing"
-      ]
-    }
-    </script>
-
-    <title>João Maia - Full Stack Developer Portfolio | Porto, Portugal</title>
-
-    <!-- Preload Critical Resources -->
-    <link rel="preload" href="vendor/bootstrap/css/bootstrap.min.css" as="style">
-    <link rel="preload" href="css/resume.min.css" as="style">
-    <link rel="preload" href="img/profile.jpg" as="image">
+    <title>João Maia - Software Developer Portfolio</title>
     
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom fonts for this template -->
-    <link href="https://fonts.googleapis.com/css2?family=Saira+Extra+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-
-    <!-- Dev Icons -->
-    <link href="vendor/devicons/css/devicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css">
-
-    <!-- Simple Line Icons -->
-    <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
-
-    <!-- OPTIMIZED: Mobile-first responsive design -->
-    <link href="css/resume-optimized.css" rel="stylesheet">
     
-    <!-- Mobile Optimizations -->
-    <link href="css/mobile-optimizations.css" rel="stylesheet">
-    
-    <!-- Privacy & Cookie Components -->
-    <link href="css/cookie-consent.css" rel="stylesheet">
-    <link href="css/privacy-gate.css" rel="stylesheet">
-    
-    <!-- Premium Components -->
-    <link href="css/premium-components.css" rel="stylesheet">
-    
-    <!-- Original styles (fallback) -->
-    <link href="css/resume.min.css" rel="stylesheet">
-    
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    
-    <!-- Alertify for notifications -->
-    <link rel="preload" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/alertify.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/alertify.min.css"></noscript>
-    <link rel="preload" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/themes/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/themes/bootstrap.min.css"></noscript>
-  </head>
+    <!-- Custom CSS -->
+    <link href="css/base.css" rel="stylesheet">
+    <link href="css/components.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
+</head>
 
-  <body id="page-top">
-
-
-
+<body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top navbarColor" id="sideNav">
-      
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">
-
-        <!-- Mobile Navigation Icons -->
-        <a target="_blank" class="d-block d-lg-none social-link" href="https://www.linkedin.com/in/joao-maia/" aria-label="LinkedIn Profile">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-          </span>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="sideNav">
+        <a class="navbar-brand" href="#page-top">
+            <span class="d-block d-lg-none" id="navbar-name">João Maia</span>
+            <span class="d-none d-lg-block">
+                <img class="img-profile rounded-circle" id="navbar-profile-img" src="img/profile.jpg" alt="João Maia Profile">
+            </span>
         </a>
-        <span class="d-block d-lg-none navTitleTXT">Portfolio</span>
         
-        <a target="_blank" class="d-block d-lg-none social-link" href="https://github.com/vunf1/" aria-label="GitHub Profile">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-          </span>
-        </a>
-
-        <!-- Desktop Profile Image -->
-        <span class="d-none d-lg-block profTop">
-          <img id="profileIMG" class="rounded-circle mx-auto mb-2 profile-image" src="img/profile.jpg" alt="João Maia Profile Photo">
-        </span>
-      </a>
-
-            <!-- Mobile Toggle Button -->
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fa fa-bars"></i>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger profTop" id="g_about" href="#about">
-              <i class="fa fa-user fa-fw me-2"></i>About
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger loadDiv" id="g_experience" href="#experience">
-              <i class="fa fa-briefcase fa-fw me-2"></i>Experience
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger loadDiv" id="g_education" href="#education">
-              <i class="fa fa-graduation-cap fa-fw me-2"></i>Education
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger loadDiv" id="g_skills" href="#skills">
-              <i class="fa fa-code fa-fw me-2"></i>Skills
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger loadDiv" id="g_interests" href="#interests">
-              <i class="fa fa-heart fa-fw me-2"></i>Interests
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger loadDiv" id="g_awards" href="#awards">
-              <i class="fa fa-trophy fa-fw me-2"></i>Certifications
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger loadDiv" id="g_project" href="#projects">
-              <i class="fa fa-rocket fa-fw me-2"></i>Projects
-            </a>
-          </li>
-          
-          <!-- Language Switcher -->
-          <li class="nav-item language-switcher">
-            <a class="nav-link" id="pt" href="javascript:void(0)" onclick="switchLanguage('pt', event)">
-              <img class="transLogo" src="img/pt_logo.png" alt="Português" title="Switch to Portuguese" style="visibility: visible;">
-            </a>
-            <span class="language-separator">|</span>
-            <a class="nav-link" id="eng" href="javascript:void(0)" onclick="switchLanguage('eng', event)">
-              <img class="transLogo" src="img/eng_logo.png" alt="English" title="Switch to English" style="visibility: visible;">
-            </a>
-          </li>
-          
-          <!-- Dark Mode Toggle -->
-          <li class="nav-item">
-            <div class="dark-mode-toggle" id="modernDarkModeToggle" onclick="toggleDarkMode()">
-              <h3 id="darkMode">
-                <i class="fa fa-moon-o fa-fw me-2"></i>Dark Mode
-                <a class="darkModebtn text-white" id="modernDarkModeBtn">OFF</a>
-              </h3>
-            </div>
-          </li>
-
-          <!-- Privacy & Legal Links -->
-          <li class="nav-item privacy-section">
-            <p class="m-0 credit-text">Built with ❤️ by João Maia</p>
-            <div class="privacy-links">
-              <a href="privacy-policy.html" target="_blank" class="privacy-link">
-                <i class="fa fa-shield fa-fw me-2"></i>Privacy Policy
-              </a>
-              <button class="btn btn-sm btn-outline-light" onclick="window.cookieConsent?.withdrawConsent()">
-                <i class="fa fa-cog fa-fw me-2"></i>Cookie Settings
-              </button>
-            </div>
-          </li>
-
-
-        </ul>
-      </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon">
+                <i class="fa fa-bars"></i>
+            </span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#experience">Experience</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#education">Education</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#skills">Skills</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#projects">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#certifications">Certifications</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#interests">Interests</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#awards">Awards</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+                
+                <!-- Dark Mode Toggle -->
+                <li class="nav-item dark-mode-toggle">
+                    <h3>Theme</h3>
+                    <button class="darkModebtn" id="darkModeToggle">
+                        <i class="fa fa-moon-o"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
     </nav>
 
-    <!-- Main Content Container -->
-    <div class="container-fluid p-0 caixa" id="main-content" data-bs-spy="scroll" data-bs-target="#sideNav" data-bs-offset="0" tabindex="0">
-      <!-- Content will be loaded here dynamically -->
+    <!-- Page Content -->
+    <div class="container-fluid p-0">
+        <!-- About Section -->
+        <section class="resume-section" id="about">
+            <div class="resume-section-content">
+                <div class="profile-section text-center mb-4">
+                    <img class="img-profile rounded-circle mx-auto mb-2" id="profile-image" src="img/profile.jpg" alt="João Maia Profile">
+                    <h1 class="mb-0" id="profile-name">João Maia</h1>
+                    <div class="subheading mb-3" id="profile-title">Software Developer</div>
+                    <p class="lead mb-3" id="profile-tagline">Passionate about creating innovative software solutions</p>
+                    <p class="mb-4" id="profile-summary">Experienced software developer with expertise in full-stack development, cloud technologies, and agile methodologies.</p>
+                    
+                    <!-- Social Links -->
+                    <ul class="list-social-icons" id="social-links">
+                        <!-- Will be populated by JavaScript -->
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section class="resume-section" id="experience">
+            <div class="resume-section-content">
+                <h2 class="mb-4">Experience</h2>
+                <div id="experience-content">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section class="resume-section" id="education">
+            <div class="resume-section-content">
+                <h2 class="mb-4">Education</h2>
+                <div id="education-content">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <hr class="m-0">
+
+        <!-- Skills Section -->
+        <section class="resume-section" id="skills">
+            <div class="resume-section-content">
+                <h2 class="mb-4">Skills</h2>
+                <div id="skills-content">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <hr class="m-0">
+
+        <!-- Projects Section -->
+        <section class="resume-section" id="projects">
+            <div class="resume-section-content">
+                <h2 class="mb-4">Projects</h2>
+                <div id="projects-content">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <hr class="m-0">
+
+        <!-- Certifications Section -->
+        <section class="resume-section" id="certifications">
+            <div class="resume-section-content">
+                <h2 class="mb-4">Certifications</h2>
+                <div id="certifications-content">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <hr class="m-0">
+
+        <!-- Interests Section -->
+        <section class="resume-section" id="interests">
+            <div class="resume-section-content">
+                <h2 class="mb-4">Interests</h2>
+                <div id="interests-content">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <hr class="m-0">
+
+        <!-- Awards Section -->
+        <section class="resume-section" id="awards">
+            <div class="resume-section-content">
+                <h2 class="mb-4">Awards</h2>
+                <div id="awards-content">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <hr class="m-0">
+
+        <!-- Contact Section -->
+        <section class="resume-section" id="contact">
+            <div class="resume-section-content">
+                <h2 class="mb-4">Contact</h2>
+                <div id="contact-content">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
     </div>
 
-<!-- MODAL Para os certifacados IMAGES
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Certificate</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>-->
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Alertify for notifications -->
-    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/alertify.min.js"></script>
-    <script src="js/alertify1.0.10.js"></script>
-
-    <!-- Modernizr for feature detection -->
-    <script src="js/modernizr2.8.2.js"></script>
-
-    <!-- Privacy & GDPR Components -->
-    <script src="js/cookie-consent.js"></script>
-    <script src="js/privacy-gate.js"></script>
-
-    <!-- ERROR HANDLING: Global error handler -->
-    <script src="js/error-handler.js"></script>
-
-    <!-- PERFORMANCE: Image optimization and lazy loading -->
-    <script src="js/performance-optimizer.js"></script>
-
-    <!-- OPTIMIZED: Enhanced Portfolio with Mobile-First Approach -->
-    <script src="js/portfolio-optimized.js"></script>
-
-    <!-- RESTORED: Original Portfolio Functionality (Fallback) -->
-    <script src="js/resume.min.js"></script>
-
-    <!-- Main Portfolio Scripts -->
-    <script src="js/portfolio-modern.js"></script>
-
-    <!-- Emergency Fix for Content Visibility -->
-    <script src="js/portfolio-emergency-fix.js"></script>
-
-    <!-- Immediate Content Visibility Fix -->
-    <script>
-        // Immediate fix to ensure content is visible
-        (function() {
-            function showContent() {
-                const mainContent = document.querySelector('.caixa');
-                if (mainContent) {
-                    mainContent.style.display = 'block';
-                    mainContent.style.visibility = 'visible';
-                    mainContent.style.opacity = '1';
-                    mainContent.style.filter = 'none';
-                }
-                
-                // Show all portfolio sections
-                const sections = document.querySelectorAll('.resume-section, .resume-item, .skill-item, .certification-item');
-                sections.forEach(section => {
-                    section.style.display = 'block';
-                    section.style.visibility = 'visible';
-                    section.style.opacity = '1';
-                    section.style.filter = 'none';
-                });
-                
-                // Test original functionality with a delay to ensure resume.min.js is loaded
-                setTimeout(() => {
-                    // Check if original loadPage function exists
-                    if (typeof window.loadPage === 'function') {
-                        // Original function exists, use it
-                        window.loadPage('eng');
-                    } else {
-                        // Fallback to direct content loading
-                        loadOriginalContent('eng');
-                    }
-                }, 100); // Small delay to ensure scripts are loaded
-                
-            }
-            
-            // Apply immediately
-            showContent();
-            
-            // Apply after DOM loads
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', showContent);
-            }
-            
-            // Apply after window loads
-            window.addEventListener('load', showContent);
-        })();
-    </script>
-
-    <!-- Performance Monitoring -->
-    <script>
-      // Performance monitoring
-      const perfData = performance.getEntriesByType('navigation')[0];
-      if (perfData) {
-          // Performance data available
-      }
-    </script>
-
-  </body>
-
+    
+    <!-- Custom JavaScript -->
+    <script src="js/portfolio-consolidated.js"></script>
+</body>
 </html>
