@@ -2,132 +2,222 @@
 <html lang="en">
 
   <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="CV">
-    <meta name="author" content="Maia">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="João Maia - Full Stack Developer & Software Engineer Portfolio. Expert in modern web technologies, mobile development, and cloud solutions. Based in Porto, Portugal.">
+    <meta name="author" content="João Maia">
+    <meta name="keywords" content="João Maia, Full Stack Developer, Software Engineer, Web Development, Mobile Development, Porto, Portugal, React, Node.js, Python, Java">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="João Maia - Full Stack Developer Portfolio">
+    <meta property="og:description" content="Professional portfolio showcasing web development, mobile apps, and software engineering projects. Expert in modern technologies and innovative solutions.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vunf1.coventry.domains">
+    <meta property="og:image" content="img/profile.jpg">
+    <meta property="og:site_name" content="João Maia Portfolio">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="João Maia - Full Stack Developer Portfolio">
+    <meta name="twitter:description" content="Professional portfolio showcasing web development, mobile apps, and software engineering projects.">
+    <meta name="twitter:image" content="img/profile.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "João Maia",
+      "jobTitle": "Full Stack Developer",
+      "description": "Experienced software engineer specializing in web and mobile development",
+      "url": "https://vunf1.coventry.domains",
+      "image": "img/profile.jpg",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Porto",
+        "addressCountry": "PT"
+      },
+      "email": "jokass.workplace@gmail.com",
+      "telephone": "+351934330807",
+      "sameAs": [
+        "https://www.linkedin.com/in/joao-maia/",
+        "https://github.com/vunf1/",
+        "https://github.coventry.ac.uk/deoiveij/"
+      ],
+      "knowsAbout": [
+        "Web Development",
+        "Mobile Development",
+        "Software Engineering",
+        "Full Stack Development",
+        "Cloud Computing"
+      ]
+    }
+    </script>
 
-    <title>Portfolio - João Maia</title>
+    <title>João Maia - Full Stack Developer Portfolio | Porto, Portugal</title>
 
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="vendor/bootstrap/css/bootstrap.min.css" as="style">
+    <link rel="preload" href="css/resume.min.css" as="style">
+    <link rel="preload" href="img/profile.jpg" as="image">
+    
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
-    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Saira+Extra+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
+    <!-- Dev Icons -->
     <link href="vendor/devicons/css/devicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css">
 
+    <!-- Simple Line Icons -->
     <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="css/resume.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-
-    <!-- Allertify styles -->
     
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/alertify.min.js"></script>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/alertify.min.css"/>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/themes/bootstrap.min.css"/>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/themes/default.min.css"/>
-
+    <!-- Privacy & Cookie Components -->
+    <link href="css/cookie-consent.css" rel="stylesheet">
+    <link href="css/privacy-gate.css" rel="stylesheet">
+    
+    <!-- Premium Components -->
+    <link href="css/premium-components.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- Alertify for notifications -->
+    <link rel="preload" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/alertify.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/alertify.min.css"></noscript>
+    <link rel="preload" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/themes/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/themes/bootstrap.min.css"></noscript>
   </head>
 
-  <body id="page-top" >
-
-   
-        <img id="loading" src="img/loading/Preloader_3.gif" >
+  <body id="page-top">
 
 
+
+    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top navbarColor" id="sideNav">
       
       <a class="navbar-brand js-scroll-trigger" href="#page-top">
 
-        <!-- less 500with trigger icon on NavBar-->
-        <a target="_blank" class="d-block d-lg-none" href="https://www.linkedin.com/in/joao-maia/">
+        <!-- Mobile Navigation Icons -->
+        <a target="_blank" class="d-block d-lg-none social-link" href="https://www.linkedin.com/in/joao-maia/" aria-label="LinkedIn Profile">
           <span class="fa-stack fa-lg">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
           </span>
         </a>
-        <span class="d-block d-lg-none  navTitleTXT"  style="color: white;">Portfolio</span>
+        <span class="d-block d-lg-none navTitleTXT">Portfolio</span>
         
-        <a target="_blank" class="d-block d-lg-none"  href="https://github.com/vunf1/">
+        <a target="_blank" class="d-block d-lg-none social-link" href="https://github.com/vunf1/" aria-label="GitHub Profile">
           <span class="fa-stack fa-lg">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-github fa-stack-1x fa-inverse"></i>
           </span>
         </a>
-        <!-- Title Alternative <span class="d-block d-lg-none">Portfolio</span> -->
 
+        <!-- Desktop Profile Image -->
         <span class="d-none d-lg-block profTop">
-          <img style="width: 100%; height: 100%" id="profileIMG" class="rounded-circle mx-auto mb-2 " src="img/profile.jpg" >
+          <img id="profileIMG" class="rounded-circle mx-auto mb-2 profile-image" src="img/profile.jpg" alt="João Maia Profile Photo">
         </span>
       </a>
 
-      <button  class="fa fa-bars navbar-toggler"  data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> </button>
-      <style>
-        .fa.fa-bars {
-          
-            opacity: 0.8;      
-            color: rgba(22, 51, 22, 0.75);   
-                    
-            background-color: Transparent;
-            background-repeat:no-repeat;
-            border: none;
-            outline:none;
-        }
-
-        .transLogo,#profileIMG{
-          visibility:hidden;
-        }
-      </style>
+            <!-- Mobile Toggle Button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars"></i>
+      </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger profTop" id="g_about" >About</a>
+            <a class="nav-link js-scroll-trigger profTop" id="g_about" href="#about">
+              <i class="fa fa-user fa-fw mr-2"></i>About
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger loadDiv" id="g_experience">Experience</a>
+            <a class="nav-link js-scroll-trigger loadDiv" id="g_experience" href="#experience">
+              <i class="fa fa-briefcase fa-fw mr-2"></i>Experience
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger loadDiv" id="g_education">Education</a>
+            <a class="nav-link js-scroll-trigger loadDiv" id="g_education" href="#education">
+              <i class="fa fa-graduation-cap fa-fw mr-2"></i>Education
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger loadDiv" id="g_skills">Skills</a>
+            <a class="nav-link js-scroll-trigger loadDiv" id="g_skills" href="#skills">
+              <i class="fa fa-code fa-fw mr-2"></i>Skills
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger loadDiv" id="g_interests">Interests</a>
+            <a class="nav-link js-scroll-trigger loadDiv" id="g_interests" href="#interests">
+              <i class="fa fa-heart fa-fw mr-2"></i>Interests
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger loadDiv" id="g_awards">Certifications</a>
+            <a class="nav-link js-scroll-trigger loadDiv" id="g_awards" href="#awards">
+              <i class="fa fa-trophy fa-fw mr-2"></i>Certifications
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger loadDiv" id="g_project">Projects</a>
+            <a class="nav-link js-scroll-trigger loadDiv" id="g_project" href="#projects">
+              <i class="fa fa-rocket fa-fw mr-2"></i>Projects
+            </a>
           </li>
+          
+          <!-- Language Switcher -->
+          <li class="nav-item language-switcher">
+            <a class="nav-link" id="pt" href="javascript:void(0)" onclick="switchLanguage('pt', event)">
+              <img class="transLogo" src="img/pt_logo.png" alt="Português" title="Switch to Portuguese" style="visibility: visible;">
+            </a>
+            <span class="language-separator">|</span>
+            <a class="nav-link" id="eng" href="javascript:void(0)" onclick="switchLanguage('eng', event)">
+              <img class="transLogo" src="img/eng_logo.png" alt="English" title="Switch to English" style="visibility: visible;">
+            </a>
+          </li>
+          
+          <!-- Dark Mode Toggle -->
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger">  <img class="transLogo" id="pt" src="img/pt_logo.png"><span> </span><img class="transLogo" id="eng" src="img/eng_logo.png"></a>
+            <div class="dark-mode-toggle" id="modernDarkModeToggle" onclick="toggleDarkMode()">
+              <h3 id="darkMode">
+                <i class="fa fa-moon-o fa-fw mr-2"></i>Dark Mode
+                <a class="darkModebtn text-white" id="modernDarkModeBtn">OFF</a>
+              </h3>
+            </div>
           </li>
-          <span class="button-checkbox">
-            
-              <h3 id="darkMode">Dark Mode   <a style="outline: none;" class="darkModebtn text-white " id="OFF"  > OFF</a></h3>
-          </span>
 
-          <li >
-            
-              <p style="font-size: 10px;" class="footer lead"><i id="desigTXT">Designed by: </i><a id="copyrights" target="_blank" href="https://github.com/BlackrockDigital/startbootstrap-resume"><strong>Start Bootstrap </strong></a></p>
+          <!-- Privacy & Legal Links -->
+          <li class="nav-item privacy-section">
+            <p class="m-0 credit-text">Built with ❤️ by João Maia</p>
+            <div class="privacy-links">
+              <a href="privacy-policy.html" target="_blank" class="privacy-link">
+                <i class="fa fa-shield fa-fw mr-2"></i>Privacy Policy
+              </a>
+              <button class="btn btn-sm btn-outline-light" onclick="window.cookieConsent?.withdrawConsent()">
+                <i class="fa fa-cog fa-fw mr-2"></i>Cookie Settings
+              </button>
+            </div>
           </li>
+
+
         </ul>
       </div>
     </nav>
-<div class="container-fluid p-0 caixa">
 
-
-</div>
+    <!-- Main Content Container -->
+    <div class="container-fluid p-0 caixa" id="main-content">
+      <!-- Content will be loaded here dynamically -->
+    </div>
 
 <!-- MODAL Para os certifacados IMAGES
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -148,22 +238,93 @@
     </div>
   </div>
 </div>-->
- <!-- Bootstrap core JavaScript -->
+    <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Plugin JavaScript -->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
+    <!-- Alertify for notifications -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/alertify.min.js"></script>
+    <script src="js/alertify1.0.10.js"></script>
 
-    <!-- Custom scripts for this template https://alertifyjs.org-->
-<script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
-
-<script src="js/alertify1.0.10.js"></script>
-
+    <!-- Modernizr for feature detection -->
     <script src="js/modernizr2.8.2.js"></script>
 
+    <!-- Privacy & GDPR Components -->
+    <script src="js/cookie-consent.js"></script>
+    <script src="js/privacy-gate.js"></script>
+
+    <!-- RESTORED: Original Portfolio Functionality -->
     <script src="js/resume.min.js"></script>
+
+    <!-- Main Portfolio Scripts -->
+    <script src="js/portfolio-modern.js"></script>
+
+    <!-- Emergency Fix for Content Visibility -->
+    <script src="js/portfolio-emergency-fix.js"></script>
+
+    <!-- Immediate Content Visibility Fix -->
+    <script>
+        // Immediate fix to ensure content is visible
+        (function() {
+            function showContent() {
+                const mainContent = document.querySelector('.caixa');
+                if (mainContent) {
+                    mainContent.style.display = 'block';
+                    mainContent.style.visibility = 'visible';
+                    mainContent.style.opacity = '1';
+                    mainContent.style.filter = 'none';
+                }
+                
+                // Show all portfolio sections
+                const sections = document.querySelectorAll('.resume-section, .resume-item, .skill-item, .certification-item');
+                sections.forEach(section => {
+                    section.style.display = 'block';
+                    section.style.visibility = 'visible';
+                    section.style.opacity = '1';
+                    section.style.filter = 'none';
+                });
+                
+                // Test original functionality with a delay to ensure resume.min.js is loaded
+                setTimeout(() => {
+                    if (window.loadPage && typeof window.loadPage === 'function') {
+                        console.log('✅ Original loadPage function is working');
+                        // Load initial content
+                        window.loadPage('eng');
+                    } else {
+                        console.warn('❌ Original loadPage function not found');
+                    }
+                }, 100); // Small delay to ensure scripts are loaded
+                
+                console.log('Immediate content visibility fix applied');
+            }
+            
+            // Apply immediately
+            showContent();
+            
+            // Apply after DOM loads
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', showContent);
+            }
+            
+            // Apply after window loads
+            window.addEventListener('load', showContent);
+        })();
+    </script>
+
+    <!-- Performance Monitoring -->
+    <script>
+      // Performance monitoring
+      window.addEventListener('load', () => {
+        if ('performance' in window) {
+          const perfData = performance.getEntriesByType('navigation')[0];
+          console.log('Page Load Time:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
+        }
+      });
+    </script>
+
   </body>
 
 </html>

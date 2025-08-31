@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Gate Test - Contact Information Access</title>
+    <link rel="stylesheet" href="css/premium-components.css">
+    <link rel="stylesheet" href="css/privacy-gate.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+        }
+        .contact-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .contact-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        .test-button {
+            background: #009933;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        .test-button:hover {
+            background: #007a29;
+            transform: translateY(-2px);
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔒 Privacy Gate Test</h1>
+        <p>This page demonstrates how the privacy gate only triggers when users try to access contact information.</p>
+        
+        <div class="test-section">
+            <h2>📋 Test Instructions</h2>
+            <ol>
+                <li>Try clicking on the contact information below - this should trigger the privacy gate</li>
+                <li>Fill out the consent form to access the contact details</li>
+                <li>After consent, contact information should be accessible</li>
+                <li>Try other actions that don't involve contact info - these should work normally</li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h2>📞 Contact Information (Privacy Gated)</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <strong>Email:</strong> 
+                    <a href="mailto:test@example.com" class="privacy-gated">test@example.com</a>
+                    <small>🔒 Click to access (triggers privacy gate)</small>
+                </div>
+                <div class="contact-item">
+                    <strong>Phone:</strong> 
+                    <a href="tel:+1234567890" class="privacy-gated">+1 (234) 567-890</a>
+                    <small>🔒 Click to access (triggers privacy gate)</small>
+                </div>
+                <div class="contact-item">
+                    <strong>Address:</strong> 
+                    <span class="privacy-gated">123 Test Street, Test City</span>
+                    <small>🔒 Hover to see hint</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>✅ Non-Contact Actions (Always Available)</h2>
+            <button class="test-button" onclick="showStatus('This action works without privacy gate!', 'success')">
+                Test Button 1
+            </button>
+            <button class="test-button" onclick="showStatus('Another action that works normally!', 'success')">
+                Test Button 2
+            </button>
+            <button class="test-button" onclick="showStatus('All non-contact actions are accessible!', 'info')">
+                Test Button 3
+            </button>
+        </div>
+
+        <div class="test-section">
+            <h2>📊 Test Status</h2>
+            <div id="status-container"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>🔄 Reset Test</h2>
+            <button class="test-button" onclick="resetPrivacyGate()" style="background: #dc3545;">
+                Reset Privacy Gate
+            </button>
+            <p><small>This will clear your consent and hide contact information again.</small></p>
+        </div>
+    </div>
+
+    <script src="js/privacy-gate.js"></script>
+    <script>
+        function showStatus(message, type) {
+            const container = document.getElementById('status-container');
+            const statusDiv = document.createElement('div');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+            container.appendChild(statusDiv);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (statusDiv.parentNode) {
+                    statusDiv.remove();
+                }
+            }, 5000);
+        }
+
+        function resetPrivacyGate() {
+            if (window.privacyGate) {
+                window.privacyGate.withdrawConsent();
+                showStatus('Privacy gate reset! Contact information is now hidden again.', 'info');
+            }
+        }
+
+        // Show initial status
+        document.addEventListener('DOMContentLoaded', () => {
+            showStatus('Privacy gate test page loaded. Try accessing contact information!', 'info');
+        });
+    </script>
+</body>
+</html>
