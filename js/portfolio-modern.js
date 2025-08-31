@@ -13,7 +13,7 @@ class ModernPortfolio {
     }
 
     init() {
-        console.log('Portfolio initializing with original functionality...');
+        // Portfolio initializing with original functionality...
         this.setupEventListeners();
         this.initializeComponents();
         this.handleInitialLoad();
@@ -52,17 +52,22 @@ class ModernPortfolio {
 
     initializeComponents() {
         // Initialize cookie consent
-        if (window.cookieConsent) {
-            console.log('Cookie consent initialized');
+        if (window.CookieConsent) {
+            this.cookieConsent = new window.CookieConsent();
+            // Cookie consent initialized
         }
 
         // Initialize privacy gate
-        if (window.privacyGate) {
-            console.log('Privacy gate initialized');
+        if (window.PrivacyGate) {
+            this.privacyGate = new window.PrivacyGate();
+            // Privacy gate initialized
         }
 
         // Set initial language
         this.setLanguage(this.currentLanguage);
+        
+        // Setup premium animations
+        this.setupPremiumAnimations();
     }
 
     async handleInitialLoad() {
@@ -80,13 +85,13 @@ class ModernPortfolio {
             this.revealAllContent();
             
             // Initialize privacy gate for contact information only
-            if (window.privacyGate) {
-                console.log('Privacy gate initialized for contact information only');
+            if (window.PrivacyGate) {
+                this.privacyGate = new window.PrivacyGate();
+                // Privacy gate initialized for contact information only
             }
             
         } catch (error) {
-            console.error('Error during initial load:', error);
-            this.showErrorMessage('Failed to load portfolio. Please refresh the page.');
+            // Error during initial load
         }
     }
 
@@ -112,13 +117,11 @@ class ModernPortfolio {
 
     // RESTORED ORIGINAL CONTENT LOADING METHOD
     loadOriginalContent(language) {
-        console.log('Loading original content for language:', language);
-        
-        // Use the original resume.js functionality
-        if (window.loadPage) {
+        // Loading original content for language: ${language}
+        if (typeof window.loadPage === 'function') {
             window.loadPage(language);
         } else {
-            // Fallback: manually trigger content loading
+            // Fallback to direct content loading
             this.triggerContentLoad(language);
         }
     }
@@ -172,8 +175,7 @@ class ModernPortfolio {
             
             this.showLanguageNotification(language);
         } catch (error) {
-            console.error('Error switching language:', error);
-            this.showNotification('Failed to switch language.', 'error');
+            // Error switching language
         }
     }
 
@@ -242,7 +244,7 @@ class ModernPortfolio {
             this.scrollToSection(targetElement);
             this.highlightSection(sectionId);
         } else {
-            console.warn(`Section not found: ${sectionId}Title`);
+            // Section not found: ${sectionId}Title
         }
     }
 
@@ -352,63 +354,256 @@ class ModernPortfolio {
         });
     }
 
+    // Premium Animation System
+    setupPremiumAnimations() {
+        // Setting up premium animations...
+        
+        // Intersection Observer for scroll animations
+        this.setupScrollAnimations();
+        
+        // Premium hover effects
+        this.setupPremiumHoverEffects();
+        
+        // Smooth scrolling
+        this.setupSmoothScrolling();
+        
+        // Parallax effects
+        this.setupParallaxEffects();
+        
+        // Typing animations
+        this.setupTypingAnimations();
+        
+        // Particle effects
+        this.setupParticleEffects();
+    }
+
     setupScrollAnimations() {
-        // Enhanced scroll-triggered animations with better performance
         const observerOptions = {
-            threshold: 0.15,
-            rootMargin: '0px 0px -100px 0px'
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Add staggered animation delay for better visual flow
-                    const delay = Math.random() * 200; // Random delay up to 200ms
-                    setTimeout(() => {
-                        entry.target.classList.add('animate-in');
-                    }, delay);
+                    entry.target.style.animationPlayState = 'running';
+                    entry.target.classList.add('animate-in');
                 }
             });
         }, observerOptions);
 
-        // Observe elements for animation with better targeting
-        const animatedElements = document.querySelectorAll('.resume-section, .resume-item, .skill-item, .certification-item');
-        animatedElements.forEach((el, index) => {
-            // Add initial state
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(40px)';
-            el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-            
-            // Stagger initial animations
-            setTimeout(() => {
-                observer.observe(el);
-            }, index * 100); // Stagger observation by 100ms
+        // Observe all sections
+        document.querySelectorAll('.resume-section, .resume-item, .skill-item').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
         });
     }
 
-    setupHoverEffects() {
-        // Enhanced hover effects with better performance
-        const interactiveElements = document.querySelectorAll('.resume-item, .skill-item, .certification-item, .social-link');
-        
-        interactiveElements.forEach(item => {
-            // Add hover state management
-            let hoverTimeout;
-            
-            item.addEventListener('mouseenter', () => {
-                clearTimeout(hoverTimeout);
-                item.classList.add('hover-effect');
-                
-                // Add subtle glow effect
-                item.style.boxShadow = '0 10px 30px rgba(0, 153, 51, 0.15)';
+    setupPremiumHoverEffects() {
+        // Premium card hover effects
+        document.querySelectorAll('.card, .resume-item').forEach(card => {
+            card.addEventListener('mouseenter', (e) => {
+                this.createHoverEffect(e.target);
             });
             
-            item.addEventListener('mouseleave', () => {
-                hoverTimeout = setTimeout(() => {
-                    item.classList.remove('hover-effect');
-                    item.style.boxShadow = '';
-                }, 100); // Small delay to prevent flickering
+            card.addEventListener('mouseleave', (e) => {
+                this.removeHoverEffect(e.target);
             });
         });
+
+        // Premium button hover effects
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mouseenter', (e) => {
+                this.createButtonHoverEffect(e.target);
+            });
+        });
+    }
+
+    createHoverEffect(element) {
+        const rect = element.getBoundingClientRect();
+        const glow = document.createElement('div');
+        
+        glow.className = 'hover-glow';
+        glow.style.cssText = `
+            position: absolute;
+            top: ${rect.top}px;
+            left: ${rect.left}px;
+            width: ${rect.width}px;
+            height: ${rect.height}px;
+            background: radial-gradient(circle, rgba(0, 153, 51, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        `;
+        
+        document.body.appendChild(glow);
+        
+        // Animate in
+        requestAnimationFrame(() => {
+            glow.style.opacity = '1';
+        });
+        
+        element._hoverGlow = glow;
+    }
+
+    removeHoverEffect(element) {
+        if (element._hoverGlow) {
+            element._hoverGlow.style.opacity = '0';
+            setTimeout(() => {
+                if (element._hoverGlow && element._hoverGlow.parentNode) {
+                    element._hoverGlow.parentNode.removeChild(element._hoverGlow);
+                }
+                element._hoverGlow = null;
+            }, 300);
+        }
+    }
+
+    createButtonHoverEffect(button) {
+        // Create ripple effect
+        const ripple = document.createElement('span');
+        const rect = button.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = event.clientX - rect.left - size / 2;
+        const y = event.clientY - rect.top - size / 2;
+        
+        ripple.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: ${size}px;
+            left: ${x}px;
+            top: ${y}px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        `;
+        
+        button.appendChild(ripple);
+        
+        setTimeout(() => {
+            if (ripple.parentNode) {
+                ripple.parentNode.removeChild(ripple);
+            }
+        }, 600);
+    }
+
+    setupSmoothScrolling() {
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    }
+
+    setupParallaxEffects() {
+        // Simple parallax for background elements
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.parallax');
+            
+            parallaxElements.forEach(element => {
+                const speed = element.dataset.speed || 0.5;
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+    }
+
+    setupTypingAnimations() {
+        // Typing effect for headings
+        const typingElements = document.querySelectorAll('.typing-animation');
+        
+        typingElements.forEach(element => {
+            const text = element.textContent;
+            element.textContent = '';
+            element.style.borderRight = '2px solid #009933';
+            
+            let i = 0;
+            const typeWriter = () => {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                } else {
+                    element.style.borderRight = 'none';
+                }
+            };
+            
+            // Start typing when element is visible
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        typeWriter();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            observer.observe(element);
+        });
+    }
+
+    setupParticleEffects() {
+        // Create floating particles for premium feel
+        const particleContainer = document.createElement('div');
+        particleContainer.className = 'particle-container';
+        particleContainer.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        `;
+        
+        document.body.appendChild(particleContainer);
+        
+        // Create particles
+        for (let i = 0; i < 20; i++) {
+            this.createParticle(particleContainer);
+        }
+    }
+
+    createParticle(container) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        const size = Math.random() * 4 + 2;
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * window.innerHeight;
+        const duration = Math.random() * 20 + 10;
+        
+        particle.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: ${size}px;
+            background: rgba(0, 153, 51, 0.3);
+            border-radius: 50%;
+            left: ${x}px;
+            top: ${y}px;
+            animation: float ${duration}s infinite linear;
+        `;
+        
+        container.appendChild(particle);
+        
+        // Remove and recreate particle after animation
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+                this.createParticle(container);
+            }
+        }, duration * 1000);
     }
 
     showLanguageNotification(language) {
@@ -483,74 +678,23 @@ class ModernPortfolio {
         };
     }
 
-    ensureContentVisible() {
-        // Force all portfolio content to be visible
-        const allContent = document.querySelectorAll('.resume-section, .resume-item, .skill-item, .certification-item, .profile-image, .navbar, .footer');
-        allContent.forEach(element => {
-            element.style.filter = 'none';
-            element.style.pointerEvents = 'auto';
-            element.style.opacity = '1';
-            element.style.visibility = 'visible';
-        });
-        
-        // Only gate contact information
-        const contactElements = document.querySelectorAll('a[href^="mailto:"], a[href^="tel:"], .phone-number, .email-address');
-        contactElements.forEach(element => {
-            element.classList.add('privacy-gated');
-        });
-        
-        // Debug: log what's visible
-        console.log('Portfolio content visibility check:');
-        console.log('- Total content elements:', allContent.length);
-        console.log('- Contact elements gated:', contactElements.length);
-        console.log('- Main content container:', document.querySelector('.caixa')?.innerHTML ? 'Has content' : 'No content');
-    }
 
-    // Debug method to check content state
-    debugContentState() {
-        const mainContainer = document.querySelector('.caixa');
-        const privacyGate = document.getElementById('privacy-gate-overlay');
-        const loadingScreen = document.getElementById('loading');
-        
-        console.log('=== Portfolio Debug Info ===');
-        console.log('Main container exists:', !!mainContainer);
-        console.log('Main container content length:', mainContainer?.innerHTML?.length || 0);
-        console.log('Privacy gate visible:', !!privacyGate);
-        console.log('Loading screen visible:', !!loadingScreen);
-        console.log('Privacy gate instance:', !!window.privacyGate);
-        console.log('Portfolio instance:', !!window.modernPortfolio);
-        console.log('================================');
-    }
 }
 
 // Initialize portfolio when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM loaded, initializing portfolio with original functionality...');
+    // DOM loaded, initializing portfolio with original functionality...
     window.modernPortfolio = new ModernPortfolio();
     
     // Restore dark mode preference
     restoreDarkModePreference();
     
-    // Add global debug function
-    window.debugPortfolio = () => {
-        if (window.modernPortfolio) {
-            window.modernPortfolio.debugContentState();
-        } else {
-            console.log('Portfolio not initialized yet');
-        }
-    };
-    
-    // Force content visibility after a delay as a safety measure
-    setTimeout(() => {
-        if (window.modernPortfolio) {
-            window.modernPortfolio.ensureContentVisible();
-        }
-    }, 3000);
+
 });
 
 // Function to restore dark mode preference
 function restoreDarkModePreference() {
-    const savedTheme = localStorage.getItem('darkMode');
+    const savedTheme = localStorage.getItem('portfolio-theme');
     const darkModeToggle = document.getElementById('modernDarkModeToggle');
     const darkModeBtn = document.getElementById('modernDarkModeBtn');
     
@@ -560,7 +704,7 @@ function restoreDarkModePreference() {
         darkModeBtn.textContent = 'ON';
         darkModeBtn.id = 'modernDarkModeBtn';
         document.body.classList.add('dark-theme');
-        console.log('Dark mode preference restored');
+        // Dark mode preference restored
     }
 }
 
@@ -577,24 +721,34 @@ function switchLanguage(language, event) {
     event.stopPropagation();
   }
   
-  // Ensure language parameter is valid
-  if (!language || (language !== 'pt' && language !== 'eng')) {
-    console.warn('Invalid language parameter:', language, 'defaulting to eng');
+  // Validate language parameter
+  if (!language || !['eng', 'pt'].includes(language)) {
+    // Invalid language parameter, defaulting to eng
     language = 'eng';
   }
   
-  console.log('Switching language to:', language);
-  
-  if (window.modernPortfolio) {
-    window.modernPortfolio.switchLanguage(language);
-  } else {
-    // Fallback if modernPortfolio is not available
-    if (window.loadPage) {
-      console.log('Using fallback loadPage for language:', language);
+  // Switch language
+  try {
+    // Switching language to: ${language}
+    
+    if (typeof window.loadPage === 'function') {
       window.loadPage(language);
+    } else if (typeof this.loadOriginalContent === 'function') {
+      this.loadOriginalContent(language);
     } else {
-      console.warn('No language switching method available');
+      // Using fallback loadPage for language: ${language}
+      if (typeof window.loadPage === 'function') {
+        window.loadPage(language);
+      } else {
+        // No language switching method available
+      }
     }
+    
+    // Update language switcher UI
+    this.updateLanguageSwitcher(language);
+    
+  } catch (error) {
+    // Error switching language
   }
   
   // Return false to prevent any default behavior
@@ -606,60 +760,45 @@ function toggleDarkMode() {
   const darkModeToggle = document.getElementById('modernDarkModeToggle');
   const darkModeBtn = document.getElementById('modernDarkModeBtn');
   
-  console.log('toggleDarkMode called');
-  console.log('Current darkModeBtn id:', darkModeBtn?.id);
-  console.log('Current darkModeToggle active class:', darkModeToggle?.classList.contains('active'));
+  // toggleDarkMode called
+  // Current darkModeBtn id
+  // Current darkModeToggle active class
   
-  if (darkModeToggle && darkModeBtn) {
-    const isDark = darkModeToggle.classList.contains('active');
-    console.log('Current theme is dark:', isDark);
+  const isDark = darkModeToggle.classList.contains('active');
+  
+  // Current theme is dark
+  
+  if (isDark) {
+    // Switching to light mode
+    darkModeToggle.classList.remove('active');
+    darkModeBtn.textContent = 'OFF';
+    document.body.classList.remove('dark-theme');
     
-    if (isDark) {
-      // Switch to light mode
-      console.log('Switching to light mode');
-      darkModeToggle.classList.remove('active');
-      darkModeBtn.textContent = 'OFF';
-      darkModeBtn.id = 'modernDarkModeBtn';
-      document.body.classList.remove('dark-theme');
-      
-      // Show notification
-      if (window.alertify) {
-        alertify.success('Light Mode Activated');
-      }
-      
-      console.log('Switched to Light Mode');
-    } else {
-      // Switch to dark mode
-      console.log('Switching to dark mode');
-      darkModeToggle.classList.add('active');
-      darkModeBtn.textContent = 'ON';
-      darkModeBtn.id = 'modernDarkModeBtn';
-      document.body.classList.add('dark-theme');
-      
-      // Show notification
-      if (window.alertify) {
-        alertify.success('Dark Mode Activated');
-      }
-      
-      console.log('Switched to Dark Mode');
-    }
+    // Save preference
+    localStorage.setItem('portfolio-theme', 'light');
     
-    // Store preference in localStorage
-    const newTheme = isDark ? 'light' : 'dark';
-    localStorage.setItem('darkMode', newTheme);
-    console.log('Theme preference saved:', newTheme);
-    
-    // Verify the change
-    setTimeout(() => {
-      console.log('Theme verification - body has dark-theme class:', document.body.classList.contains('dark-theme'));
-      console.log('Toggle has active class:', darkModeToggle.classList.contains('active'));
-      console.log('Button text:', darkModeBtn.textContent);
-      console.log('Button id:', darkModeBtn.id);
-    }, 100);
+    // Switched to Light Mode
   } else {
-    console.error('Dark mode elements not found:', {
-      darkModeToggle: !!darkModeToggle,
-      darkModeBtn: !!darkModeBtn
-    });
+    // Switching to dark mode
+    darkModeToggle.classList.add('active');
+    darkModeBtn.textContent = 'ON';
+    document.body.classList.add('dark-theme');
+    
+    // Save preference
+    localStorage.setItem('portfolio-theme', 'dark');
+    
+    // Switched to Dark Mode
   }
+  
+  // Save theme preference
+  const newTheme = isDark ? 'light' : 'dark';
+  localStorage.setItem('portfolio-theme', newTheme);
+  
+  // Theme preference saved
+  
+  // Verify theme application
+  // Theme verification - body has dark-theme class
+  // Toggle has active class
+  // Button text
+  // Button id
 }

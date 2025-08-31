@@ -1,14 +1,12 @@
-/**
- * Emergency Fix for Portfolio Content Visibility
- * This script ensures that portfolio content is always visible
- * PRESERVING ORIGINAL DESIGN
- */
+// Emergency Portfolio Fix - Preserves Original Design
+// This script ensures content visibility and fixes layout issues
 
 (function() {
     'use strict';
     
-    console.log('Emergency portfolio fix loaded - preserving original design');
+    // Emergency portfolio fix loaded - preserving original design
     
+    // Force content visibility immediately
     function forceContentVisible() {
         // Force all portfolio content to be visible
         const allContent = document.querySelectorAll('.resume-section, .resume-item, .skill-item, .certification-item, .profile-image, .navbar, .footer, .caixa');
@@ -34,9 +32,9 @@
         
         // Ensure original resume.js functionality is working
         if (window.loadPage && typeof window.loadPage === 'function') {
-            console.log('Original loadPage function found and working');
+            // Original loadPage function found and working
         } else {
-            console.warn('Original loadPage function not found - portfolio may not work properly');
+            // Original loadPage function not found - portfolio may not work properly
         }
         
         // Ensure original navigation works
@@ -46,10 +44,10 @@
             element.style.pointerEvents = 'auto';
         });
         
-        console.log('Emergency fix applied - content should be visible with original design');
-        console.log('- Content elements processed:', allContent.length);
-        console.log('- Contact elements gated:', contactElements.length);
-        console.log('- Navigation elements enabled:', loadDivElements.length);
+        // Emergency fix applied - content should be visible with original design
+        // - Content elements processed
+        // - Contact elements gated
+        // - Navigation elements enabled
     }
     
     // Apply fix immediately
@@ -134,7 +132,7 @@
             profileImg.style.setProperty('max-width', '150px', 'important');
             profileImg.style.setProperty('max-height', '150px', 'important');
             
-            console.log('Profile image size fixed - forced to 150x150px');
+            // Profile image size fixed - forced to 150x150px
         }
     }
 
@@ -164,3 +162,149 @@
     });
     
 })();
+
+// Force navbar privacy section visibility
+function ensureNavbarPrivacyVisibility() {
+    const privacySection = document.querySelector('.navbar-nav .privacy-section');
+    const creditText = document.querySelector('.navbar-nav .credit-text');
+    const privacyLinks = document.querySelector('.navbar-nav .privacy-links');
+    
+    if (privacySection) {
+        // Force visibility
+        privacySection.style.setProperty('display', 'block', 'important');
+        privacySection.style.setProperty('visibility', 'visible', 'important');
+        privacySection.style.setProperty('opacity', '1', 'important');
+        
+        // Privacy section visibility forced
+    }
+    
+    if (creditText) {
+        creditText.style.setProperty('display', 'block', 'important');
+        creditText.style.setProperty('visibility', 'visible', 'important');
+        creditText.style.setProperty('opacity', '1', 'important');
+    }
+    
+    if (privacyLinks) {
+        privacyLinks.style.setProperty('display', 'flex', 'important');
+        privacyLinks.style.setProperty('visibility', 'visible', 'important');
+        privacyLinks.style.setProperty('opacity', '1', 'important');
+    }
+}
+
+// Force apply dark theme to footer
+function forceFooterDarkTheme() {
+    const footer = document.querySelector('.footer-credit');
+    const body = document.body;
+    
+    if (footer && body.classList.contains('dark-theme')) {
+        // Force applying dark theme to footer
+        footer.style.setProperty('background-color', 'rgba(255, 255, 255, 0.05)', 'important');
+        footer.style.setProperty('border-top', '1px solid rgba(255, 255, 255, 0.1)', 'important');
+        footer.style.setProperty('color', 'rgb(226, 232, 240)', 'important');
+        
+        const container = footer.querySelector('.container');
+        if (container) {
+            container.style.setProperty('color', 'rgb(226, 232, 240)', 'important');
+        }
+        
+        const paragraph = footer.querySelector('p');
+        if (paragraph) {
+            paragraph.style.setProperty('color', 'rgb(226, 232, 240)', 'important');
+        }
+        
+        // Dark theme forced to footer with background fix
+    }
+}
+
+// Force add dark theme class to body if toggle is active
+function ensureDarkThemeClass() {
+    const darkModeToggle = document.getElementById('modernDarkModeToggle');
+    const body = document.body;
+    
+    if (darkModeToggle && darkModeToggle.classList.contains('active')) {
+        if (!body.classList.contains('dark-theme')) {
+            // Dark mode toggle is active but body missing dark-theme class - adding it
+            body.classList.add('dark-theme');
+        }
+    }
+}
+
+// Comprehensive dark theme state checker and fixer
+function checkAndFixDarkTheme() {
+    const body = document.body;
+    const darkModeToggle = document.getElementById('modernDarkModeToggle');
+    const footer = document.querySelector('.footer-credit');
+    
+    if (darkModeToggle && darkModeToggle.classList.contains('active') && !body.classList.contains('dark-theme')) {
+        // Dark mode toggle is active but body missing dark-theme class - FIXING
+        body.classList.add('dark-theme');
+        
+        // Force applying dark theme to footer after class fix
+        if (footer) {
+            footer.style.setProperty('background-color', 'rgba(255, 255, 255, 0.05)', 'important');
+            footer.style.setProperty('border-top', '1px solid rgba(255, 255, 255, 0.1)', 'important');
+            footer.style.setProperty('color', 'rgb(226, 232, 240)', 'important');
+            
+            const container = footer.querySelector('.container');
+            if (container) {
+                container.style.setProperty('color', 'rgb(226, 232, 240)', 'important');
+            }
+            
+            const paragraph = footer.querySelector('p');
+            if (paragraph) {
+                paragraph.style.setProperty('color', 'rgb(226, 232, 240)', 'important');
+            }
+            
+            // Dark theme forced to footer after class fix
+        }
+    } else if (darkModeToggle && darkModeToggle.classList.contains('active') && body.classList.contains('dark-theme')) {
+        // Dark mode is properly active - applying footer styles
+        if (footer) {
+            forceFooterDarkTheme();
+        }
+    } else {
+        // Dark mode is not active - no changes needed
+    }
+}
+
+// Run footer dark theme fix
+forceFooterDarkTheme();
+ensureDarkThemeClass();
+
+// Also run when dark mode is toggled
+document.addEventListener('DOMContentLoaded', () => {
+    // Watch for dark theme class changes
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                if (document.body.classList.contains('dark-theme')) {
+                    setTimeout(forceFooterDarkTheme, 100);
+                }
+            }
+        });
+    });
+    
+    observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class']
+    });
+    
+    // Also check periodically
+    setInterval(() => {
+        if (document.body.classList.contains('dark-theme')) {
+            forceFooterDarkTheme();
+        }
+    }, 2000);
+});
+
+// Run comprehensive check
+checkAndFixDarkTheme();
+
+// Also run periodically
+setInterval(checkAndFixDarkTheme, 1000);
+
+// Run navbar privacy visibility fix
+ensureNavbarPrivacyVisibility();
+
+// Also run when DOM is ready
+document.addEventListener('DOMContentLoaded', ensureNavbarPrivacyVisibility);

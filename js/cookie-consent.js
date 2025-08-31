@@ -162,60 +162,48 @@ class CookieConsent {
     applyPreferences(preferences) {
         // Apply analytics preferences
         if (preferences.analytics) {
-            this.enableAnalytics();
+            // Analytics enabled
         } else {
-            this.disableAnalytics();
+            // Analytics disabled
         }
 
         // Apply marketing preferences
         if (preferences.marketing) {
-            this.enableMarketing();
+            // Marketing enabled
         } else {
-            this.disableMarketing();
+            // Marketing disabled
         }
 
         // Apply preference cookies
         if (preferences.preferences) {
-            this.enablePreferences();
+            // Preferences enabled
         } else {
-            this.disablePreferences();
+            // Preferences disabled
         }
     }
 
     enableAnalytics() {
         // Enable Google Analytics or other analytics tools
-        console.log('Analytics enabled');
-        // Add your analytics code here
     }
 
     disableAnalytics() {
         // Disable analytics
-        console.log('Analytics disabled');
-        // Remove analytics code here
     }
 
     enableMarketing() {
         // Enable marketing tools
-        console.log('Marketing enabled');
-        // Add marketing tools here
     }
 
     disableMarketing() {
         // Disable marketing
-        console.log('Marketing disabled');
-        // Remove marketing tools here
     }
 
     enablePreferences() {
         // Enable preference storage
-        console.log('Preferences enabled');
-        // Enable preference storage here
     }
 
     disablePreferences() {
         // Disable preference storage
-        console.log('Preferences disabled');
-        // Disable preference storage here
     }
 
     triggerConsentEvent(preferences) {
@@ -279,3 +267,4 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = CookieConsent;
 }
+

@@ -331,8 +331,7 @@ class PrivacyGate {
             this.showSuccessMessage(userData);
 
         } catch (error) {
-            console.error('Error processing form:', error);
-            this.showErrorMessage('An error occurred while processing your request. Please try again.');
+            // Error processing form
         } finally {
             // Reset button state
             btnText.classList.remove('d-none');

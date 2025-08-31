@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 5 Test</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Bootstrap 5.3.7 Test</h1>
+        
+        <!-- Test Bootstrap 5 Components -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card Test</h5>
+                        <p class="card-text">This card should have Bootstrap 5 styling.</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#testModal">
+                            Open Modal
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="alert alert-success">
+                    <i class="fa fa-check"></i> Bootstrap 5 is working!
+                </div>
+                
+                <!-- Test Tooltip -->
+                <button class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip test">
+                    Hover for tooltip
+                </button>
+            </div>
+        </div>
+        
+        <!-- Test Collapse -->
+        <div class="mt-4">
+            <button class="btn btn-warning" data-bs-toggle="collapse" data-bs-target="#collapseTest">
+                Toggle Collapse
+            </button>
+            <div class="collapse mt-2" id="collapseTest">
+                <div class="card card-body">
+                    This content can be collapsed and expanded.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Test Modal -->
+    <div class="modal fade" id="testModal" tabindex="-1" aria-labelledby="testModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="testModalLabel">Test Modal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    This is a Bootstrap 5 modal test.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- jQuery (if needed) -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    
+    <!-- Bootstrap 5 JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Initialize Tooltips -->
+    <script>
+        // Bootstrap 5 tooltip initialization
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+        
+        console.log('Bootstrap 5 Test Page Loaded');
+        console.log('Bootstrap version:', typeof bootstrap !== 'undefined' ? '5.x' : 'Not loaded');
+    </script>
+</body>
+</html>
