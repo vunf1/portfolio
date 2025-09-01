@@ -23,8 +23,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['preact', 'preact-router'],
-          bootstrap: ['bootstrap']
+          vendor: ['preact', 'preact-router']
         }
       }
     },

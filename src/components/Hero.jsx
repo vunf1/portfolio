@@ -35,6 +35,8 @@ export function Hero({ personal, social, onScrollDown }) {
           src={personal.profileImage} 
           alt={`${personal.name} Profile`}
           className="hero-avatar hover-scale"
+          loading="lazy"
+          decoding="async"
         />
         
         {/* Hero Content */}

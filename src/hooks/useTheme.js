@@ -26,11 +26,6 @@ export function useTheme() {
     
     // Save preference to localStorage
     localStorage.setItem('darkMode', JSON.stringify(isDarkMode))
-    
-    // Debug logging
-    console.log('Theme changed to:', isDarkMode ? 'dark' : 'light')
-    console.log('HTML data-bs-theme:', html.getAttribute('data-bs-theme'))
-    console.log('Body data-bs-theme:', body.getAttribute('data-bs-theme'))
   }, [isDarkMode])
 
   const toggleTheme = () => {
