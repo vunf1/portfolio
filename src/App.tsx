@@ -1,29 +1,56 @@
 import { useState, useEffect } from 'preact/hooks'
-import { Hero } from './components/Hero.jsx'
-import { Navigation } from './components/Navigation.jsx'
-import { About } from './components/About.jsx'
-import { Contact } from './components/Contact.jsx'
-import { Experience } from './components/Experience.jsx'
-import { Education } from './components/Education.jsx'
-import { Skills } from './components/Skills.jsx'
-import { Projects } from './components/Projects.jsx'
-import { Certifications } from './components/Certifications.jsx'
-import { Interests } from './components/Interests.jsx'
-import { Awards } from './components/Awards.jsx'
-import { Testimonials } from './components/Testimonials.jsx'
-import { ContactModal } from './components/ContactModal.jsx'
-import { ErrorBoundary } from './components/ErrorBoundary.jsx'
-import { usePortfolioData } from './hooks/usePortfolioData.js'
-import { useTheme } from './hooks/useTheme.js'
+import { Hero } from './components/Hero'
+import { Navigation } from './components/Navigation'
+import { About } from './components/About'
+import { Contact } from './components/Contact'
+import { Experience } from './components/Experience'
+import { Education } from './components/Education'
+import { Skills } from './components/Skills'
+import { Projects } from './components/Projects'
+import { Certifications } from './components/Certifications'
+import { Interests } from './components/Interests'
+import { Awards } from './components/Awards'
+import { Testimonials } from './components/Testimonials'
+import { ContactModal } from './components/ContactModal'
+import { ErrorBoundary } from './components/ErrorBoundary'
+import { usePortfolioData } from './hooks/usePortfolioData'
+import { useTheme } from './hooks/useTheme'
+import { useI18n } from './hooks/useI18n'
+import type { ContactFormData } from './types'
 
 export function App() {
   const { portfolioData, loading, error } = usePortfolioData()
   const { isDarkMode, toggleTheme } = useTheme()
+  const { t } = useI18n()
   const [showContactModal, setShowContactModal] = useState(false)
   const [contactUnlocked, setContactUnlocked] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
+  const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false)
 
-  const handleContactUnlock = (formData) => {
+  // Handle smooth language transitions
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      setIsLanguageTransitioning(true)
+      setTimeout(() => {
+        setIsLanguageTransitioning(false)
+      }, 300) // Match CSS transition duration
+    }
+
+    // Listen for language changes
+    const observer = new MutationObserver(() => {
+      handleLanguageChange()
+    })
+
+    // Observe the document for language changes
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['lang']
+    })
+
+    return () => observer.disconnect()
+  }, [])
+
+  const handleContactUnlock = (_formData: ContactFormData) => {
     // Here you would typically send the data to your backend
     setContactUnlocked(true)
     setShowContactModal(false)
@@ -119,95 +146,95 @@ export function App() {
           onScrollDown={handleScrollDown}
         />
         
-        <div className="portfolio-container">
+        <div className={`portfolio-container ${isLanguageTransitioning ? 'language-transitioning' : ''}`}>
           {/* About Section */}
-          <section className="portfolio-section" id="about">
+          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="about">
             <div className="section-header">
-              <h2 className="section-title">About Me</h2>
-              <p className="section-subtitle">Get to know me better</p>
+              <h2 className="section-title">{t('about.title')}</h2>
+              <p className="section-subtitle">{t('about.subtitle')}</p>
             </div>
             <About personal={portfolioData.personal} social={portfolioData.social} />
           </section>
           
           {/* Experience Section */}
-          <section className="portfolio-section" id="experience">
+          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="experience">
             <div className="section-header">
-              <h2 className="section-title">Professional Experience</h2>
-              <p className="section-subtitle">My journey in software development</p>
+              <h2 className="section-title">{t('experience.title')}</h2>
+              <p className="section-subtitle">{t('experience.subtitle')}</p>
             </div>
             <Experience experience={portfolioData.experience} />
           </section>
           
           {/* Education Section */}
-          <section className="portfolio-section" id="education">
+          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="education">
             <div className="section-header">
-              <h2 className="section-title">Education & Training</h2>
-              <p className="section-subtitle">Academic background and continuous learning</p>
+              <h2 className="section-title">{t('education.title')}</h2>
+              <p className="section-subtitle">{t('education.subtitle')}</p>
             </div>
             <Education education={portfolioData.education} />
           </section>
           
           {/* Skills Section */}
-          <section className="portfolio-section" id="skills">
+          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="skills">
             <div className="section-header">
-              <h2 className="section-title">Technical Skills</h2>
-              <p className="section-subtitle">Technologies and competencies I master</p>
+              <h2 className="section-title">{t('skills.title')}</h2>
+              <p className="section-subtitle">{t('skills.subtitle')}</p>
             </div>
             <Skills skills={portfolioData.skills} />
           </section>
           
           {/* Projects Section */}
-          <section className="portfolio-section" id="projects">
+          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="projects">
             <div className="section-header">
-              <h2 className="section-title">Featured Projects</h2>
-              <p className="section-subtitle">Showcase of my best work</p>
+              <h2 className="section-title">{t('projects.title')}</h2>
+              <p className="section-subtitle">{t('projects.subtitle')}</p>
             </div>
             <Projects projects={portfolioData.projects} />
           </section>
           
           {/* Certifications Section */}
-          <section className="portfolio-section" id="certifications">
+          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="certifications">
             <div className="section-header">
-              <h2 className="section-title">Certifications</h2>
-              <p className="section-subtitle">Professional qualifications and achievements</p>
+              <h2 className="section-title">{t('certifications.title')}</h2>
+              <p className="section-subtitle">{t('certifications.subtitle')}</p>
             </div>
             <Certifications certifications={portfolioData.certifications} />
           </section>
           
           {/* Testimonials Section */}
           {portfolioData.testimonials && (
-            <section className="portfolio-section" id="testimonials">
+            <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="testimonials">
               <div className="section-header">
-                <h2 className="section-title">Client Testimonials</h2>
-                <p className="section-subtitle">What others say about my work</p>
+                <h2 className="section-title">{t('testimonials.title')}</h2>
+                <p className="section-subtitle">{t('testimonials.subtitle')}</p>
               </div>
               <Testimonials testimonials={portfolioData.testimonials} />
             </section>
           )}
           
           {/* Interests Section */}
-          <section className="portfolio-section" id="interests">
+          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="interests">
             <div className="section-header">
-              <h2 className="section-title">Personal Interests</h2>
-              <p className="section-subtitle">Beyond the code - what drives me</p>
+              <h2 className="section-title">{t('interests.title')}</h2>
+              <p className="section-subtitle">{t('interests.subtitle')}</p>
             </div>
             <Interests interests={portfolioData.interests} />
           </section>
           
           {/* Awards Section */}
-          <section className="portfolio-section" id="awards">
+          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="awards">
             <div className="section-header">
-              <h2 className="section-title">Awards & Recognition</h2>
-              <p className="section-subtitle">Achievements and honors</p>
+              <h2 className="section-title">{t('awards.title')}</h2>
+              <p className="section-subtitle">{t('awards.subtitle')}</p>
             </div>
             <Awards awards={portfolioData.awards} />
           </section>
           
           {/* Contact Section */}
-          <section className="portfolio-section" id="contact">
+          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="contact">
             <div className="section-header">
-              <h2 className="section-title">Get In Touch</h2>
-              <p className="section-subtitle">Let's discuss your next project</p>
+              <h2 className="section-title">{t('contact.title')}</h2>
+              <p className="section-subtitle">{t('contact.subtitle')}</p>
             </div>
             <Contact 
               personal={portfolioData.personal}

@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'preact/hooks'
+import { useI18n } from '../hooks/useI18n'
+import type { HeroProps } from '../types'
 
-export function Hero({ personal, social, onScrollDown }) {
-  const [isVisible, setIsVisible] = useState(false)
+export function Hero({ personal, social, onScrollDown }: HeroProps) {
+  const [_isVisible, setIsVisible] = useState(false)
   const [currentSocialIndex, setCurrentSocialIndex] = useState(0)
+  const { t } = useI18n()
 
   useEffect(() => {
     setIsVisible(true)
@@ -27,6 +30,19 @@ export function Hero({ personal, social, onScrollDown }) {
     }
   }
 
+  // Map social icons to proper FontAwesome classes
+  const getSocialIcon = (socialItem: any) => {
+    const iconMap: { [key: string]: string } = {
+      'fa-linkedin': 'fa-brands fa-linkedin',
+      'fa-github': 'fa-brands fa-github',
+      'fa-graduation-cap': 'fa-solid fa-graduation-cap',
+      'fa-globe': 'fa-solid fa-globe',
+      'fa-envelope': 'fa-solid fa-envelope',
+      'fa-phone': 'fa-solid fa-phone'
+    }
+    return iconMap[socialItem.icon] || socialItem.icon
+  }
+
   return (
     <section className="portfolio-hero" id="hero">
       <div className="hero-profile">
@@ -45,7 +61,7 @@ export function Hero({ personal, social, onScrollDown }) {
         </h1>
         
         <h2 className="hero-title">
-          {personal.title}
+          {t('hero.title')}
         </h2>
         
         <p className="hero-summary">
@@ -83,7 +99,7 @@ export function Hero({ personal, social, onScrollDown }) {
             }}
           >
             <i className="fa-solid fa-envelope me-2"></i>
-            Get In Touch
+            {t('hero.cta')}
           </a>
           
           <a 
@@ -98,7 +114,7 @@ export function Hero({ personal, social, onScrollDown }) {
             }}
           >
             <i className="fa-solid fa-code me-2"></i>
-            View Projects
+            {t('navigation.projects')}
           </a>
         </div>
         
@@ -118,23 +134,27 @@ export function Hero({ personal, social, onScrollDown }) {
                 }}
                 aria-label={socialItem.name}
               >
-                <i className={`fa ${socialItem.icon}`}></i>
+                <i className={getSocialIcon(socialItem)}></i>
                 <span className="social-tooltip">{socialItem.name}</span>
               </a>
             ))}
           </div>
         </div>
-        
-        {/* Scroll Indicator */}
-        <div className="scroll-indicator animate-fade-in-up" style={{ animationDelay: '2s' }}>
-          <button 
-            onClick={handleScrollDown}
-            className="scroll-btn"
-            aria-label="Scroll down to explore"
-          >
-            <i className="fa-solid fa-chevron-down"></i>
-          </button>
-        </div>
+      </div>
+      
+      {/* Premium Scroll Indicator */}
+      <div className="premium-scroll-indicator">
+        <button 
+          onClick={handleScrollDown}
+          className="premium-scroll-btn"
+          aria-label="Scroll down to explore"
+        >
+          <div className="scroll-btn-content">
+            <div className="scroll-icon-container">
+              <i className="fa-solid fa-chevron-down scroll-icon"></i>
+            </div>
+          </div>
+        </button>
       </div>
       
       {/* Background Elements */}

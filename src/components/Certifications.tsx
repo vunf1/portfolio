@@ -1,4 +1,6 @@
-export function Certifications({ certifications }) {
+import type { CertificationsProps } from '../types'
+
+export function Certifications({ certifications }: CertificationsProps) {
   return (
     <section className="resume-section" id="certifications">
       <div className="resume-section-content">

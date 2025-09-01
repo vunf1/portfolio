@@ -1,22 +1,24 @@
 import { useState } from 'preact/hooks'
+import type { ContactModalProps, ContactFormData, FormErrors } from '../types'
 
-export function ContactModal({ show, onClose, onSubmit }) {
-  const [formData, setFormData] = useState({
+export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
+  const [formData, setFormData] = useState<ContactFormData>({
     visitorName: '',
     visitorEmail: '',
     visitorCompany: '',
     contactReason: ''
   })
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState<FormErrors>({})
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
+  const handleInputChange = (e: Event) => {
+    const target = e.target as HTMLInputElement
+    const { name, value } = target
     setFormData(prev => ({
       ...prev,
       [name]: value
     }))
     // Clear error when user starts typing
-    if (errors[name]) {
+    if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({
         ...prev,
         [name]: ''
@@ -25,7 +27,7 @@ export function ContactModal({ show, onClose, onSubmit }) {
   }
 
   const validateForm = () => {
-    const newErrors = {}
+    const newErrors: FormErrors = {}
     
     if (!formData.visitorName.trim()) {
       newErrors.visitorName = 'Full name is required'
@@ -41,7 +43,7 @@ export function ContactModal({ show, onClose, onSubmit }) {
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: Event) => {
     e.preventDefault()
     
     if (validateForm()) {
@@ -60,8 +62,8 @@ export function ContactModal({ show, onClose, onSubmit }) {
   if (!show) return null
 
   return (
-    <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
-      <div className="modal-dialog modal-dialog-centered">
+    <div className="modal fade show" style={{ display: 'block' }} tabIndex={-1}>
+      <div className="modal-dialog modal-dialog-centered modal-mobile">
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">Unlock Contact Information</h5>
@@ -75,7 +77,7 @@ export function ContactModal({ show, onClose, onSubmit }) {
           
           <form onSubmit={handleSubmit}>
             <div className="modal-body">
-              <div className="mb-3">
+              <div className="form-group">
                 <label htmlFor="visitorName" className="form-label">Full Name *</label>
                 <input 
                   type="text" 
@@ -85,13 +87,14 @@ export function ContactModal({ show, onClose, onSubmit }) {
                   value={formData.visitorName}
                   onChange={handleInputChange}
                   required
+                  placeholder="Enter your full name"
                 />
                 {errors.visitorName && (
                   <div className="invalid-feedback">{errors.visitorName}</div>
                 )}
               </div>
               
-              <div className="mb-3">
+              <div className="form-group">
                 <label htmlFor="visitorEmail" className="form-label">Email Address *</label>
                 <input 
                   type="email" 
@@ -101,13 +104,14 @@ export function ContactModal({ show, onClose, onSubmit }) {
                   value={formData.visitorEmail}
                   onChange={handleInputChange}
                   required
+                  placeholder="Enter your email address"
                 />
                 {errors.visitorEmail && (
                   <div className="invalid-feedback">{errors.visitorEmail}</div>
                 )}
               </div>
               
-              <div className="mb-3">
+              <div className="form-group">
                 <label htmlFor="visitorCompany" className="form-label">Company (Optional)</label>
                 <input 
                   type="text" 
@@ -116,10 +120,11 @@ export function ContactModal({ show, onClose, onSubmit }) {
                   name="visitorCompany"
                   value={formData.visitorCompany}
                   onChange={handleInputChange}
+                  placeholder="Enter your company name"
                 />
               </div>
               
-              <div className="mb-3">
+              <div className="form-group">
                 <label htmlFor="contactReason" className="form-label">Reason for Contact (Optional)</label>
                 <select 
                   className="form-select"

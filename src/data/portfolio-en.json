@@ -1,0 +1,628 @@
+{
+  "portfolio": {
+    "personal": {
+      "name": "João Maia",
+      "title": "Full-Stack Software Engineer",
+      "tagline": "Crafting Digital Excellence Through Code",
+      "subtitle": "Passionate about building scalable, user-centric applications",
+      "email": "jokass.workplace@gmail.com",
+      "phone": "+351 934 330 807",
+      "phoneSecondary": "+44 7393 557259",
+      "location": "Porto, Portugal",
+      "website": "https://joaomaia.dev",
+      "profileImage": "src/img/profile.jpg",
+      "summary": "Experienced software engineer with 8+ years of expertise in full-stack development, cloud technologies, and agile methodologies. Specialized in creating robust, scalable applications with a focus on user experience and performance optimization.",
+      "longSummary": "I am a dedicated software engineer with a proven track record of delivering high-quality, enterprise-grade solutions. My journey in technology began at age 10, and I've been passionate about computers and programming ever since. I specialize in modern web technologies, cloud architecture, and creating intuitive user experiences that drive business value.",
+      "availability": "Open to new opportunities",
+      "relocation": "Willing to relocate",
+      "remote": "Remote-friendly",
+      "languages": ["Portuguese (Native)", "English (Fluent)"],
+      "coreValues": [
+        "Quality-driven development",
+        "User-centric design",
+        "Continuous learning",
+        "Team collaboration",
+        "Innovation and creativity"
+      ]
+    },
+    "social": [
+      {
+        "name": "LinkedIn",
+        "url": "https://www.linkedin.com/in/joao-maia/",
+        "icon": "fa-linkedin",
+        "color": "#0077B5",
+        "description": "Professional network and experience"
+      },
+      {
+        "name": "GitHub",
+        "url": "https://github.com/vunf1/",
+        "icon": "fa-github",
+        "color": "#333",
+        "description": "Open source contributions and projects"
+      },
+      {
+        "name": "GitHub (Coventry)",
+        "url": "https://github.coventry.ac.uk/deoiveij/",
+        "icon": "fa-graduation-cap",
+        "color": "#2c5aa0",
+        "description": "Academic projects and research"
+      },
+      {
+        "name": "Portfolio",
+        "url": "https://joaomaia.dev",
+        "icon": "fa-globe",
+        "color": "#2c5aa0",
+        "description": "Personal website and projects"
+      }
+    ],
+    "experience": [
+      {
+        "id": "exp-1",
+        "title": "Full-Stack Software Engineer",
+        "company": "Freelance & Independent Projects",
+        "location": "Porto, Portugal",
+        "period": "2020 - Present",
+        "duration": "4+ years",
+        "description": "Leading development of custom web applications and software solutions for diverse clients. Specializing in modern web technologies, cloud deployment, and scalable architecture.",
+        "technologies": ["React", "Node.js", "Python", "AWS", "Docker", "PostgreSQL", "MongoDB"],
+        "achievements": [
+          "Delivered 15+ client projects with 100% satisfaction rate",
+          "Reduced application load times by 60% through optimization",
+          "Implemented CI/CD pipelines reducing deployment time by 80%",
+          "Mentored 3 junior developers in modern development practices"
+        ],
+        "impact": "Generated €50K+ in revenue while maintaining high code quality standards",
+        "highlights": ["Client Management", "Technical Leadership", "Performance Optimization"]
+      },
+      {
+        "id": "exp-2",
+        "title": "Software Developer Intern",
+        "company": "Medsky",
+        "location": "Vila Nova de Gaia, Portugal",
+        "period": "2016 - 2017",
+        "duration": "1 year",
+        "description": "Developed and maintained enterprise software solutions, including license management systems and network infrastructure tools. Collaborated with cross-functional teams to deliver high-quality products.",
+        "technologies": ["CodeIgniter", "jQuery", "Bootstrap", "RESTful API", "C#", "VB.NET", "MikroTik"],
+        "achievements": [
+          "Built RESTful license management system serving 1000+ users",
+          "Reduced memory usage by 40% through software migration",
+          "Supported Portuguese Red Cross campaign with network mapping",
+          "Configured enterprise network infrastructure"
+        ],
+        "impact": "Improved system efficiency and user experience for enterprise clients",
+        "highlights": ["Full-Stack Development", "System Architecture", "Network Configuration"]
+      },
+      {
+        "id": "exp-3",
+        "title": "Multi-Role Hospitality Professional",
+        "company": "Delaware North",
+        "location": "Coventry, UK",
+        "period": "2018 - 2020",
+        "duration": "2 years",
+        "description": "Managed diverse operational responsibilities across hospitality, logistics, and customer service. Demonstrated adaptability and leadership in fast-paced environments.",
+        "technologies": ["Customer Service", "Operations Management", "Team Leadership", "Logistics"],
+        "achievements": [
+          "Led team of 8 staff members during peak operations",
+          "Improved customer satisfaction scores by 25%",
+          "Streamlined logistics processes reducing wait times by 30%",
+          "Trained 12 new employees in company procedures"
+        ],
+        "impact": "Enhanced operational efficiency and customer experience",
+        "highlights": ["Team Leadership", "Process Improvement", "Customer Excellence"]
+      }
+    ],
+    "education": [
+      {
+        "id": "edu-1",
+        "degree": "BSc (Hons) Computer Science",
+        "institution": "Coventry University",
+        "location": "Coventry, United Kingdom",
+        "period": "2017 - 2024",
+        "status": "In Progress",
+        "gpa": "Expected: First Class Honours",
+        "description": "Comprehensive computer science program covering software engineering, algorithms, data structures, and modern development practices. Includes placement year for industry experience.",
+        "courses": [
+          "Software Engineering",
+          "Data Structures & Algorithms",
+          "Database Systems",
+          "Web Development",
+          "Mobile App Development",
+          "Cloud Computing",
+          "Artificial Intelligence",
+          "Software Testing"
+        ],
+        "projects": [
+          "AI-powered recommendation system",
+          "Real-time chat application",
+          "E-commerce platform with payment integration"
+        ],
+        "achievements": [
+          "Dean's List recognition",
+          "Outstanding Academic Performance Award",
+          "Student Representative for Computer Science Department"
+        ]
+      },
+      {
+        "id": "edu-2",
+        "degree": "Technician in Management and Programming of Computer Systems",
+        "institution": "Arquitecto Oliveira Ferreira School",
+        "location": "Arcozelo, Porto, Portugal",
+        "period": "2014 - 2017",
+        "status": "Completed",
+        "gpa": "Top Grade (19/20)",
+        "description": "Professional qualification covering comprehensive programming, system administration, and information systems management. Focused on practical, industry-relevant skills.",
+        "courses": [
+          "Object-Oriented Programming",
+          "Web Development & Design",
+          "Database Management",
+          "Network Administration",
+          "System Analysis",
+          "Project Management"
+        ],
+        "projects": [
+          "School management system",
+          "E-commerce website",
+          "Network infrastructure design"
+        ],
+        "achievements": [
+          "Top of class recognition",
+          "Best project award",
+          "Industry partnership internship"
+        ]
+      }
+    ],
+    "skills": {
+      "technical": [
+        {
+          "category": "Frontend Development",
+          "skills": [
+            {"name": "React.js", "level": 90, "experience": "4+ years", "projects": 15},
+            {"name": "Vue.js", "level": 85, "experience": "3+ years", "projects": 8},
+            {"name": "TypeScript", "level": 88, "experience": "3+ years", "projects": 12},
+            {"name": "HTML5/CSS3", "level": 95, "experience": "8+ years", "projects": 25},
+            {"name": "JavaScript (ES6+)", "level": 92, "experience": "8+ years", "projects": 30},
+            {"name": "Sass/SCSS", "level": 90, "experience": "5+ years", "projects": 20},
+            {"name": "Bootstrap", "level": 95, "experience": "6+ years", "projects": 25}
+          ]
+        },
+        {
+          "category": "Backend Development",
+          "skills": [
+            {"name": "Node.js", "level": 88, "experience": "4+ years", "projects": 18},
+            {"name": "Python", "level": 85, "experience": "5+ years", "projects": 12},
+            {"name": "PHP", "level": 90, "experience": "6+ years", "projects": 22},
+            {"name": "Java", "level": 80, "experience": "3+ years", "projects": 8},
+            {"name": "C#", "level": 82, "experience": "4+ years", "projects": 10},
+            {"name": "Express.js", "level": 90, "experience": "4+ years", "projects": 18}
+          ]
+        },
+        {
+          "category": "Database & Cloud",
+          "skills": [
+            {"name": "PostgreSQL", "level": 88, "experience": "4+ years", "projects": 15},
+            {"name": "MongoDB", "level": 85, "experience": "3+ years", "projects": 12},
+            {"name": "MySQL", "level": 90, "experience": "6+ years", "projects": 25},
+            {"name": "AWS", "level": 85, "experience": "3+ years", "projects": 10},
+            {"name": "Docker", "level": 88, "experience": "3+ years", "projects": 12},
+            {"name": "Redis", "level": 80, "experience": "2+ years", "projects": 8}
+          ]
+        },
+        {
+          "category": "DevOps & Tools",
+          "skills": [
+            {"name": "Git/GitHub", "level": 95, "experience": "6+ years", "projects": 40},
+            {"name": "CI/CD", "level": 88, "experience": "3+ years", "projects": 15},
+            {"name": "Linux/Ubuntu", "level": 90, "experience": "8+ years", "projects": 30},
+            {"name": "VS Code", "level": 95, "experience": "6+ years", "projects": 40},
+            {"name": "Webpack", "level": 85, "experience": "4+ years", "projects": 18},
+            {"name": "Jest", "level": 88, "experience": "3+ years", "projects": 15}
+          ]
+        }
+      ],
+      "soft": [
+        {"name": "Problem Solving", "level": 95, "description": "Analytical thinking and creative solutions"},
+        {"name": "Communication", "level": 90, "description": "Clear technical and non-technical communication"},
+        {"name": "Team Leadership", "level": 88, "description": "Leading development teams and mentoring"},
+        {"name": "Project Management", "level": 85, "description": "Agile methodologies and project delivery"},
+        {"name": "Client Relations", "level": 90, "description": "Understanding and exceeding client expectations"},
+        {"name": "Continuous Learning", "level": 95, "description": "Staying current with technology trends"}
+      ]
+    },
+    "projects": [
+      {
+        "id": "proj-1",
+        "name": "Enterprise E-commerce Platform",
+        "description": "Full-stack e-commerce solution with advanced features including real-time inventory, payment processing, and analytics dashboard.",
+        "longDescription": "A comprehensive e-commerce platform built for enterprise clients, featuring advanced product management, customer analytics, and seamless payment integration. The system handles high traffic loads and provides real-time insights for business optimization.",
+        "technologies": ["React", "Node.js", "PostgreSQL", "Redis", "AWS", "Stripe API"],
+        "features": [
+          "Real-time inventory management",
+          "Advanced search and filtering",
+          "Multi-payment gateway integration",
+          "Analytics dashboard",
+          "Mobile-responsive design",
+          "SEO optimization"
+        ],
+        "url": "https://github.com/vunf1/ecommerce-platform",
+        "demo": "https://demo-ecommerce.joaomaia.dev",
+        "image": "src/img/projects/ecommerce.jpg",
+        "period": "2023 - 2024",
+        "role": "Full-Stack Developer & Architect",
+        "teamSize": 3,
+        "highlights": [
+          "40% increase in conversion rates",
+          "99.9% uptime achieved",
+          "Handles 10K+ concurrent users"
+        ],
+        "challenges": "Implementing real-time features while maintaining performance",
+        "solutions": "Used Redis for caching and WebSocket for real-time updates"
+      },
+      {
+        "id": "proj-2",
+        "name": "AI-Powered Task Management System",
+        "description": "Intelligent task management application with AI-driven prioritization and predictive analytics.",
+        "longDescription": "A smart task management system that uses machine learning to prioritize tasks, predict completion times, and optimize workflow efficiency. Features include natural language processing for task creation and intelligent scheduling algorithms.",
+        "technologies": ["Python", "TensorFlow", "React", "FastAPI", "PostgreSQL", "Docker"],
+        "features": [
+          "AI-powered task prioritization",
+          "Natural language task creation",
+          "Predictive time estimation",
+          "Smart scheduling",
+          "Progress analytics",
+          "Team collaboration tools"
+        ],
+        "url": "https://github.com/vunf1/ai-task-manager",
+        "demo": "https://demo-taskmanager.joaomaia.dev",
+        "image": "src/img/projects/task-manager.jpg",
+        "period": "2023",
+        "role": "Lead Developer & AI Engineer",
+        "teamSize": 2,
+        "highlights": [
+          "30% improvement in task completion efficiency",
+          "95% accuracy in time predictions",
+          "Natural language processing integration"
+        ],
+        "challenges": "Implementing accurate AI predictions with limited training data",
+        "solutions": "Used transfer learning and data augmentation techniques"
+      },
+      {
+        "id": "proj-3",
+        "name": "Real-Time Chat Application",
+        "description": "Modern chat application with real-time messaging, file sharing, and video calling capabilities.",
+        "longDescription": "A feature-rich chat application supporting real-time messaging, file sharing, and video calls. Built with WebRTC for peer-to-peer communication and WebSocket for instant messaging. Includes end-to-end encryption and user authentication.",
+        "technologies": ["React", "Node.js", "Socket.io", "WebRTC", "MongoDB", "JWT"],
+        "features": [
+          "Real-time messaging",
+          "File sharing and storage",
+          "Video calling",
+          "Group chats",
+          "Message encryption",
+          "User authentication"
+        ],
+        "url": "https://github.com/vunf1/chat-app",
+        "demo": "https://demo-chat.joaomaia.dev",
+        "image": "src/img/projects/chat-app.jpg",
+        "period": "2022 - 2023",
+        "role": "Full-Stack Developer",
+        "teamSize": 1,
+        "highlights": [
+          "Sub-100ms message delivery",
+          "Support for 100+ concurrent users",
+          "Cross-platform compatibility"
+        ],
+        "challenges": "Implementing reliable WebRTC connections across different networks",
+        "solutions": "Used STUN/TURN servers and connection fallback mechanisms"
+      }
+    ],
+    "certifications": [
+      {
+        "id": "cert-1",
+        "name": "AWS Certified Developer - Associate",
+        "issuer": "Amazon Web Services",
+        "date": "2024",
+        "expiryDate": "2027",
+        "credentialId": "AWS-123456789",
+        "description": "Comprehensive certification covering AWS development services, deployment, and best practices.",
+        "skills": ["AWS Lambda", "API Gateway", "DynamoDB", "CloudFormation", "CI/CD"],
+        "verificationUrl": "https://aws.amazon.com/verification",
+        "image": "src/img/certifications/aws-badge.png"
+      },
+      {
+        "id": "cert-2",
+        "name": "Node.js Essential Training",
+        "issuer": "LinkedIn Learning",
+        "date": "2023",
+        "expiryDate": "N/A",
+        "credentialId": "LL-987654321",
+        "description": "Advanced Node.js development covering Express.js, middleware, and API development.",
+        "skills": ["Node.js", "Express.js", "Middleware", "API Development", "Testing"],
+        "verificationUrl": "https://linkedin.com/learning",
+        "image": "src/img/certifications/linkedin-badge.png"
+      },
+      {
+        "id": "cert-3",
+        "name": "React Developer Certification",
+        "issuer": "Meta (Facebook)",
+        "date": "2023",
+        "expiryDate": "N/A",
+        "credentialId": "META-456789123",
+        "description": "Professional React development certification covering hooks, context, and advanced patterns.",
+        "skills": ["React Hooks", "Context API", "Performance Optimization", "Testing", "State Management"],
+        "verificationUrl": "https://meta.com/developers",
+        "image": "src/img/certifications/meta-badge.png"
+      }
+    ],
+    "interests": [
+      {
+        "category": "Technology & Innovation",
+        "items": [
+          "Artificial Intelligence & Machine Learning",
+          "Blockchain & Web3 Technologies",
+          "Cloud Architecture & DevOps",
+          "Cybersecurity & Ethical Hacking",
+          "Open Source Contribution"
+        ],
+        "description": "Passionate about emerging technologies and their potential to solve real-world problems."
+      },
+      {
+        "category": "Personal Development",
+        "items": [
+          "Continuous Learning & Skill Development",
+          "Problem-Solving & Critical Thinking",
+          "Leadership & Team Building",
+          "Public Speaking & Communication",
+          "Mentoring & Knowledge Sharing"
+        ],
+        "description": "Committed to personal and professional growth through continuous learning and development."
+      },
+      {
+        "category": "Lifestyle & Wellness",
+        "items": [
+          "Outdoor Activities & Adventure Sports",
+          "Fitness & Health Optimization",
+          "Travel & Cultural Exploration",
+          "Reading & Knowledge Acquisition",
+          "Mindfulness & Mental Health"
+        ],
+        "description": "Believe in maintaining a balanced lifestyle that supports both personal and professional success."
+      }
+    ],
+    "awards": [
+      {
+        "id": "award-1",
+        "title": "Outstanding Academic Performance",
+        "issuer": "Coventry University",
+        "date": "2023",
+        "description": "Recognition for exceptional academic achievement and contribution to the Computer Science department.",
+        "criteria": "Academic excellence, research contribution, and leadership",
+        "impact": "Enhanced academic reputation and research opportunities",
+        "certificateUrl": "src/img/awards/academic-excellence.pdf"
+      },
+      {
+        "id": "award-2",
+        "title": "Best Project Award",
+        "issuer": "Arquitecto Oliveira Ferreira School",
+        "date": "2017",
+        "description": "Awarded for developing the most innovative and technically advanced project in the graduating class.",
+        "criteria": "Innovation, technical complexity, and practical application",
+        "impact": "Recognition from industry professionals and career advancement",
+        "certificateUrl": "src/img/awards/best-project.pdf"
+      },
+      {
+        "id": "award-3",
+        "title": "Student Representative Excellence",
+        "issuer": "Coventry University",
+        "date": "2022",
+        "description": "Recognition for outstanding service as student representative and contribution to department improvement.",
+        "criteria": "Leadership, communication, and positive impact",
+        "impact": "Improved student experience and department policies",
+        "certificateUrl": "src/img/awards/student-rep.pdf"
+      }
+    ],
+    "testimonials": [
+      {
+        "id": "test-1",
+        "name": "Sarah Johnson",
+        "position": "CTO",
+        "company": "TechCorp Solutions",
+        "content": "João delivered an exceptional e-commerce platform that exceeded our expectations. His technical expertise and attention to detail resulted in a system that handles our high traffic loads seamlessly.",
+        "rating": 5,
+        "date": "2024-01-15"
+      },
+      {
+        "id": "test-2",
+        "name": "Michael Chen",
+        "position": "Product Manager",
+        "company": "InnovateTech",
+        "content": "Working with João was a pleasure. He not only delivered the project on time but also provided valuable insights that improved our product strategy. Highly recommended!",
+        "rating": 5,
+        "date": "2023-12-20"
+      },
+      {
+        "id": "test-3",
+        "name": "Emily Rodriguez",
+        "position": "Startup Founder",
+        "company": "GreenTech Ventures",
+        "content": "João's expertise in modern web technologies helped us build a robust MVP that attracted our first round of funding. His technical guidance was invaluable.",
+        "rating": 5,
+        "date": "2023-11-10"
+      }
+    ],
+    "contact": {
+      "email": "jokass.workplace@gmail.com",
+      "phone": "+351 934 330 807",
+      "phoneSecondary": "+44 7393 557259",
+      "linkedin": "https://www.linkedin.com/in/joao-maia/",
+      "github": "https://github.com/vunf1/",
+      "website": "https://joaomaia.dev",
+      "location": "Porto, Portugal",
+      "availability": "Open to new opportunities",
+      "responseTime": "Within 24 hours",
+      "preferredContact": "Email or LinkedIn"
+    },
+    "meta": {
+      "lastUpdated": "2024-01-20",
+      "version": "2.0.0",
+      "author": "João Maia",
+      "seo": {
+        "title": "João Maia - Full-Stack Software Engineer | Porto, Portugal",
+        "description": "Experienced full-stack software engineer specializing in React, Node.js, and cloud technologies. Based in Porto, Portugal. Open to new opportunities.",
+        "keywords": ["software engineer", "full-stack developer", "React", "Node.js", "Portugal", "Porto"],
+        "ogImage": "src/img/og-image.jpg"
+      }
+    }
+  },
+  "ui": {
+    "navigation": {
+      "brand": "João Maia",
+      "about": "About",
+      "experience": "Experience",
+      "education": "Education",
+      "skills": "Skills",
+      "projects": "Projects",
+      "certifications": "Certifications",
+      "interests": "Interests",
+      "awards": "Awards",
+      "testimonials": "Testimonials",
+      "contact": "Contact"
+    },
+    "hero": {
+      "title": "Software Engineer",
+      "subtitle": "Full-Stack Developer specializing in modern web technologies",
+      "tagline": "Passionate about creating innovative solutions",
+      "cta": "View My Work",
+      "scrollDown": "Scroll Down"
+    },
+    "about": {
+      "title": "About Me",
+      "subtitle": "Get to know me better",
+      "summary": "Passionate software engineer with expertise in modern web development",
+      "location": "Based in Portugal",
+      "availability": "Available for new opportunities",
+      "relocation": "Open to relocation",
+      "remote": "Remote work available",
+      "languages": "Languages",
+      "coreValues": "Core Values"
+    },
+    "experience": {
+      "title": "Professional Experience",
+      "subtitle": "My journey in software development",
+      "duration": "Duration",
+      "location": "Location",
+      "technologies": "Technologies",
+      "achievements": "Key Achievements",
+      "highlights": "Highlights",
+      "impact": "Impact"
+    },
+    "education": {
+      "title": "Education",
+      "subtitle": "Academic background and continuous learning",
+      "institution": "Institution",
+      "degree": "Degree",
+      "period": "Period",
+      "gpa": "GPA",
+      "status": "Status",
+      "courses": "Relevant Courses",
+      "projects": "Academic Projects",
+      "achievements": "Achievements"
+    },
+    "skills": {
+      "title": "Skills",
+      "subtitle": "Technologies and competencies I master",
+      "technical": "Technical Skills",
+      "soft": "Soft Skills",
+      "level": "Proficiency Level",
+      "experience": "Experience",
+      "projects": "Projects",
+      "description": "Description"
+    },
+    "projects": {
+      "title": "Featured Projects",
+      "subtitle": "Showcase of my best work",
+      "technologies": "Technologies Used",
+      "features": "Key Features",
+      "links": "Links",
+      "code": "Code",
+      "demo": "Demo",
+      "role": "Role",
+      "teamSize": "Team Size",
+      "highlights": "Highlights",
+      "challenges": "Challenges",
+      "solutions": "Solutions"
+    },
+    "certifications": {
+      "title": "Certifications",
+      "subtitle": "Professional qualifications and achievements",
+      "issuer": "Issuer",
+      "issueDate": "Issue Date",
+      "expiryDate": "Expiry Date",
+      "credentialId": "Credential ID",
+      "skills": "Skills Covered",
+      "verificationUrl": "Verification URL",
+      "description": "Description"
+    },
+    "interests": {
+      "title": "Interests",
+      "subtitle": "Beyond the code - what drives me",
+      "technology": "Technology & Innovation",
+      "personalDevelopment": "Personal Development",
+      "lifestyle": "Lifestyle & Wellness",
+      "specificInterests": "Specific Interests"
+    },
+    "awards": {
+      "title": "Awards & Recognition",
+      "subtitle": "Achievements and honors",
+      "issuer": "Issuer",
+      "date": "Date",
+      "criteria": "Criteria",
+      "impact": "Impact",
+      "certificateUrl": "Certificate URL",
+      "description": "Description"
+    },
+    "testimonials": {
+      "title": "Client Testimonials",
+      "subtitle": "What others say about my work",
+      "position": "Position",
+      "company": "Company",
+      "rating": "Rating",
+      "date": "Date"
+    },
+    "contact": {
+      "title": "Contact Information",
+      "subtitle": "Let's discuss your next project",
+      "unlockInfo": "Unlock Contact Information",
+      "form": {
+        "title": "Unlock Contact Information",
+        "fullName": "Full Name",
+        "email": "Email Address",
+        "company": "Company (Optional)",
+        "reason": "Reason for Contact (Optional)",
+        "reasonOptions": {
+          "jobOpportunity": "Job Opportunity",
+          "projectCollaboration": "Project Collaboration",
+          "consulting": "Consulting",
+          "networking": "Networking",
+          "other": "Other"
+        },
+        "submit": "Unlock Information",
+        "cancel": "Cancel",
+        "required": "Required",
+        "optional": "Optional"
+      },
+      "availability": "Availability",
+      "responseTime": "Response Time",
+      "preferredContact": "Preferred Contact Method"
+    },
+    "common": {
+      "loading": "Loading...",
+      "error": "Error",
+      "refresh": "Refresh Page",
+      "somethingWentWrong": "Something went wrong",
+      "tryRefreshing": "We're sorry, but something unexpected happened. Please try refreshing the page.",
+      "language": "Language",
+      "theme": "Theme",
+      "darkMode": "Dark Mode",
+      "lightMode": "Light Mode"
+    }
+  }
+}

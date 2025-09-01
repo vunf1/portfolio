@@ -43,5 +43,10 @@ export default defineConfig({
     include: ['preact', 'preact/jsx-runtime', 'preact/hooks', 'preact-router']
   },
   // Ensure static assets are served correctly
-  publicDir: 'public'
+  publicDir: 'public',
+  // TypeScript support
+  esbuild: {
+    jsxFactory: 'h',
+    jsxFragment: 'Fragment'
+  }
 })

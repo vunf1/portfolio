@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'preact/hooks'
+import type { UseThemeReturn } from '../types'
 
-export function useTheme() {
+export function useTheme(): UseThemeReturn {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     // Check localStorage for saved preference
     const saved = localStorage.getItem('darkMode')
@@ -29,7 +30,7 @@ export function useTheme() {
   }, [isDarkMode])
 
   const toggleTheme = () => {
-    setIsDarkMode(prev => !prev)
+    setIsDarkMode((prev: boolean) => !prev)
   }
 
   return { isDarkMode, toggleTheme }

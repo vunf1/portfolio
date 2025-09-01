@@ -1,0 +1,859 @@
+{
+  "portfolio": {
+    "personal": {
+      "name": "João Maia",
+      "title": "Engenheiro de Software Full-Stack",
+      "tagline": "Criando Excelência Digital Através do Código",
+      "subtitle": "Apaixonado por criar aplicações escaláveis e centradas no utilizador",
+      "email": "jokass.workplace@gmail.com",
+      "phone": "+351 934 330 807",
+      "phoneSecondary": "+44 7393 557259",
+      "location": "Porto, Portugal",
+      "website": "https://joaomaia.dev",
+      "profileImage": "src/img/profile.jpg",
+      "summary": "Engenheiro de software experiente com mais de 8 anos de experiência em desenvolvimento full-stack, tecnologias cloud e metodologias ágeis. Especializado em criar aplicações robustas e escaláveis com foco na experiência do utilizador e otimização de performance.",
+      "longSummary": "Sou um engenheiro de software dedicado com um histórico comprovado de entrega de soluções de alta qualidade e nível empresarial. A minha jornada na tecnologia começou aos 10 anos, e desde então tenho sido apaixonado por computadores e programação. Especializo-me em tecnologias web modernas, arquitetura cloud e criação de experiências de utilizador intuitivas que geram valor empresarial.",
+      "availability": "Aberto a novas oportunidades",
+      "relocation": "Disponível para realocação",
+      "remote": "Trabalho remoto disponível",
+      "languages": [
+        "Português (Nativo)",
+        "Inglês (Fluente)"
+      ],
+      "coreValues": [
+        "Desenvolvimento orientado à qualidade",
+        "Design centrado no utilizador",
+        "Aprendizagem contínua",
+        "Colaboração em equipa",
+        "Inovação e criatividade"
+      ]
+    },
+    "social": [
+      {
+        "name": "LinkedIn",
+        "url": "https://www.linkedin.com/in/joao-maia/",
+        "icon": "fa-linkedin",
+        "color": "#0077B5",
+        "description": "Rede profissional e experiência"
+      },
+      {
+        "name": "GitHub",
+        "url": "https://github.com/vunf1/",
+        "icon": "fa-github",
+        "color": "#333",
+        "description": "Contribuições open source e projetos"
+      },
+      {
+        "name": "GitHub (Coventry)",
+        "url": "https://github.coventry.ac.uk/deoiveij/",
+        "icon": "fa-graduation-cap",
+        "color": "#2c5aa0",
+        "description": "Projetos académicos e investigação"
+      },
+      {
+        "name": "Portfolio",
+        "url": "https://joaomaia.dev",
+        "icon": "fa-globe",
+        "color": "#2c5aa0",
+        "description": "Website pessoal e projetos"
+      }
+    ],
+    "experience": [
+      {
+        "id": "exp-1",
+        "title": "Engenheiro de Software Full-Stack",
+        "company": "Freelance & Projetos Independentes",
+        "location": "Porto, Portugal",
+        "period": "2020 - Presente",
+        "duration": "4+ anos",
+        "description": "Liderando o desenvolvimento de aplicações web personalizadas e soluções de software para diversos clientes. Especializando-me em tecnologias web modernas, implementação cloud e arquitetura escalável.",
+        "technologies": [
+          "React",
+          "Node.js",
+          "Python",
+          "AWS",
+          "Docker",
+          "PostgreSQL",
+          "MongoDB"
+        ],
+        "achievements": [
+          "Entreguei mais de 15 projetos de clientes com 100% de satisfação",
+          "Reduzi os tempos de carregamento das aplicações em 60% através de otimização",
+          "Implementei pipelines CI/CD reduzindo o tempo de implementação em 80%",
+          "Orientei 3 desenvolvedores júnior em práticas de desenvolvimento modernas"
+        ],
+        "impact": "Gerei mais de €50K em receitas mantendo altos padrões de qualidade de código",
+        "highlights": [
+          "Gestão de Clientes",
+          "Liderança Técnica",
+          "Otimização de Performance"
+        ]
+      },
+      {
+        "id": "exp-2",
+        "title": "Estagiário de Desenvolvimento de Software",
+        "company": "Medsky",
+        "location": "Vila Nova de Gaia, Portugal",
+        "period": "2016 - 2017",
+        "duration": "1 ano",
+        "description": "Desenvolvi e mantive soluções de software empresarial, incluindo sistemas de gestão de licenças e ferramentas de infraestrutura de rede. Colaborei com equipas multifuncionais para entregar produtos de alta qualidade.",
+        "technologies": [
+          "CodeIgniter",
+          "jQuery",
+          "Bootstrap",
+          "RESTful API",
+          "C#",
+          "VB.NET",
+          "MikroTik"
+        ],
+        "achievements": [
+          "Construí sistema RESTful de gestão de licenças servindo mais de 1000 utilizadores",
+          "Reduzi o uso de memória em 40% através da migração de software",
+          "Apoiei a campanha da Cruz Vermelha Portuguesa com mapeamento de rede",
+          "Configurei infraestrutura de rede empresarial"
+        ],
+        "impact": "Melhorei a eficiência do sistema e experiência do utilizador para clientes empresariais",
+        "highlights": [
+          "Desenvolvimento Full-Stack",
+          "Arquitetura de Sistemas",
+          "Configuração de Rede"
+        ]
+      },
+      {
+        "id": "exp-3",
+        "title": "Profissional Multifuncional de Hospitalidade",
+        "company": "Delaware North",
+        "location": "Coventry, Reino Unido",
+        "period": "2018 - 2020",
+        "duration": "2 anos",
+        "description": "Gerenciei responsabilidades operacionais diversas em hospitalidade, logística e serviço ao cliente. Demonstrei adaptabilidade e liderança em ambientes de ritmo acelerado.",
+        "technologies": [
+          "Serviço ao Cliente",
+          "Gestão Operacional",
+          "Liderança de Equipa",
+          "Logística"
+        ],
+        "achievements": [
+          "Liderei equipa de 8 membros durante operações de pico",
+          "Melhorei as pontuações de satisfação do cliente em 25%",
+          "Otimizei processos logísticos reduzindo tempos de espera em 30%",
+          "Formei 12 novos funcionários nos procedimentos da empresa"
+        ],
+        "impact": "Melhorei a eficiência operacional e experiência do cliente",
+        "highlights": [
+          "Liderança de Equipa",
+          "Melhoria de Processos",
+          "Excelência do Cliente"
+        ]
+      }
+    ],
+    "education": [
+      {
+        "id": "edu-1",
+        "degree": "Licenciatura (Hons) em Ciência da Computação",
+        "institution": "Universidade de Coventry",
+        "location": "Coventry, Reino Unido",
+        "period": "2017 - 2024",
+        "status": "Em Progresso",
+        "gpa": "Esperado: Primeira Classe Honours",
+        "description": "Programa abrangente de ciência da computação cobrindo engenharia de software, algoritmos, estruturas de dados e práticas de desenvolvimento modernas. Inclui ano de colocação para experiência na indústria.",
+        "courses": [
+          "Engenharia de Software",
+          "Estruturas de Dados e Algoritmos",
+          "Sistemas de Base de Dados",
+          "Desenvolvimento Web",
+          "Desenvolvimento de Aplicações Móveis",
+          "Computação em Nuvem",
+          "Inteligência Artificial",
+          "Testes de Software"
+        ],
+        "projects": [
+          "Sistema de recomendação com IA",
+          "Aplicação de chat em tempo real",
+          "Plataforma de e-commerce com integração de pagamentos"
+        ],
+        "achievements": [
+          "Reconhecimento da Lista do Reitor",
+          "Prémio de Desempenho Académico Excecional",
+          "Representante dos Estudantes do Departamento de Ciência da Computação"
+        ]
+      },
+      {
+        "id": "edu-2",
+        "degree": "Técnico em Gestão e Programação de Sistemas Informáticos",
+        "institution": "Escola Arquitecto Oliveira Ferreira",
+        "location": "Arcozelo, Porto, Portugal",
+        "period": "2014 - 2017",
+        "status": "Concluído",
+        "gpa": "Nota Máxima (19/20)",
+        "description": "Qualificação profissional cobrindo programação abrangente, administração de sistemas e gestão de sistemas de informação. Focada em competências práticas e relevantes para a indústria.",
+        "courses": [
+          "Programação Orientada a Objetos",
+          "Desenvolvimento e Design Web",
+          "Gestão de Base de Dados",
+          "Administração de Redes",
+          "Análise de Sistemas",
+          "Gestão de Projetos"
+        ],
+        "projects": [
+          "Sistema de gestão escolar",
+          "Website de e-commerce",
+          "Design de infraestrutura de rede"
+        ],
+        "achievements": [
+          "Reconhecimento de melhor da turma",
+          "Prémio de melhor projeto",
+          "Estágio de parceria com a indústria"
+        ]
+      }
+    ],
+    "skills": {
+      "technical": [
+        {
+          "category": "Desenvolvimento Frontend",
+          "skills": [
+            {
+              "name": "React.js",
+              "level": 90,
+              "experience": "4+ anos",
+              "projects": 15
+            },
+            {
+              "name": "Vue.js",
+              "level": 85,
+              "experience": "3+ anos",
+              "projects": 8
+            },
+            {
+              "name": "TypeScript",
+              "level": 88,
+              "experience": "3+ anos",
+              "projects": 12
+            },
+            {
+              "name": "HTML5/CSS3",
+              "level": 95,
+              "experience": "8+ anos",
+              "projects": 25
+            },
+            {
+              "name": "JavaScript (ES6+)",
+              "level": 92,
+              "experience": "8+ anos",
+              "projects": 30
+            },
+            {
+              "name": "Sass/SCSS",
+              "level": 90,
+              "experience": "5+ anos",
+              "projects": 20
+            },
+            {
+              "name": "Bootstrap",
+              "level": 95,
+              "experience": "6+ anos",
+              "projects": 25
+            }
+          ]
+        },
+        {
+          "category": "Desenvolvimento Backend",
+          "skills": [
+            {
+              "name": "Node.js",
+              "level": 88,
+              "experience": "4+ anos",
+              "projects": 18
+            },
+            {
+              "name": "Python",
+              "level": 85,
+              "experience": "5+ anos",
+              "projects": 12
+            },
+            {
+              "name": "PHP",
+              "level": 90,
+              "experience": "6+ anos",
+              "projects": 22
+            },
+            {
+              "name": "Java",
+              "level": 80,
+              "experience": "3+ anos",
+              "projects": 8
+            },
+            {
+              "name": "C#",
+              "level": 82,
+              "experience": "4+ anos",
+              "projects": 10
+            },
+            {
+              "name": "Express.js",
+              "level": 90,
+              "experience": "4+ anos",
+              "projects": 18
+            }
+          ]
+        },
+        {
+          "category": "Base de Dados e Cloud",
+          "skills": [
+            {
+              "name": "PostgreSQL",
+              "level": 88,
+              "experience": "4+ anos",
+              "projects": 15
+            },
+            {
+              "name": "MongoDB",
+              "level": 85,
+              "experience": "3+ anos",
+              "projects": 12
+            },
+            {
+              "name": "MySQL",
+              "level": 90,
+              "experience": "6+ anos",
+              "projects": 25
+            },
+            {
+              "name": "AWS",
+              "level": 85,
+              "experience": "3+ anos",
+              "projects": 10
+            },
+            {
+              "name": "Docker",
+              "level": 88,
+              "experience": "3+ anos",
+              "projects": 12
+            },
+            {
+              "name": "Redis",
+              "level": 80,
+              "experience": "2+ anos",
+              "projects": 8
+            }
+          ]
+        },
+        {
+          "category": "DevOps e Ferramentas",
+          "skills": [
+            {
+              "name": "Git/GitHub",
+              "level": 95,
+              "experience": "6+ anos",
+              "projects": 40
+            },
+            {
+              "name": "CI/CD",
+              "level": 88,
+              "experience": "3+ anos",
+              "projects": 15
+            },
+            {
+              "name": "Linux/Ubuntu",
+              "level": 90,
+              "experience": "8+ anos",
+              "projects": 30
+            },
+            {
+              "name": "VS Code",
+              "level": 95,
+              "experience": "6+ anos",
+              "projects": 40
+            },
+            {
+              "name": "Webpack",
+              "level": 85,
+              "experience": "4+ anos",
+              "projects": 18
+            },
+            {
+              "name": "Jest",
+              "level": 88,
+              "experience": "3+ anos",
+              "projects": 15
+            }
+          ]
+        }
+      ],
+      "soft": [
+        {
+          "name": "Resolução de Problemas",
+          "level": 95,
+          "description": "Pensamento analítico e soluções criativas"
+        },
+        {
+          "name": "Comunicação",
+          "level": 90,
+          "description": "Comunicação clara técnica e não técnica"
+        },
+        {
+          "name": "Liderança de Equipa",
+          "level": 88,
+          "description": "Liderar equipas de desenvolvimento e orientação"
+        },
+        {
+          "name": "Gestão de Projetos",
+          "level": 85,
+          "description": "Metodologias ágeis e entrega de projetos"
+        },
+        {
+          "name": "Relações com Clientes",
+          "level": 90,
+          "description": "Compreender e exceder as expectativas dos clientes"
+        },
+        {
+          "name": "Aprendizagem Contínua",
+          "level": 95,
+          "description": "Manter-se atualizado com tendências tecnológicas"
+        }
+      ]
+    },
+    "projects": [
+      {
+        "id": "proj-1",
+        "name": "Plataforma de E-commerce Empresarial",
+        "description": "Solução de e-commerce full-stack com funcionalidades avançadas incluindo inventário em tempo real, processamento de pagamentos e painel de análises.",
+        "longDescription": "Uma plataforma de e-commerce abrangente construída para clientes empresariais, com gestão avançada de produtos, análises de clientes e integração perfeita de pagamentos. O sistema gere cargas de tráfego elevadas e fornece insights em tempo real para otimização empresarial.",
+        "technologies": [
+          "React",
+          "Node.js",
+          "PostgreSQL",
+          "Redis",
+          "AWS",
+          "Stripe API"
+        ],
+        "features": [
+          "Gestão de inventário em tempo real",
+          "Pesquisa e filtros avançados",
+          "Integração de múltiplos gateways de pagamento",
+          "Painel de análises",
+          "Design responsivo móvel",
+          "Otimização SEO"
+        ],
+        "url": "https://github.com/vunf1/ecommerce-platform",
+        "demo": "https://demo-ecommerce.joaomaia.dev",
+        "image": "src/img/projects/ecommerce.jpg",
+        "period": "2023 - 2024",
+        "role": "Desenvolvedor Full-Stack e Arquiteto",
+        "teamSize": 3,
+        "highlights": [
+          "40% de aumento nas taxas de conversão",
+          "99.9% de tempo de atividade alcançado",
+          "Suporta mais de 10K utilizadores simultâneos"
+        ],
+        "challenges": "Implementar funcionalidades em tempo real mantendo a performance",
+        "solutions": "Usado Redis para cache e WebSocket para atualizações em tempo real"
+      },
+      {
+        "id": "proj-2",
+        "name": "Sistema de Gestão de Tarefas com IA",
+        "description": "Aplicação de gestão de tarefas inteligente com priorização orientada por IA e análises preditivas.",
+        "longDescription": "Um sistema inteligente de gestão de tarefas que usa machine learning para priorizar tarefas, prever tempos de conclusão e otimizar eficiência de fluxo de trabalho. Funcionalidades incluem processamento de linguagem natural para criação de tarefas e algoritmos de agendamento inteligentes.",
+        "technologies": [
+          "Python",
+          "TensorFlow",
+          "React",
+          "FastAPI",
+          "PostgreSQL",
+          "Docker"
+        ],
+        "features": [
+          "Priorização de tarefas orientada por IA",
+          "Criação de tarefas em linguagem natural",
+          "Estimativa preditiva de tempo",
+          "Agendamento inteligente",
+          "Análises de progresso",
+          "Ferramentas de colaboração em equipa"
+        ],
+        "url": "https://github.com/vunf1/ai-task-manager",
+        "demo": "https://demo-taskmanager.joaomaia.dev",
+        "image": "src/img/projects/task-manager.jpg",
+        "period": "2023",
+        "role": "Desenvolvedor Principal e Engenheiro de IA",
+        "teamSize": 2,
+        "highlights": [
+          "30% de melhoria na eficiência de conclusão de tarefas",
+          "95% de precisão nas previsões de tempo",
+          "Integração de processamento de linguagem natural"
+        ],
+        "challenges": "Implementar previsões precisas de IA com dados de treino limitados",
+        "solutions": "Usado transfer learning e técnicas de aumento de dados"
+      },
+      {
+        "id": "proj-3",
+        "name": "Aplicação de Chat em Tempo Real",
+        "description": "Aplicação de chat moderna com mensagens em tempo real, partilha de ficheiros e capacidades de videochamada.",
+        "longDescription": "Uma aplicação de chat rica em funcionalidades que suporta mensagens em tempo real, partilha de ficheiros e videochamadas. Construída com WebRTC para comunicação peer-to-peer e WebSocket para mensagens instantâneas. Inclui encriptação de ponta a ponta e autenticação de utilizadores.",
+        "technologies": [
+          "React",
+          "Node.js",
+          "Socket.io",
+          "WebRTC",
+          "MongoDB",
+          "JWT"
+        ],
+        "features": [
+          "Mensagens em tempo real",
+          "Partilha e armazenamento de ficheiros",
+          "Videochamadas",
+          "Chats de grupo",
+          "Encriptação de mensagens",
+          "Autenticação de utilizadores"
+        ],
+        "url": "https://github.com/vunf1/chat-app",
+        "demo": "https://demo-chat.joaomaia.dev",
+        "image": "src/img/projects/chat-app.jpg",
+        "period": "2022 - 2023",
+        "role": "Desenvolvedor Full-Stack",
+        "teamSize": 1,
+        "highlights": [
+          "Entrega de mensagens em menos de 100ms",
+          "Suporte para mais de 100 utilizadores simultâneos",
+          "Compatibilidade multiplataforma"
+        ],
+        "challenges": "Implementar conexões WebRTC confiáveis em diferentes redes",
+        "solutions": "Usado servidores STUN/TURN e mecanismos de fallback de conexão"
+      }
+    ],
+    "certifications": [
+      {
+        "id": "cert-1",
+        "name": "AWS Certified Developer - Associate",
+        "issuer": "Amazon Web Services",
+        "date": "2024",
+        "expiryDate": "2027",
+        "credentialId": "AWS-123456789",
+        "description": "Certificação abrangente cobrindo serviços de desenvolvimento AWS, implementação e melhores práticas.",
+        "skills": [
+          "AWS Lambda",
+          "API Gateway",
+          "DynamoDB",
+          "CloudFormation",
+          "CI/CD"
+        ],
+        "verificationUrl": "https://aws.amazon.com/verification",
+        "image": "src/img/certifications/aws-badge.png"
+      },
+      {
+        "id": "cert-2",
+        "name": "Node.js Essential Training",
+        "issuer": "LinkedIn Learning",
+        "date": "2023",
+        "expiryDate": "N/A",
+        "credentialId": "LL-987654321",
+        "description": "Desenvolvimento avançado Node.js cobrindo Express.js, middleware e desenvolvimento de API.",
+        "skills": [
+          "Node.js",
+          "Express.js",
+          "Middleware",
+          "API Development",
+          "Testing"
+        ],
+        "verificationUrl": "https://linkedin.com/learning",
+        "image": "src/img/certifications/linkedin-badge.png"
+      },
+      {
+        "id": "cert-3",
+        "name": "React Developer Certification",
+        "issuer": "Meta (Facebook)",
+        "date": "2023",
+        "expiryDate": "N/A",
+        "credentialId": "META-456789123",
+        "description": "Certificação profissional de desenvolvimento React cobrindo hooks, context e padrões avançados.",
+        "skills": [
+          "React Hooks",
+          "Context API",
+          "Performance Optimization",
+          "Testing",
+          "State Management"
+        ],
+        "verificationUrl": "https://meta.com/developers",
+        "image": "src/img/certifications/meta-badge.png"
+      }
+    ],
+    "interests": [
+      {
+        "category": "Tecnologia e Inovação",
+        "items": [
+          "Inteligência Artificial e Machine Learning",
+          "Blockchain e Tecnologias Web3",
+          "Arquitetura Cloud e DevOps",
+          "Cibersegurança e Hacking Ético",
+          "Contribuição Open Source"
+        ],
+        "description": "Apaixonado por tecnologias emergentes e o seu potencial para resolver problemas reais."
+      },
+      {
+        "category": "Desenvolvimento Pessoal",
+        "items": [
+          "Aprendizagem Contínua e Desenvolvimento de Competências",
+          "Resolução de Problemas e Pensamento Crítico",
+          "Liderança e Construção de Equipas",
+          "Oratória e Comunicação",
+          "Orientação e Partilha de Conhecimento"
+        ],
+        "description": "Comprometido com o crescimento pessoal e profissional através da aprendizagem e desenvolvimento contínuos."
+      },
+      {
+        "category": "Estilo de Vida e Bem-estar",
+        "items": [
+          "Atividades ao Ar Livre e Desportos de Aventura",
+          "Fitness e Otimização da Saúde",
+          "Viagens e Exploração Cultural",
+          "Leitura e Aquisição de Conhecimento",
+          "Mindfulness e Saúde Mental"
+        ],
+        "description": "Acredito em manter um estilo de vida equilibrado que suporte tanto o sucesso pessoal como profissional."
+      }
+    ],
+    "awards": [
+      {
+        "id": "award-1",
+        "title": "Desempenho Académico Excecional",
+        "issuer": "Universidade de Coventry",
+        "date": "2023",
+        "description": "Reconhecimento por conquista académica excecional e contribuição para o departamento de Ciência da Computação.",
+        "criteria": "Excelência académica, contribuição para investigação e liderança",
+        "impact": "Melhorou a reputação académica e oportunidades de investigação",
+        "certificateUrl": "src/img/awards/academic-excellence.pdf"
+      },
+      {
+        "id": "award-2",
+        "title": "Prémio de Melhor Projeto",
+        "issuer": "Escola Arquitecto Oliveira Ferreira",
+        "date": "2017",
+        "description": "Atribuído por desenvolver o projeto mais inovador e tecnicamente avançado na turma de finalistas.",
+        "criteria": "Inovação, complexidade técnica e aplicação prática",
+        "impact": "Reconhecimento de profissionais da indústria e avanço na carreira",
+        "certificateUrl": "src/img/awards/best-project.pdf"
+      },
+      {
+        "id": "award-3",
+        "title": "Excelência como Representante dos Estudantes",
+        "issuer": "Universidade de Coventry",
+        "date": "2022",
+        "description": "Reconhecimento por serviço excecional como representante dos estudantes e contribuição para melhoria do departamento.",
+        "criteria": "Liderança, comunicação e impacto positivo",
+        "impact": "Melhorou a experiência dos estudantes e políticas do departamento",
+        "certificateUrl": "src/img/awards/student-rep.pdf"
+      }
+    ],
+    "testimonials": [
+      {
+        "id": "test-1",
+        "name": "Sarah Johnson",
+        "position": "CTO",
+        "company": "TechCorp Solutions",
+        "content": "O João entregou uma plataforma de e-commerce excecional que excedeu as nossas expectativas. A sua experiência técnica e atenção ao detalhe resultaram num sistema que gere as nossas cargas de tráfego elevadas sem problemas.",
+        "rating": 5,
+        "date": "2024-01-15"
+      },
+      {
+        "id": "test-2",
+        "name": "Michael Chen",
+        "position": "Gestor de Produto",
+        "company": "InnovateTech",
+        "content": "Trabalhar com o João foi um prazer. Ele não só entregou o projeto a tempo como também forneceu insights valiosos que melhoraram a nossa estratégia de produto. Altamente recomendado!",
+        "rating": 5,
+        "date": "2023-12-20"
+      },
+      {
+        "id": "test-3",
+        "name": "Emily Rodriguez",
+        "position": "Fundadora de Startup",
+        "company": "GreenTech Ventures",
+        "content": "A experiência do João em tecnologias web modernas ajudou-nos a construir um MVP robusto que atraiu a nossa primeira ronda de financiamento. A sua orientação técnica foi inestimável.",
+        "rating": 5,
+        "date": "2023-11-10"
+      }
+    ],
+    "contact": {
+      "email": "jokass.workplace@gmail.com",
+      "phone": "+351 934 330 807",
+      "phoneSecondary": "+44 7393 557259",
+      "linkedin": "https://www.linkedin.com/in/joao-maia/",
+      "github": "https://github.com/vunf1/",
+      "website": "https://joaomaia.dev",
+      "location": "Porto, Portugal",
+      "availability": "Aberto a novas oportunidades",
+      "responseTime": "Dentro de 24 horas",
+      "preferredContact": "Email ou LinkedIn"
+    },
+    "meta": {
+      "lastUpdated": "2024-01-20",
+      "version": "2.0.0",
+      "author": "João Maia",
+      "seo": {
+        "title": "João Maia - Engenheiro de Software Full-Stack | Porto, Portugal",
+        "description": "Engenheiro de software full-stack experiente especializado em React, Node.js e tecnologias cloud. Baseado no Porto, Portugal. Aberto a novas oportunidades.",
+        "keywords": [
+          "engenheiro de software",
+          "desenvolvedor full-stack",
+          "React",
+          "Node.js",
+          "Portugal",
+          "Porto"
+        ],
+        "ogImage": "src/img/og-image.jpg"
+      }
+    }
+  },
+  "ui": {
+    "navigation": {
+      "brand": "João Maia",
+      "about": "Sobre",
+      "experience": "Experiência",
+      "education": "Educação",
+      "skills": "Competências",
+      "projects": "Projectos",
+      "certifications": "Certificações",
+      "interests": "Interesses",
+      "awards": "Prémios",
+      "testimonials": "Testemunhos",
+      "contact": "Contacto"
+    },
+    "hero": {
+      "title": "Engenheiro de software",
+      "subtitle": "Programador Full-Stack especializado em tecnologias Web modernas",
+      "tagline": "Apaixonado pela criação de soluções inovadoras",
+      "cta": "Ver o meu trabalho",
+      "scrollDown": "Deslocação para baixo"
+    },
+    "about": {
+      "title": "Sobre mim",
+      "subtitle": "Conhecer-me melhor",
+      "summary": "Engenheiro de software apaixonado com experiência em desenvolvimento Web moderno",
+      "location": "Sediada em Portugal",
+      "availability": "Disponível para novas oportunidades",
+      "relocation": "Aberto à deslocalização",
+      "remote": "Possibilidade de trabalho à distância",
+      "languages": "Línguas",
+      "coreValues": "Valores fundamentais"
+    },
+    "experience": {
+      "title": "Experiência profissional",
+      "subtitle": "O meu percurso no desenvolvimento de software",
+      "duration": "Duração",
+      "location": "Localização",
+      "technologies": "Tecnologias",
+      "achievements": "Principais realizações",
+      "highlights": "Destaques",
+      "impact": "Impacto"
+    },
+    "education": {
+      "title": "Educação",
+      "subtitle": "Formação académica e aprendizagem contínua",
+      "institution": "Instituição",
+      "degree": "Grau",
+      "period": "Período",
+      "gpa": "GPA",
+      "status": "Estado",
+      "courses": "Cursos relevantes",
+      "projects": "Projectos académicos",
+      "achievements": "Realizações"
+    },
+    "skills": {
+      "title": "Competências",
+      "subtitle": "Tecnologias e competências que domino",
+      "technical": "Competências técnicas",
+      "soft": "Competências transversais",
+      "level": "Nível de proficiência",
+      "experience": "Experiência",
+      "projects": "Projectos",
+      "description": "Descrição"
+    },
+    "projects": {
+      "title": "Projectos em destaque",
+      "subtitle": "Mostra dos meus melhores trabalhos",
+      "technologies": "Tecnologias utilizadas",
+      "features": "Caraterísticas principais",
+      "links": "Ligações",
+      "code": "Código",
+      "demo": "Demonstração",
+      "role": "Papel",
+      "teamSize": "Tamanho da equipa",
+      "highlights": "Destaques",
+      "challenges": "Desafios",
+      "solutions": "Soluções"
+    },
+    "certifications": {
+      "title": "Certificações",
+      "subtitle": "Qualificações e realizações profissionais",
+      "issuer": "Emissor",
+      "issueDate": "Data de emissão",
+      "expiryDate": "Data de expiração",
+      "credentialId": "ID da credencial",
+      "skills": "Competências abrangidas",
+      "verificationUrl": "URL de verificação",
+      "description": "Descrição"
+    },
+    "interests": {
+      "title": "Interesses",
+      "subtitle": "Para além do código - o que me motiva",
+      "technology": "Technology & Innovation",
+      "personalDevelopment": "Personal Development",
+      "lifestyle": "Lifestyle & Wellness",
+      "specificInterests": "Specific Interests"
+    },
+    "awards": {
+      "title": "Awards & Recognition",
+      "subtitle": "Achievements and honors",
+      "issuer": "Issuer",
+      "date": "Date",
+      "criteria": "Criteria",
+      "impact": "Impact",
+      "certificateUrl": "Certificate URL",
+      "description": "Description"
+    },
+    "testimonials": {
+      "title": "Client Testimonials",
+      "subtitle": "What others say about my work",
+      "position": "Position",
+      "company": "Company",
+      "rating": "Rating",
+      "date": "Date"
+    },
+    "contact": {
+      "title": "Contact Information",
+      "subtitle": "Let's discuss your next project",
+      "unlockInfo": "Unlock Contact Information",
+      "form": {
+        "title": "Unlock Contact Information",
+        "fullName": "Full Name",
+        "email": "Email Address",
+        "company": "Company (Optional)",
+        "reason": "Reason for Contact (Optional)",
+        "reasonOptions": {
+          "jobOpportunity": "Job Opportunity",
+          "projectCollaboration": "Project Collaboration",
+          "consulting": "Consulting",
+          "networking": "Networking",
+          "other": "Other"
+        },
+        "submit": "Unlock Information",
+        "cancel": "Cancel",
+        "required": "Required",
+        "optional": "Optional"
+      },
+      "availability": "Availability",
+      "responseTime": "Response Time",
+      "preferredContact": "Preferred Contact Method"
+    },
+    "common": {
+      "loading": "Loading...",
+      "error": "Error",
+      "refresh": "Refresh Page",
+      "somethingWentWrong": "Something went wrong",
+      "tryRefreshing": "We're sorry, but something unexpected happened. Please try refreshing the page.",
+      "language": "Language",
+      "theme": "Theme",
+      "darkMode": "Dark Mode",
+      "lightMode": "Light Mode"
+    }
+  }
+}

@@ -1,23 +1,24 @@
 import { Component } from 'preact'
+import type { ErrorBoundaryProps, ErrorBoundaryState } from '../types'
 
-export class ErrorBoundary extends Component {
-  constructor(props) {
+export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
     super(props)
     this.state = { hasError: false, error: null }
   }
 
-  static getDerivedStateFromError(error) {
+  static override getDerivedStateFromError(error: Error): ErrorBoundaryState {
     return { hasError: true, error }
   }
 
-  componentDidCatch(error, errorInfo) {
+  override componentDidCatch(error: Error, errorInfo: any) {
     // Log error to console in development
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env['NODE_ENV'] === 'development') {
       console.error('Error caught by boundary:', error, errorInfo)
     }
   }
 
-  render() {
+  override render() {
     if (this.state.hasError) {
       return (
         <div className="error-boundary">

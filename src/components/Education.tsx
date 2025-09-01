@@ -1,4 +1,6 @@
-export function Education({ education }) {
+import type { EducationProps } from '../types'
+
+export function Education({ education }: EducationProps) {
   return (
     <section className="resume-section" id="education">
       <div className="resume-section-content">

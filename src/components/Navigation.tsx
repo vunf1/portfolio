@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'preact/hooks'
+import { useI18n } from '../hooks/useI18n'
+import type { NavigationProps } from '../types'
 
-export function Navigation({ personal, isDarkMode, onThemeToggle, activeSection }) {
+export function Navigation({ personal, isDarkMode, onThemeToggle, activeSection }: NavigationProps) {
   const [isNavCollapsed, setIsNavCollapsed] = useState(true) // Start collapsed (closed)
   const [isScrolled, setIsScrolled] = useState(false)
+  const { t, changeLanguage, currentLanguage } = useI18n()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -10,11 +13,12 @@ export function Navigation({ personal, isDarkMode, onThemeToggle, activeSection 
     }
 
     // Close mobile menu when clicking outside
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: Event) => {
+      const target = event.target as Element
       const nav = document.querySelector('.premium-nav')
       const toggle = document.querySelector('.nav-toggle')
       
-      if (nav && toggle && !nav.contains(event.target) && !toggle.contains(event.target)) {
+      if (nav && toggle && !nav.contains(target) && !toggle.contains(target)) {
         setIsNavCollapsed(true)
       }
     }
@@ -32,7 +36,7 @@ export function Navigation({ personal, isDarkMode, onThemeToggle, activeSection 
     setIsNavCollapsed(!isNavCollapsed) // Toggle between open/closed
   }
 
-  const scrollToSection = (sectionId) => {
+  const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
@@ -56,22 +60,22 @@ export function Navigation({ personal, isDarkMode, onThemeToggle, activeSection 
   }, [])
 
   const navItems = [
-    { id: 'about', label: 'About', icon: 'fa-solid fa-user' },
-    { id: 'experience', label: 'Experience', icon: 'fa-solid fa-briefcase' },
-    { id: 'education', label: 'Education', icon: 'fa-solid fa-graduation-cap' },
-    { id: 'skills', label: 'Skills', icon: 'fa-solid fa-code' },
-    { id: 'projects', label: 'Projects', icon: 'fa-solid fa-folder' },
-    { id: 'certifications', label: 'Certifications', icon: 'fa-solid fa-certificate' },
-    { id: 'testimonials', label: 'Testimonials', icon: 'fa-solid fa-quote-left' },
-    { id: 'interests', label: 'Interests', icon: 'fa-solid fa-heart' },
-    { id: 'awards', label: 'Awards', icon: 'fa-solid fa-trophy' },
-    { id: 'contact', label: 'Contact', icon: 'fa-solid fa-envelope' }
+    { id: 'about', label: t('navigation.about'), icon: 'fa-solid fa-user' },
+    { id: 'experience', label: t('navigation.experience'), icon: 'fa-solid fa-briefcase' },
+    { id: 'education', label: t('navigation.education'), icon: 'fa-solid fa-graduation-cap' },
+    { id: 'skills', label: t('navigation.skills'), icon: 'fa-solid fa-code' },
+    { id: 'projects', label: t('navigation.projects'), icon: 'fa-solid fa-folder' },
+    { id: 'certifications', label: t('navigation.certifications'), icon: 'fa-solid fa-certificate' },
+    { id: 'testimonials', label: t('navigation.testimonials'), icon: 'fa-solid fa-quote-left' },
+    { id: 'interests', label: t('navigation.interests'), icon: 'fa-solid fa-heart' },
+    { id: 'awards', label: t('navigation.awards'), icon: 'fa-solid fa-trophy' },
+    { id: 'contact', label: t('navigation.contact'), icon: 'fa-solid fa-envelope' }
   ]
 
   return (
     <nav className={`premium-nav ${isScrolled ? 'scrolled' : ''}`} id="sideNav">
       <div className="nav-container">
-        {/* Brand */}
+        {/* Enhanced Brand */}
         <a 
           className="nav-brand" 
           href="#hero" 
@@ -81,12 +85,18 @@ export function Navigation({ personal, isDarkMode, onThemeToggle, activeSection 
           }}
         >
           <div className="brand-content">
-            <img 
-              className="brand-avatar" 
-              src={personal.profileImage} 
-              alt={`${personal.name} Profile`}
-            />
-            <span className="brand-name">{personal.name}</span>
+            <div className="brand-avatar-container">
+              <img 
+                className="brand-avatar" 
+                src={personal.profileImage} 
+                alt={`${personal.name} Profile`}
+              />
+              <div className="brand-avatar-glow"></div>
+            </div>
+            <div className="brand-text">
+              <span className="brand-name">{personal.name}</span>
+              <span className="brand-title">{personal.title}</span>
+            </div>
           </div>
         </a>
         
@@ -129,6 +139,24 @@ export function Navigation({ personal, isDarkMode, onThemeToggle, activeSection 
                 aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} theme`}
               >
                 <i className={`fa-solid ${isDarkMode ? 'fa-sun' : 'fa-moon'}`}></i>
+              </button>
+            </li>
+            
+            {/* Language Toggle */}
+            <li className="nav-item language-toggle">
+              <button 
+                className="language-btn"
+                onClick={() => {
+                  // Add a small delay to show the transition effect
+                  document.documentElement.classList.add('language-changing')
+                  setTimeout(() => {
+                    changeLanguage(currentLanguage === 'en' ? 'pt-PT' : 'en')
+                    document.documentElement.classList.remove('language-changing')
+                  }, 150)
+                }}
+                aria-label={`Switch to ${currentLanguage === 'en' ? 'Portuguese' : 'English'}`}
+              >
+                {currentLanguage === 'en' ? '🇺🇸 EN' : '🇵🇹 PT'}
               </button>
             </li>
           </ul>

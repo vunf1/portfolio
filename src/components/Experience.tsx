@@ -1,4 +1,6 @@
-export function Experience({ experience }) {
+import type { ExperienceProps } from '../types'
+
+export function Experience({ experience }: ExperienceProps) {
   return (
     <section className="resume-section" id="experience">
       <div className="resume-section-content">
@@ -36,13 +38,23 @@ export function Experience({ experience }) {
                 
                 {exp.achievements && exp.achievements.length > 0 && (
                   <div className="card-achievements">
-                    <strong>Key Achievements:</strong>
-                    <ul className="achievements-list">
+                    <div className="achievements-header">
+                      <div className="achievements-icon-wrapper">
+                        <i className="fa-solid fa-trophy"></i>
+                      </div>
+                      <strong className="achievements-title">Key Achievements:</strong>
+                    </div>
+                    <div className="achievements-list">
                       {exp.achievements.map((achievement, achievementIndex) => (
-                        <li key={achievementIndex}>{achievement}</li>
+                        <div key={achievementIndex} className="achievement-item">
+                          <div className="achievement-icon">
+                            <i className="fa-solid fa-check"></i>
+                          </div>
+                          <span className="achievement-text">{achievement}</span>
+                        </div>
                       ))}
-                    </ul>
-                  </div>
+                    </div>
+                  </div> 
                 )}
               </div>
             </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'preact/hooks'
+import type { TestimonialsProps } from '../types'
 
-export function Testimonials({ testimonials }) {
+export function Testimonials({ testimonials }: TestimonialsProps) {
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
@@ -14,7 +15,7 @@ export function Testimonials({ testimonials }) {
     return () => clearInterval(interval)
   }, [isAutoPlaying, testimonials.length])
 
-  const goToTestimonial = (index) => {
+  const goToTestimonial = (index: number) => {
     setCurrentTestimonial(index)
     setIsAutoPlaying(false)
     
@@ -50,24 +51,24 @@ export function Testimonials({ testimonials }) {
               </div>
               
               <blockquote className="testimonial-text">
-                "{testimonials[currentTestimonial].content}"
+                "{testimonials[currentTestimonial]?.content}"
               </blockquote>
               
               <div className="testimonial-author">
                 <div className="author-info">
                   <h4 className="author-name">
-                    {testimonials[currentTestimonial].name}
+                    {testimonials[currentTestimonial]?.name}
                   </h4>
                   <p className="author-position">
-                    {testimonials[currentTestimonial].position}
+                    {testimonials[currentTestimonial]?.position}
                   </p>
                   <p className="author-company">
-                    {testimonials[currentTestimonial].company}
+                    {testimonials[currentTestimonial]?.company}
                   </p>
                 </div>
                 
                 <div className="testimonial-rating">
-                  {[...Array(testimonials[currentTestimonial].rating)].map((_, index) => (
+                  {[...Array(testimonials[currentTestimonial]?.rating || 0)].map((_, index) => (
                     <i key={index} className="fa-solid fa-star text-warning"></i>
                   ))}
                 </div>
