@@ -1,0 +1,208 @@
+/* Import essential CSS */
+@import './css/premium.css';
+
+/* Preact-specific styles */
+#app {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Ensure smooth transitions for Preact components */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Loading state */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Error state */
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #dc3545;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Premium Portfolio Specific Styles - Compact Layout */
+.portfolio-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+.portfolio-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--primary-gradient);
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  opacity: 0.3;
+}
+
+.hero-profile {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  padding: var(--space-6);
+}
+
+.hero-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin: 0 auto var(--space-4);
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow-2xl);
+  animation: fadeInUp 1s ease-out;
+}
+
+.hero-name {
+  font-size: var(--font-size-6xl);
+  font-weight: 700;
+  color: white;
+  margin-bottom: var(--space-3);
+  animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.hero-title {
+  font-size: var(--font-size-2xl);
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--space-4);
+  animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+.hero-summary {
+  font-size: var(--font-size-lg);
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: var(--space-6);
+  line-height: 1.6;
+  animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 1s ease-out 0.8s both;
+}
+
+/* Section Styles - Compact Layout */
+.portfolio-section {
+  padding: var(--space-8) 0;
+  position: relative;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.section-title {
+  font-size: var(--font-size-5xl);
+  font-weight: 700;
+  margin-bottom: var(--space-3);
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-subtitle {
+  font-size: var(--font-size-xl);
+  color: var(--neutral-600);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Card Grid - Reduced gaps */
+.card-grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+.card-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.card-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .portfolio-container {
+    padding: 0 var(--space-3);
+  }
+  
+  .hero-name {
+    font-size: var(--font-size-4xl);
+  }
+  
+  .hero-title {
+    font-size: var(--font-size-xl);
+  }
+  
+  .hero-summary {
+    font-size: var(--font-size-base);
+  }
+  
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .card-grid,
+  .card-grid-2,
+  .card-grid-3 {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-title {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .portfolio-section {
+    padding: var(--space-6) 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-avatar {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .hero-name {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .hero-title {
+    font-size: var(--font-size-lg);
+  }
+}

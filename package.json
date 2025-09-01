@@ -1,0 +1,25 @@
+{
+  "name": "joao-maia-portfolio",
+  "version": "1.0.0",
+  "description": "João Maia's Modern Portfolio Website built with Vite + Preact",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "vite preview --port 3000"
+  },
+  "keywords": ["portfolio", "preact", "vite", "react", "modern"],
+  "author": "João Maia",
+  "license": "MIT",
+  "dependencies": {
+    "preact": "^10.19.6",
+    "preact-router": "^4.1.2"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.8.1",
+    "vite": "^5.1.4",
+    "vite-plugin-html": "^3.2.0"
+  }
+}
+
