@@ -3,9 +3,9 @@
 /* ===== ADVANCED CSS VARIABLES ===== */
 :root {
   /* Premium Color Palette - Enterprise Grade */
-  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --primary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --secondary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --accent-gradient: linear-gradient(135deg, #2196f3 0%, #4facfe 100%);
   --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
   --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
   --danger-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
@@ -39,7 +39,7 @@
   --neutral-900: #212121;
   
   /* Social Media Colors */
-  --social-color: #667eea;
+  --social-color: #4facfe;
   
   /* Typography Scale - Enterprise */
   --font-size-xs: 0.75rem;    /* 12px */
