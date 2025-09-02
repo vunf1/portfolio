@@ -163,7 +163,7 @@ database/
 Dynamic-Database
 Dynamic-Database.zip
 node_modules/
-package-lock.json
 
 
 dist/
+/.cursor
