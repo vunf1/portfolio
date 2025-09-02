@@ -53,7 +53,8 @@ export async function loadTranslations(language: string) {
       i18n.changeLanguage(language)
     }
   } catch (error) {
-    console.error(`Error loading ${language} translations:`, error)
+    // Silently handle translation loading errors
+    // In production, you might want to log this to an error reporting service
   }
 }
 
