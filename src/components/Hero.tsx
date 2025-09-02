@@ -7,9 +7,7 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
   const { t } = useI18n()
   const heroRef = useRef<HTMLElement>(null)
   
-  // Debug: Log social data
-  console.log('Hero component - social data:', social)
-  console.log('Hero component - social length:', social?.length)
+
 
   useEffect(() => {
     
@@ -81,9 +79,7 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
       'fa-envelope': 'fa-solid fa-envelope',
       'fa-phone': 'fa-solid fa-phone'
     }
-    const mappedIcon = iconMap[socialItem.icon] || socialItem.icon
-    console.log('Icon mapping:', socialItem.icon, '->', mappedIcon)
-    return mappedIcon
+    return iconMap[socialItem.icon] || socialItem.icon
   }
 
   return (
@@ -166,20 +162,26 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
           <div className="social-grid">
             {social && social.length > 0 ? (
               social.map((socialItem, index) => (
-                <a
+                                <a
                   key={index}
                   href={socialItem.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`social-link ${index === currentSocialIndex ? 'active' : ''}`}
-                                  style={{ 
-                  '--social-color': socialItem.color || '#0077B5',
-                  animationDelay: `${1.6 + index * 0.1}s`
-                }}
+                  style={{ 
+                    '--social-color': socialItem.color || '#0077B5',
+                    animationDelay: `${1.6 + index * 0.1}s`
+                  }}
                   aria-label={socialItem.name}
+                  data-debug-icon={socialItem.icon}
+                  data-debug-mapped={getSocialIcon(socialItem)}
                 >
-                  <i className={getSocialIcon(socialItem)} style={{ fontSize: '24px', color: 'white' }}></i>
+                  <i className={getSocialIcon(socialItem)}></i>
                   <span className="social-tooltip">{socialItem.name}</span>
+                  {/* Fallback text if icon doesn't render */}
+                  <span className="social-fallback" style={{ fontSize: '12px', marginTop: '4px' }}>
+                    {socialItem.name}
+                  </span>
                 </a>
               ))
             ) : (
