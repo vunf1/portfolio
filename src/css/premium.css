@@ -362,7 +362,7 @@
   border: 2px solid transparent;
 }
 
-/* Ensure FontAwesome icons are visible */
+/* Ensure Devicon icons are visible */
 .social-link i {
   font-size: 24px !important;
   color: white !important;
@@ -370,13 +370,17 @@
   line-height: 1;
 }
 
-/* Fallback text styling */
-.social-fallback {
-  font-size: 10px !important;
-  margin-top: 2px !important;
-  text-align: center;
-  opacity: 0.8;
+/* Devicon specific styling */
+.social-link .devicon-linkedin-plain,
+.social-link .devicon-github-original,
+.social-link .devicon-firefox-plain {
+  font-size: 28px !important;
+  color: white !important;
+  display: block !important;
+  line-height: 1;
 }
+
+
 
 .social-link::before {
   content: '';

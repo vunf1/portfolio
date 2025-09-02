@@ -69,15 +69,15 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
     }
   }
 
-  // Map social icons to proper FontAwesome classes
+  // Map social icons to Devicon classes (with fallbacks for legacy FontAwesome)
   const getSocialIcon = (socialItem: { icon: string }) => {
     const iconMap: { [key: string]: string } = {
-      'fa-linkedin': 'fa-brands fa-linkedin',
-      'fa-github': 'fa-brands fa-github',
-      'fa-graduation-cap': 'fa-solid fa-graduation-cap',
-      'fa-globe': 'fa-solid fa-globe',
-      'fa-envelope': 'fa-solid fa-envelope',
-      'fa-phone': 'fa-solid fa-phone'
+      'fa-linkedin': 'devicon-linkedin-plain',
+      'fa-github': 'devicon-github-original',
+      'fa-graduation-cap': 'devicon-graduation-cap',
+      'fa-globe': 'devicon-firefox-plain',
+      'fa-envelope': 'devicon-envelope',
+      'fa-phone': 'devicon-phone'
     }
     return iconMap[socialItem.icon] || socialItem.icon
   }
@@ -178,10 +178,6 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
                 >
                   <i className={getSocialIcon(socialItem)}></i>
                   <span className="social-tooltip">{socialItem.name}</span>
-                  {/* Fallback text if icon doesn't render */}
-                  <span className="social-fallback" style={{ fontSize: '12px', marginTop: '4px' }}>
-                    {socialItem.name}
-                  </span>
                 </a>
               ))
             ) : (
