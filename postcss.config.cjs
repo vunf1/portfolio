@@ -1,8 +1,12 @@
 module.exports = {
   plugins: {
     autoprefixer: {
-      flexbox: 'no-2009',
-      grid: 'autoplace'
+      overrideBrowserslist: [
+        '> 1%',
+        'last 2 versions',
+        'not dead',
+        'not ie 11'
+      ]
     },
     cssnano: {
       preset: ['default', {
@@ -11,10 +15,12 @@ module.exports = {
         colormin: true,
         minifyFontValues: true,
         minifySelectors: true,
-        mergeLonghand: true,
         mergeRules: true,
-        reduceIdents: false,
-        zindex: false
+        mergeLonghand: true,
+        reduceTransforms: true,
+        reduceInitial: true,
+        reduceIdents: true,
+        zindex: false, // Keep z-index values for proper layering
       }]
     }
   }

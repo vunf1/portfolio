@@ -1,42 +1,32 @@
 import { defineConfig } from 'vite'
 import preact from '@preact/preset-vite'
-import { createHtmlPlugin } from 'vite-plugin-html'
 import { resolve } from 'path'
 
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/portfolio/' : '/',
-  plugins: [
-    preact(),
-    createHtmlPlugin({
-      minify: {
-        collapseWhitespace: true,
-        removeComments: true,
-        removeRedundantAttributes: true,
-        removeScriptTypeAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        useShortDoctype: true,
-        minifyCSS: true,
-        minifyJS: true
-      },
-      inject: {
-        data: {
-          title: 'João Maia - Software Developer Portfolio',
-          description: 'Enterprise-grade portfolio showcasing full-stack engineering expertise',
-          keywords: 'software engineer, full-stack developer, cloud architecture, enterprise solutions',
-          author: 'João Maia',
-          ogImage: './img/profile.jpg',
-          ogUrl: 'https://vunf1.github.io/portfolio/'
-        }
-      }
-    })
-  ],
-  root: '.',
+  plugins: [preact()],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+    },
+  },
   build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    sourcemap: false,
-    minify: 'terser',
-    target: 'es2020',
+    target: 'es2015', // Support older browsers while maintaining modern features
+    minify: 'terser', // Use terser for better minification
+    terserOptions: {
+      compress: {
+        drop_console: true, // Remove console.log in production
+        drop_debugger: true, // Remove debugger statements
+        pure_funcs: ['console.log', 'console.info', 'console.debug'], // Remove specific console functions
+        passes: 2, // Multiple compression passes
+      },
+      mangle: {
+        toplevel: true, // Mangle top-level names
+        safari10: true, // Safari 10 compatibility
+      },
+      format: {
+        comments: false, // Remove comments
+      },
+    },
     rollupOptions: {
       output: {
         manualChunks: {
@@ -55,74 +45,61 @@ export default defineConfig({
             './src/components/Testimonials'
           ]
         },
-        // Enterprise-grade chunk naming
         chunkFileNames: 'assets/[name]-[hash].js',
         entryFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]'
-      }
-    },
-    // Advanced Terser configuration for obfuscation
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info', 'console.debug'],
-        passes: 2
+        assetFileNames: 'assets/[name]-[hash].[ext]',
+        // Optimize chunk loading
+        experimentalMinChunkSize: 10000, // Minimum chunk size in bytes
       },
-      mangle: {
-        toplevel: false,
-        safari10: true,
-        properties: false
+      // Tree shaking optimization
+      treeshake: {
+        moduleSideEffects: false, // Assume no side effects
+        propertyReadSideEffects: false,
+        unknownGlobalSideEffects: false,
       },
-      format: {
-        comments: false
-      }
     },
-    // Copy vendor assets
-    copyPublicDir: true,
-    // Enable chunk size warnings
-    chunkSizeWarningLimit: 1000,
+    // Enable source maps for debugging (optional - can be disabled for production)
+    sourcemap: false,
     // Optimize dependencies
     commonjsOptions: {
-      include: [/node_modules/]
-    }
+      include: [/node_modules/],
+      transformMixedEsModules: true,
+    },
+    // Chunk size warnings
+    chunkSizeWarningLimit: 1000, // 1MB warning limit
   },
+  // Optimize dependencies
+  optimizeDeps: {
+    include: [
+      'preact',
+      'preact/hooks',
+      'preact-router',
+      'i18next',
+      'react-i18next',
+      'i18next-browser-languagedetector'
+    ],
+    exclude: ['@preact/preset-vite'],
+  },
+  // Server configuration for development
   server: {
     port: 3000,
     open: true,
-    host: true,
+    // Security headers for development
     headers: {
       'X-Content-Type-Options': 'nosniff',
       'X-Frame-Options': 'DENY',
       'X-XSS-Protection': '1; mode=block',
-      'Referrer-Policy': 'strict-origin-when-cross-origin'
-    }
+    },
   },
+  // Preview configuration
   preview: {
-    port: 3000,
+    port: 4173,
     open: true,
+    // Security headers for preview
     headers: {
       'X-Content-Type-Options': 'nosniff',
       'X-Frame-Options': 'DENY',
       'X-XSS-Protection': '1; mode=block',
-      'Referrer-Policy': 'strict-origin-when-cross-origin'
-    }
+    },
   },
-  optimizeDeps: {
-    include: ['preact', 'preact-router', 'preact/jsx-runtime', 'preact/hooks'],
-    exclude: ['@types/node']
-  },
-  // Ensure static assets are served correctly
-  publicDir: 'public',
-  // TypeScript support
-  esbuild: {
-    jsxFactory: 'h',
-    jsxFragment: 'Fragment',
-    target: 'es2020'
-  },
-  // Performance optimizations
-  define: {
-    __DEV__: false,
-    __PROD__: true
-  }
 })
