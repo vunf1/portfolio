@@ -263,7 +263,7 @@
       "name": "João Maia",
       "phone": "+351 934 330 807",
       "phoneSecondary": "+44 7393 557259",
-      "profileImage": "/img/profile.jpg",
+      "profileImage": "./img/profile.jpg",
       "relocation": "Willing to relocate",
       "remote": "Open to remote work",
       "subtitle": "Back-end operations, Azure, and OOP-focused problem solver",

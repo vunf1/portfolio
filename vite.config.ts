@@ -24,7 +24,7 @@ export default defineConfig({
           description: 'Enterprise-grade portfolio showcasing full-stack engineering expertise',
           keywords: 'software engineer, full-stack developer, cloud architecture, enterprise solutions',
           author: 'João Maia',
-          ogImage: '/img/profile.jpg',
+          ogImage: './img/profile.jpg',
           ogUrl: 'https://joaomaia.dev'
         }
       }
