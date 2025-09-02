@@ -9,7 +9,7 @@
       "phone": "+351 934 330 807",
       "phoneSecondary": "+44 7393 557259",
       "location": "Porto, Portugal",
-      "website": "https://joaomaia.dev",
+      "website": "https://vunf1.github.io/portfolio/",
       "profileImage": "./img/profile.jpg",
       "summary": "Engenheiro de software experiente com mais de 8 anos de experiência em desenvolvimento full-stack, tecnologias cloud e metodologias ágeis. Especializado em criar aplicações robustas e escaláveis com foco na experiência do utilizador e otimização de performance.",
       "longSummary": "Sou um engenheiro de software dedicado com um histórico comprovado de entrega de soluções de alta qualidade e nível empresarial. A minha jornada na tecnologia começou aos 10 anos, e desde então tenho sido apaixonado por computadores e programação. Especializo-me em tecnologias web modernas, arquitetura cloud e criação de experiências de utilizador intuitivas que geram valor empresarial.",
@@ -52,7 +52,7 @@
       },
       {
         "name": "Portfolio",
-        "url": "https://joaomaia.dev",
+        "url": "https://vunf1.github.io/portfolio/",
         "icon": "fa-globe",
         "color": "#2c5aa0",
         "description": "Website pessoal e projetos"
@@ -678,7 +678,7 @@
       "phoneSecondary": "+44 7393 557259",
       "linkedin": "https://www.linkedin.com/in/joao-maia/",
       "github": "https://github.com/vunf1/",
-      "website": "https://joaomaia.dev",
+      "website": "https://vunf1.github.io/portfolio/",
       "location": "Porto, Portugal",
       "availability": "Aberto a novas oportunidades",
       "responseTime": "Dentro de 24 horas",

@@ -25,7 +25,7 @@ export default defineConfig({
           keywords: 'software engineer, full-stack developer, cloud architecture, enterprise solutions',
           author: 'João Maia',
           ogImage: './img/profile.jpg',
-          ogUrl: 'https://joaomaia.dev'
+          ogUrl: 'https://vunf1.github.io/portfolio/'
         }
       }
     })

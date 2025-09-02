@@ -50,6 +50,8 @@ export function usePortfolioData(): UsePortfolioDataReturn {
         // Set initial data
         const initialData = dataCache.get(currentLanguage) || dataCache.get('en')
         if (initialData) {
+          console.log('Setting portfolio data:', initialData.portfolio)
+          console.log('Social data:', initialData.portfolio.social)
           setPortfolioData(initialData.portfolio)
         }
         

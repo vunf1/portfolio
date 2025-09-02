@@ -6,6 +6,10 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
   const [currentSocialIndex, setCurrentSocialIndex] = useState(0)
   const { t } = useI18n()
   const heroRef = useRef<HTMLElement>(null)
+  
+  // Debug: Log social data
+  console.log('Hero component - social data:', social)
+  console.log('Hero component - social length:', social?.length)
 
   useEffect(() => {
     
@@ -77,7 +81,9 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
       'fa-envelope': 'fa-solid fa-envelope',
       'fa-phone': 'fa-solid fa-phone'
     }
-    return iconMap[socialItem.icon] || socialItem.icon
+    const mappedIcon = iconMap[socialItem.icon] || socialItem.icon
+    console.log('Icon mapping:', socialItem.icon, '->', mappedIcon)
+    return mappedIcon
   }
 
   return (
@@ -158,23 +164,27 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
         {/* Social Links */}
         <div className="hero-social animate-fade-in-up" style={{ animationDelay: '1.4s' }}>
           <div className="social-grid">
-            {social.map((socialItem, index) => (
-              <a
-                key={index}
-                href={socialItem.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`social-link ${index === currentSocialIndex ? 'active' : ''}`}
-                style={{ 
-                  '--social-color': socialItem.color,
+            {social && social.length > 0 ? (
+              social.map((socialItem, index) => (
+                <a
+                  key={index}
+                  href={socialItem.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`social-link ${index === currentSocialIndex ? 'active' : ''}`}
+                                  style={{ 
+                  '--social-color': socialItem.color || '#0077B5',
                   animationDelay: `${1.6 + index * 0.1}s`
                 }}
-                aria-label={socialItem.name}
-              >
-                <i className={getSocialIcon(socialItem)}></i>
-                <span className="social-tooltip">{socialItem.name}</span>
-              </a>
-            ))}
+                  aria-label={socialItem.name}
+                >
+                  <i className={getSocialIcon(socialItem)} style={{ fontSize: '24px', color: 'white' }}></i>
+                  <span className="social-tooltip">{socialItem.name}</span>
+                </a>
+              ))
+            ) : (
+              <div>No social links available</div>
+            )}
           </div>
         </div>
       </div>

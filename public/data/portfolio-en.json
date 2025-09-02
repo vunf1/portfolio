@@ -12,7 +12,7 @@
       "phoneSecondary": "+44 7393 557259",
       "preferredContact": "Email or LinkedIn",
       "responseTime": "Within 24 hours",
-      "website": "https://www.vunf1.coventry.domains/"
+      "website": "https://vunf1.github.io/portfolio/"
     },
     "education": [
       {
@@ -270,7 +270,7 @@
       "summary": "Full-stack developer based in Porto, passionate about learning and creative problem-solving. Experienced across back-end operations, Microsoft Azure, and object-oriented development.",
       "tagline": "Lifelong learner, shipping with creativity",
       "title": "Full-Stack Developer",
-      "website": "https://www.vunf1.coventry.domains/"
+      "website": "https://vunf1.github.io/portfolio/"
     },
     "projects": [],
     "skills": {
@@ -410,7 +410,7 @@
         "description": "Personal website and portfolio",
         "icon": "fa-globe",
         "name": "Portfolio",
-        "url": "https://www.vunf1.coventry.domains/"
+        "url": "https://vunf1.github.io/portfolio/"
       },
       {
         "color": "#333333",
