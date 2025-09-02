@@ -3,13 +3,11 @@ import { useI18n } from '../hooks/useI18n'
 import type { HeroProps } from '../types'
 
 export function Hero({ personal, social, onScrollDown }: HeroProps) {
-  const [_isVisible, setIsVisible] = useState(false)
   const [currentSocialIndex, setCurrentSocialIndex] = useState(0)
   const { t } = useI18n()
   const heroRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    setIsVisible(true)
     
     // Auto-rotate social icons
     const interval = setInterval(() => {
@@ -18,7 +16,7 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
 
     // Set random positions for floating icons on load
     const setRandomPositions = () => {
-      if (!heroRef.current) return
+      if (!heroRef.current) {return}
       
       const shapes = heroRef.current.querySelectorAll('.floating-shape') as NodeListOf<HTMLElement>
       
@@ -70,7 +68,7 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
   }
 
   // Map social icons to proper FontAwesome classes
-  const getSocialIcon = (socialItem: any) => {
+  const getSocialIcon = (socialItem: { icon: string }) => {
     const iconMap: { [key: string]: string } = {
       'fa-linkedin': 'fa-brands fa-linkedin',
       'fa-github': 'fa-brands fa-github',

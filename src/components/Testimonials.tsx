@@ -6,7 +6,7 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
   useEffect(() => {
-    if (!isAutoPlaying) return
+    if (!isAutoPlaying) {return}
 
     const interval = setInterval(() => {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)

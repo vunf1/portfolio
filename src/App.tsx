@@ -16,7 +16,6 @@ import { ErrorBoundary } from './components/ErrorBoundary'
 import { usePortfolioData } from './hooks/usePortfolioData'
 import { useTheme } from './hooks/useTheme'
 import { useI18n } from './hooks/useI18n'
-import type { ContactFormData } from './types'
 
 export function App() {
   const { portfolioData, loading, error } = usePortfolioData()
@@ -50,7 +49,7 @@ export function App() {
     return () => observer.disconnect()
   }, [])
 
-  const handleContactUnlock = (_formData: ContactFormData) => {
+  const handleContactUnlock = () => {
     // Here you would typically send the data to your backend
     setContactUnlocked(true)
     setShowContactModal(false)
@@ -65,7 +64,7 @@ export function App() {
 
   // Intersection Observer for active section tracking
   useEffect(() => {
-    if (!portfolioData) return
+    if (!portfolioData) {return}
 
     const observerOptions = {
       threshold: 0.3,

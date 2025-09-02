@@ -2,7 +2,7 @@ import type { ExperienceProps } from '../types'
 
 export function Experience({ experience }: ExperienceProps) {
   const renderTechnologies = (technologies: string[]) => {
-    if (!technologies || technologies.length === 0) return null
+    if (!technologies || technologies.length === 0) {return null}
 
     return (
       <div className="card-technologies">
@@ -35,7 +35,7 @@ export function Experience({ experience }: ExperienceProps) {
   }
 
   const renderHighlights = (highlights: string[]) => {
-    if (!highlights || highlights.length === 0) return null
+    if (!highlights || highlights.length === 0) {return null}
 
     return (
       <div className="card-highlights">

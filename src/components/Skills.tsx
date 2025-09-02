@@ -39,42 +39,42 @@ export function Skills({ skills }: SkillsProps) {
     }
 
     // Programming Languages
-    if (language.includes('python')) return 'devicon-python-plain colored'
-    if (language.includes('typescript')) return 'devicon-typescript-plain colored'
-    if (language.includes('javascript')) return 'devicon-javascript-plain colored'
-    if (language.includes('java')) return 'devicon-java-plain colored'
-    if (language.includes('c#')) return 'devicon-csharp-plain colored'
-    if (language.includes('c++')) return 'devicon-cplusplus-plain colored'
-    if (language === 'c') return 'devicon-c-plain colored'
-    if (language.includes('visual basic') || language.includes('vb.net') || language.includes('vba')) return 'devicon-visualbasic-plain colored'
-    if (language.includes('php')) return 'devicon-php-plain colored'
-    if (language.includes('lua')) return 'devicon-lua-plain colored'
-    if (language.includes('powershell')) return 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/powershell/powershell-original.svg'
-    if (language.includes('bash') || language.includes('shell')) return 'devicon-bash-plain colored'
-    if (language.includes('nosql')) return 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg'
-    if (language.includes('sql')) return 'devicon-mysql-plain colored'
+    if (language.includes('python')) {return 'devicon-python-plain colored'}
+    if (language.includes('typescript')) {return 'devicon-typescript-plain colored'}
+    if (language.includes('javascript')) {return 'devicon-javascript-plain colored'}
+    if (language.includes('java')) {return 'devicon-java-plain colored'}
+    if (language.includes('c#')) {return 'devicon-csharp-plain colored'}
+    if (language.includes('c++')) {return 'devicon-cplusplus-plain colored'}
+    if (language === 'c') {return 'devicon-c-plain colored'}
+    if (language.includes('visual basic') || language.includes('vb.net') || language.includes('vba')) {return 'devicon-visualbasic-plain colored'}
+    if (language.includes('php')) {return 'devicon-php-plain colored'}
+    if (language.includes('lua')) {return 'devicon-lua-plain colored'}
+    if (language.includes('powershell')) {return 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/powershell/powershell-original.svg'}
+    if (language.includes('bash') || language.includes('shell')) {return 'devicon-bash-plain colored'}
+    if (language.includes('nosql')) {return 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg'}
+    if (language.includes('sql')) {return 'devicon-mysql-plain colored'}
 
     // AI & ML
-    if (language.includes('llm') || language.includes('rag') || language.includes('ai')) return ''
-    if (language.includes('embedding') || language.includes('vector')) return ''
-    if (language.includes('prompt')) return ''
+    if (language.includes('llm') || language.includes('rag') || language.includes('ai')) {return ''}
+    if (language.includes('embedding') || language.includes('vector')) {return ''}
+    if (language.includes('prompt')) {return ''}
 
     // Cybersecurity
-    if (language.includes('firewall') || language.includes('ids') || language.includes('security')) return ''
-    if (language.includes('encryption') || language.includes('aes') || language.includes('rsa')) return ''
-    if (language.includes('threat') || language.includes('hunting')) return ''
-    if (language.includes('zero trust')) return ''
+    if (language.includes('firewall') || language.includes('ids') || language.includes('security')) {return ''}
+    if (language.includes('encryption') || language.includes('aes') || language.includes('rsa')) {return ''}
+    if (language.includes('threat') || language.includes('hunting')) {return ''}
+    if (language.includes('zero trust')) {return ''}
 
     // Tooling & Platforms
-    if (language.includes('linux')) return 'devicon-linux-plain colored'
-    if (language.includes('windows')) return 'devicon-windows8-plain colored'
-    if (language.includes('docker')) return 'devicon-docker-plain colored'
-    if (language.includes('ci/cd') || language.includes('git')) return 'devicon-git-plain colored'
-    if (language.includes('obs') || language.includes('streaming')) return 'devicon-vuejs-plain colored'
+    if (language.includes('linux')) {return 'devicon-linux-plain colored'}
+    if (language.includes('windows')) {return 'devicon-windows8-plain colored'}
+    if (language.includes('docker')) {return 'devicon-docker-plain colored'}
+    if (language.includes('ci/cd') || language.includes('git')) {return 'devicon-git-plain colored'}
+    if (language.includes('obs') || language.includes('streaming')) {return 'devicon-vuejs-plain colored'}
 
     // Software Engineering
-    if (language.includes('design pattern') || language.includes('oop') || language.includes('mvc')) return ''
-    if (language.includes('api') || language.includes('rest')) return ''
+    if (language.includes('design pattern') || language.includes('oop') || language.includes('mvc')) {return ''}
+    if (language.includes('api') || language.includes('rest')) {return ''}
 
     // Default icon for other skills
     return ''

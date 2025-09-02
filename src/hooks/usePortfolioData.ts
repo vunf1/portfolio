@@ -3,7 +3,7 @@ import { useI18n } from './useI18n'
 import type { PortfolioData, UsePortfolioDataReturn } from '../types'
 
 // Cache for preloaded data
-const dataCache = new Map<string, any>()
+const dataCache = new Map<string, { portfolio: PortfolioData; ui: Record<string, unknown> }>()
 
 export function usePortfolioData(): UsePortfolioDataReturn {
   const [portfolioData, setPortfolioData] = useState<PortfolioData | null>(null)
@@ -54,7 +54,6 @@ export function usePortfolioData(): UsePortfolioDataReturn {
         }
         
       } catch (err) {
-        console.error('Error preloading portfolio data:', err)
         setError(err instanceof Error ? err : new Error('Unknown error occurred'))
       } finally {
         setLoading(false)
@@ -76,7 +75,7 @@ export function usePortfolioData(): UsePortfolioDataReturn {
 
 // New hook for accessing both portfolio data and UI translations
 export function useConsolidatedData() {
-  const [data, setData] = useState<{ portfolio: PortfolioData; ui: any } | null>(null)
+  const [data, setData] = useState<{ portfolio: PortfolioData; ui: Record<string, unknown> } | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
   const { currentLanguage } = useI18n()
@@ -103,7 +102,6 @@ export function useConsolidatedData() {
         setData(loadedData)
         
       } catch (err) {
-        console.error('Error loading consolidated data:', err)
         setError(err instanceof Error ? err : new Error('Unknown error occurred'))
       } finally {
         setLoading(false)

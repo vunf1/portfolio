@@ -59,7 +59,7 @@ export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
     }
   }
 
-  if (!show) return null
+  if (!show) {return null}
 
   return (
     <div className="modal fade show" style={{ display: 'block' }} tabIndex={-1}>

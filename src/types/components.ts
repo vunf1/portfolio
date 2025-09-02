@@ -1,10 +1,11 @@
 // Component Props Types
-import type { Personal, Social, Experience, Education, Skills, Project, Certification, InterestCategory, Award, Testimonial } from './portfolio'
+import type { Personal, Social, Experience, Education, Skills, Project, Certification, InterestCategory, Award, Testimonial, PortfolioData } from './portfolio'
+import type { ComponentChildren } from 'preact'
 
 // Navigation Component Props
 export interface NavigationProps {
   personal: Personal
-  portfolioData: any // Add portfolio data to check for empty sections
+  portfolioData: PortfolioData // Add portfolio data to check for empty sections
   isDarkMode: boolean
   onThemeToggle: () => void
   activeSection: string
@@ -87,7 +88,7 @@ export interface ContactFormData {
 
 // Error Boundary Props
 export interface ErrorBoundaryProps {
-  children: any
+  children: ComponentChildren
 }
 
 // Error Boundary State
