@@ -5325,20 +5325,19 @@
 
 /* Language button animation */
 .language-btn {
-  background: var(--secondary-gradient);
+  background: transparent;
   border: none;
-  border-radius: var(--radius-lg);
-  padding: var(--space-2) var(--space-3);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--text-primary);
   cursor: pointer;
   transition: var(--transition-all);
-  box-shadow: var(--shadow-md);
   font-size: var(--font-size-sm);
   font-weight: 500;
-  min-width: 60px;
   position: relative;
   overflow: hidden;
 }
@@ -5360,7 +5359,21 @@
 
 .language-btn:hover {
   transform: scale(1.05);
-  box-shadow: var(--shadow-lg);
+}
+
+/* Adjust flag size and alignment */
+.language-btn {
+  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
+  min-width: auto;
+}
+
+.language-btn .flag-emoji {
+  font-size: 1.2em;
+  line-height: 1;
 }
 
 /* Desktop Navigation - Ensure toggle is hidden */

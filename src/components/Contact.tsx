@@ -4,7 +4,6 @@ export function Contact({ personal, isUnlocked, onUnlock }: ContactProps) {
   return (
     <section className="resume-section" id="contact">
       <div className="resume-section-content">
-        <h2 className="mb-4">Contact</h2>
         <div className="contact-container position-relative">
           <div id="contact-content" className={isUnlocked ? '' : 'blur-content'}>
             {isUnlocked ? (

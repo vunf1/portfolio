@@ -30,9 +30,14 @@ export function Skills({ skills }: SkillsProps) {
     }
   }
 
-  const getLanguageIcon = (languageName: string): string => {
+  const getLanguageIcon = (languageName: string, categoryName?: string): string => {
     const language = languageName.toLowerCase()
     
+    // Return no icons for specific categories
+    if (categoryName === 'Key Competencies' || categoryName === 'Tooling & Platforms') {
+      return ''
+    }
+
     // Programming Languages
     if (language.includes('python')) return 'devicon-python-plain colored'
     if (language.includes('typescript')) return 'devicon-typescript-plain colored'
@@ -48,29 +53,29 @@ export function Skills({ skills }: SkillsProps) {
     if (language.includes('bash') || language.includes('shell')) return 'devicon-bash-plain colored'
     if (language.includes('nosql')) return 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg'
     if (language.includes('sql')) return 'devicon-mysql-plain colored'
-    
+
     // AI & ML
     if (language.includes('llm') || language.includes('rag') || language.includes('ai')) return ''
     if (language.includes('embedding') || language.includes('vector')) return ''
     if (language.includes('prompt')) return ''
-    
+
     // Cybersecurity
     if (language.includes('firewall') || language.includes('ids') || language.includes('security')) return ''
     if (language.includes('encryption') || language.includes('aes') || language.includes('rsa')) return ''
     if (language.includes('threat') || language.includes('hunting')) return ''
     if (language.includes('zero trust')) return ''
-    
+
     // Tooling & Platforms
     if (language.includes('linux')) return 'devicon-linux-plain colored'
     if (language.includes('windows')) return 'devicon-windows8-plain colored'
     if (language.includes('docker')) return 'devicon-docker-plain colored'
     if (language.includes('ci/cd') || language.includes('git')) return 'devicon-git-plain colored'
     if (language.includes('obs') || language.includes('streaming')) return 'devicon-vuejs-plain colored'
-    
+
     // Software Engineering
     if (language.includes('design pattern') || language.includes('oop') || language.includes('mvc')) return ''
     if (language.includes('api') || language.includes('rest')) return ''
-    
+
     // Default icon for other skills
     return ''
   }
@@ -81,8 +86,7 @@ export function Skills({ skills }: SkillsProps) {
   return (
     <section className="resume-section" id="skills">
       <div className="resume-section-content">
-        <h2 className="mb-4">Skills</h2>
-        
+
         {/* Proficiency Legend */}
         <div className="proficiency-legend">
           <h4 className="legend-title">Proficiency Levels</h4>
@@ -111,15 +115,15 @@ export function Skills({ skills }: SkillsProps) {
                   <div key={skillIndex} className="skill-compact-card">
                     <div className="skill-compact-header">
                       <div className="skill-compact-name">
-                        {getLanguageIcon(skill.name) && getLanguageIcon(skill.name).startsWith('http') ? (
-                          <img 
-                            src={getLanguageIcon(skill.name)} 
+                        {getLanguageIcon(skill.name, skillGroup.category) && getLanguageIcon(skill.name, skillGroup.category).startsWith('http') ? (
+                          <img
+                            src={getLanguageIcon(skill.name, skillGroup.category)}
                             alt={`${skill.name} icon`}
                             className="skill-language-icon"
                             style={{ width: '16px', height: '16px' }}
                           />
-                        ) : getLanguageIcon(skill.name) ? (
-                          <i className={`${getLanguageIcon(skill.name)} skill-language-icon`}></i>
+                        ) : getLanguageIcon(skill.name, skillGroup.category) ? (
+                          <i className={`${getLanguageIcon(skill.name, skillGroup.category)} skill-language-icon`}></i>
                         ) : null}
                         <span>{skill.name}</span>
                       </div>
@@ -147,7 +151,7 @@ export function Skills({ skills }: SkillsProps) {
               </div>
             </div>
           ))}
-          
+
           {/* Soft Skills */}
           {soft.length > 0 && (
             <div className="skills-category">
@@ -157,13 +161,13 @@ export function Skills({ skills }: SkillsProps) {
                   <div key={skillIndex} className="skill-compact-card">
                     <div className="skill-compact-header">
                       <div className="skill-compact-name">
-                        {getLanguageIcon(skill.name) && getLanguageIcon(skill.name).startsWith('http') ? (
-                          <img 
-                            src={getLanguageIcon(skill.name)} 
+                        {getLanguageIcon(skill.name, 'Soft Skills') && getLanguageIcon(skill.name, 'Soft Skills').startsWith('http') ? (
+                          <img
+                            src={getLanguageIcon(skill.name, 'Soft Skills')}
                             alt={`${skill.name} icon`}
                           />
-                        ) : getLanguageIcon(skill.name) ? (
-                          <i className={`${getLanguageIcon(skill.name)} skill-language-icon`}></i>
+                        ) : getLanguageIcon(skill.name, 'Soft Skills') ? (
+                          <i className={`${getLanguageIcon(skill.name, 'Soft Skills')} skill-language-icon`}></i>
                         ) : null}
                         <span>{skill.name}</span>
                       </div>

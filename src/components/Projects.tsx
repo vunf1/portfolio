@@ -4,7 +4,6 @@ export function Projects({ projects }: ProjectsProps) {
   return (
     <section className="resume-section" id="projects">
       <div className="resume-section-content">
-        <h2 className="mb-4">Projects</h2>
         <div id="projects-content" className="projects-grid">
           {projects.map((project, index) => (
             <div key={index} className="project-item">

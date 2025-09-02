@@ -4,7 +4,6 @@ export function Education({ education }: EducationProps) {
   return (
     <section className="resume-section" id="education">
       <div className="resume-section-content">
-        <h2 className="mb-4">Education</h2>
         <div id="education-content" className="education-grid">
           {education.map((edu, index) => (
             <div key={index} className="education-card premium-card">

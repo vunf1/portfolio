@@ -4,7 +4,6 @@ export function Interests({ interests }: InterestsProps) {
   return (
     <section className="resume-section" id="interests">
       <div className="resume-section-content">
-        <h2 className="mb-4">Interests</h2>
         <div id="interests-content" className="interests-grid">
           {interests.map((interest, index) => (
             <div key={index} className="interest-item">

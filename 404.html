@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - João Maia Portfolio</title>
+    <script>
+        // GitHub Pages 404.html for SPA routing
+        // This handles client-side routing when users navigate directly to a route
+        const pathSegmentsToKeep = 0; // Root deployment, no subdirectory
+        
+        const l = window.location;
+        const baseUrl = l.origin + '/';
+        
+        // Check if the current path is not the base path
+        if (l.pathname !== '/' && l.pathname !== '') {
+            // Redirect to base with hash for client-side routing
+            window.location.href = baseUrl + '#' + l.pathname.slice(1);
+        } else {
+            // If we're at the base, just redirect to the main page
+            window.location.href = baseUrl;
+        }
+    </script>
+</head>
+<body>
+    <h1>Redirecting...</h1>
+    <p>If you are not redirected automatically, <a href="/">click here</a>.</p>
+</body>
+</html>

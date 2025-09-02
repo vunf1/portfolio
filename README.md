@@ -52,7 +52,7 @@ portfolio/
 
 ### **1. Clone Repository**
 ```bash
-git clone https://github.com/yourusername/portfolio.git
+git clone https://github.com/vunf1/portfolio.git
 cd portfolio
 ```
 

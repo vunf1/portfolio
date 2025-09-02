@@ -39,7 +39,15 @@ export function Navigation({ personal, portfolioData, isDarkMode, onThemeToggle,
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      // Calculate the offset to stop at the section title
+      const navHeight = 80 // Approximate navigation height
+      const offset = 20 // Additional offset for better positioning
+      const elementTop = element.offsetTop - navHeight - offset
+      
+      window.scrollTo({
+        top: elementTop,
+        behavior: 'smooth'
+      })
     }
     // Close mobile nav on click
     if (window.innerWidth < 992) {
@@ -157,7 +165,9 @@ export function Navigation({ personal, portfolioData, isDarkMode, onThemeToggle,
                 }}
                 aria-label={`Switch to ${currentLanguage === 'en' ? 'Portuguese' : 'English'}`}
               >
-                {currentLanguage === 'en' ? '🇺🇸 EN' : '🇵🇹 PT'}
+                <span className="flag-emoji">
+                  {currentLanguage === 'en' ? '🇵🇹' : '🇺🇸'}
+                </span>
               </button>
             </li>
           </ul>

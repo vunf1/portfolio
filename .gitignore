@@ -10,7 +10,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -165,3 +164,6 @@ Dynamic-Database
 Dynamic-Database.zip
 node_modules/
 package-lock.json
+
+
+dist/

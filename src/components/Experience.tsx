@@ -62,7 +62,6 @@ export function Experience({ experience }: ExperienceProps) {
   return (
     <section className="resume-section" id="experience">
       <div className="resume-section-content">
-        <h2 className="mb-4">Experience</h2>
         <div id="experience-content" className="experience-grid">
           {experience.map((exp, index) => {
             // Check if this is the "Autonomous — Self-Study" entry

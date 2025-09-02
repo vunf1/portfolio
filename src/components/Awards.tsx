@@ -4,7 +4,6 @@ export function Awards({ awards }: AwardsProps) {
   return (
     <section className="resume-section" id="awards">
       <div className="resume-section-content">
-        <h2 className="mb-4">Awards</h2>
         <div id="awards-content" className="awards-grid">
           {awards.map((award, index) => (
             <div key={index} className="award-item">

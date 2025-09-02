@@ -1,0 +1,127 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main, master ]
+    paths-ignore:
+      - 'README.md'
+      - 'DEPLOYMENT.md'
+      - 'deploy.ps1'
+      - '.github/workflows/**'
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Type check
+        run: npm run type-check
+        
+      - name: Lint
+        run: npm run lint
+        
+      - name: Build test
+        run: npm run build:gh-pages
+        env:
+          NODE_ENV: production
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build for production
+        run: npm run build:gh-pages
+        env:
+          NODE_ENV: production
+          
+      - name: Copy 404.html to dist
+        run: cp 404.html dist/
+        
+      - name: Verify dist contents
+        run: |
+          echo "📁 Dist folder contents:"
+          ls -la dist/
+          echo ""
+          echo "📦 Assets folder contents:"
+          ls -la dist/assets/
+          echo ""
+          echo "🖼️ Images folder contents:"
+          ls -la dist/img/
+          echo ""
+          echo "📊 Data folder contents:"
+          ls -la dist/data/
+          echo ""
+          echo "📄 Root files:"
+          ls -la dist/*.html dist/*.xml dist/*.txt dist/*.headers 2>/dev/null || true
+          
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        
+      - name: Deployment status
+        run: |
+          echo "🚀 Deployment successful!"
+          echo "🌐 Your site is now available at: ${{ steps.deployment.outputs.page_url }}"
+          echo "📅 Deployed at: $(date)"
+          echo "🔗 Commit: ${{ github.sha }}"
+          echo ""
+          echo "📁 Deployed files:"
+          echo "- index.html ✅"
+          echo "- assets/ (JS, CSS, fonts) ✅"
+          echo "- img/ (profile, background) ✅"
+          echo "- data/ (portfolio data) ✅"
+          echo "- 404.html (SPA routing) ✅"
+          echo "- sitemap.xml ✅"
+          echo "- robots.txt ✅"
+          echo "- _headers (security) ✅"

@@ -4,7 +4,6 @@ export function Certifications({ certifications }: CertificationsProps) {
   return (
     <section className="resume-section" id="certifications">
       <div className="resume-section-content">
-        <h2 className="mb-4">Certifications</h2>
         <div id="certifications-content">
           {certifications.map((cert, index) => (
             <div key={index} className="certification-item mb-4">

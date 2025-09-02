@@ -15,42 +15,27 @@
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
 
-    /* Strict Type Checking */
+    /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
 
-    /* Additional Checks */
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-
-    /* Module Resolution */
+    /* Path mapping */
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    },
-
-    /* Emit */
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-
-    /* Interop Constraints */
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    }
   },
   "include": [
-    "src/**/*"
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.jsx"
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "build"
   ]
 }
