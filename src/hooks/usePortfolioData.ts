@@ -27,7 +27,7 @@ export function usePortfolioData(): UsePortfolioDataReturn {
           }
           
           const dataFile = lang === 'pt-PT' ? 'portfolio-pt-PT.json' : 'portfolio-en.json'
-          const response = await fetch(`/data/${dataFile}`)
+          const response = await fetch(`./data/${dataFile}`)
           
           if (!response.ok) {
             throw new Error(`Failed to load ${lang} data: ${response.status} ${response.statusText}`)
@@ -87,7 +87,7 @@ export function useConsolidatedData() {
         setError(null)
         
         const dataFile = currentLanguage === 'pt-PT' ? 'portfolio-pt-PT.json' : 'portfolio-en.json'
-        const response = await fetch(`/data/${dataFile}`)
+        const response = await fetch(`./data/${dataFile}`)
         
         if (!response.ok) {
           throw new Error(`Failed to load ${currentLanguage} data: ${response.status} ${response.statusText}`)

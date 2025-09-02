@@ -40,8 +40,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['preact', 'preact-router'],
-          utils: ['preact/hooks', 'preact/jsx-runtime']
+          vendor: ['preact', 'preact-router']
         },
         // Enterprise-grade chunk naming
         chunkFileNames: 'assets/[name]-[hash].js',
@@ -55,14 +54,12 @@ export default defineConfig({
         drop_console: true,
         drop_debugger: true,
         pure_funcs: ['console.log', 'console.info', 'console.debug'],
-        passes: 3
+        passes: 2
       },
       mangle: {
-        toplevel: true,
+        toplevel: false,
         safari10: true,
-        properties: {
-          regex: /^_/
-        }
+        properties: false
       },
       format: {
         comments: false
