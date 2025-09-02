@@ -6,6 +6,11 @@ export interface UsePortfolioDataReturn {
   portfolioData: PortfolioData | null
   loading: boolean
   error: Error | null
+  loadSection: (section: string) => Promise<void>
+  loadAllSections: () => Promise<void>
+  loadedSections: string[]
+  isSectionLoaded: (section: string) => boolean
+  getSectionLoadingStatus: (section: string) => 'loaded' | 'critical' | 'pending'
 }
 
 // useTheme Hook Return Type

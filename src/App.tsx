@@ -1,21 +1,39 @@
 import { useState, useEffect } from 'preact/hooks'
+import { lazy, Suspense } from 'preact/compat'
 import { Hero } from './components/Hero'
 import { Navigation } from './components/Navigation'
-import { About } from './components/About'
 import { Contact } from './components/Contact'
-import { Experience } from './components/Experience'
-import { Education } from './components/Education'
-import { Skills } from './components/Skills'
-import { Projects } from './components/Projects'
-import { Certifications } from './components/Certifications'
-import { Interests } from './components/Interests'
-import { Awards } from './components/Awards'
-import { Testimonials } from './components/Testimonials'
 import { ContactModal } from './components/ContactModal'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { usePortfolioData } from './hooks/usePortfolioData'
 import { useTheme } from './hooks/useTheme'
 import { useI18n } from './hooks/useI18n'
+
+// Lazy load non-critical components
+const About = lazy(() => import('./components/About').then(module => ({ default: module.About })))
+const Experience = lazy(() => import('./components/Experience').then(module => ({ default: module.Experience })))
+const Education = lazy(() => import('./components/Education').then(module => ({ default: module.Education })))
+const Skills = lazy(() => import('./components/Skills').then(module => ({ default: module.Skills })))
+const Projects = lazy(() => import('./components/Projects').then(module => ({ default: module.Projects })))
+const Certifications = lazy(() => import('./components/Certifications').then(module => ({ default: module.Certifications })))
+const Interests = lazy(() => import('./components/Interests').then(module => ({ default: module.Interests })))
+const Awards = lazy(() => import('./components/Awards').then(module => ({ default: module.Awards })))
+const Testimonials = lazy(() => import('./components/Testimonials').then(module => ({ default: module.Testimonials })))
+
+// Loading skeleton component for better UX
+const SectionSkeleton = () => (
+  <div className="section-skeleton">
+    <div className="skeleton-header">
+      <div className="skeleton-title"></div>
+      <div className="skeleton-subtitle"></div>
+    </div>
+    <div className="skeleton-content">
+      <div className="skeleton-line"></div>
+      <div className="skeleton-line"></div>
+      <div className="skeleton-line short"></div>
+    </div>
+  </div>
+)
 
 export function App() {
   const { portfolioData, loading, error } = usePortfolioData()
@@ -153,7 +171,9 @@ export function App() {
               <h2 className="section-title">{t('about.title')}</h2>
               <p className="section-subtitle">{t('about.subtitle')}</p>
             </div>
-            <About personal={portfolioData.personal} social={portfolioData.social} />
+            <Suspense fallback={<SectionSkeleton />}>
+              <About personal={portfolioData.personal} social={portfolioData.social} />
+            </Suspense>
           </section>
           
           {/* Experience Section */}
@@ -162,7 +182,9 @@ export function App() {
               <h2 className="section-title">{t('experience.title')}</h2>
               <p className="section-subtitle">{t('experience.subtitle')}</p>
             </div>
-            <Experience experience={portfolioData.experience} />
+            <Suspense fallback={<SectionSkeleton />}>
+              <Experience experience={portfolioData.experience} />
+            </Suspense>
           </section>
           
           {/* Education Section */}
@@ -171,7 +193,9 @@ export function App() {
               <h2 className="section-title">{t('education.title')}</h2>
               <p className="section-subtitle">{t('education.subtitle')}</p>
             </div>
-            <Education education={portfolioData.education} />
+            <Suspense fallback={<SectionSkeleton />}>
+              <Education education={portfolioData.education} />
+            </Suspense>
           </section>
           
           {/* Skills Section */}
@@ -180,7 +204,9 @@ export function App() {
               <h2 className="section-title">{t('skills.title')}</h2>
               <p className="section-subtitle">{t('skills.subtitle')}</p>
             </div>
-            <Skills skills={portfolioData.skills} />
+            <Suspense fallback={<SectionSkeleton />}>
+              <Skills skills={portfolioData.skills} />
+            </Suspense>
           </section>
           
           {/* Projects Section */}
@@ -190,7 +216,9 @@ export function App() {
                 <h2 className="section-title">{t('projects.title')}</h2>
                 <p className="section-subtitle">{t('projects.subtitle')}</p>
               </div>
-              <Projects projects={portfolioData.projects} />
+              <Suspense fallback={<SectionSkeleton />}>
+                <Projects projects={portfolioData.projects} />
+              </Suspense>
             </section>
           )}
           
@@ -201,7 +229,9 @@ export function App() {
                 <h2 className="section-title">{t('certifications.title')}</h2>
                 <p className="section-subtitle">{t('certifications.subtitle')}</p>
               </div>
-              <Certifications certifications={portfolioData.certifications} />
+              <Suspense fallback={<SectionSkeleton />}>
+                <Certifications certifications={portfolioData.certifications} />
+              </Suspense>
             </section>
           )}
           
@@ -212,7 +242,9 @@ export function App() {
                 <h2 className="section-title">{t('testimonials.title')}</h2>
                 <p className="section-subtitle">{t('testimonials.subtitle')}</p>
               </div>
-              <Testimonials testimonials={portfolioData.testimonials} />
+              <Suspense fallback={<SectionSkeleton />}>
+                <Testimonials testimonials={portfolioData.testimonials} />
+              </Suspense>
             </section>
           )}
           
@@ -223,7 +255,9 @@ export function App() {
                 <h2 className="section-title">{t('interests.title')}</h2>
                 <p className="section-subtitle">{t('interests.subtitle')}</p>
               </div>
-              <Interests interests={portfolioData.interests} />
+              <Suspense fallback={<SectionSkeleton />}>
+                <Interests interests={portfolioData.interests} />
+              </Suspense>
             </section>
           )}
           
@@ -234,7 +268,9 @@ export function App() {
                 <h2 className="section-title">{t('awards.title')}</h2>
                 <p className="section-subtitle">{t('awards.subtitle')}</p>
               </div>
-              <Awards awards={portfolioData.awards} />
+              <Suspense fallback={<SectionSkeleton />}>
+                <Awards awards={portfolioData.awards} />
+              </Suspense>
             </section>
           )}
           

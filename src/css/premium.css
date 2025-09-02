@@ -1254,10 +1254,6 @@
     grid-template-columns: 1fr;
   }
   
-  .testimonial-item {
-    padding: var(--space-4);
-  }
-  
   /* Navigation mobile refinements */
   .nav-link {
     padding: var(--space-3);
@@ -5880,4 +5876,290 @@
   .testimonial-items {
     grid-template-columns: 1fr;
   }
+}
+
+/* ===== SECTION SKELETON LOADING ===== */
+.section-skeleton {
+  padding: var(--space-8);
+  background: var(--neutral-50);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--neutral-200);
+  margin: var(--space-6) 0;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-header {
+  margin-bottom: var(--space-6);
+}
+
+.skeleton-title {
+  height: 2rem;
+  background: var(--neutral-200);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+  width: 60%;
+}
+
+.skeleton-subtitle {
+  height: 1.25rem;
+  background: var(--neutral-200);
+  border-radius: var(--radius-md);
+  width: 80%;
+}
+
+.skeleton-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.skeleton-line {
+  height: 1rem;
+  background: var(--neutral-200);
+  border-radius: var(--radius-md);
+  width: 100%;
+}
+
+.skeleton-line.short {
+  width: 70%;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Dark theme skeleton */
+.dark-theme .section-skeleton {
+  background: var(--neutral-800);
+  border-color: var(--neutral-700);
+}
+
+.dark-theme .skeleton-title,
+.dark-theme .skeleton-subtitle,
+.dark-theme .skeleton-line {
+  background: var(--neutral-700);
+}
+
+/* ===== PERFORMANCE OPTIMIZATIONS FOR LOW-END DEVICES ===== */
+
+/* Respect user motion preferences - HIGH PRIORITY */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .floating-shape,
+  .matrix-background,
+  .hero-glow,
+  .floating-icon,
+  .data-stream,
+  .tech-grid {
+    animation: none !important;
+    display: none !important;
+  }
+  
+  .hero-profile {
+    transform: none !important;
+  }
+  
+  .portfolio-hero::before,
+  .portfolio-hero::after {
+    animation: none !important;
+    display: none !important;
+  }
+}
+
+/* Low-end device optimizations - HIGH PRIORITY */
+@media (max-width: 768px), (max-device-memory: 4gb), (max-resolution: 1.5dppx) {
+  /* Hide floating shapes but keep beautiful background */
+  .floating-shape,
+  .floating-icon {
+    display: none !important;
+  }
+  
+  /* Keep the beautiful gradient background */
+  .portfolio-hero {
+    background: 
+      linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #1e3c72 100%),
+      radial-gradient(circle at 20% 80%, rgba(79, 172, 254, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(0, 242, 254, 0.2) 0%, transparent 50%) !important;
+  }
+  
+  /* Hide complex background elements but keep basic styling */
+  .portfolio-hero::before,
+  .portfolio-hero::after {
+    display: none !important;
+  }
+  
+  .hero-profile {
+    backdrop-filter: none !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+  }
+  
+  /* Hide data streams and tech grid on mobile */
+  .data-stream,
+  .tech-grid {
+    display: none !important;
+  }
+}
+
+/* Ultra-low-end device optimizations - HIGHEST PRIORITY */
+@media (max-width: 480px), (max-device-memory: 2gb), (max-resolution: 1dppx) {
+  .floating-shape,
+  .floating-icon,
+  .matrix-background,
+  .data-stream,
+  .tech-grid {
+    display: none !important;
+  }
+  
+  /* Keep beautiful background even on ultra-low-end devices */
+  .portfolio-hero {
+    background: 
+      linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%),
+      radial-gradient(circle at 30% 70%, rgba(79, 172, 254, 0.2) 0%, transparent 40%) !important;
+  }
+  
+  .hero-profile {
+    background: rgba(0, 0, 0, 0.95) !important;
+    border: 1px solid rgba(79, 172, 254, 0.3) !important;
+    box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.4) !important;
+  }
+  
+  /* Disable animations but keep basic styling */
+  .floating-shape,
+  .data-stream,
+  .tech-grid {
+    animation: none !important;
+  }
+  
+  /* Hide all background elements */
+  .hero-bg-elements {
+    display: none !important;
+  }
+}
+
+/* Optimize expensive animations with will-change */
+.floating-shape,
+.floating-icon,
+.hero-glow {
+  will-change: transform;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+/* Reduce animation load on scroll */
+@media (prefers-reduced-motion: reduce), (max-width: 768px) {
+  .portfolio-hero::before {
+    animation: none !important;
+    display: none !important;
+  }
+  
+  .portfolio-hero::after {
+    animation: none !important;
+    display: none !important;
+  }
+  
+  .floating-shape {
+    animation-play-state: paused !important;
+  }
+  
+  .data-stream,
+  .tech-grid {
+    animation: none !important;
+    display: none !important;
+  }
+}
+
+/* Mobile optimization - ensure consistent performance */
+@media (max-width: 768px) {
+  .floating-shape {
+    animation-duration: 8s !important;
+    animation-iteration-count: 2 !important;
+  }
+  
+  .data-stream {
+    animation-duration: 6s !important;
+    opacity: 0.2 !important;
+  }
+}
+
+/* Optimized floating shapes for all devices - lightweight and performant */
+.floating-shape {
+  animation: float-simple 6s ease-in-out infinite;
+  opacity: 0.4;
+}
+
+.mobile-shape {
+  animation: float-simple 6s ease-in-out infinite;
+}
+
+.mobile-stream {
+  animation: data-stream-simple 4s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes float-simple {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(5deg);
+  }
+}
+
+@keyframes data-stream-simple {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Ensure beautiful background is always visible */
+.portfolio-hero {
+  background: 
+    linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #1e3c72 100%),
+    radial-gradient(circle at 20% 80%, rgba(79, 172, 254, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 242, 254, 0.2) 0%, transparent 50%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Matrix background for high-end devices */
+.portfolio-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="circuit" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M 0 25 L 50 25 M 25 0 L 25 50" stroke="rgba(79,172,254,0.1)" stroke-width="0.5" fill="none"/><circle cx="25" cy="25" r="2" fill="rgba(79,172,254,0.2)"/></pattern></defs><rect width="100" height="100" fill="url(%23circuit)"/></svg>');
+  opacity: 0.6;
+  animation: matrix-scroll 20s linear infinite;
+}
+
+.portfolio-hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(79, 172, 254, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 70% 30%, rgba(0, 242, 254, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.05) 0%, transparent 60%);
+  opacity: 0.8;
 }

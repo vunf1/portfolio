@@ -2,14 +2,36 @@ import { useState, useEffect, useRef } from 'preact/hooks'
 import { useI18n } from '../hooks/useI18n'
 import type { HeroProps } from '../types'
 
+// Device capability detection - simplified for consistent performance
+const isLowEndDevice = () => {
+  // Check for reduced motion preference
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true
+  
+  // Check for very low-end device indicators
+  if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) return true
+  
+  // Check for very low memory devices
+  if ('deviceMemory' in navigator && (navigator as any).deviceMemory <= 2) return true
+  
+  return false
+}
+
 export function Hero({ personal, social, onScrollDown }: HeroProps) {
   const [currentSocialIndex, setCurrentSocialIndex] = useState(0)
+  const [isLowEnd, setIsLowEnd] = useState(false)
   const { t } = useI18n()
   const heroRef = useRef<HTMLElement>(null)
   
 
 
   useEffect(() => {
+    // Check device capabilities on mount for potential future optimizations
+    const lowEnd = isLowEndDevice()
+    setIsLowEnd(lowEnd)
+  }, [])
+
+  useEffect(() => {
+    if (!isLowEnd) return
     
     // Auto-rotate social icons
     const interval = setInterval(() => {
@@ -55,7 +77,7 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
     return () => {
       clearInterval(interval)
     }
-  }, [social.length])
+  }, [social.length, isLowEnd])
 
   const handleScrollDown = () => {
     if (onScrollDown) {
@@ -202,165 +224,28 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
         </button>
       </div>
       
-      {/* Background Elements */}
-      <div className="hero-bg-elements">
-        <div className="floating-shape shape-1">
+      {/* Background Elements - Show reduced animations on all devices for better performance */}
+      <div className="hero-bg-elements mobile-optimized">
+        {/* Optimized floating shapes for all devices */}
+        <div className="floating-shape shape-1 mobile-shape">
           <i className="fa-solid fa-microchip"></i>
         </div>
-        <div className="floating-shape shape-2">
+        <div className="floating-shape shape-2 mobile-shape">
           <i className="fa-solid fa-code"></i>
         </div>
-        <div className="floating-shape shape-3">
+        <div className="floating-shape shape-3 mobile-shape">
           <i className="fa-solid fa-database"></i>
         </div>
-        <div className="floating-shape shape-4">
+        <div className="floating-shape shape-4 mobile-shape">
           <i className="fa-solid fa-server"></i>
         </div>
-        <div className="floating-shape shape-5">
-          <i className="fa-solid fa-network-wired"></i>
-        </div>
-        <div className="floating-shape shape-6">
+        <div className="floating-shape shape-5 mobile-shape">
           <i className="fa-solid fa-cloud"></i>
         </div>
-        <div className="floating-shape shape-7">
-          <i className="fa-solid fa-shield-halved"></i>
-        </div>
-        <div className="floating-shape shape-8">
-          <i className="fa-solid fa-robot"></i>
-        </div>
-        <div className="floating-shape shape-9">
-          <i className="fa-solid fa-brain"></i>
-        </div>
-        <div className="floating-shape shape-10">
-          <i className="fa-solid fa-rocket"></i>
-        </div>
-        <div className="floating-shape shape-11">
-          <i className="fa-solid fa-satellite"></i>
-        </div>
-        <div className="floating-shape shape-12">
-          <i className="fa-solid fa-cube"></i>
-        </div>
-        <div className="floating-shape shape-13">
-          <i className="fa-solid fa-mobile-screen"></i>
-        </div>
-        <div className="floating-shape shape-14">
-          <i className="fa-solid fa-laptop-code"></i>
-        </div>
-        <div className="floating-shape shape-15">
-          <i className="fa-solid fa-wifi"></i>
-        </div>
-        <div className="floating-shape shape-16">
-          <i className="fa-solid fa-bolt"></i>
-        </div>
-        <div className="floating-shape shape-17">
-          <i className="fa-solid fa-gear"></i>
-        </div>
-        <div className="floating-shape shape-18">
-          <i className="fa-solid fa-chart-line"></i>
-        </div>
-        <div className="floating-shape shape-19">
-          <i className="fa-solid fa-key"></i>
-        </div>
-        <div className="floating-shape shape-20">
-          <i className="fa-solid fa-eye"></i>
-        </div>
-        <div className="floating-shape shape-21">
-          <i className="fa-solid fa-fingerprint"></i>
-        </div>
-        <div className="floating-shape shape-22">
-          <i className="fa-solid fa-qrcode"></i>
-        </div>
-        <div className="floating-shape shape-23">
-          <i className="fa-solid fa-memory"></i>
-        </div>
-        <div className="floating-shape shape-24">
-          <i className="fa-solid fa-microchip"></i>
-        </div>
-        <div className="floating-shape shape-25">
-          <i className="fa-solid fa-terminal"></i>
-        </div>
-        <div className="floating-shape shape-26">
-          <i className="fa-solid fa-cogs"></i>
-        </div>
-        <div className="floating-shape shape-27">
-          <i className="fa-solid fa-sitemap"></i>
-        </div>
-        <div className="floating-shape shape-28">
-          <i className="fa-solid fa-project-diagram"></i>
-        </div>
-        <div className="floating-shape shape-29">
-          <i className="fa-solid fa-chart-bar"></i>
-        </div>
-        <div className="floating-shape shape-30">
-          <i className="fa-solid fa-tablet-alt"></i>
-        </div>
-        <div className="floating-shape shape-31">
-          <i className="fa-solid fa-desktop"></i>
-        </div>
-        <div className="floating-shape shape-32">
-          <i className="fa-solid fa-hdd"></i>
-        </div>
-        <div className="floating-shape shape-33">
-          <i className="fa-solid fa-memory"></i>
-        </div>
-        <div className="floating-shape shape-34">
-          <i className="fa-solid fa-microchip"></i>
-        </div>
-        <div className="floating-shape shape-35">
-          <i className="fa-solid fa-satellite-dish"></i>
-        </div>
-        <div className="floating-shape shape-36">
-          <i className="fa-solid fa-broadcast-tower"></i>
-        </div>
-        <div className="floating-shape shape-37">
-          <i className="fa-solid fa-wifi"></i>
-        </div>
-        <div className="floating-shape shape-38">
-          <i className="fa-solid fa-signal"></i>
-        </div>
-        <div className="floating-shape shape-39">
-          <i className="fa-solid fa-antenna"></i>
-        </div>
-        <div className="floating-shape shape-40">
-          <i className="fa-solid fa-satellite"></i>
-        </div>
-        <div className="floating-shape shape-41">
-          <i className="fa-solid fa-rocket"></i>
-        </div>
-        <div className="floating-shape shape-42">
-          <i className="fa-solid fa-space-shuttle"></i>
-        </div>
-        <div className="floating-shape shape-43">
-          <i className="fa-solid fa-meteor"></i>
-        </div>
-        <div className="floating-shape shape-44">
-          <i className="fa-solid fa-atom"></i>
-        </div>
-        <div className="floating-shape shape-45">
-          <i className="fa-solid fa-dna"></i>
-        </div>
-        <div className="floating-shape shape-46">
-          <i className="fa-solid fa-flask"></i>
-        </div>
-        <div className="floating-shape shape-47">
-          <i className="fa-solid fa-vial"></i>
-        </div>
-        <div className="floating-shape shape-48">
-          <i className="fa-solid fa-microscope"></i>
-        </div>
         
-        {/* Data Stream Lines */}
-        <div className="data-stream data-stream-1"></div>
-        <div className="data-stream data-stream-2"></div>
-        <div className="data-stream data-stream-3"></div>
-        <div className="data-stream data-stream-4"></div>
-        <div className="data-stream data-stream-5"></div>
-        <div className="data-stream data-stream-6"></div>
-        <div className="data-stream data-stream-7"></div>
-        <div className="data-stream data-stream-8"></div>
-        
-        {/* Tech Grid Overlay */}
-        <div className="tech-grid"></div>
+        {/* Simple data streams for all devices */}
+        <div className="data-stream data-stream-1 mobile-stream"></div>
+        <div className="data-stream data-stream-2 mobile-stream"></div>
       </div>
     </section>
   )

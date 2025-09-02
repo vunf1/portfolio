@@ -40,7 +40,20 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['preact', 'preact-router']
+          vendor: ['preact', 'preact-router'],
+          utils: ['preact/hooks', 'preact/jsx-runtime'],
+          i18n: ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
+          components: [
+            './src/components/About',
+            './src/components/Experience',
+            './src/components/Education',
+            './src/components/Skills',
+            './src/components/Projects',
+            './src/components/Certifications',
+            './src/components/Interests',
+            './src/components/Awards',
+            './src/components/Testimonials'
+          ]
         },
         // Enterprise-grade chunk naming
         chunkFileNames: 'assets/[name]-[hash].js',
