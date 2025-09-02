@@ -28,7 +28,6 @@ export interface Social {
 }
 
 export interface Experience {
-  id: string
   title: string
   company: string
   location: string
@@ -55,9 +54,12 @@ export interface Education {
   achievements: string[]
 }
 
+// Skill Proficiency Bands
+export type SkillLevel = 'Foundational' | 'Proficient' | 'Advanced' | 'Expert'
+
 export interface Skill {
   name: string
-  level: number
+  level: SkillLevel
   experience: string
   projects: number
 }
@@ -69,11 +71,17 @@ export interface SkillGroup {
 
 export interface SoftSkill {
   name: string
-  level: number
+  level: SkillLevel
   description: string
 }
 
 export interface Skills {
+  proficiencyLevels: {
+    Foundational: string
+    Proficient: string
+    Advanced: string
+    Expert: string
+  }
   technical: SkillGroup[]
   soft: SoftSkill[]
 }
@@ -163,11 +171,166 @@ export interface PortfolioData {
   meta: {
     lastUpdated: string
     version: string
+    author: string
     seo: {
       title: string
       description: string
       keywords: string[]
       ogImage: string
     }
+  }
+}
+
+export interface UI {
+  navigation: {
+    brand: string
+    about: string
+    experience: string
+    education: string
+    skills: string
+    projects: string
+    certifications: string
+    interests: string
+    awards: string
+    testimonials: string
+    contact: string
+  }
+  hero: {
+    title: string
+    subtitle: string
+    tagline: string
+    cta: string
+    scrollDown: string
+  }
+  about: {
+    title: string
+    subtitle: string
+    summary: string
+    location: string
+    availability: string
+    relocation: string
+    remote: string
+    languages: string
+    coreValues: string
+  }
+  experience: {
+    title: string
+    subtitle: string
+    duration: string
+    location: string
+    technologies: string
+    achievements: string
+    highlights: string
+    impact: string
+  }
+  education: {
+    title: string
+    subtitle: string
+    institution: string
+    degree: string
+    period: string
+    gpa: string
+    status: string
+    courses: string
+    projects: string
+    achievements: string
+  }
+  skills: {
+    title: string
+    subtitle: string
+    technical: string
+    soft: string
+    level: string
+    experience: string
+    projects: string
+    description: string
+  }
+  projects: {
+    title: string
+    subtitle: string
+    technologies: string
+    features: string
+    links: string
+    code: string
+    demo: string
+    role: string
+    teamSize: string
+    highlights: string
+    challenges: string
+    solutions: string
+  }
+  certifications: {
+    title: string
+    subtitle: string
+    issuer: string
+    issueDate: string
+    expiryDate: string
+    credentialId: string
+    skills: string
+    verificationUrl: string
+    description: string
+  }
+  interests: {
+    title: string
+    subtitle: string
+    technology: string
+    personalDevelopment: string
+    lifestyle: string
+    specificInterests: string
+  }
+  awards: {
+    title: string
+    subtitle: string
+    issuer: string
+    date: string
+    criteria: string
+    impact: string
+    certificateUrl: string
+    description: string
+  }
+  testimonials: {
+    title: string
+    subtitle: string
+    position: string
+    company: string
+    rating: string
+    date: string
+  }
+  contact: {
+    title: string
+    subtitle: string
+    unlockInfo: string
+    form: {
+      title: string
+      fullName: string
+      email: string
+      company: string
+      reason: string
+      reasonOptions: {
+        jobOpportunity: string
+        projectCollaboration: string
+        consulting: string
+        networking: string
+        other: string
+      }
+      submit: string
+      cancel: string
+      required: string
+      optional: string
+    }
+    availability: string
+    responseTime: string
+    preferredContact: string
+  }
+  common: {
+    loading: string
+    error: string
+    refresh: string
+    somethingWentWrong: string
+    tryRefreshing: string
+    language: string
+    theme: string
+    darkMode: string
+    lightMode: string
   }
 }

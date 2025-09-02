@@ -134,6 +134,7 @@ export function App() {
       <>
         <Navigation 
           personal={portfolioData.personal}
+          portfolioData={portfolioData}
           isDarkMode={isDarkMode}
           onThemeToggle={toggleTheme}
           activeSection={activeSection}
@@ -184,25 +185,29 @@ export function App() {
           </section>
           
           {/* Projects Section */}
-          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="projects">
-            <div className="section-header">
-              <h2 className="section-title">{t('projects.title')}</h2>
-              <p className="section-subtitle">{t('projects.subtitle')}</p>
-            </div>
-            <Projects projects={portfolioData.projects} />
-          </section>
+          {portfolioData.projects && portfolioData.projects.length > 0 && (
+            <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="projects">
+              <div className="section-header">
+                <h2 className="section-title">{t('projects.title')}</h2>
+                <p className="section-subtitle">{t('projects.subtitle')}</p>
+              </div>
+              <Projects projects={portfolioData.projects} />
+            </section>
+          )}
           
           {/* Certifications Section */}
-          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="certifications">
-            <div className="section-header">
-              <h2 className="section-title">{t('certifications.title')}</h2>
-              <p className="section-subtitle">{t('certifications.subtitle')}</p>
-            </div>
-            <Certifications certifications={portfolioData.certifications} />
-          </section>
+          {portfolioData.certifications && portfolioData.certifications.length > 0 && (
+            <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="certifications">
+              <div className="section-header">
+                <h2 className="section-title">{t('certifications.title')}</h2>
+                <p className="section-subtitle">{t('certifications.subtitle')}</p>
+              </div>
+              <Certifications certifications={portfolioData.certifications} />
+            </section>
+          )}
           
           {/* Testimonials Section */}
-          {portfolioData.testimonials && (
+          {portfolioData.testimonials && portfolioData.testimonials.length > 0 && (
             <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="testimonials">
               <div className="section-header">
                 <h2 className="section-title">{t('testimonials.title')}</h2>
@@ -213,22 +218,26 @@ export function App() {
           )}
           
           {/* Interests Section */}
-          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="interests">
-            <div className="section-header">
-              <h2 className="section-title">{t('interests.title')}</h2>
-              <p className="section-subtitle">{t('interests.subtitle')}</p>
-            </div>
-            <Interests interests={portfolioData.interests} />
-          </section>
+          {portfolioData.interests && portfolioData.interests.length > 0 && (
+            <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="interests">
+              <div className="section-header">
+                <h2 className="section-title">{t('interests.title')}</h2>
+                <p className="section-subtitle">{t('interests.subtitle')}</p>
+              </div>
+              <Interests interests={portfolioData.interests} />
+            </section>
+          )}
           
           {/* Awards Section */}
-          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="awards">
-            <div className="section-header">
-              <h2 className="section-title">{t('awards.title')}</h2>
-              <p className="section-subtitle">{t('awards.subtitle')}</p>
-            </div>
-            <Awards awards={portfolioData.awards} />
-          </section>
+          {portfolioData.awards && portfolioData.awards.length > 0 && (
+            <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="awards">
+              <div className="section-header">
+                <h2 className="section-title">{t('awards.title')}</h2>
+                <p className="section-subtitle">{t('awards.subtitle')}</p>
+              </div>
+              <Awards awards={portfolioData.awards} />
+            </section>
+          )}
           
           {/* Contact Section */}
           <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="contact">

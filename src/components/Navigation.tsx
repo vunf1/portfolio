@@ -2,7 +2,7 @@ import { useState, useEffect } from 'preact/hooks'
 import { useI18n } from '../hooks/useI18n'
 import type { NavigationProps } from '../types'
 
-export function Navigation({ personal, isDarkMode, onThemeToggle, activeSection }: NavigationProps) {
+export function Navigation({ personal, portfolioData, isDarkMode, onThemeToggle, activeSection }: NavigationProps) {
   const [isNavCollapsed, setIsNavCollapsed] = useState(true) // Start collapsed (closed)
   const [isScrolled, setIsScrolled] = useState(false)
   const { t, changeLanguage, currentLanguage } = useI18n()
@@ -64,11 +64,12 @@ export function Navigation({ personal, isDarkMode, onThemeToggle, activeSection 
     { id: 'experience', label: t('navigation.experience'), icon: 'fa-solid fa-briefcase' },
     { id: 'education', label: t('navigation.education'), icon: 'fa-solid fa-graduation-cap' },
     { id: 'skills', label: t('navigation.skills'), icon: 'fa-solid fa-code' },
-    { id: 'projects', label: t('navigation.projects'), icon: 'fa-solid fa-folder' },
-    { id: 'certifications', label: t('navigation.certifications'), icon: 'fa-solid fa-certificate' },
-    { id: 'testimonials', label: t('navigation.testimonials'), icon: 'fa-solid fa-quote-left' },
-    { id: 'interests', label: t('navigation.interests'), icon: 'fa-solid fa-heart' },
-    { id: 'awards', label: t('navigation.awards'), icon: 'fa-solid fa-trophy' },
+    // Only show sections that have data
+    ...(portfolioData.projects && portfolioData.projects.length > 0 ? [{ id: 'projects', label: t('navigation.projects'), icon: 'fa-solid fa-folder' }] : []),
+    ...(portfolioData.certifications && portfolioData.certifications.length > 0 ? [{ id: 'certifications', label: t('navigation.certifications'), icon: 'fa-solid fa-certificate' }] : []),
+    ...(portfolioData.testimonials && portfolioData.testimonials.length > 0 ? [{ id: 'testimonials', label: t('navigation.testimonials'), icon: 'fa-solid fa-quote-left' }] : []),
+    ...(portfolioData.interests && portfolioData.interests.length > 0 ? [{ id: 'interests', label: t('navigation.interests'), icon: 'fa-solid fa-heart' }] : []),
+    ...(portfolioData.awards && portfolioData.awards.length > 0 ? [{ id: 'awards', label: t('navigation.awards'), icon: 'fa-solid fa-trophy' }] : []),
     { id: 'contact', label: t('navigation.contact'), icon: 'fa-solid fa-envelope' }
   ]
 

@@ -4,6 +4,7 @@ import type { Personal, Social, Experience, Education, Skills, Project, Certific
 // Navigation Component Props
 export interface NavigationProps {
   personal: Personal
+  portfolioData: any // Add portfolio data to check for empty sections
   isDarkMode: boolean
   onThemeToggle: () => void
   activeSection: string
