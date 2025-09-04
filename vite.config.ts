@@ -1,101 +1,94 @@
 import { defineConfig } from 'vite'
 import preact from '@preact/preset-vite'
 import { resolve } from 'path'
+import { createHtmlPlugin } from 'vite-plugin-html'
 
 export default defineConfig({
-  plugins: [preact()],
+  plugins: [
+    preact(),
+    createHtmlPlugin({
+      minify: true,
+      inject: {
+        data: {
+          title: 'João Maia - Software Developer Portfolio'
+        }
+      }
+    })
+  ],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
     },
   },
+  publicDir: 'public',
   build: {
-    target: 'es2015', // Support older browsers while maintaining modern features
-    minify: 'terser', // Use terser for better minification
+    target: 'es2015',
+    minify: 'terser',
     terserOptions: {
       compress: {
-        drop_console: true, // Remove console.log in production
-        drop_debugger: true, // Remove debugger statements
-        pure_funcs: ['console.log', 'console.info', 'console.debug'], // Remove specific console functions
-        passes: 2, // Multiple compression passes
+        drop_console: false, // Keep console logs for debugging
+        drop_debugger: true,
+        pure_funcs: [], // Don't remove any functions
+        passes: 1, // Single pass to avoid issues
       },
       mangle: {
-        toplevel: true, // Mangle top-level names
-        safari10: true, // Safari 10 compatibility
+        toplevel: false, // Don't mangle top-level names
+        safari10: true,
       },
       format: {
-        comments: false, // Remove comments
+        comments: false,
       },
     },
     rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html')
+      },
       output: {
-        manualChunks: {
-          vendor: ['preact', 'preact-router'],
-          utils: ['preact/hooks', 'preact/jsx-runtime'],
-          i18n: ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
-          components: [
-            './src/components/About',
-            './src/components/Experience',
-            './src/components/Education',
-            './src/components/Skills',
-            './src/components/Projects',
-            './src/components/Certifications',
-            './src/components/Interests',
-            './src/components/Awards',
-            './src/components/Testimonials'
-          ]
-        },
+        // Simplified chunking - let Vite handle it automatically
+        manualChunks: undefined,
         chunkFileNames: 'assets/[name]-[hash].js',
         entryFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]',
-        // Optimize chunk loading
-        experimentalMinChunkSize: 10000, // Minimum chunk size in bytes
       },
-      // Tree shaking optimization
+      // Conservative tree shaking
       treeshake: {
-        moduleSideEffects: false, // Assume no side effects
-        propertyReadSideEffects: false,
-        unknownGlobalSideEffects: false,
+        moduleSideEffects: true, // Assume side effects exist
+        propertyReadSideEffects: true,
+        unknownGlobalSideEffects: true,
       },
     },
-    // Enable source maps for debugging (optional - can be disabled for production)
-    sourcemap: false,
-    // Optimize dependencies
+    sourcemap: true, // Enable source maps for debugging
     commonjsOptions: {
       include: [/node_modules/],
       transformMixedEsModules: true,
     },
-    // Chunk size warnings
-    chunkSizeWarningLimit: 1000, // 1MB warning limit
+    chunkSizeWarningLimit: 2000, // Increase warning limit
+    assetsInlineLimit: 4096,
   },
-  // Optimize dependencies
   optimizeDeps: {
     include: [
       'preact',
       'preact/hooks',
-      'preact-router',
-      'i18next',
-      'react-i18next',
-      'i18next-browser-languagedetector'
+      'preact/compat',
+      'preact-router'
     ],
     exclude: ['@preact/preset-vite'],
   },
-  // Server configuration for development
   server: {
     port: 3000,
     open: true,
-    // Security headers for development
     headers: {
       'X-Content-Type-Options': 'nosniff',
       'X-Frame-Options': 'DENY',
       'X-XSS-Protection': '1; mode=block',
     },
+    fs: {
+      allow: ['..']
+    }
   },
-  // Preview configuration
   preview: {
     port: 4173,
     open: true,
-    // Security headers for preview
     headers: {
       'X-Content-Type-Options': 'nosniff',
       'X-Frame-Options': 'DENY',

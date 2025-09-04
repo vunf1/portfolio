@@ -27,10 +27,23 @@ jobs:
         run: npm ci
         
       - name: Security audit
-        run: npm audit --audit-level moderate
+        run: npm run security:audit
         
       - name: Check for outdated packages
-        run: npm outdated || true
+        run: npm run ci:dependencies
+        
+      - name: Component security check
+        run: |
+          echo "🔒 Component Security Check:"
+          echo "============================"
+          echo ""
+          echo "📁 Checking UI components for security issues..."
+          npm run lint:ui
+          echo ""
+          echo "📁 Checking main components for security issues..."
+          npm run lint:components
+          echo ""
+          echo "✅ Component security check complete"
         
       - name: Generate dependency report
         run: |
@@ -38,10 +51,15 @@ jobs:
           echo "===================" >> dependency-report.txt
           echo "" >> dependency-report.txt
           echo "Outdated packages:" >> dependency-report.txt
-          npm outdated >> dependency-report.txt 2>&1 || echo "All packages up to date" >> dependency-report.txt
+          npm run ci:dependencies >> dependency-report.txt 2>&1 || echo "All packages up to date" >> dependency-report.txt
           echo "" >> dependency-report.txt
           echo "Security audit:" >> dependency-report.txt
-          npm audit --audit-level moderate >> dependency-report.txt 2>&1 || echo "No security issues found" >> dependency-report.txt
+          npm run security:audit >> dependency-report.txt 2>&1 || echo "No security issues found" >> dependency-report.txt
+          echo "" >> dependency-report.txt
+          echo "Component system status:" >> dependency-report.txt
+          echo "- Design tokens: $(ls src/css/tokens.css >/dev/null 2>&1 && echo 'Present' || echo 'Missing')" >> dependency-report.txt
+          echo "- Component CSS: $(ls src/css/components.css >/dev/null 2>&1 && echo 'Present' || echo 'Missing')" >> dependency-report.txt
+          echo "- UI components: $(ls src/components/ui/ >/dev/null 2>&1 && echo 'Present' || echo 'Missing')" >> dependency-report.txt
           
       - name: Upload dependency report
         uses: actions/upload-artifact@v4

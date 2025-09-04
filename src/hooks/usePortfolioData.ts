@@ -9,6 +9,12 @@ const dataCache = new Map<string, { portfolio: PortfolioData; ui: Record<string,
 const CRITICAL_SECTIONS = ['hero', 'about', 'experience', 'education', 'skills']
 const NON_CRITICAL_SECTIONS = ['projects', 'certifications', 'interests', 'awards', 'testimonials']
 
+// Helper function to get the correct data path
+function getDataPath(filename: string): string {
+  // Use absolute paths for consistency across environments
+  return `/data/${filename}`
+}
+
 export function usePortfolioData(): UsePortfolioDataReturn {
   const [portfolioData, setPortfolioData] = useState<PortfolioData | null>(null)
   const [loading, setLoading] = useState(true)
@@ -22,23 +28,32 @@ export function usePortfolioData(): UsePortfolioDataReturn {
       const languages = ['en', 'pt-PT']
       
       try {
+        console.log('🔄 Starting to load critical data...')
         setLoading(true)
         setError(null)
         
         // Load all language datasets in parallel
         const loadPromises = languages.map(async (lang) => {
           if (dataCache.has(lang)) {
+            console.log(`✅ Using cached data for ${lang}`)
             return dataCache.get(lang)!
           }
           
           const dataFile = lang === 'pt-PT' ? 'portfolio-pt-PT.json' : 'portfolio-en.json'
-          const response = await fetch(`./data/${dataFile}`)
+          const dataPath = getDataPath(dataFile)
+          
+          console.log(`📥 Loading data from: ${dataPath}`)
+          
+          const response = await fetch(dataPath)
+          
+          console.log(`📡 Response status: ${response.status} ${response.statusText}`)
           
           if (!response.ok) {
             throw new Error(`Failed to load ${lang} data: ${response.status} ${response.statusText}`)
           }
           
           const data = await response.json()
+          console.log(`✅ Successfully loaded ${lang} data:`, data)
           
           // Validate data structure
           if (!data.portfolio || !data.ui) {
@@ -50,18 +65,24 @@ export function usePortfolioData(): UsePortfolioDataReturn {
           return data
         })
         
-        await Promise.all(loadPromises)
+        const results = await Promise.all(loadPromises)
+        console.log('✅ All language data loaded successfully:', results)
         
         // Set initial data with only critical sections
         const initialData = dataCache.get(currentLanguage) || dataCache.get('en')
         if (initialData) {
           const criticalData = createCriticalData(initialData.portfolio)
+          console.log('✅ Setting portfolio data:', criticalData)
           setPortfolioData(criticalData)
+        } else {
+          console.error('❌ No initial data available after loading')
         }
         
       } catch (err) {
+        console.error('❌ Error loading portfolio data:', err)
         setError(err instanceof Error ? err : new Error('Unknown error occurred'))
       } finally {
+        console.log('🏁 Finished loading attempt, setting loading to false')
         setLoading(false)
       }
     }
@@ -91,7 +112,9 @@ export function usePortfolioData(): UsePortfolioDataReturn {
       await new Promise(resolve => setTimeout(resolve, 100))
       
       setPortfolioData(prev => {
-        if (!prev) return prev
+        if (!prev) {
+          return prev
+        }
         
         return {
           ...prev,
@@ -182,7 +205,9 @@ export function useConsolidatedData() {
         setError(null)
         
         const dataFile = currentLanguage === 'pt-PT' ? 'portfolio-pt-PT.json' : 'portfolio-en.json'
-        const response = await fetch(`./data/${dataFile}`)
+        const dataPath = getDataPath(dataFile)
+        
+        const response = await fetch(dataPath)
         
         if (!response.ok) {
           throw new Error(`Failed to load ${currentLanguage} data: ${response.status} ${response.statusText}`)

@@ -1,6 +1,14 @@
+import { useI18n } from '../hooks/useI18n'
+import { Section } from './ui'
 import type { ExperienceProps } from '../types'
 
-export function Experience({ experience }: ExperienceProps) {
+export function Experience({ experiences, className = '', id }: ExperienceProps) {
+  const { t } = useI18n()
+  // Safety check: if no experiences data, return null
+  if (!experiences || experiences.length === 0) {
+    return null
+  }
+
   const renderTechnologies = (technologies: string[]) => {
     if (!technologies || technologies.length === 0) {return null}
 
@@ -43,7 +51,7 @@ export function Experience({ experience }: ExperienceProps) {
           <div className="highlights-icon-wrapper">
             <i className="fa-solid fa-star"></i>
           </div>
-          <strong className="highlights-title">Key Highlights:</strong>
+          <strong className="highlight-title">Key Highlights:</strong>
         </div>
         <div className="highlights-list">
           {highlights.map((highlight, highlightIndex) => (
@@ -60,18 +68,19 @@ export function Experience({ experience }: ExperienceProps) {
   }
 
   return (
-    <section className="resume-section" id="experience">
-      <div className="resume-section-content">
-        <div id="experience-content" className="experience-grid">
-          {experience.map((exp, index) => {
-            // Check if this is the "Autonomous — Self-Study" entry
-            const isFullWidth = exp.title === "Autonomous — Self-Study"
-            
-            return (
-              <div 
-                key={index} 
-                className={`experience-card premium-card ${isFullWidth ? 'experience-full-width' : ''}`}
-              >
+    <Section 
+      id={id || 'experience'} 
+      className={className} 
+      title={String(t('experience.title'))} 
+      subtitle={String(t('experience.subtitle'))}
+    >
+      <div className="experience-grid-3x3">
+                  {experiences.map((exp, index) => {
+          return (
+            <div 
+              key={index} 
+              className="experience-card premium-card"
+            >
                 <div className="card-header">
                   <h3 className="card-title">{exp.title}</h3>
                   <div className="card-company">
@@ -124,8 +133,7 @@ export function Experience({ experience }: ExperienceProps) {
               </div>
             )
           })}
-        </div>
       </div>
-    </section>
+    </Section>
   )
 }

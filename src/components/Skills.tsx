@@ -1,4 +1,5 @@
-import type { SkillsProps, SkillLevel } from '../types'
+import type { SkillsProps } from '../types/components'
+import type { SkillLevel } from '../types/portfolio'
 
 export function Skills({ skills }: SkillsProps) {
   // Handle the new skills data structure

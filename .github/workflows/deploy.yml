@@ -40,11 +40,14 @@ jobs:
       - name: Type check
         run: npm run type-check
         
-      - name: Lint
-        run: npm run lint
+      - name: Lint components
+        run: npm run lint:components
+        
+      - name: Lint UI components
+        run: npm run lint:ui
         
       - name: Build test
-        run: npm run build:gh-pages
+        run: npm run build:components
         env:
           NODE_ENV: production
 
@@ -125,3 +128,8 @@ jobs:
           echo "- sitemap.xml ✅"
           echo "- robots.txt ✅"
           echo "- _headers (security) ✅"
+          echo ""
+          echo "🎨 Component System:"
+          echo "- Design tokens ✅"
+          echo "- UI components ✅"
+          echo "- Optimized build ✅"

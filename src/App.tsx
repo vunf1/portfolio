@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'preact/hooks'
-import { lazy, Suspense } from 'preact/compat'
-import { Hero } from './components/Hero'
+import { lazy, Suspense, useEffect, useState } from 'preact/compat'
+import { usePortfolioData } from './hooks/usePortfolioData'
+import { useI18n } from './hooks/useI18n'
+import { useTheme } from './hooks/useTheme'
 import { Navigation } from './components/Navigation'
 import { Contact } from './components/Contact'
 import { ContactModal } from './components/ContactModal'
 import { ErrorBoundary } from './components/ErrorBoundary'
-import { usePortfolioData } from './hooks/usePortfolioData'
-import { useTheme } from './hooks/useTheme'
-import { useI18n } from './hooks/useI18n'
+import { Hero } from './components/Hero'
+import { SectionSkeleton } from './components/SectionSkeleton'
 
 // Lazy load non-critical components
 const About = lazy(() => import('./components/About').then(module => ({ default: module.About })))
@@ -20,29 +20,23 @@ const Interests = lazy(() => import('./components/Interests').then(module => ({ 
 const Awards = lazy(() => import('./components/Awards').then(module => ({ default: module.Awards })))
 const Testimonials = lazy(() => import('./components/Testimonials').then(module => ({ default: module.Testimonials })))
 
-// Loading skeleton component for better UX
-const SectionSkeleton = () => (
-  <div className="section-skeleton">
-    <div className="skeleton-header">
-      <div className="skeleton-title"></div>
-      <div className="skeleton-subtitle"></div>
-    </div>
-    <div className="skeleton-content">
-      <div className="skeleton-line"></div>
-      <div className="skeleton-line"></div>
-      <div className="skeleton-line short"></div>
-    </div>
-  </div>
-)
-
 export function App() {
   const { portfolioData, loading, error } = usePortfolioData()
-  const { isDarkMode, toggleTheme } = useTheme()
   const { t } = useI18n()
+  useTheme() // Initialize theme system
   const [showContactModal, setShowContactModal] = useState(false)
   const [contactUnlocked, setContactUnlocked] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
   const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false)
+
+  // Debug: Add test message to see if component is rendering
+  console.log('🎯 App component rendering:', { 
+    portfolioData: portfolioData ? 'Available' : 'Not Available',
+    loading, 
+    error: error?.message || 'None',
+    hasPersonal: portfolioData?.personal ? 'Yes' : 'No',
+    hasSocial: portfolioData?.social ? 'Yes' : 'No'
+  })
 
   // Handle smooth language transitions
   useEffect(() => {
@@ -82,7 +76,9 @@ export function App() {
 
   // Intersection Observer for active section tracking
   useEffect(() => {
-    if (!portfolioData) {return}
+    if (!portfolioData) {
+      return
+    }
 
     const observerOptions = {
       threshold: 0.3,
@@ -92,69 +88,94 @@ export function App() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setActiveSection(entry.target.id)
+          const sectionId = entry.target.id
+          if (sectionId) {
+            setActiveSection(sectionId)
+          }
         }
       })
     }, observerOptions)
 
     // Observe all sections
     const sections = document.querySelectorAll('section[id]')
-    sections.forEach(section => observer.observe(section))
+    sections.forEach((section) => observer.observe(section))
 
     return () => observer.disconnect()
-  }, [portfolioData])
+  }, [portfolioData]) // Remove activeSection from dependencies
 
+  // Show loading state
   if (loading) {
     return (
       <div className="loading">
         <div className="loading-content">
           <div className="loading-spinner"></div>
-          <p>Loading portfolio...</p>
+          <p>{t('common.loading')}</p>
         </div>
       </div>
     )
   }
 
+  // Show error state
   if (error) {
     return (
       <div className="error">
         <div className="error-content">
-                           <i className="fa-solid fa-exclamation-triangle fa-3x mb-4"></i>
-          <h2>Error Loading Portfolio</h2>
-          <p>{error.message}</p>
+          <i className="fa-solid fa-exclamation-triangle fa-3x mb-4"></i>
+          <h2>{t('common.error')}</h2>
+          <p>{t('common.somethingWentWrong')}</p>
           <button 
             className="btn-premium mt-4"
             onClick={() => window.location.reload()}
           >
-                               <i className="fa-solid fa-refresh me-2"></i>
-                   Try Again
+            <i className="fa-solid fa-refresh me-2"></i>
+            {t('common.refresh')}
           </button>
         </div>
       </div>
     )
   }
 
+  // Show debug info if no data
   if (!portfolioData) {
+    console.log('⚠️ Showing no data state')
     return (
       <div className="error">
         <div className="error-content">
-                           <i className="fa-solid fa-info-circle fa-3x mb-4"></i>
-          <h2>No Portfolio Data</h2>
+          <i className="fa-solid fa-info-circle fa-3x mb-4"></i>
+          <h2>Portfolio Data Not Available</h2>
           <p>Portfolio data is not available. Please check your data file.</p>
+          <div style={{ marginTop: '20px', padding: '20px', backgroundColor: '#f8f9fa', borderRadius: '8px' }}>
+            <h3>Debug Info:</h3>
+            <p>Loading: {loading.toString()}</p>
+            <p>Error: {error ? (error as Error).message : 'None'}</p>
+            <p>Portfolio Data: {portfolioData ? 'Available' : 'Not Available'}</p>
+            <p>Current Language: {useI18n().currentLanguage}</p>
+          </div>
         </div>
       </div>
     )
   }
 
+  console.log('✅ Portfolio data available, rendering main content')
+
   return (
     <ErrorBoundary>
       <>
         <Navigation 
-          personal={portfolioData.personal}
-          portfolioData={portfolioData}
-          isDarkMode={isDarkMode}
-          onThemeToggle={toggleTheme}
-          activeSection={activeSection}
+          items={[
+            { id: 'about', label: String(t('navigation.about')), icon: 'fa-solid fa-user' },
+            { id: 'experience', label: String(t('navigation.experience')), icon: 'fa-solid fa-briefcase' },
+            { id: 'education', label: String(t('navigation.education')), icon: 'fa-solid fa-graduation-cap' },
+            { id: 'skills', label: String(t('navigation.skills')), icon: 'fa-solid fa-code' },
+            ...(portfolioData.projects && portfolioData.projects.length > 0 ? [{ id: 'projects', label: String(t('navigation.projects')), icon: 'fa-solid fa-folder' }] : []),
+            ...(portfolioData.certifications && portfolioData.certifications.length > 0 ? [{ id: 'certifications', label: String(t('navigation.certifications')), icon: 'fa-solid fa-certificate' }] : []),
+            ...(portfolioData.testimonials && portfolioData.testimonials.length > 0 ? [{ id: 'testimonials', label: String(t('navigation.testimonials')), icon: 'fa-solid fa-quote-left' }] : []),
+            ...(portfolioData.interests && portfolioData.interests.length > 0 ? [{ id: 'interests', label: String(t('navigation.interests')), icon: 'fa-solid fa-heart' }] : []),
+            ...(portfolioData.awards && portfolioData.awards.length > 0 ? [{ id: 'awards', label: String(t('navigation.awards')), icon: 'fa-solid fa-trophy' }] : []),
+            { id: 'contact', label: String(t('navigation.contact')), icon: 'fa-solid fa-envelope' }
+          ]}
+          activeId={activeSection}
+          onNavigate={setActiveSection}
         />
         
         {/* Hero Section */}
@@ -166,126 +187,70 @@ export function App() {
         
         <div className={`portfolio-container ${isLanguageTransitioning ? 'language-transitioning' : ''}`}>
           {/* About Section */}
-          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="about">
-            <div className="section-header">
-              <h2 className="section-title">{t('about.title')}</h2>
-              <p className="section-subtitle">{t('about.subtitle')}</p>
-            </div>
-            <Suspense fallback={<SectionSkeleton />}>
-              <About personal={portfolioData.personal} social={portfolioData.social} />
-            </Suspense>
-          </section>
+          <Suspense fallback={<SectionSkeleton />}>
+            <About 
+              personal={portfolioData.personal} 
+              social={portfolioData.social} 
+            />
+          </Suspense>
           
           {/* Experience Section */}
-          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="experience">
-            <div className="section-header">
-              <h2 className="section-title">{t('experience.title')}</h2>
-              <p className="section-subtitle">{t('experience.subtitle')}</p>
-            </div>
-            <Suspense fallback={<SectionSkeleton />}>
-              <Experience experience={portfolioData.experience} />
-            </Suspense>
-          </section>
+          <Suspense fallback={<SectionSkeleton />}>
+            <Experience experiences={portfolioData.experience} />
+          </Suspense>
           
           {/* Education Section */}
-          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="education">
-            <div className="section-header">
-              <h2 className="section-title">{t('education.title')}</h2>
-              <p className="section-subtitle">{t('education.subtitle')}</p>
-            </div>
-            <Suspense fallback={<SectionSkeleton />}>
-              <Education education={portfolioData.education} />
-            </Suspense>
-          </section>
+          <Suspense fallback={<SectionSkeleton />}>
+            <Education education={portfolioData.education} />
+          </Suspense>
           
           {/* Skills Section */}
-          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="skills">
-            <div className="section-header">
-              <h2 className="section-title">{t('skills.title')}</h2>
-              <p className="section-subtitle">{t('skills.subtitle')}</p>
-            </div>
-            <Suspense fallback={<SectionSkeleton />}>
-              <Skills skills={portfolioData.skills} />
-            </Suspense>
-          </section>
+          <Suspense fallback={<SectionSkeleton />}>
+            <Skills skills={portfolioData.skills} />
+          </Suspense>
           
           {/* Projects Section */}
           {portfolioData.projects && portfolioData.projects.length > 0 && (
-            <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="projects">
-              <div className="section-header">
-                <h2 className="section-title">{t('projects.title')}</h2>
-                <p className="section-subtitle">{t('projects.subtitle')}</p>
-              </div>
-              <Suspense fallback={<SectionSkeleton />}>
-                <Projects projects={portfolioData.projects} />
-              </Suspense>
-            </section>
+            <Suspense fallback={<SectionSkeleton />}>
+              <Projects projects={portfolioData.projects} />
+            </Suspense>
           )}
           
           {/* Certifications Section */}
           {portfolioData.certifications && portfolioData.certifications.length > 0 && (
-            <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="certifications">
-              <div className="section-header">
-                <h2 className="section-title">{t('certifications.title')}</h2>
-                <p className="section-subtitle">{t('certifications.subtitle')}</p>
-              </div>
-              <Suspense fallback={<SectionSkeleton />}>
-                <Certifications certifications={portfolioData.certifications} />
-              </Suspense>
-            </section>
+            <Suspense fallback={<SectionSkeleton />}>
+              <Certifications certifications={portfolioData.certifications} />
+            </Suspense>
           )}
           
           {/* Testimonials Section */}
           {portfolioData.testimonials && portfolioData.testimonials.length > 0 && (
-            <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="testimonials">
-              <div className="section-header">
-                <h2 className="section-title">{t('testimonials.title')}</h2>
-                <p className="section-subtitle">{t('testimonials.subtitle')}</p>
-              </div>
-              <Suspense fallback={<SectionSkeleton />}>
-                <Testimonials testimonials={portfolioData.testimonials} />
-              </Suspense>
-            </section>
+            <Suspense fallback={<SectionSkeleton />}>
+              <Testimonials testimonials={portfolioData.testimonials} />
+            </Suspense>
           )}
           
           {/* Interests Section */}
           {portfolioData.interests && portfolioData.interests.length > 0 && (
-            <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="interests">
-              <div className="section-header">
-                <h2 className="section-title">{t('interests.title')}</h2>
-                <p className="section-subtitle">{t('interests.subtitle')}</p>
-              </div>
-              <Suspense fallback={<SectionSkeleton />}>
-                <Interests interests={portfolioData.interests} />
-              </Suspense>
-            </section>
+            <Suspense fallback={<SectionSkeleton />}>
+              <Interests interests={portfolioData.interests} />
+            </Suspense>
           )}
           
           {/* Awards Section */}
           {portfolioData.awards && portfolioData.awards.length > 0 && (
-            <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="awards">
-              <div className="section-header">
-                <h2 className="section-title">{t('awards.title')}</h2>
-                <p className="section-subtitle">{t('awards.subtitle')}</p>
-              </div>
-              <Suspense fallback={<SectionSkeleton />}>
-                <Awards awards={portfolioData.awards} />
-              </Suspense>
-            </section>
+            <Suspense fallback={<SectionSkeleton />}>
+              <Awards awards={portfolioData.awards} />
+            </Suspense>
           )}
           
           {/* Contact Section */}
-          <section className={`portfolio-section ${isLanguageTransitioning ? 'language-transitioning' : ''}`} id="contact">
-            <div className="section-header">
-              <h2 className="section-title">{t('contact.title')}</h2>
-              <p className="section-subtitle">{t('contact.subtitle')}</p>
-            </div>
-            <Contact 
-              personal={portfolioData.personal}
-              isUnlocked={contactUnlocked}
-              onUnlock={() => setShowContactModal(true)}
-            />
-          </section>
+          <Contact 
+            personal={portfolioData.personal}
+            contact={portfolioData.contact}
+            isUnlocked={contactUnlocked}
+            onUnlock={() => setShowContactModal(true)}
+          />
         </div>
 
         <ContactModal 

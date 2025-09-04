@@ -1,24 +1,17 @@
 import { render } from 'preact'
 import { App } from './App'
 import './index.css'
-import './i18n' // Initialize i18n
+import './css/premium.css'
 
-// Register service worker for offline support
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then((registration) => {
-        console.log('Service Worker registered successfully:', registration.scope)
-      })
-      .catch((error) => {
-        console.error('Service Worker registration failed:', error)
-      })
-  })
-}
+console.log('🚀 Main.tsx starting...')
 
 const appElement = document.getElementById('app')
 if (appElement) {
+  console.log('✅ App element found, rendering...')
   render(<App />, appElement)
+  console.log('✅ App rendered successfully')
+} else {
+  console.error('❌ App element not found!')
 }
 
 

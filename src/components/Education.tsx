@@ -1,45 +1,35 @@
-import type { EducationProps } from '../types'
+import { useI18n } from '../hooks/useI18n'
+import { Section, Card } from './ui'
+import type { EducationProps } from '../types/components'
 
-export function Education({ education }: EducationProps) {
+export function Education({ education, className = '', id }: EducationProps) {
+  const { t } = useI18n()
+  
+  if (!education || education.length === 0) {
+    return null
+  }
+
   return (
-    <section className="resume-section" id="education">
-      <div className="resume-section-content">
-        <div id="education-content" className="education-grid">
-          {education.map((edu, index) => (
-            <div key={index} className="education-card premium-card">
-              <div className="card-header">
-                <h3 className="card-title">{edu.degree}</h3>
-                <div className="card-institution">
-                  {edu.institution}
-                  {edu.location && <span className="text-muted"> • {edu.location}</span>}
-                </div>
-                <div className="card-period">{edu.period}</div>
-                {edu.gpa && <div className="card-gpa">GPA: {edu.gpa}</div>}
-              </div>
-              
-              <div className="card-body">
-                {edu.description && <p className="card-description">{edu.description}</p>}
-                
-                {edu.courses && edu.courses.length > 0 && (
-                  <div className="card-courses">
-                    <strong>Relevant Courses:</strong>
-                    <div className="course-tags">
-                      {edu.courses.map((course, courseIndex) => (
-                        <span 
-                          key={courseIndex} 
-                          className="course-tag"
-                        >
-                          {course}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+    <Section 
+      id={id || 'education'} 
+      className={className} 
+      title={String(t('education.title'))} 
+      subtitle={String(t('education.subtitle'))}
+    >
+      <div className="education-grid">
+        {education.map((edu) => (
+          <Card 
+            key={edu.id || `edu-${edu.institution}`} 
+            title={edu.degree} 
+            subtitle={edu.institution} 
+            className="education-card"
+          >
+            {edu.description && (
+              <p className="education-description">{edu.description}</p>
+            )}
+          </Card>
+        ))}
       </div>
-    </section>
+    </Section>
   )
 }

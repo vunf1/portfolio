@@ -28,7 +28,7 @@ const validateForm = (formData: ContactFormData): FormErrors => {
     errors.visitorName = 'Name must be at least 2 characters'
   } else if (name.length > 100) {
     errors.visitorName = 'Name must be less than 100 characters'
-  } else if (!/^[a-zA-Z\s\-'\.]+$/.test(name)) {
+  } else if (!/^[a-zA-Z\s\-'.]+$/.test(name)) {
     errors.visitorName = 'Name contains invalid characters'
   }
   
@@ -47,7 +47,7 @@ const validateForm = (formData: ContactFormData): FormErrors => {
     const company = formData.visitorCompany.trim()
     if (company.length > 100) {
       errors.visitorCompany = 'Company name must be less than 100 characters'
-    } else if (!/^[a-zA-Z0-9\s\-'\.&,]+$/.test(company)) {
+    } else if (!/^[a-zA-Z0-9\s\-'.&,]+$/.test(company)) {
       errors.visitorCompany = 'Company name contains invalid characters'
     }
   }
@@ -170,7 +170,9 @@ export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
     setAttempts(0)
   }
 
-  if (!show) return null
+  if (!show) {
+    return null
+  }
 
   const isLockedOut = Date.now() < lockoutUntil
   const remainingLockoutTime = Math.ceil((lockoutUntil - Date.now()) / 1000)

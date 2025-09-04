@@ -1,11 +1,20 @@
 import { useState, useEffect } from 'preact/hooks'
 import { useI18n } from '../hooks/useI18n'
-import type { NavigationProps } from '../types'
+import { useTheme } from '../hooks/useTheme'
+import type { NavigationProps } from '../types/components'
 
-export function Navigation({ personal, portfolioData, isDarkMode, onThemeToggle, activeSection }: NavigationProps) {
-  const [isNavCollapsed, setIsNavCollapsed] = useState(true) // Start collapsed (closed)
+export function Navigation({ 
+  items, 
+  activeId, 
+  onNavigate, 
+  variant = 'horizontal',
+  className = '',
+  id 
+}: NavigationProps) {
+  const [isNavCollapsed, setIsNavCollapsed] = useState(true)
   const [isScrolled, setIsScrolled] = useState(false)
-  const { t, changeLanguage, currentLanguage } = useI18n()
+  const { changeLanguage, currentLanguage } = useI18n()
+  const { isDarkMode, toggleTheme } = useTheme()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,15 +42,14 @@ export function Navigation({ personal, portfolioData, isDarkMode, onThemeToggle,
   }, [])
 
   const toggleNav = () => {
-    setIsNavCollapsed(!isNavCollapsed) // Toggle between open/closed
+    setIsNavCollapsed(!isNavCollapsed)
   }
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      // Calculate the offset to stop at the section title
-      const navHeight = 80 // Approximate navigation height
-      const offset = 20 // Additional offset for better positioning
+      const navHeight = 80
+      const offset = 20
       const elementTop = element.offsetTop - navHeight - offset
       
       window.scrollTo({
@@ -49,17 +57,19 @@ export function Navigation({ personal, portfolioData, isDarkMode, onThemeToggle,
         behavior: 'smooth'
       })
     }
-    // Close mobile nav on click
+    
     if (window.innerWidth < 992) {
-      setIsNavCollapsed(true) // Close menu (collapsed = true)
+      setIsNavCollapsed(true)
     }
+    
+    onNavigate?.(sectionId)
   }
 
   // Close mobile menu when resizing to desktop
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 992) {
-        setIsNavCollapsed(true) // Close menu on desktop
+        setIsNavCollapsed(true)
       }
     }
 
@@ -67,24 +77,17 @@ export function Navigation({ personal, portfolioData, isDarkMode, onThemeToggle,
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const navItems = [
-    { id: 'about', label: t('navigation.about'), icon: 'fa-solid fa-user' },
-    { id: 'experience', label: t('navigation.experience'), icon: 'fa-solid fa-briefcase' },
-    { id: 'education', label: t('navigation.education'), icon: 'fa-solid fa-graduation-cap' },
-    { id: 'skills', label: t('navigation.skills'), icon: 'fa-solid fa-code' },
-    // Only show sections that have data
-    ...(portfolioData.projects && portfolioData.projects.length > 0 ? [{ id: 'projects', label: t('navigation.projects'), icon: 'fa-solid fa-folder' }] : []),
-    ...(portfolioData.certifications && portfolioData.certifications.length > 0 ? [{ id: 'certifications', label: t('navigation.certifications'), icon: 'fa-solid fa-certificate' }] : []),
-    ...(portfolioData.testimonials && portfolioData.testimonials.length > 0 ? [{ id: 'testimonials', label: t('navigation.testimonials'), icon: 'fa-solid fa-quote-left' }] : []),
-    ...(portfolioData.interests && portfolioData.interests.length > 0 ? [{ id: 'interests', label: t('navigation.interests'), icon: 'fa-solid fa-heart' }] : []),
-    ...(portfolioData.awards && portfolioData.awards.length > 0 ? [{ id: 'awards', label: t('navigation.awards'), icon: 'fa-solid fa-trophy' }] : []),
-    { id: 'contact', label: t('navigation.contact'), icon: 'fa-solid fa-envelope' }
-  ]
+  const navClasses = [
+    'premium-nav',
+    variant !== 'horizontal' && `nav-${variant}`,
+    isScrolled && 'scrolled',
+    className
+  ].filter(Boolean).join(' ')
 
   return (
-    <nav className={`premium-nav ${isScrolled ? 'scrolled' : ''}`} id="sideNav">
+    <nav className={navClasses} id={id || 'sideNav'}>
       <div className="nav-container">
-        {/* Enhanced Brand */}
+        {/* Brand */}
         <a 
           className="nav-brand" 
           href="#hero" 
@@ -97,80 +100,76 @@ export function Navigation({ personal, portfolioData, isDarkMode, onThemeToggle,
             <div className="brand-avatar-container">
               <img 
                 className="brand-avatar" 
-                src={personal.profileImage} 
-                alt={`${personal.name} Profile`}
+                src="/img/optimized/profile-sm.jpeg"
+                alt="Profile"
+                loading="lazy"
               />
-              <div className="brand-avatar-glow"></div>
             </div>
             <div className="brand-text">
-              <span className="brand-name">{personal.name}</span>
-              <span className="brand-title">{personal.title}</span>
+              <span className="brand-name">João Maia</span>
+              <span className="brand-title">Full-Stack Engineer</span>
             </div>
           </div>
         </a>
-        
-        {/* Mobile Toggle */}
-        <button 
-          className="nav-toggle" 
-          onClick={toggleNav}
-          aria-expanded={!isNavCollapsed}
-          aria-label="Toggle navigation"
-        >
-          <span className="toggle-icon">
-            <i className="fa-solid fa-bars"></i>
-          </span>
-        </button>
-        
-        {/* Navigation Menu */}
-        <div className={`nav-menu ${isNavCollapsed ? '' : 'show'}`}>
+
+        {/* Navigation Items */}
+        <div className={`nav-menu ${isNavCollapsed ? 'collapsed' : ''}`}>
           <ul className="nav-list">
-            {navItems.map((item) => (
+            {items.map((item) => (
               <li key={item.id} className="nav-item">
-                <a 
-                  className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
+                <a
                   href={`#${item.id}`}
+                  className={`nav-link ${activeId === item.id ? 'active' : ''}`}
                   onClick={(e) => {
                     e.preventDefault()
                     scrollToSection(item.id)
                   }}
                 >
-                  <i className={`${item.icon} nav-icon`}></i>
-                  <span className="nav-label">{item.label}</span>
+                  {item.icon && <i className={item.icon}></i>}
+                  <span className="nav-text">{item.label}</span>
                 </a>
               </li>
             ))}
-            
-            {/* Theme Toggle */}
-            <li className="nav-item theme-toggle">
-              <button 
-                className="theme-btn"
-                onClick={onThemeToggle}
-                aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} theme`}
-              >
-                <i className={`fa-solid ${isDarkMode ? 'fa-sun' : 'fa-moon'}`}></i>
-              </button>
-            </li>
-            
-            {/* Language Toggle */}
-            <li className="nav-item language-toggle">
-              <button 
-                className="language-btn"
-                onClick={() => {
-                  // Add a small delay to show the transition effect
-                  document.documentElement.classList.add('language-changing')
-                  setTimeout(() => {
-                    changeLanguage(currentLanguage === 'en' ? 'pt-PT' : 'en')
-                    document.documentElement.classList.remove('language-changing')
-                  }, 150)
-                }}
-                aria-label={`Switch to ${currentLanguage === 'en' ? 'Portuguese' : 'English'}`}
-              >
-                <span className="flag-emoji">
-                  {currentLanguage === 'en' ? '🇵🇹' : '🇺🇸'}
-                </span>
-              </button>
-            </li>
           </ul>
+        </div>
+
+        {/* Theme and Language Toggles */}
+        <div className="nav-controls">
+          {/* Theme Toggle */}
+          <button
+            className="theme-toggle"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} theme`}
+          >
+            <div className="theme-btn">
+              <i className={`fa-solid ${isDarkMode ? 'fa-sun' : 'fa-moon'}`}></i>
+            </div>
+          </button>
+
+          {/* Language Toggle */}
+          <button
+            className="language-toggle"
+            onClick={() => changeLanguage(currentLanguage === 'en' ? 'pt-PT' : 'en')}
+            aria-label={`Switch to ${currentLanguage === 'en' ? 'Portuguese' : 'English'}`}
+          >
+            <div className="language-btn">
+              <span className="flag-emoji">
+                {currentLanguage === 'en' ? '🇵🇹' : '🇬🇧'}
+              </span>
+            </div>
+          </button>
+
+          {/* Mobile Toggle */}
+          <button
+            className="nav-toggle"
+            onClick={toggleNav}
+            aria-label="Toggle navigation menu"
+            aria-expanded={!isNavCollapsed}
+          >
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+          </button>
         </div>
       </div>
     </nav>

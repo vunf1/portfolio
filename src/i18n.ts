@@ -40,7 +40,7 @@ i18n
 export async function loadTranslations(language: string) {
   try {
     const dataFile = language === 'pt-PT' ? 'portfolio-pt-PT.json' : 'portfolio-en.json'
-    const response = await fetch(`./data/${dataFile}`)
+    const response = await fetch(`/data/${dataFile}`)
     
     if (!response.ok) {
       throw new Error(`Failed to load ${language} translations: ${response.status}`)
@@ -53,6 +53,7 @@ export async function loadTranslations(language: string) {
       i18n.changeLanguage(language)
     }
   } catch (error) {
+    console.warn(`Failed to load ${language} translations:`, error)
     // Silently handle translation loading errors
     // In production, you might want to log this to an error reporting service
   }

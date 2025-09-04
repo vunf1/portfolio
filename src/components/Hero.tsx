@@ -5,13 +5,19 @@ import type { HeroProps } from '../types'
 // Device capability detection - simplified for consistent performance
 const isLowEndDevice = () => {
   // Check for reduced motion preference
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return true
+  }
   
   // Check for very low-end device indicators
-  if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) return true
+  if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) {
+    return true
+  }
   
   // Check for very low memory devices
-  if ('deviceMemory' in navigator && (navigator as any).deviceMemory <= 2) return true
+  if ('deviceMemory' in navigator && (navigator as Navigator & { deviceMemory?: number }).deviceMemory && (navigator as Navigator & { deviceMemory?: number }).deviceMemory <= 2) {
+    return true
+  }
   
   return false
 }
@@ -31,7 +37,9 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
   }, [])
 
   useEffect(() => {
-    if (!isLowEnd) return
+    if (!isLowEnd) {
+      return
+    }
     
     // Auto-rotate social icons
     const interval = setInterval(() => {
@@ -248,26 +256,7 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
         <div className="data-stream data-stream-2 mobile-stream"></div>
       </div>
       
-      {/* Optimized Responsive Background Image */}
-      <div className="hero-background-image">
-        <picture>
-          <source 
-            type="image/avif" 
-            srcSet="./img/optimized/background-xs.avif 480w, ./img/optimized/background-sm.avif 768w, ./img/optimized/background-md.avif 1024w, ./img/optimized/background-lg.avif 1920w, ./img/optimized/background-xl.avif 2560w"
-          />
-          <source 
-            type="image/webp" 
-            srcSet="./img/optimized/background-xs.webp 480w, ./img/optimized/background-sm.webp 768w, ./img/optimized/background-md.webp 1024w, ./img/optimized/background-lg.webp 1920w, ./img/optimized/background-xl.webp 2560w"
-          />
-          <img 
-            src="./img/optimized/background-md.jpeg" 
-            srcSet="./img/optimized/background-xs.jpeg 480w, ./img/optimized/background-sm.jpeg 768w, ./img/optimized/background-md.jpeg 1024w, ./img/optimized/background-lg.jpeg 1920w, ./img/optimized/background-xl.jpeg 2560w"
-            alt="Technology background with matrix patterns"
-            loading="eager"
-            className="hero-bg-image"
-          />
-        </picture>
-      </div>
+
     </section>
   )
 }
