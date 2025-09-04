@@ -3,9 +3,15 @@ import type { UseThemeReturn } from '../types'
 
 export function useTheme(): UseThemeReturn {
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    // Check localStorage for saved preference
-    const saved = localStorage.getItem('darkMode')
-    return saved ? JSON.parse(saved) : false
+    try {
+      // Check localStorage for saved preference
+      const saved = localStorage.getItem('darkMode')
+      return saved ? JSON.parse(saved) : false
+    } catch (error) {
+      // Handle localStorage errors gracefully
+      console.warn('Failed to read theme preference from localStorage:', error)
+      return false
+    }
   })
 
   useEffect(() => {
@@ -26,7 +32,12 @@ export function useTheme(): UseThemeReturn {
     }
     
     // Save preference to localStorage
-    localStorage.setItem('darkMode', JSON.stringify(isDarkMode))
+    try {
+      localStorage.setItem('darkMode', JSON.stringify(isDarkMode))
+    } catch (error) {
+      // Handle localStorage errors gracefully
+      console.warn('Failed to save theme preference to localStorage:', error)
+    }
   }, [isDarkMode])
 
   const toggleTheme = () => {
