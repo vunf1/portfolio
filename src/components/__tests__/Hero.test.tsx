@@ -3,18 +3,25 @@ import { render, screen, fireEvent } from '@testing-library/preact'
 import { Hero } from '../Hero'
 import type { HeroProps } from '../../types'
 
-// Mock the useI18n hook
-vi.mock('../../hooks/useI18n', () => ({
-  useI18n: () => ({
+// Mock the TranslationContext
+vi.mock('../../contexts/TranslationContext', () => ({
+  useTranslation: () => ({
     t: (key: string) => {
       const translations: Record<string, string> = {
-        'hero.title': 'Software Developer',
+        'hero.title': 'Full-Stack Developer',
+        'hero.subtitle': 'Back-end Ops • Azure • OOP',
         'hero.cta': 'Get In Touch',
         'navigation.projects': 'View Projects'
       }
       return translations[key] || key
-    }
-  })
+    },
+    currentLanguage: 'en',
+    changeLanguage: vi.fn(),
+    isEnglish: true,
+    isPortuguese: false,
+    supportedLanguages: ['en', 'pt-PT']
+  }),
+  preloadTranslations: vi.fn().mockResolvedValue(undefined)
 }))
 
 // Mock window.matchMedia
@@ -75,7 +82,7 @@ describe('Hero Component', () => {
     render(<Hero {...defaultProps} />)
     
     expect(screen.getByText('João Maia')).toBeInTheDocument()
-    expect(screen.getByText('Software Developer')).toBeInTheDocument()
+    expect(screen.getByText('Full-Stack Developer')).toBeInTheDocument()
     expect(screen.getByText(mockPersonal.longSummary)).toBeInTheDocument()
   })
 

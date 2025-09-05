@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'preact/hooks'
-import { useI18n } from './useI18n'
 import type { PortfolioData, UsePortfolioDataReturn } from '../types'
 
 // Cache for preloaded data
@@ -15,12 +14,11 @@ function getDataPath(filename: string): string {
   return `/data/${filename}`
 }
 
-export function usePortfolioData(): UsePortfolioDataReturn {
+export function usePortfolioData(currentLanguage: 'en' | 'pt-PT' = 'en'): UsePortfolioDataReturn {
   const [portfolioData, setPortfolioData] = useState<PortfolioData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
   const [loadedSections, setLoadedSections] = useState<Set<string>>(new Set(CRITICAL_SECTIONS))
-  const { currentLanguage } = useI18n()
 
   // Load critical data first
   useEffect(() => {
@@ -72,7 +70,7 @@ export function usePortfolioData(): UsePortfolioDataReturn {
         const initialData = dataCache.get(currentLanguage) || dataCache.get('en')
         if (initialData) {
           const criticalData = createCriticalData(initialData.portfolio)
-          console.log('✅ Setting portfolio data:', criticalData)
+          console.log('✅ Setting initial portfolio data for:', currentLanguage, criticalData)
           setPortfolioData(criticalData)
         } else {
           console.error('❌ No initial data available after loading')
@@ -92,10 +90,14 @@ export function usePortfolioData(): UsePortfolioDataReturn {
 
   // Switch language instantly using cached data
   useEffect(() => {
+    console.log('🔄 Language changed to:', currentLanguage)
     if (dataCache.has(currentLanguage)) {
       const data = dataCache.get(currentLanguage)!
       const criticalData = createCriticalData(data.portfolio)
+      console.log('✅ Switching to cached data for:', currentLanguage, criticalData)
       setPortfolioData(criticalData)
+    } else {
+      console.log('⚠️ No cached data found for language:', currentLanguage)
     }
   }, [currentLanguage]) // Switch instantly when language changes
 
@@ -192,11 +194,10 @@ function createCriticalData(portfolio: PortfolioData): PortfolioData {
 }
 
 // New hook for accessing both portfolio data and UI translations
-export function useConsolidatedData() {
+export function useConsolidatedData(currentLanguage: 'en' | 'pt-PT' = 'en') {
   const [data, setData] = useState<{ portfolio: PortfolioData; ui: Record<string, unknown> } | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
-  const { currentLanguage } = useI18n()
 
   useEffect(() => {
     const loadData = async () => {

@@ -31,9 +31,13 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 })
 
-// Mock localStorage
+// Mock localStorage with English as default
 const localStorageMock = {
-  getItem: vi.fn(),
+  getItem: vi.fn((key: string) => {
+    // Always return English for tests unless specifically testing language switching
+    if (key === 'i18nextLng') return 'en'
+    return null
+  }),
   setItem: vi.fn(),
   removeItem: vi.fn(),
   clear: vi.fn(),
@@ -62,3 +66,62 @@ window.location = {
   replace: vi.fn(),
   reload: vi.fn(),
 }
+
+// Mock fetch for translation data
+global.fetch = vi.fn()
+
+// Mock translation data
+const mockTranslationData = {
+  portfolio: {
+    personal: {
+      name: 'João Maia',
+      title: 'Full-Stack Developer',
+      subtitle: 'Back-end Ops • Azure • OOP',
+      summary: 'Experienced full-stack developer specializing in React, Node.js, and cloud technologies',
+      coreValues: ['Innovation', 'Quality', 'Collaboration'],
+      profileImage: '/img/profile.jpg'
+    },
+    social: [
+      {
+        name: 'LinkedIn',
+        url: 'https://linkedin.com/in/joaomaia',
+        icon: 'fa-linkedin',
+        color: '#0077B5'
+      },
+      {
+        name: 'GitHub',
+        url: 'https://github.com/joaomaia',
+        icon: 'fa-github',
+        color: '#333'
+      }
+    ]
+  },
+  ui: {
+    hero: {
+      title: 'Full-Stack Developer',
+      subtitle: 'Back-end Ops • Azure • OOP',
+      cta: 'Get In Touch',
+      tagline: 'Always learning. Building with purpose.'
+    },
+    navigation: {
+      brand: 'João Maia',
+      about: 'About',
+      experience: 'Experience',
+      education: 'Education',
+      skills: 'Skills',
+      projects: 'View Projects',
+      contact: 'Contact'
+    }
+  }
+}
+
+// Mock fetch implementation
+;(global.fetch as any).mockImplementation((url: string) => {
+  if (url.includes('portfolio-en.json') || url.includes('portfolio-pt-PT.json')) {
+    return Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve(mockTranslationData)
+    })
+  }
+  return Promise.reject(new Error('Unmocked fetch call'))
+})

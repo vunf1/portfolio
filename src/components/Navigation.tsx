@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'preact/hooks'
-import { useI18n } from '../hooks/useI18n'
+import { useTranslation } from '../contexts/TranslationContext'
 import { useTheme } from '../hooks/useTheme'
 import type { NavigationProps } from '../types/components'
 
@@ -13,7 +13,7 @@ export function Navigation({
 }: NavigationProps) {
   const [isNavCollapsed, setIsNavCollapsed] = useState(true)
   const [isScrolled, setIsScrolled] = useState(false)
-  const { changeLanguage, currentLanguage } = useI18n()
+  const { t, changeLanguage, currentLanguage } = useTranslation()
   const { isDarkMode, toggleTheme } = useTheme()
 
   useEffect(() => {
@@ -106,8 +106,8 @@ export function Navigation({
               />
             </div>
             <div className="brand-text">
-              <span className="brand-name">João Maia</span>
-              <span className="brand-title">Full-Stack Engineer</span>
+              <span className="brand-name">{t('navigation.brand')}</span>
+              <span className="brand-title">{t('hero.title')}</span>
             </div>
           </div>
         </a>

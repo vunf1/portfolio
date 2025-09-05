@@ -167,3 +167,6 @@ node_modules/
 
 dist/
 /.cursor
+/coverage
+/coverage
+coverage/

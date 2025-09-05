@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'preact/hooks'
-import { useI18n } from '../hooks/useI18n'
+import { useTranslation } from '../contexts/TranslationContext'
 import type { HeroProps } from '../types'
 
 // Device capability detection - simplified for consistent performance
@@ -15,7 +15,7 @@ const isLowEndDevice = () => {
   }
   
   // Check for very low memory devices
-  if ('deviceMemory' in navigator && (navigator as Navigator & { deviceMemory?: number }).deviceMemory && (navigator as Navigator & { deviceMemory?: number }).deviceMemory <= 2) {
+  if ('deviceMemory' in navigator && (navigator as Navigator & { deviceMemory?: number }).deviceMemory && (navigator as Navigator & { deviceMemory?: number }).deviceMemory! <= 2) {
     return true
   }
   
@@ -25,7 +25,7 @@ const isLowEndDevice = () => {
 export function Hero({ personal, social, onScrollDown }: HeroProps) {
   const [currentSocialIndex, setCurrentSocialIndex] = useState(0)
   const [isLowEnd, setIsLowEnd] = useState(false)
-  const { t } = useI18n()
+  const { t } = useTranslation()
   const heroRef = useRef<HTMLElement>(null)
   
 
@@ -132,6 +132,10 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
         <h2 className="hero-title">
           {t('hero.title')}
         </h2>
+        
+        <p className="hero-subtitle">
+          {t('hero.subtitle')}
+        </p>
         
         <p className="hero-summary">
           {personal.longSummary || personal.summary}

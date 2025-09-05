@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'preact/compat'
 import { usePortfolioData } from './hooks/usePortfolioData'
-import { useI18n } from './hooks/useI18n'
+import { useTranslation } from './contexts/TranslationContext'
 import { useTheme } from './hooks/useTheme'
 import { Navigation } from './components/Navigation'
 import { Contact } from './components/Contact'
@@ -21,8 +21,8 @@ const Awards = lazy(() => import('./components/Awards').then(module => ({ defaul
 const Testimonials = lazy(() => import('./components/Testimonials').then(module => ({ default: module.Testimonials })))
 
 export function App() {
-  const { portfolioData, loading, error } = usePortfolioData()
-  const { t } = useI18n()
+  const { t, currentLanguage } = useTranslation()
+  const { portfolioData, loading, error } = usePortfolioData(currentLanguage)
   useTheme() // Initialize theme system
   const [showContactModal, setShowContactModal] = useState(false)
   const [contactUnlocked, setContactUnlocked] = useState(false)
@@ -34,8 +34,9 @@ export function App() {
     portfolioData: portfolioData ? 'Available' : 'Not Available',
     loading, 
     error: error?.message || 'None',
-    hasPersonal: portfolioData?.personal ? 'Yes' : 'No',
-    hasSocial: portfolioData?.social ? 'Yes' : 'No'
+    currentLanguage: currentLanguage,
+    aboutTranslation: t('navigation.about'),
+    contactTranslation: t('navigation.contact')
   })
 
   // Handle smooth language transitions
@@ -149,7 +150,7 @@ export function App() {
             <p>Loading: {loading.toString()}</p>
             <p>Error: {error ? (error as Error).message : 'None'}</p>
             <p>Portfolio Data: {portfolioData ? 'Available' : 'Not Available'}</p>
-            <p>Current Language: {useI18n().currentLanguage}</p>
+            <p>Current Language: {currentLanguage}</p>
           </div>
         </div>
       </div>

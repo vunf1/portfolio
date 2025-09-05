@@ -3,12 +3,29 @@ import { render, screen, fireEvent } from '@testing-library/preact'
 import { Navigation } from '../Navigation'
 import type { NavigationProps } from '../../types/components'
 
-// Mock the hooks
-vi.mock('../../hooks/useI18n', () => ({
-  useI18n: () => ({
+// Mock the TranslationContext
+vi.mock('../../contexts/TranslationContext', () => ({
+  useTranslation: () => ({
+    t: (key: string) => {
+      const translations: Record<string, string> = {
+        'navigation.brand': 'João Maia',
+        'hero.title': 'Full-Stack Developer',
+        'navigation.about': 'About',
+        'navigation.experience': 'Experience',
+        'navigation.education': 'Education',
+        'navigation.skills': 'Skills',
+        'navigation.projects': 'Projects',
+        'navigation.contact': 'Contact'
+      }
+      return translations[key] || key
+    },
+    currentLanguage: 'en',
     changeLanguage: vi.fn(),
-    currentLanguage: 'en'
-  })
+    isEnglish: true,
+    isPortuguese: false,
+    supportedLanguages: ['en', 'pt-PT']
+  }),
+  preloadTranslations: vi.fn().mockResolvedValue(undefined)
 }))
 
 vi.mock('../../hooks/useTheme', () => ({
@@ -51,7 +68,7 @@ describe('Navigation Component', () => {
     render(<Navigation {...defaultProps} />)
     
     expect(screen.getByText('João Maia')).toBeInTheDocument()
-    expect(screen.getByText('Full-Stack Engineer')).toBeInTheDocument()
+    expect(screen.getByText('Full-Stack Developer')).toBeInTheDocument()
   })
 
   it('renders navigation items', () => {
