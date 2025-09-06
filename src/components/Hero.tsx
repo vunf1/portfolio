@@ -22,8 +22,7 @@ const isLowEndDevice = () => {
   return false
 }
 
-export function Hero({ personal, social, onScrollDown }: HeroProps) {
-  const [currentSocialIndex, setCurrentSocialIndex] = useState(0)
+export function Hero({ personal, onScrollDown }: HeroProps) {
   const [isLowEnd, setIsLowEnd] = useState(false)
   const { t } = useTranslation()
   const heroRef = useRef<HTMLElement>(null)
@@ -40,11 +39,6 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
     if (!isLowEnd) {
       return
     }
-    
-    // Auto-rotate social icons
-    const interval = setInterval(() => {
-      setCurrentSocialIndex((prev) => (prev + 1) % social.length)
-    }, 3000)
 
     // Set random positions for floating icons on load
     const setRandomPositions = () => {
@@ -81,11 +75,7 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
 
     // Set random positions on load
     setRandomPositions()
-
-    return () => {
-      clearInterval(interval)
-    }
-  }, [social.length, isLowEnd])
+  }, [isLowEnd])
 
   const handleScrollDown = () => {
     if (onScrollDown) {
@@ -99,18 +89,6 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
     }
   }
 
-  // Map social icons to Devicon classes (with fallbacks for legacy FontAwesome)
-  const getSocialIcon = (socialItem: { icon: string }) => {
-    const iconMap: { [key: string]: string } = {
-      'fa-linkedin': 'devicon-linkedin-plain',
-      'fa-github': 'devicon-github-original',
-      'fa-graduation-cap': 'devicon-graduation-cap',
-      'fa-globe': 'devicon-firefox-plain',
-      'fa-envelope': 'devicon-envelope',
-      'fa-phone': 'devicon-phone'
-    }
-    return iconMap[socialItem.icon] || socialItem.icon
-  }
 
   return (
     <section className="portfolio-hero" id="hero" ref={heroRef}>
@@ -158,67 +136,7 @@ export function Hero({ personal, social, onScrollDown }: HeroProps) {
           </div>
         )}
         
-        {/* Hero Actions */}
-        <div className="hero-actions">
-          <a 
-            href="#contact" 
-            className="btn-premium hover-lift"
-            onClick={(e) => {
-              e.preventDefault()
-              const contactSection = document.getElementById('contact')
-              if (contactSection) {
-                contactSection.scrollIntoView({ behavior: 'smooth' })
-              }
-            }}
-          >
-            <i className="fa-solid fa-envelope me-2"></i>
-            {t('hero.cta')}
-          </a>
-          
-          <a 
-            href="#projects" 
-            className="btn-premium btn-outline hover-lift"
-            onClick={(e) => {
-              e.preventDefault()
-              const projectsSection = document.getElementById('projects')
-              if (projectsSection) {
-                projectsSection.scrollIntoView({ behavior: 'smooth' })
-              }
-            }}
-          >
-            <i className="fa-solid fa-code me-2"></i>
-            {t('navigation.projects')}
-          </a>
-        </div>
         
-        {/* Social Links */}
-        <div className="hero-social animate-fade-in-up" style={{ animationDelay: '1.4s' }}>
-          <div className="social-grid">
-            {social && social.length > 0 ? (
-              social.map((socialItem, index) => (
-                                <a
-                  key={index}
-                  href={socialItem.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`social-link ${index === currentSocialIndex ? 'active' : ''}`}
-                  style={{ 
-                    '--social-color': socialItem.color || '#0077B5',
-                    animationDelay: `${1.6 + index * 0.1}s`
-                  }}
-                  aria-label={socialItem.name}
-                  data-debug-icon={socialItem.icon}
-                  data-debug-mapped={getSocialIcon(socialItem)}
-                >
-                  <i className={getSocialIcon(socialItem)}></i>
-                  <span className="social-tooltip">{socialItem.name}</span>
-                </a>
-              ))
-            ) : (
-              <div>No social links available</div>
-            )}
-          </div>
-        </div>
       </div>
       
       {/* Premium Scroll Indicator */}

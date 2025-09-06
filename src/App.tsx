@@ -24,7 +24,7 @@ export function App() {
   const { t, currentLanguage } = useTranslation()
   const { portfolioData, loading, error } = usePortfolioData(currentLanguage)
   useTheme() // Initialize theme system
-  const { isUnlocked: contactUnlocked, unlockContact } = useContactUnlock()
+  const { isUnlocked: contactUnlocked, unlockContact, lockContact } = useContactUnlock()
   const [showContactModal, setShowContactModal] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
   const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false)
@@ -224,7 +224,6 @@ export function App() {
         {/* Hero Section */}
         <Hero 
           personal={portfolioData.personal}
-          social={portfolioData.social}
           onScrollDown={handleScrollDown}
         />
         
@@ -235,6 +234,7 @@ export function App() {
             contact={portfolioData.contact}
             isUnlocked={contactUnlocked}
             onUnlock={() => setShowContactModal(true)}
+            onLock={lockContact}
           />
           
           {/* Experience Section */}

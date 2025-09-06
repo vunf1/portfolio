@@ -1,9 +1,26 @@
+import { useState } from 'preact/hooks'
 import { useTranslation } from '../contexts/TranslationContext'
-import { Section } from './ui'
+import { Section, ConfirmationModal } from './ui'
 import type { ContactProps } from '../types'
 
-export function Contact({ personal, contact, isUnlocked, onUnlock }: ContactProps) {
-  const { t, currentLanguage } = useTranslation()
+export function Contact({ personal, contact, isUnlocked, onUnlock, onLock }: ContactProps) {
+  const { t } = useTranslation()
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
+
+  const handleDeleteClick = () => {
+    setShowDeleteConfirmation(true)
+  }
+
+  const handleDeleteConfirm = () => {
+    if (onLock) {
+      onLock()
+    }
+    setShowDeleteConfirmation(false)
+  }
+
+  const handleDeleteCancel = () => {
+    setShowDeleteConfirmation(false)
+  }
   
   return (
     <Section 
@@ -32,11 +49,21 @@ export function Contact({ personal, contact, isUnlocked, onUnlock }: ContactProp
                   {personal.availability}
                 </p>
                 {/* Unlock Status Indicator */}
-                <div className="unlock-status mt-3">
+                <div className="unlock-status mt-3 d-flex align-items-center justify-content-center gap-2">
                   <span className="badge bg-success">
                     <i className="fa-solid fa-unlock me-1"></i>
                     {t('contact.unlocked', 'Contact Unlocked')}
                   </span>
+                  {onLock && (
+                    <button
+                      className="btn btn-outline-danger btn-sm"
+                      onClick={handleDeleteClick}
+                      title={t('contact.deleteUnlock', 'Delete unlock data')}
+                      aria-label={t('contact.deleteUnlock', 'Delete unlock data')}
+                    >
+                      <i className="fa-solid fa-trash-can"></i>
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -166,6 +193,19 @@ export function Contact({ personal, contact, isUnlocked, onUnlock }: ContactProp
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={showDeleteConfirmation}
+        onClose={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        title={t('contact.deleteConfirmation.title', 'Delete Unlock Data')}
+        message={t('contact.deleteConfirmation.message', 'Are you sure you want to delete your unlock data? This will lock the contact information and you will need to unlock it again to view the details.')}
+        confirmText={t('contact.deleteConfirmation.confirm', 'Delete')}
+        cancelText={t('contact.deleteConfirmation.cancel', 'Cancel')}
+        variant="danger"
+        icon="fa-solid fa-trash-can"
+      />
     </Section>
   )
 }

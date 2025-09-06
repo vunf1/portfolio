@@ -69,8 +69,7 @@ const mockSocial = [
 ]
 
 const defaultProps: HeroProps = {
-  personal: mockPersonal,
-  social: mockSocial
+  personal: mockPersonal
 }
 
 describe('Hero Component', () => {
@@ -104,27 +103,7 @@ describe('Hero Component', () => {
     expect(screen.getByText('Collaboration')).toBeInTheDocument()
   })
 
-  it('renders social links', () => {
-    render(<Hero {...defaultProps} />)
-    
-    const linkedinLink = screen.getByLabelText('LinkedIn')
-    const githubLink = screen.getByLabelText('GitHub')
-    
-    expect(linkedinLink).toBeInTheDocument()
-    expect(linkedinLink).toHaveAttribute('href', 'https://linkedin.com/in/joaomaia')
-    expect(linkedinLink).toHaveAttribute('target', '_blank')
-    expect(linkedinLink).toHaveAttribute('rel', 'noopener noreferrer')
-    
-    expect(githubLink).toBeInTheDocument()
-    expect(githubLink).toHaveAttribute('href', 'https://github.com/joaomaia')
-  })
 
-  it('renders action buttons', () => {
-    render(<Hero {...defaultProps} />)
-    
-    expect(screen.getByText('Get In Touch')).toBeInTheDocument()
-    expect(screen.getByText('View Projects')).toBeInTheDocument()
-  })
 
   it('handles scroll down button click', () => {
     const mockOnScrollDown = vi.fn()
@@ -136,39 +115,7 @@ describe('Hero Component', () => {
     expect(mockOnScrollDown).toHaveBeenCalledTimes(1)
   })
 
-  it('handles contact button click', () => {
-    // Mock scrollIntoView
-    const mockScrollIntoView = vi.fn()
-    const mockGetElementById = vi.spyOn(document, 'getElementById')
-    mockGetElementById.mockReturnValue({
-      scrollIntoView: mockScrollIntoView
-    } as any)
 
-    render(<Hero {...defaultProps} />)
-    
-    const contactButton = screen.getByText('Get In Touch')
-    fireEvent.click(contactButton)
-    
-    expect(mockGetElementById).toHaveBeenCalledWith('contact')
-    expect(mockScrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth' })
-  })
-
-  it('handles projects button click', () => {
-    // Mock scrollIntoView
-    const mockScrollIntoView = vi.fn()
-    const mockGetElementById = vi.spyOn(document, 'getElementById')
-    mockGetElementById.mockReturnValue({
-      scrollIntoView: mockScrollIntoView
-    } as any)
-
-    render(<Hero {...defaultProps} />)
-    
-    const projectsButton = screen.getByText('View Projects')
-    fireEvent.click(projectsButton)
-    
-    expect(mockGetElementById).toHaveBeenCalledWith('projects')
-    expect(mockScrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth' })
-  })
 
   it('renders floating shapes and background elements', () => {
     render(<Hero {...defaultProps} />)
@@ -182,16 +129,6 @@ describe('Hero Component', () => {
     expect(streams.length).toBeGreaterThan(0)
   })
 
-  it('handles empty social array gracefully', () => {
-    const propsWithoutSocial = {
-      ...defaultProps,
-      social: []
-    }
-    
-    render(<Hero {...propsWithoutSocial} />)
-    
-    expect(screen.getByText('No social links available')).toBeInTheDocument()
-  })
 
   it('uses longSummary when available', () => {
     render(<Hero {...defaultProps} />)

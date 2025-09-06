@@ -75,6 +75,19 @@ export interface ModalProps extends BaseComponentProps {
   closeOnEscape?: boolean
 }
 
+// Confirmation Modal Props
+export interface ConfirmationModalProps extends BaseComponentProps {
+  isOpen: boolean
+  onClose: () => void
+  onConfirm: () => void
+  title?: string
+  message?: string
+  confirmText?: string
+  cancelText?: string
+  variant?: 'danger' | 'warning' | 'info' | 'primary'
+  icon?: string
+}
+
 // Form Component Props
 export interface InputProps extends BaseComponentProps {
   type?: 'text' | 'email' | 'password' | 'tel' | 'url' | 'number'
@@ -171,12 +184,6 @@ export interface HeroProps extends BaseComponentProps {
     profileImage: string
     coreValues?: string[]
   }
-  social: Array<{
-    name: string
-    url: string
-    icon: string
-    color: string
-  }>
   onScrollDown?: () => void
 }
 
@@ -330,16 +337,25 @@ export interface ContactProps extends BaseComponentProps {
     availability: string
     responseTime: string
     preferredContact: string
+    linkedin?: string
+    github?: string
   }
   personal: {
+    name: string
+    title: string
     email: string
     phone: string
     phoneSecondary: string
     location: string
     website: string
+    profileImage: string
+    availability: string
+    remote?: string
+    relocation?: string
   }
   isUnlocked: boolean
   onUnlock: () => void
+  onLock?: () => void
 }
 
 // Contact Modal Props
