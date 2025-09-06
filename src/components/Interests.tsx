@@ -8,6 +8,7 @@ export function Interests({ interests }: InterestsProps) {
   return (
     <Section 
       id="interests" 
+      data-section="interests"
       title={String(t('interests.title'))} 
       subtitle={String(t('interests.subtitle'))}
     >

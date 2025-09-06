@@ -62,16 +62,79 @@ export function Navigation({
   }
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      const navHeight = 80
-      const offset = 20
-      const elementTop = element.offsetTop - navHeight - offset
+    // Alternative approach: Use a more reliable method to find and scroll to sections
+    const scrollToElement = () => {
+      // Method 1: Try getElementById first (fastest)
+      let element = document.getElementById(sectionId)
       
-      window.scrollTo({
-        top: elementTop,
-        behavior: 'smooth'
-      })
+      // Method 2: If not found, try querySelector with more specific selector
+      if (!element) {
+        element = document.querySelector(`section[id="${sectionId}"]`)
+      }
+      
+      // Method 3: If still not found, try finding by data attribute or class
+      if (!element) {
+        element = document.querySelector(`[data-section="${sectionId}"]`)
+      }
+      
+      // Method 4: Last resort - find by section class and check if it contains the ID
+      if (!element) {
+        const sections = document.querySelectorAll('section')
+        for (const section of sections) {
+          if (section.id === sectionId) {
+            element = section
+            break
+          }
+        }
+      }
+      
+      if (element) {
+        // Calculate the scroll position accounting for fixed navbar
+        const navHeight = 80
+        const offset = 20
+        const elementRect = element.getBoundingClientRect()
+        const elementTop = elementRect.top + window.pageYOffset - navHeight - offset
+        
+        // Smooth scroll to the calculated position
+        window.scrollTo({
+          top: elementTop,
+          behavior: 'smooth'
+        })
+        
+        return true
+      }
+      
+      return false
+    }
+    
+    // Try to scroll immediately
+    if (!scrollToElement()) {
+      // If not found, use a more aggressive approach with multiple attempts
+      let attempts = 0
+      const maxAttempts = 10
+      
+      const retryScroll = () => {
+        attempts++
+        
+        if (scrollToElement()) {
+          return // Success!
+        }
+        
+        if (attempts < maxAttempts) {
+          // Try again with increasing delay
+          const delay = attempts * 100 // 100ms, 200ms, 300ms, etc.
+          setTimeout(retryScroll, delay)
+        } else {
+          // Final fallback: scroll to top
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          })
+        }
+      }
+      
+      // Start retry process
+      setTimeout(retryScroll, 50) // Small initial delay
     }
     
     if (window.innerWidth < 992) {

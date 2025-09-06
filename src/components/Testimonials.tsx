@@ -40,7 +40,7 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
   }
 
   return (
-    <div className="testimonials-container">
+    <section id="testimonials" data-section="testimonials" className="testimonials-container">
       <div className="testimonials-carousel">
         {/* Main Testimonial Display */}
         <div className="testimonial-main">
@@ -151,6 +151,6 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

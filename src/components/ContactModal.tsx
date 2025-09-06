@@ -1,4 +1,5 @@
-import { useState, useCallback, useRef } from 'preact/hooks'
+import { useState, useCallback, useRef, useEffect } from 'preact/hooks'
+import { useTranslation } from '../contexts/TranslationContext'
 import type { ContactModalProps, ContactFormData, FormErrors } from '../types'
 
 // Security constants
@@ -61,6 +62,7 @@ const validateForm = (formData: ContactFormData): FormErrors => {
 }
 
 export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
+  const { t } = useTranslation()
   const [formData, setFormData] = useState<ContactFormData>({
     visitorName: '',
     visitorEmail: '',
@@ -170,6 +172,26 @@ export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
     setAttempts(0)
   }
 
+  // Handle keyboard events
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && show && !isSubmitting) {
+        onClose()
+      }
+    }
+
+    if (show) {
+      document.addEventListener('keydown', handleKeyDown)
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden'
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = 'unset'
+    }
+  }, [show, isSubmitting, onClose])
+
   if (!show) {
     return null
   }
@@ -178,18 +200,16 @@ export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
   const remainingLockoutTime = Math.ceil((lockoutUntil - Date.now()) / 1000)
 
   return (
-    <div className="modal fade show" style={{ display: 'block' }} tabIndex={-1}>
-      <div className="modal-dialog modal-dialog-centered modal-mobile">
+    <>
+      <div 
+        className="modal-backdrop fade show" 
+        onClick={isSubmitting ? undefined : onClose}
+      ></div>
+      <div className="modal fade show" style={{ display: 'block' }} tabIndex={-1}>
+        <div className="modal-dialog modal-dialog-centered modal-mobile">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">Unlock Contact Information</h5>
-            <button 
-              type="button" 
-              className="btn-close" 
-              onClick={onClose}
-              aria-label="Close"
-              disabled={isSubmitting}
-            ></button>
+            <h5 className="modal-title">{t('contact.form.title')}</h5>
           </div>
           
           <form ref={formRef} onSubmit={handleSubmit}>
@@ -198,20 +218,20 @@ export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
               {isLockedOut && (
                 <div className="alert alert-warning">
                   <i className="fa-solid fa-shield-alt me-2"></i>
-                  Form temporarily locked. Please wait {remainingLockoutTime} seconds.
+                  {t('contact.form.locked', `Form temporarily locked. Please wait ${remainingLockoutTime} seconds.`)}
                 </div>
               )}
               
               {attempts > 0 && !isLockedOut && (
                 <div className="alert alert-info">
                   <i className="fa-solid fa-info-circle me-2"></i>
-                  Attempts: {attempts}/{MAX_ATTEMPTS}
+                  {t('contact.form.attempts', `Attempts: ${attempts}/${MAX_ATTEMPTS}`)}
                 </div>
               )}
               
               <div className="form-group">
                 <label htmlFor="visitorName" className="form-label">
-                  Full Name * <span className="text-muted">(2-100 characters)</span>
+                  {t('contact.form.fullName')} * <span className="text-muted">({t('contact.form.characters', '2-100 characters')})</span>
                 </label>
                 <input 
                   type="text" 
@@ -222,7 +242,7 @@ export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
                   onChange={handleInputChange}
                   required
                   disabled={isLockedOut || isSubmitting}
-                  placeholder="Enter your full name"
+                  placeholder={t('contact.form.fullNamePlaceholder', 'Enter your full name')}
                   maxLength={100}
                   pattern="[a-zA-Z\s\-'\.]+"
                   title="Only letters, spaces, hyphens, apostrophes, and periods allowed"
@@ -234,7 +254,7 @@ export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
               
               <div className="form-group">
                 <label htmlFor="visitorEmail" className="form-label">
-                  Email Address * <span className="text-muted">(max 254 characters)</span>
+                  {t('contact.form.email')} * <span className="text-muted">(max 254 characters)</span>
                 </label>
                 <input 
                   type="email" 
@@ -245,7 +265,7 @@ export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
                   onChange={handleInputChange}
                   required
                   disabled={isLockedOut || isSubmitting}
-                  placeholder="Enter your email address"
+                  placeholder={t('contact.form.emailPlaceholder', 'Enter your email address')}
                   maxLength={254}
                 />
                 {errors.visitorEmail && (
@@ -255,7 +275,7 @@ export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
               
               <div className="form-group">
                 <label htmlFor="visitorCompany" className="form-label">
-                  Company <span className="text-muted">(Optional, max 100 characters)</span>
+                  {t('contact.form.company')} <span className="text-muted">({t('contact.form.optional')}, max 100 characters)</span>
                 </label>
                 <input 
                   type="text" 
@@ -265,7 +285,7 @@ export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
                   value={formData.visitorCompany}
                   onChange={handleInputChange}
                   disabled={isLockedOut || isSubmitting}
-                  placeholder="Enter your company name"
+                  placeholder={t('contact.form.companyPlaceholder', 'Enter your company name')}
                   maxLength={100}
                   pattern="[a-zA-Z0-9\s\-'\.&,]+"
                   title="Only letters, numbers, spaces, hyphens, apostrophes, periods, ampersands, and commas allowed"
@@ -276,7 +296,7 @@ export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
               </div>
               
               <div className="form-group">
-                <label htmlFor="contactReason" className="form-label">Reason for Contact</label>
+                <label htmlFor="contactReason" className="form-label">{t('contact.form.reason')}</label>
                 <select 
                   className={`form-select ${errors.contactReason ? 'is-invalid' : ''}`}
                   id="contactReason" 
@@ -285,23 +305,38 @@ export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
                   onChange={handleInputChange}
                   disabled={isLockedOut || isSubmitting}
                 >
-                  <option value="">Select a reason...</option>
-                  <option value="job-opportunity">Job Opportunity</option>
-                  <option value="project-collaboration">Project Collaboration</option>
-                  <option value="consulting">Consulting</option>
-                  <option value="networking">Networking</option>
-                  <option value="other">Other</option>
+                  <option value="">{t('contact.form.reasonPlaceholder', 'Select a reason...')}</option>
+                  <option value="job-opportunity">{t('contact.form.reasonOptions.jobOpportunity')}</option>
+                  <option value="project-collaboration">{t('contact.form.reasonOptions.projectCollaboration')}</option>
+                  <option value="consulting">{t('contact.form.reasonOptions.consulting')}</option>
+                  <option value="networking">{t('contact.form.reasonOptions.networking')}</option>
+                  <option value="other">{t('contact.form.reasonOptions.other')}</option>
                 </select>
                 {errors.contactReason && (
                   <div className="invalid-feedback">{errors.contactReason}</div>
                 )}
               </div>
               
-              {/* Security Notice */}
-              <div className="alert alert-info small">
-                <i className="fa-solid fa-shield-alt me-2"></i>
-                <strong>Security:</strong> This form is protected against spam and abuse. 
-                Your information is processed securely and will not be shared.
+              {/* Security & Privacy Notice */}
+              <div className="alert alert-info enterprise-security">
+                <div className="security-header">
+                  <i className="fa-solid fa-shield-alt"></i>
+                  <span className="security-title">{t('contact.form.security', 'Security & Privacy')}</span>
+                </div>
+                <div className="security-content">
+                  <div className="security-item">
+                    <i className="fa-solid fa-lock"></i>
+                    <span>{t('contact.form.securityNotice', 'Protected against spam and abuse. Data processed securely.')}</span>
+                  </div>
+                  <div className="security-item">
+                    <i className="fa-solid fa-database"></i>
+                    <span>{t('contact.form.dataStorage', 'Local storage: 30 days. No external transmission.')}</span>
+                  </div>
+                  <div className="security-item">
+                    <i className="fa-solid fa-wrench"></i>
+                    <span>{t('contact.form.dataMetrics', 'Hashed data. Auto-expires or manual clear.')}</span>
+                  </div>
+                </div>
               </div>
             </div>
             
@@ -312,7 +347,7 @@ export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
                 onClick={onClose}
                 disabled={isSubmitting}
               >
-                Cancel
+                {t('contact.form.cancel')}
               </button>
               <button 
                 ref={submitButtonRef}
@@ -323,12 +358,12 @@ export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
                 {isSubmitting ? (
                   <>
                     <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                    Submitting...
+                    {t('contact.form.submitting', 'Submitting...')}
                   </>
                 ) : (
                   <>
                     <i className="fa-solid fa-unlock me-2"></i>
-                    Unlock Information
+                    {t('contact.form.submit')}
                   </>
                 )}
               </button>
@@ -336,10 +371,8 @@ export function ContactModal({ show, onClose, onSubmit }: ContactModalProps) {
           </form>
         </div>
       </div>
-      
-      {/* Modal backdrop */}
-      <div className="modal-backdrop fade show" onClick={isSubmitting ? undefined : onClose}></div>
     </div>
+    </>
   )
 }
 

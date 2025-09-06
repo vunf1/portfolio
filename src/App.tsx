@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useState } from 'preact/compat'
 import { usePortfolioData } from './hooks/usePortfolioData'
 import { useTranslation } from './contexts/TranslationContext'
 import { useTheme } from './hooks/useTheme'
+import { useContactUnlock } from './hooks/useContactUnlock'
 import { Navigation } from './components/Navigation'
 import { Contact } from './components/Contact'
 import { ContactModal } from './components/ContactModal'
@@ -10,7 +11,6 @@ import { Hero } from './components/Hero'
 import { SectionSkeleton } from './components/SectionSkeleton'
 
 // Lazy load non-critical components
-const About = lazy(() => import('./components/About').then(module => ({ default: module.About })))
 const Experience = lazy(() => import('./components/Experience').then(module => ({ default: module.Experience })))
 const Education = lazy(() => import('./components/Education').then(module => ({ default: module.Education })))
 const Skills = lazy(() => import('./components/Skills').then(module => ({ default: module.Skills })))
@@ -24,8 +24,8 @@ export function App() {
   const { t, currentLanguage } = useTranslation()
   const { portfolioData, loading, error } = usePortfolioData(currentLanguage)
   useTheme() // Initialize theme system
+  const { isUnlocked: contactUnlocked, unlockContact } = useContactUnlock()
   const [showContactModal, setShowContactModal] = useState(false)
-  const [contactUnlocked, setContactUnlocked] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
   const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false)
 
@@ -62,16 +62,25 @@ export function App() {
     return () => observer.disconnect()
   }, [])
 
-  const handleContactUnlock = () => {
-    // Here you would typically send the data to your backend
-    setContactUnlocked(true)
-    setShowContactModal(false)
+  const handleContactUnlock = (formData: any) => {
+    // Extract name and email from form data
+    const userData = {
+      name: formData.visitorName,
+      email: formData.visitorEmail
+    }
+    
+    // Store unlock state persistently
+    const success = unlockContact(userData)
+    if (success) {
+      setShowContactModal(false)
+    }
+    // Note: unlockContact already updates the state, so no need to call setContactUnlocked
   }
 
   const handleScrollDown = () => {
-    const aboutSection = document.getElementById('about')
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' })
+    const contactSection = document.getElementById('contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
     }
   }
 
@@ -82,27 +91,61 @@ export function App() {
     }
 
     const observerOptions = {
-      threshold: 0.3,
-      rootMargin: '-20% 0px -20% 0px'
+      threshold: [0.1, 0.3, 0.5, 0.7, 0.9], // Multiple thresholds for better detection
+      rootMargin: '-10% 0px -10% 0px' // Less restrictive margin
     }
 
     const observer = new IntersectionObserver((entries) => {
+      // Find the section with the highest intersection ratio
+      let mostVisibleSection = null
+      let highestRatio = 0
+      
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const sectionId = entry.target.id
-          if (sectionId) {
-            setActiveSection(sectionId)
-          }
+        if (entry.isIntersecting && entry.intersectionRatio > highestRatio) {
+          highestRatio = entry.intersectionRatio
+          mostVisibleSection = entry.target.id
         }
       })
+      
+      if (mostVisibleSection) {
+        setActiveSection(mostVisibleSection)
+      }
     }, observerOptions)
 
-    // Observe all sections
-    const sections = document.querySelectorAll('section[id]')
-    sections.forEach((section) => observer.observe(section))
+    // Function to observe all sections
+    const observeSections = () => {
+      const sections = document.querySelectorAll('section[id]')
+      sections.forEach((section) => {
+        // Only observe if not already observed
+        if (!section.hasAttribute('data-observed')) {
+          observer.observe(section)
+          section.setAttribute('data-observed', 'true')
+        }
+      })
+    }
 
-    return () => observer.disconnect()
-  }, [portfolioData]) // Remove activeSection from dependencies
+    // Initial observation
+    observeSections()
+
+    // Re-observe sections after a delay to catch lazy-loaded components
+    const timeoutId = setTimeout(observeSections, 1000)
+
+    // Also observe when DOM changes (for lazy-loaded components)
+    const mutationObserver = new MutationObserver(() => {
+      observeSections()
+    })
+
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true
+    })
+
+    return () => {
+      observer.disconnect()
+      mutationObserver.disconnect()
+      clearTimeout(timeoutId)
+    }
+  }, [portfolioData])
 
   // Show loading state
   if (loading) {
@@ -164,7 +207,6 @@ export function App() {
       <>
         <Navigation 
           items={[
-            { id: 'about', label: String(t('navigation.about')), icon: 'fa-solid fa-user' },
             { id: 'experience', label: String(t('navigation.experience')), icon: 'fa-solid fa-briefcase' },
             { id: 'education', label: String(t('navigation.education')), icon: 'fa-solid fa-graduation-cap' },
             { id: 'skills', label: String(t('navigation.skills')), icon: 'fa-solid fa-code' },
@@ -187,13 +229,13 @@ export function App() {
         />
         
         <div className={`portfolio-container ${isLanguageTransitioning ? 'language-transitioning' : ''}`}>
-          {/* About Section */}
-          <Suspense fallback={<SectionSkeleton />}>
-            <About 
-              personal={portfolioData.personal} 
-              social={portfolioData.social} 
-            />
-          </Suspense>
+          {/* Contact Section */}
+          <Contact 
+            personal={portfolioData.personal}
+            contact={portfolioData.contact}
+            isUnlocked={contactUnlocked}
+            onUnlock={() => setShowContactModal(true)}
+          />
           
           {/* Experience Section */}
           <Suspense fallback={<SectionSkeleton />}>
@@ -244,14 +286,6 @@ export function App() {
               <Awards awards={portfolioData.awards} />
             </Suspense>
           )}
-          
-          {/* Contact Section */}
-          <Contact 
-            personal={portfolioData.personal}
-            contact={portfolioData.contact}
-            isUnlocked={contactUnlocked}
-            onUnlock={() => setShowContactModal(true)}
-          />
         </div>
 
         <ContactModal 

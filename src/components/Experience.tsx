@@ -70,6 +70,7 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
   return (
     <Section 
       id={id || 'experience'} 
+      data-section="experience"
       className={className} 
       title={String(t('experience.title'))} 
       subtitle={String(t('experience.subtitle'))}

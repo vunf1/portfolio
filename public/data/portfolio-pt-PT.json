@@ -610,13 +610,43 @@
         },
         "required": "Necessário",
         "submit": "Desbloquear",
-        "title": "Desbloquear informações de contacto"
+        "submitting": "A submeter...",
+        "title": "Desbloquear informações de contacto",
+        "locked": "Formulário temporariamente bloqueado. Por favor, aguarde {seconds} segundos.",
+        "attempts": "Tentativas: {current}/{max}",
+        "characters": "2-100 caracteres",
+        "fullNamePlaceholder": "Introduza o seu nome completo",
+        "emailPlaceholder": "Introduza o seu endereço de correio eletrónico",
+        "companyPlaceholder": "Introduza o nome da sua empresa",
+        "reasonPlaceholder": "Selecione um motivo...",
+        "security": "Segurança e Privacidade",
+        "securityNotice": "Protegido contra spam e abuso. Dados processados com segurança.",
+        "dataStorage": "Armazenamento local: 30 dias. Sem transmissão externa.",
+        "dataMetrics": "Dados codificados. Expiração automática ou limpeza manual."
       },
       "preferredContact": "Método de contacto preferido",
       "responseTime": "Tempo de resposta",
       "subtitle": "Vamos falar sobre o seu projeto",
       "title": "Contacto",
-      "unlockInfo": "Desbloquear informações de contacto"
+      "unlockInfo": "Desbloquear informações de contacto",
+      "unlockTitle": "Clique para desbloquear o acesso às minhas informações",
+      "unlockSubtitle": "Entre em contacto comigo",
+      "unlockButton": "Desbloquear Informações de Contacto",
+      "placeholderText": "As informações de contacto serão exibidas aqui após o desbloqueio.",
+      "unlocked": "Contacto Desbloqueado",
+      "ctaText": "Pronto para trabalharmos juntos?",
+      "sendMessage": "Enviar Mensagem",
+      "labels": {
+        "email": "Correio Eletrónico",
+        "phone": "Telefone",
+        "location": "Localização",
+        "website": "Sítio Web",
+        "connect": "Conectar"
+      },
+      "badges": {
+        "remoteAvailable": "Trabalho Remoto Disponível",
+        "openToRelocation": "Aberto à Relocalização"
+      }
     },
     "education": {
       "achievements": "Realizações",
@@ -656,7 +686,6 @@
       "title": "Interesses"
     },
     "navigation": {
-      "about": "Sobre",
       "awards": "Prémios",
       "brand": "João Maia",
       "certifications": "Certificações",

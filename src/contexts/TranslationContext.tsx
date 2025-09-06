@@ -102,8 +102,8 @@ export function useTranslation() {
     localStorage.setItem('i18nextLng', lang)
   }, [loadTranslations])
 
-  // Translation function
-  const t = useCallback((key: string, defaultValue?: string) => {
+  // Translation function - not using useCallback to ensure it's recreated on every render
+  const t = (key: string, defaultValue?: string) => {
     const keys = key.split('.')
     let value: unknown = globalTranslations
     
@@ -116,7 +116,7 @@ export function useTranslation() {
     }
     
     return (value as string) || defaultValue || key
-  }, [translations])
+  }
 
   return {
     t,

@@ -8,6 +8,7 @@ export function Projects({ projects }: ProjectsProps) {
   return (
     <Section 
       id="projects" 
+      data-section="projects"
       title={String(t('projects.title'))} 
       subtitle={String(t('projects.subtitle'))}
     >

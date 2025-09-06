@@ -12,6 +12,7 @@ export function Education({ education, className = '', id }: EducationProps) {
   return (
     <Section 
       id={id || 'education'} 
+      data-section="education"
       className={className} 
       title={String(t('education.title'))} 
       subtitle={String(t('education.subtitle'))}

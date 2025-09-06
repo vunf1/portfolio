@@ -13,6 +13,7 @@ export interface SectionProps extends BaseComponentProps {
   title?: string
   subtitle?: string
   variant?: 'default' | 'alternate' | 'highlighted'
+  'data-section'?: string
 }
 
 // Card Component Props
@@ -220,14 +221,14 @@ export interface SkillsProps extends BaseComponentProps {
       category: string
       skills: Array<{
         name: string
-        level: 'Foundational' | 'Proficient' | 'Advanced' | 'Expert'
+        level: import('./portfolio').SkillLevel
         experience: string
         projects: number
       }>
     }>
     soft: Array<{
       name: string
-      level: 'Foundational' | 'Proficient' | 'Advanced' | 'Expert'
+      level: import('./portfolio').SkillLevel
       description: string
     }>
   }

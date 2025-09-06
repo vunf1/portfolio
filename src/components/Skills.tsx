@@ -11,6 +11,7 @@ export function Skills({ skills }: SkillsProps) {
     return (
       <Section 
         id="skills" 
+        data-section="skills"
         title={String(t('skills.title'))} 
         subtitle={String(t('skills.subtitle'))}
       >
@@ -114,6 +115,7 @@ export function Skills({ skills }: SkillsProps) {
   return (
     <Section 
       id="skills" 
+      data-section="skills"
       title={String(t('skills.title'))} 
       subtitle={String(t('skills.subtitle'))}
     >

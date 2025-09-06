@@ -8,6 +8,7 @@ export function Awards({ awards }: AwardsProps) {
   return (
     <Section 
       id="awards" 
+      data-section="awards"
       title={String(t('awards.title'))} 
       subtitle={String(t('awards.subtitle'))}
     >

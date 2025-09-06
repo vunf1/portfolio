@@ -12,6 +12,7 @@ export function Certifications({ certifications, className = '', id }: Certifica
   return (
     <Section 
       id={id || 'certifications'} 
+      data-section="certifications"
       className={className} 
       title={String(t('certifications.title'))} 
       subtitle={String(t('certifications.subtitle'))}

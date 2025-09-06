@@ -484,13 +484,43 @@
         },
         "required": "Required",
         "submit": "Unlock",
-        "title": "Unlock Contact Information"
+        "submitting": "Submitting...",
+        "title": "Unlock Contact Information",
+        "locked": "Form temporarily locked. Please wait {seconds} seconds.",
+        "attempts": "Attempts: {current}/{max}",
+        "characters": "2-100 characters",
+        "fullNamePlaceholder": "Enter your full name",
+        "emailPlaceholder": "Enter your email address",
+        "companyPlaceholder": "Enter your company name",
+        "reasonPlaceholder": "Select a reason...",
+        "security": "Security & Privacy",
+        "securityNotice": "Protected against spam and abuse. Data processed securely.",
+        "dataStorage": "Local storage: 30 days. No external transmission.",
+        "dataMetrics": "Hashed data. Auto-expires or manual clear."
       },
       "preferredContact": "Preferred Contact Method",
       "responseTime": "Response Time",
       "subtitle": "Let's talk about your project",
       "title": "Contact",
-      "unlockInfo": "Unlock Contact Information"
+      "unlockInfo": "Unlock Contact Information",
+      "unlockTitle": "Click to unlock access to my information",
+      "unlockSubtitle": "Get in touch with me",
+      "unlockButton": "Unlock Contact Info",
+      "placeholderText": "Contact information will be displayed here after unlocking.",
+      "unlocked": "Contact Unlocked",
+      "ctaText": "Ready to work together?",
+      "sendMessage": "Send Message",
+      "labels": {
+        "email": "Email",
+        "phone": "Phone",
+        "location": "Location",
+        "website": "Website",
+        "connect": "Connect"
+      },
+      "badges": {
+        "remoteAvailable": "Remote Available",
+        "openToRelocation": "Open to Relocation"
+      }
     },
     "education": {
       "achievements": "Achievements",
@@ -530,7 +560,6 @@
       "title": "Interests"
     },
     "navigation": {
-      "about": "About",
       "awards": "Awards",
       "brand": "João Maia",
       "certifications": "Certifications",

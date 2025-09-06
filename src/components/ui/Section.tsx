@@ -6,7 +6,8 @@ export function Section({
   id, 
   title, 
   subtitle, 
-  variant = 'default' 
+  variant = 'default',
+  'data-section': dataSection
 }: SectionProps) {
   const sectionClasses = [
     'section',
@@ -15,7 +16,11 @@ export function Section({
   ].filter(Boolean).join(' ')
 
   return (
-    <section className={sectionClasses} id={id}>
+    <section 
+      className={sectionClasses} 
+      id={id}
+      data-section={dataSection}
+    >
       {(title || subtitle) && (
         <div className="section-header">
           {title && <h2 className="section-title">{title}</h2>}
