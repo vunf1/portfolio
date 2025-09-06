@@ -466,6 +466,16 @@
       "theme": "Theme",
       "tryRefreshing": "Please try refreshing the page."
     },
+    "fab": {
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu",
+      "darkMode": "Dark Mode",
+      "lightMode": "Light Mode",
+      "switchToDark": "Switch to dark mode",
+      "switchToLight": "Switch to light mode",
+      "switchToEnglish": "Switch to English",
+      "switchToPortuguese": "Switch to Portuguese"
+    },
     "contact": {
       "availability": "Availability",
       "form": {

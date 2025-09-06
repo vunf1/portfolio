@@ -592,6 +592,16 @@
       "theme": "Tema",
       "tryRefreshing": "Tente atualizar a página."
     },
+    "fab": {
+      "openMenu": "Abrir menu",
+      "closeMenu": "Fechar menu",
+      "darkMode": "Modo escuro",
+      "lightMode": "Modo claro",
+      "switchToDark": "Mudar para modo escuro",
+      "switchToLight": "Mudar para modo claro",
+      "switchToEnglish": "Mudar para inglês",
+      "switchToPortuguese": "Mudar para português"
+    },
     "contact": {
       "availability": "Disponibilidade",
       "form": {

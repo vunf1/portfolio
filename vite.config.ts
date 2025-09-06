@@ -1,9 +1,13 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import preact from '@preact/preset-vite'
 import { resolve } from 'path'
 import { createHtmlPlugin } from 'vite-plugin-html'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+  // Load environment variables
+  const env = loadEnv(mode, process.cwd(), '')
+  
+  return {
   plugins: [
     preact(),
     createHtmlPlugin({
@@ -65,6 +69,10 @@ export default defineConfig({
     chunkSizeWarningLimit: 2000, // Increase warning limit
     assetsInlineLimit: 4096,
   },
+  css: {
+    postcss: './postcss.config.cjs',
+    devSourcemap: true, // Enable CSS source maps in dev
+  },
   optimizeDeps: {
     include: [
       'preact',
@@ -87,7 +95,7 @@ export default defineConfig({
     }
   },
   preview: {
-    port: 4173,
+    port: 3000, // Use same port as dev for consistency
     open: true,
     headers: {
       'X-Content-Type-Options': 'nosniff',
@@ -95,4 +103,5 @@ export default defineConfig({
       'X-XSS-Protection': '1; mode=block',
     },
   },
+  }
 })

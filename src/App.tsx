@@ -9,6 +9,7 @@ import { ContactModal } from './components/ContactModal'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { Hero } from './components/Hero'
 import { SectionSkeleton } from './components/SectionSkeleton'
+import { FloatingActionButton } from './components/FloatingActionButton'
 
 // Lazy load non-critical components
 const Experience = lazy(() => import('./components/Experience').then(module => ({ default: module.Experience })))
@@ -293,6 +294,8 @@ export function App() {
           onClose={() => setShowContactModal(false)}
           onSubmit={handleContactUnlock}
         />
+
+        <FloatingActionButton />
       </>
     </ErrorBoundary>
   )

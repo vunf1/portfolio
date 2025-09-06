@@ -2,7 +2,6 @@ import { render } from 'preact'
 import { App } from './App'
 import { preloadTranslations } from './contexts/TranslationContext'
 import './index.css'
-import './css/premium.css'
 
 console.log('🚀 Main.tsx starting...')
 
