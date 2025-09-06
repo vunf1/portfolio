@@ -1,16 +1,21 @@
+import { useTranslation } from '../contexts/TranslationContext'
+import { Section } from './ui'
 import type { SkillsProps } from '../types/components'
 import type { SkillLevel } from '../types/portfolio'
 
 export function Skills({ skills }: SkillsProps) {
+  const { t } = useTranslation()
+  
   // Handle the new skills data structure
   if (!skills || typeof skills !== 'object') {
     return (
-      <section className="resume-section" id="skills">
-        <div className="resume-section-content">
-          <h2 className="mb-4">Skills</h2>
-          <p>Skills data not available.</p>
-        </div>
-      </section>
+      <Section 
+        id="skills" 
+        title={String(t('skills.title'))} 
+        subtitle={String(t('skills.subtitle'))}
+      >
+        <p>Skills data not available.</p>
+      </Section>
     )
   }
 
@@ -18,6 +23,7 @@ export function Skills({ skills }: SkillsProps) {
 
   const getProficiencyIcon = (level: SkillLevel): string => {
     switch (level) {
+      // English level names
       case 'Foundational':
         return 'fa-solid fa-seedling'
       case 'Proficient':
@@ -25,6 +31,15 @@ export function Skills({ skills }: SkillsProps) {
       case 'Advanced':
         return 'fa-solid fa-tree'
       case 'Expert':
+        return 'fa-solid fa-crown'
+      // Portuguese level names
+      case 'Fundacional':
+        return 'fa-solid fa-seedling'
+      case 'Proficiente':
+        return 'fa-solid fa-leaf'
+      case 'Avançado':
+        return 'fa-solid fa-tree'
+      case 'Perito':
         return 'fa-solid fa-crown'
       default:
         return 'fa-solid fa-circle'
@@ -83,14 +98,29 @@ export function Skills({ skills }: SkillsProps) {
 
   // Type assertion for proficiencyLevels
   const typedProficiencyLevels = proficiencyLevels as Record<SkillLevel, string>
+  
+  // Get translated level names - handles both English and Portuguese level names
+  const getTranslatedLevelName = (level: SkillLevel): string => {
+    // First try to translate using the level as a key
+    const translated = t(`skills.levelNames.${level}`)
+    if (translated && translated !== `skills.levelNames.${level}`) {
+      return translated
+    }
+    
+    // If that fails, it might be a Portuguese level name, so return it as-is
+    return level
+  }
 
   return (
-    <section className="resume-section" id="skills">
-      <div className="resume-section-content">
+    <Section 
+      id="skills" 
+      title={String(t('skills.title'))} 
+      subtitle={String(t('skills.subtitle'))}
+    >
 
         {/* Proficiency Legend */}
         <div className="proficiency-legend">
-          <h4 className="legend-title">Proficiency Levels</h4>
+          <h4 className="legend-title">{t('skills.proficiencyLevels')}</h4>
           <div className="legend-grid">
             {(['Foundational', 'Proficient', 'Advanced', 'Expert'] as SkillLevel[]).map((level) => (
               <div key={level} className="legend-item">
@@ -98,7 +128,7 @@ export function Skills({ skills }: SkillsProps) {
                   <i className={getProficiencyIcon(level)}></i>
                 </div>
                 <div className="legend-content">
-                  <div className="legend-level">{level}</div>
+                  <div className="legend-level">{getTranslatedLevelName(level)}</div>
                   <div className="legend-description">{typedProficiencyLevels[level] || ''}</div>
                 </div>
               </div>
@@ -130,7 +160,7 @@ export function Skills({ skills }: SkillsProps) {
                       </div>
                       <div className="skill-compact-level skill-proficiency">
                         <i className={getProficiencyIcon(skill.level)}></i>
-                        <span>{skill.level}</span>
+                        <span>{getTranslatedLevelName(skill.level)}</span>
                       </div>
                     </div>
                     <div className="skill-compact-details">
@@ -156,7 +186,7 @@ export function Skills({ skills }: SkillsProps) {
           {/* Soft Skills */}
           {soft.length > 0 && (
             <div className="skills-category">
-              <h3 className="skills-category-title">Soft Skills</h3>
+              <h3 className="skills-category-title">{t('skills.soft')}</h3>
               <div className="skills-compact-grid">
                 {soft.map((skill, skillIndex) => (
                   <div key={skillIndex} className="skill-compact-card">
@@ -174,7 +204,7 @@ export function Skills({ skills }: SkillsProps) {
                       </div>
                       <div className="skill-compact-level skill-proficiency">
                         <i className={getProficiencyIcon(skill.level)}></i>
-                        <span>{skill.level}</span>
+                        <span>{getTranslatedLevelName(skill.level)}</span>
                       </div>
                     </div>
                     {skill.description && (
@@ -188,8 +218,7 @@ export function Skills({ skills }: SkillsProps) {
             </div>
           )}
         </div>
-      </div>
-    </section>
+    </Section>
   )
 }
 

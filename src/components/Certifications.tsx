@@ -1,9 +1,9 @@
-import { useI18n } from '../hooks/useI18n'
+import { useTranslation } from '../contexts/TranslationContext'
 import { Section, Card, Badge, Button } from './ui'
 import type { CertificationsProps } from '../types/components'
 
 export function Certifications({ certifications, className = '', id }: CertificationsProps) {
-  const { t } = useI18n()
+  const { t } = useTranslation()
   
   if (!certifications || certifications.length === 0) {
     return null

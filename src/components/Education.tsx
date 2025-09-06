@@ -1,9 +1,9 @@
-import { useI18n } from '../hooks/useI18n'
+import { useTranslation } from '../contexts/TranslationContext'
 import { Section, Card } from './ui'
 import type { EducationProps } from '../types/components'
 
 export function Education({ education, className = '', id }: EducationProps) {
-  const { t } = useI18n()
+  const { t } = useTranslation()
   
   if (!education || education.length === 0) {
     return null

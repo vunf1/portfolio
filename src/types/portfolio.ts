@@ -54,8 +54,8 @@ export interface Education {
   achievements: string[]
 }
 
-// Skill Proficiency Bands
-export type SkillLevel = 'Foundational' | 'Proficient' | 'Advanced' | 'Expert'
+// Skill Proficiency Bands - supports both English and Portuguese level names
+export type SkillLevel = 'Foundational' | 'Proficient' | 'Advanced' | 'Expert' | 'Fundacional' | 'Proficiente' | 'Avançado' | 'Perito'
 
 export interface Skill {
   name: string

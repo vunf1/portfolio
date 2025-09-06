@@ -234,7 +234,7 @@
         "description": "Programador full-stack focado em operações back-end, Azure e OOP. Baseado no Porto, Portugal.",
         "keywords": [
           "Full-Stack",
-          "Azure",
+          "Azulejo",
           "OOP",
           "Portugal",
           "Porto"
@@ -259,7 +259,7 @@
         "Inglês - C1 (expressão oral), C1 (expressão escrita), C2 (compreensão)"
       ],
       "location": "Porto, Portugal",
-      "longSummary": "Desde 2010, tenho vindo a explorar metodologias de programação, ciência da computação e arquitecturas de rede. Trabalho em consultoria de TI, streaming ao vivo com várias câmaras e desenvolvimento web - com um forte foco na eficiência, automação e entrega fiável.",
+      "longSummary": "Desde 2010, tenho vindo a explorar metodologias de programação, ciência da computação e arquitecturas de rede. Trabalho em consultoria de TI, live streaming multicâmara e desenvolvimento web - com um forte foco na eficiência, automação e entrega fiável.",
       "name": "João Maia",
       "phone": "+351 934 330 807",
       "phoneSecondary": "+44 7393 557259",
@@ -275,10 +275,10 @@
     "projects": [],
     "skills": {
       "proficiencyLevels": {
-        "Advanced": "Lidera a conceção de serviços ou subsistemas, promove melhorias de desempenho/fiabilidade/segurança, orienta os colegas de equipa e eleva as práticas de engenharia.",
-        "Expert": "Define a direção e as normas técnicas, lidera iniciativas complexas com várias equipas, gere a ambiguidade e o risco e produz resultados arquitectónicos a longo prazo.",
-        "Foundational": "Realiza tarefas bem planeadas com orientação e revisões de código, segue normas/cadernos de execução e apoia correcções e manutenção incrementais.",
-        "Proficient": "Planeia e envia funcionalidades de ponta a ponta, faz escolhas informadas, escreve código testável/mantido e comunica claramente os riscos e os prazos."
+        "Advanced": "Lidera a conceção de serviços ou subsistemas, promove melhorias de desempenho, fiabilidade e segurança, orienta os colegas de equipa e eleva as práticas de engenharia.",
+        "Expert": "Define a direção e as normas técnicas, lidera iniciativas complexas de várias equipas, gere a ambiguidade e o risco e apresenta resultados arquitectónicos a longo prazo.",
+        "Foundational": "Realiza tarefas bem definidas com orientação e revisões de código, segue normas e manuais de procedimentos e apoia correcções e manutenção incrementais.",
+        "Proficient": "Planeia e implementa funcionalidades de ponta a ponta, toma decisões informadas, escreve código testável e mantível e comunica claramente os riscos e os prazos."
       },
       "soft": [
         {
@@ -686,11 +686,18 @@
       "description": "Descrição",
       "experience": "Experiência",
       "level": "Nível",
+      "proficiencyLevels": "Níveis de Proficiência",
       "projects": "Projectos",
       "soft": "Competências transversais",
       "subtitle": "Tecnologias e competências",
       "technical": "Competências técnicas",
-      "title": "Competências"
+      "title": "Competências",
+      "levelNames": {
+        "Foundational": "Fundacional",
+        "Proficient": "Proficiente", 
+        "Advanced": "Avançado",
+        "Expert": "Perito"
+      }
     },
     "testimonials": {
       "company": "Empresa",

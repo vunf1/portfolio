@@ -1,9 +1,16 @@
+import { useTranslation } from '../contexts/TranslationContext'
+import { Section } from './ui'
 import type { ContactProps } from '../types'
 
 export function Contact({ personal, isUnlocked, onUnlock }: ContactProps) {
+  const { t } = useTranslation()
+  
   return (
-    <section className="resume-section" id="contact">
-      <div className="resume-section-content">
+    <Section 
+      id="contact" 
+      title={String(t('contact.title'))} 
+      subtitle={String(t('contact.subtitle'))}
+    >
         <div className="contact-container position-relative">
           <div id="contact-content" className={isUnlocked ? '' : 'blur-content'}>
             {isUnlocked ? (
@@ -75,7 +82,6 @@ export function Contact({ personal, isUnlocked, onUnlock }: ContactProps) {
             </div>
           )}
         </div>
-      </div>
-    </section>
+    </Section>
   )
 }

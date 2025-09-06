@@ -13,6 +13,7 @@ export function Navigation({
 }: NavigationProps) {
   const [isNavCollapsed, setIsNavCollapsed] = useState(true)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isLanguageChanging, setIsLanguageChanging] = useState(false)
   const { t, changeLanguage, currentLanguage } = useTranslation()
   const { isDarkMode, toggleTheme } = useTheme()
 
@@ -43,6 +44,21 @@ export function Navigation({
 
   const toggleNav = () => {
     setIsNavCollapsed(!isNavCollapsed)
+  }
+
+  const handleLanguageChange = async (lang: 'en' | 'pt-PT') => {
+    if (lang === currentLanguage) return
+    
+    setIsLanguageChanging(true)
+    
+    try {
+      // Add a small delay for visual feedback
+      await new Promise(resolve => setTimeout(resolve, 100))
+      changeLanguage(lang)
+    } finally {
+      // Reset the loading state after a short delay
+      setTimeout(() => setIsLanguageChanging(false), 200)
+    }
   }
 
   const scrollToSection = (sectionId: string) => {
@@ -148,12 +164,13 @@ export function Navigation({
 
           {/* Language Toggle */}
           <button
-            className="language-toggle"
-            onClick={() => changeLanguage(currentLanguage === 'en' ? 'pt-PT' : 'en')}
+            className={`language-toggle ${isLanguageChanging ? 'changing' : ''}`}
+            onClick={() => handleLanguageChange(currentLanguage === 'en' ? 'pt-PT' : 'en')}
             aria-label={`Switch to ${currentLanguage === 'en' ? 'Portuguese' : 'English'}`}
+            disabled={isLanguageChanging}
           >
             <div className="language-btn">
-              <span className="flag-emoji">
+              <span className={`flag-emoji ${isLanguageChanging ? 'spinning' : ''}`}>
                 {currentLanguage === 'en' ? '🇵🇹' : '🇬🇧'}
               </span>
             </div>

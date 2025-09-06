@@ -1,9 +1,16 @@
+import { useTranslation } from '../contexts/TranslationContext'
+import { Section } from './ui'
 import type { InterestsProps } from '../types'
 
 export function Interests({ interests }: InterestsProps) {
+  const { t } = useTranslation()
+  
   return (
-    <section className="resume-section" id="interests">
-      <div className="resume-section-content">
+    <Section 
+      id="interests" 
+      title={String(t('interests.title'))} 
+      subtitle={String(t('interests.subtitle'))}
+    >
         <div id="interests-content" className="interests-grid">
           {interests.map((interest, index) => (
             <div key={index} className="interest-item">
@@ -33,8 +40,7 @@ export function Interests({ interests }: InterestsProps) {
             </div>
           ))}
         </div>
-      </div>
-    </section>
+    </Section>
   )
 }
 

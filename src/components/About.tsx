@@ -1,9 +1,9 @@
-import { useI18n } from '../hooks/useI18n'
-import { Section, Button } from './ui'
+import { useTranslation } from '../contexts/TranslationContext'
+import { Section } from './ui'
 import type { AboutProps } from '../types/components'
 
 export function About({ personal, social, className = '', id }: AboutProps) {
-  const { t, currentLanguage } = useI18n()
+  const { t, currentLanguage } = useTranslation()
 
   return (
     <Section

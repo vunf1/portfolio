@@ -1,9 +1,16 @@
+import { useTranslation } from '../contexts/TranslationContext'
+import { Section } from './ui'
 import type { AwardsProps } from '../types'
 
 export function Awards({ awards }: AwardsProps) {
+  const { t } = useTranslation()
+  
   return (
-    <section className="resume-section" id="awards">
-      <div className="resume-section-content">
+    <Section 
+      id="awards" 
+      title={String(t('awards.title'))} 
+      subtitle={String(t('awards.subtitle'))}
+    >
         <div id="awards-content" className="awards-grid">
           {awards.map((award, index) => (
             <div key={index} className="award-item">
@@ -57,7 +64,6 @@ export function Awards({ awards }: AwardsProps) {
             </div>
           ))}
         </div>
-      </div>
-    </section>
+    </Section>
   )
 }

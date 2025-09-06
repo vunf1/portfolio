@@ -1,9 +1,9 @@
-import { useI18n } from '../hooks/useI18n'
+import { useTranslation } from '../contexts/TranslationContext'
 import { Section } from './ui'
 import type { ExperienceProps } from '../types'
 
 export function Experience({ experiences, className = '', id }: ExperienceProps) {
-  const { t } = useI18n()
+  const { t } = useTranslation()
   // Safety check: if no experiences data, return null
   if (!experiences || experiences.length === 0) {
     return null

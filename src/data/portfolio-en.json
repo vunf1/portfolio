@@ -560,11 +560,18 @@
       "description": "Description",
       "experience": "Experience",
       "level": "Level",
+      "proficiencyLevels": "Proficiency Levels",
       "projects": "Projects",
       "soft": "Soft Skills",
       "subtitle": "Technologies and competencies",
       "technical": "Technical Skills",
-      "title": "Skills"
+      "title": "Skills",
+      "levelNames": {
+        "Foundational": "Foundational",
+        "Proficient": "Proficient",
+        "Advanced": "Advanced", 
+        "Expert": "Expert"
+      }
     },
     "testimonials": {
       "company": "Company",

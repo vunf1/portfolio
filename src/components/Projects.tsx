@@ -1,10 +1,17 @@
+import { useTranslation } from '../contexts/TranslationContext'
+import { Section } from './ui'
 import type { ProjectsProps } from '../types'
 
 export function Projects({ projects }: ProjectsProps) {
+  const { t } = useTranslation()
+  
   return (
-    <section className="resume-section" id="projects">
-      <div className="resume-section-content">
-        <div id="projects-content" className="projects-grid">
+    <Section 
+      id="projects" 
+      title={String(t('projects.title'))} 
+      subtitle={String(t('projects.subtitle'))}
+    >
+      <div id="projects-content" className="projects-grid">
           {projects.map((project, index) => (
             <div key={index} className="project-item">
               <div className="project-content">
@@ -78,8 +85,7 @@ export function Projects({ projects }: ProjectsProps) {
             </div>
           ))}
         </div>
-      </div>
-    </section>
+    </Section>
   )
 }
 
