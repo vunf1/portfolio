@@ -22,7 +22,7 @@ const isLowEndDevice = () => {
   return false
 }
 
-export function Hero({ personal, onScrollDown }: HeroProps) {
+export function Hero({ personal }: HeroProps) {
   const [isLowEnd, setIsLowEnd] = useState(false)
   const { t } = useTranslation()
   const heroRef = useRef<HTMLElement>(null)
@@ -77,17 +77,6 @@ export function Hero({ personal, onScrollDown }: HeroProps) {
     setRandomPositions()
   }, [isLowEnd])
 
-  const handleScrollDown = () => {
-    if (onScrollDown) {
-      onScrollDown()
-    } else {
-      // Default scroll behavior
-      const aboutSection = document.getElementById('about')
-      if (aboutSection) {
-        aboutSection.scrollIntoView({ behavior: 'smooth' })
-      }
-    }
-  }
 
 
   return (
@@ -139,20 +128,6 @@ export function Hero({ personal, onScrollDown }: HeroProps) {
         
       </div>
       
-      {/* Premium Scroll Indicator */}
-      <div className="premium-scroll-indicator">
-        <button 
-          onClick={handleScrollDown}
-          className="premium-scroll-btn"
-          aria-label="Scroll down to explore"
-        >
-          <div className="scroll-btn-content">
-            <div className="scroll-icon-container">
-              <i className="fa-solid fa-chevron-down scroll-icon"></i>
-            </div>
-          </div>
-        </button>
-      </div>
       
       {/* Background Elements - Show reduced animations on all devices for better performance */}
       <div className="hero-bg-elements mobile-optimized">

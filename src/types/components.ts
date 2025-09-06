@@ -184,7 +184,6 @@ export interface HeroProps extends BaseComponentProps {
     profileImage: string
     coreValues?: string[]
   }
-  onScrollDown?: () => void
 }
 
 // About Component Props

@@ -4,7 +4,7 @@ import { Section, ConfirmationModal } from './ui'
 import type { ContactProps } from '../types'
 
 export function Contact({ personal, contact, isUnlocked, onUnlock, onLock }: ContactProps) {
-  const { t } = useTranslation()
+  const { t, currentLanguage } = useTranslation()
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
 
   const handleDeleteClick = () => {
@@ -20,6 +20,28 @@ export function Contact({ personal, contact, isUnlocked, onUnlock, onLock }: Con
 
   const handleDeleteCancel = () => {
     setShowDeleteConfirmation(false)
+  }
+
+  // Enhanced mailto link with multi-language support and cross-platform high priority
+  const createMailtoLink = () => {
+    const isPortuguese = currentLanguage === 'pt-PT'
+    const subject = isPortuguese 
+      ? `Vamos Conectar - ${personal.name}`
+      : `Let's Connect - ${personal.name}`
+    
+    const body = isPortuguese
+      ? `Olá ${personal.name.split(' ')[0]},\n\nEncontrei o seu portfólio e gostaria de conectar sobre oportunidades potenciais.\n\nCumprimentos,`
+      : `Hello ${personal.name.split(' ')[0]},\n\nI came across your portfolio and would like to connect regarding potential opportunities.\n\nBest regards,`
+    
+    const params = new URLSearchParams({
+      subject: subject,
+      body: body,
+      'X-Priority': '1',                    // High priority (cross-platform)
+      'X-MSMail-Priority': 'High',          // Microsoft Outlook specific
+      'Importance': 'high',                 // Alternative priority setting
+      'X-Mailer': 'Portfolio Contact Form'  // Identify sending application
+    })
+    return `mailto:${personal.email}?${params.toString()}`
   }
   
   return (
@@ -156,7 +178,7 @@ export function Contact({ personal, contact, isUnlocked, onUnlock, onLock }: Con
               {/* Call to Action */}
               <div className="contact-cta text-center mt-6">
                 <p className="cta-text">{t('contact.ctaText', 'Ready to work together?')}</p>
-                <a href={`mailto:${personal.email}?subject=${encodeURIComponent('Let\'s Connect - ' + personal.name)}`} className="btn-premium btn-cta">
+                <a href={createMailtoLink()} className="btn-premium btn-cta">
                   <i className="fa-solid fa-paper-plane me-2"></i>
                   {t('contact.sendMessage', 'Send Message')}
                 </a>

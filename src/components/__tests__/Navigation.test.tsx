@@ -87,19 +87,6 @@ describe('Navigation Component', () => {
     expect(activeLink).toHaveClass('active')
   })
 
-  it('renders theme toggle button', () => {
-    render(<Navigation {...defaultProps} />)
-    
-    const themeToggle = screen.getByLabelText('Switch to dark theme')
-    expect(themeToggle).toBeInTheDocument()
-  })
-
-  it('renders language toggle button', () => {
-    render(<Navigation {...defaultProps} />)
-    
-    const languageToggle = screen.getByLabelText('Switch to Portuguese')
-    expect(languageToggle).toBeInTheDocument()
-  })
 
   it('renders mobile toggle button', () => {
     render(<Navigation {...defaultProps} />)

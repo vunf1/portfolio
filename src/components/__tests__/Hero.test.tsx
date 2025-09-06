@@ -105,15 +105,6 @@ describe('Hero Component', () => {
 
 
 
-  it('handles scroll down button click', () => {
-    const mockOnScrollDown = vi.fn()
-    render(<Hero {...defaultProps} onScrollDown={mockOnScrollDown} />)
-    
-    const scrollButton = screen.getByLabelText('Scroll down to explore')
-    fireEvent.click(scrollButton)
-    
-    expect(mockOnScrollDown).toHaveBeenCalledTimes(1)
-  })
 
 
 
