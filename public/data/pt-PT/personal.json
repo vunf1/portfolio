@@ -1,0 +1,28 @@
+{
+  "name": "João Maia",
+  "title": "Programador Full-Stack",
+  "tagline": "Aprendizagem ao longo da vida, expedição com criatividade",
+  "subtitle": "Operações de back-end, Azure e solucionador de problemas centrado em OOP",
+  "email": "joaomaia.trabalho@gmail.com",
+  "phone": "+351 934 330 807",
+  "phoneSecondary": "+44 7393 557259",
+  "location": "Porto, Portugal",
+  "website": "https://vunf1.github.io/portfolio/",
+  "profileImage": "./img/profile.jpg",
+  "summary": "Programador full-stack sediado no Porto, apaixonado pela aprendizagem e pela resolução criativa de problemas. Experiência em operações de back-end, Microsoft Azure e desenvolvimento orientado a objectos.",
+  "longSummary": "Desde 2010, tenho vindo a explorar metodologias de programação, ciência da computação e arquitecturas de rede. Trabalho em consultoria de TI, live streaming multicâmara e desenvolvimento web - com um forte foco na eficiência, automação e entrega fiável.",
+  "availability": "Aberto a novas oportunidades",
+  "relocation": "Disponibilidade para se deslocar",
+  "remote": "Aberto ao trabalho remoto",
+  "languages": [
+    "Português - C2 (oral), C1 (escrita), C2 (compreensão)",
+    "Inglês - C1 (expressão oral), C1 (expressão escrita), C2 (compreensão)"
+  ],
+  "coreValues": [
+    "Aprendizagem contínua",
+    "Criatividade com objetivo",
+    "Qualidade e eficiência",
+    "Colaboração",
+    "Automatização ponderada"
+  ]
+}

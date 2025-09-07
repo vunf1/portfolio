@@ -5,7 +5,7 @@ import type { PortfolioData, UsePortfolioDataReturn } from '../types'
 const dataCache = new Map<string, Map<string, any>>()
 
 // Define critical vs. non-critical sections
-const CRITICAL_SECTIONS = ['personal', 'contact', 'social', 'experience', 'education', 'skills', 'meta', 'ui']
+const CRITICAL_SECTIONS = ['personal', 'contact', 'social', 'experience', 'education', 'skills', 'meta']
 const NON_CRITICAL_SECTIONS = ['projects', 'certifications', 'interests', 'awards', 'testimonials']
 
 // Helper function to get the correct data path
@@ -75,7 +75,22 @@ function createPortfolioData(sections: Map<string, any>): PortfolioData {
   }
 }
 
-export function usePortfolioData(currentLanguage: 'en' | 'pt-PT' = 'en'): UsePortfolioDataReturn {
+// Helper function to create critical data with only essential sections
+function createCriticalData(sections: Map<string, any>): PortfolioData {
+  const portfolio = createPortfolioData(sections)
+  
+  return {
+    ...portfolio,
+    // Limit non-critical sections for initial load
+    projects: portfolio.projects?.slice(0, 2) || [], // Only first 2 projects
+    certifications: portfolio.certifications?.slice(0, 1) || [], // Only first certification
+    interests: portfolio.interests?.slice(0, 3) || [], // Only first 3 interests
+    awards: portfolio.awards?.slice(0, 1) || [], // Only first award
+    testimonials: portfolio.testimonials?.slice(0, 1) || [] // Only first testimonial
+  }
+}
+
+export function useModularPortfolioData(currentLanguage: 'en' | 'pt-PT' = 'en'): UsePortfolioDataReturn {
   const [portfolioData, setPortfolioData] = useState<PortfolioData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
@@ -213,23 +228,8 @@ export function usePortfolioData(currentLanguage: 'en' | 'pt-PT' = 'en'): UsePor
   }
 }
 
-// Helper function to create critical data with only essential sections
-function createCriticalData(sections: Map<string, any>): PortfolioData {
-  const portfolio = createPortfolioData(sections)
-  
-  return {
-    ...portfolio,
-    // Limit non-critical sections for initial load
-    projects: Array.isArray(portfolio.projects) ? portfolio.projects.slice(0, 2) : [], // Only first 2 projects
-    certifications: Array.isArray(portfolio.certifications) ? portfolio.certifications.slice(0, 1) : [], // Only first certification
-    interests: Array.isArray(portfolio.interests) ? portfolio.interests.slice(0, 3) : [], // Only first 3 interests
-    awards: Array.isArray(portfolio.awards) ? portfolio.awards.slice(0, 1) : [], // Only first award
-    testimonials: Array.isArray(portfolio.testimonials) ? portfolio.testimonials.slice(0, 1) : [] // Only first testimonial
-  }
-}
-
 // New hook for accessing both portfolio data and UI translations
-export function useConsolidatedData(currentLanguage: 'en' | 'pt-PT' = 'en') {
+export function useModularConsolidatedData(currentLanguage: 'en' | 'pt-PT' = 'en') {
   const [data, setData] = useState<{ portfolio: PortfolioData; ui: Record<string, unknown> } | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
@@ -262,7 +262,3 @@ export function useConsolidatedData(currentLanguage: 'en' | 'pt-PT' = 'en') {
 
   return { data, loading, error }
 }
-
-
-
-

@@ -1,0 +1,188 @@
+[
+  {
+    "company": "Independent",
+    "description": "Long-term, structured self-directed learning across AI generalist foundations (LLMs, RAG, agents, prompt engineering, tools), core computer science (algorithms & data structures, operating systems, concurrency, distributed systems), and practical networking/cybersecurity (TCP/IP, routing/switching, VLANs/VPNs, QoS, DNS/DHCP, NAT). Emphasis on building prototypes, documenting learnings, and applying them to consulting and workflows.",
+    "duration": "15+ years",
+    "highlights": [
+      "AI Generalist (LLMs, RAG & Agents, tools)",
+      "Algorithms & Data Structures; OS, Concurrency, Distributed Systems",
+      "Networking & Security (routing/switching, VPNs, QoS, DNS/DHCP, NAT)",
+      "Systems Design & DevOps (containers, CI/CD, Git, DevOps)"
+    ],
+    "impact": "Accelerated prototyping and more reliable operational stacks; improved problem framing and solution quality across consulting, back-end, and real-time streaming projects.",
+    "location": "Portugal / UK",
+    "period": "June 2010 – Present",
+    "technologies": [
+      "--- Programming Languages ---",
+      "Python",
+      "TypeScript",
+      "JavaScript",
+      "Java",
+      "C#",
+      "C",
+      "C++",
+      "Visual Basic (VB.NET / VBA)",
+      "PHP",
+      "Lua",
+      "Bash / Shell",
+      "PowerShell",
+      "SQL",
+      "NoSQL",
+      "--- AI Generalist---",
+      "LLMs",
+      "RAG pipelines",
+      "Embeddings & Vector Databases",
+      "Agents",
+      "Prompt Engineering",
+      "--- Networking ---",
+      "TCP/IP",
+      "Routing & Switching",
+      "VLAN/VPN",
+      "DNS/DHCP",
+      "NAT (Network Address Translation)",
+      "QoS (Quality of Service)",
+      "--- Cybersecurity ---",
+      "Firewall/IDS",
+      "Encryption (AES, RSA, ECC, Hashing algorithms)",
+      "Log Analysis & Threat Hunting",
+      "Zero Trust Concepts",
+      "--- Tooling & Platforms ---",
+      "Linux / Windows",
+      "Docker",
+      "CI/CD",
+      "Git",
+      "--- Software Engineering ---",
+      "Systems Design",
+      "Design Patterns",
+      "OOP"
+    ],
+    "title": "Autonomous — Self-Study"
+  },
+  {
+    "achievements": [
+      "Production services via clean architecture, containers, CI/CD.",
+      "Test automation with release gates; logs, metrics, and traces for observability.",
+      "Secure-by-default pipelines: secrets, dependency scanning, least privilege, audit logging.",
+      "Network interface tuning: bonding/teaming, 802.1Q VLANs, MTU/QoS, policy-based routing.",
+      "Edge security: firewall/IDS, OpenVPN/WireGuard; scripted baseline configurations.",
+      "Streaming automation: OBS/FFmpeg/NDI, RTMP/SRT, overlay control, health checks, failover."
+    ],
+    "company": "Freelance",
+    "description": "Deliver end-to-end solutions for small businesses and individual clients. Software: full SDLC from requirements and design through implementation, testing, containerization, CI/CD, observability, and secure-by-default deployments—favoring reproducible builds, infrastructure-as-code patterns, and well-documented runbooks.\n Networking: L1/L2/L3 design and configuration (routing/switching), VLAN segmentation, DHCP/DNS services, NAT and QoS policies, wireless planning, and secure remote access (site-to-site and remote-user VPNs) troubleshooting and incident response.\n Streaming: multi-camera live productions with encoder setup, RTMP/SRT ingest, NDI routing, audio mixing, and real-time overlays/scoreboards; redundancy planning, QoS tuning, and live monitoring to maintain stable feeds under varying network conditions. Across domains, I apply automation (Python, Bash, PowerShell, AI-assisted tooling) to standardize provisioning, configuration, documentation, and reporting—reducing toil, lowering MTTR, and improving reliability, performance, and security.",
+    "duration": "8+ years",
+    "highlights": [
+      "End-to-end Software Engineering (SDLC, clean architecture, containers, CI/CD, IaC)",
+      "Reliability & Observability (structured logs, metrics, traces; SLO mindset)",
+      "Secure-by-Default Engineering (secrets management, dependency scanning, least privilege, audit)",
+      "Networking Engineering (L1–L3, routing/switching, VLANs, DNS/DHCP, NAT, QoS)",
+      "Edge Security & Remote Access (firewalls/IDS, OpenVPN/WireGuard)",
+      "Interface Performance Tuning (NIC bonding/teaming, 802.1Q, MTU/jumbo frames, policy-based routing)",
+      "Streaming Systems (OBS/encoders, RTMP/SRT, NDI, audio mixing, real-time overlays/scoreboards)",
+      "Automation & Tooling (Python/Bash/PowerShell, AI-assisted workflows, repeatable runbooks)"
+    ],
+    "impact": "Improved reliability, performance, and security across client networks and production systems; increased streaming stability and quality through redundancy planning and QoS tuning; reduced manual effort via automation; higher delivery quality for software projects with modern DevOps practices.",
+    "location": "Portugal",
+    "period": "July 2017 – Present",
+    "technologies": [],
+    "title": "Freelance — Software & Networking Engineer, IT Consultant, Streaming Technician"
+  },
+  {
+    "achievements": [
+      "Refurbished and maintained computers for resale, ensuring reliability and performance.",
+      "Managed orders and RMAs with a strong focus on operational efficiency.",
+      "Designed, deployed, and maintained PXE and SFTP servers to streamline OS installation and testing.",
+      "Reduced average machine setup time from 15–20 minutes to 3–5 minutes through automation with custom CLI tools.",
+      "Automated repetitive tasks, significantly boosting team productivity.",
+      "Delivered hands-on training for new employees and interns, accelerating adoption of optimized processes."
+    ],
+    "company": "Hardstock Lda.",
+    "description": "Designed and implemented an end-to-end, high-throughput refurbishment and deployment workflow for resale PCs, combining network-boot provisioning (PXE) with an SFTP-backed artifact depot and custom Python/PowerShell CLI tooling. Built a standardized imaging pipeline that chainloads a minimal WinPE/maintenance environment via PXE, executes pre-flight hardware diagnostics (CPU/RAM/storage SMART and quick surface checks), captures asset/serial metadata, and enforces go/no-go gates before imaging. Orchestrated unattended OS installation and post-install provisioning (driver bundle staging, firmware/BIOS updates where applicable, policy/config baselines), followed by verification steps (health checks, telemetry collection, and burn-in spot tests) to ensure consistent outcomes with minimal technician intervention.\n\nEstablished a controlled SFTP release process for golden images, drivers, and scripts with checksum validation, and least-privilege access; Implemented resilient, idempotent CLI commands that support parallel batches, safe retries, and structured JSON logs for traceability. Added lightweight observability—per-station throughput, failure modes, and simple dashboards and daily reports to highlight bottlenecks and continuous-improvement opportunities.\n\n RMA handling (intake triage, status transitions, and labeling/traceability), reducing wait states and rework. Automated repetitive technician steps (checklists, image selection, driver matching, report generation), cutting average per-machine cycle time from ~15–20 minutes to ~3–5 minutes and enabling consistent multi-unit runs. Delivered practical training (shadowing, quick-ref guides) for technicians and interns to accelerate adoption, improve first-pass yield, and maintain standardized quality across the team.",
+    "duration": "10 months",
+    "impact": "Increased overall efficiency of refurbishing and testing workflows; improved training and onboarding speed; reduced operational costs through automation.",
+    "location": "Arcozelo, Portugal",
+    "period": "August 2024 – May 2025",
+    "technologies": [
+      "PXE Server",
+      "SFTP",
+      "Custom CLI Tools (Python/PowerShell)",
+      "Windows Deployment",
+      "Hardware Diagnostics",
+      "Automation Scripting",
+      "Process Optimization"
+    ],
+    "title": "IT Technician & Process Optimization"
+  },
+  {
+    "achievements": [],
+    "company": "CoreLogic UK",
+    "description": "PWA with Angular 8 + Material UI/FX; CI/CD (Azure DevOps/Git); MongoDB + JSON; dockerized microservices with Kubernetes.",
+    "duration": "1 year",
+    "highlights": [
+      "PWA",
+      "Microservices",
+      "CI/CD"
+    ],
+    "impact": "",
+    "location": "Shirley, Solihull (6 months remote)",
+    "period": "September 2019 – August 2020",
+    "technologies": [
+      "--- Frontend ---",
+      "Angular 8",
+      "Material",
+      "--- Backend & Database ---",
+      "MongoDB",
+      "--- DevOps & Infrastructure ---",
+      "Azure DevOps",
+      "Git",
+      "Docker",
+      "Kubernetes"
+    ],
+    "title": "Full-Stack Developer"
+  },
+  {
+    "achievements": [],
+    "company": "Medsky",
+    "description": "Multi-service license management (POST validation, unique HWID, per-service JSON). MVC with CodeIgniter; RESTful API (SCRUD); Bootstrap, jQuery, Alertify; SQL (phpMyAdmin).",
+    "duration": "3 months",
+    "highlights": [
+      "REST APIs",
+      "MVC architecture"
+    ],
+    "impact": "",
+    "location": "Porto District, Portugal",
+    "period": "January 2017 – March 2017",
+    "technologies": [
+      "--- Backend ---",
+      "PHP (CodeIgniter)",
+      "REST",
+      "SQL",
+      "--- Frontend ---",
+      "Bootstrap",
+      "jQuery",
+      "Alertify"
+    ],
+    "title": "Web Application Developer"
+  },
+  {
+    "achievements": [
+      "Reduced RAM usage and footprint"
+    ],
+    "company": "Medsky",
+    "description": "Migration from C#/HTML to Visual Basic to reduce RAM and physical footprint (CD-based execution). INI-based configuration and user manual included.",
+    "duration": "2 months",
+    "highlights": [
+      "Optimization",
+      "Migration"
+    ],
+    "impact": "",
+    "location": "Porto District, Portugal",
+    "period": "May 2016 – June 2016",
+    "technologies": [
+      "C#",
+      "VB",
+      "HTML",
+      "INI"
+    ],
+    "title": "Information Technology Software Developer"
+  }
+]

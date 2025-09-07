@@ -1,0 +1,124 @@
+{
+  "proficiencyLevels": {
+    "Foundational": "Delivers well-scoped tasks with mentorship and code reviews, follows standards/runbooks, and supports incremental fixes and maintenance.",
+    "Proficient": "Plans and ships features end-to-end, makes informed trade-offs, writes testable/maintainable code, and communicates risks and timelines clearly.",
+    "Advanced": "Leads the design of services or subsystems, drives performance/reliability/security improvements, mentors teammates, and elevates engineering practices.",
+    "Expert": "Sets technical direction and standards, leads complex multi-team initiatives, manages ambiguity and risk, and delivers long-term architectural outcomes."
+  },
+  "soft": [
+    {
+      "description": "Clear written and verbal communication; keeps teams aligned",
+      "level": "Advanced",
+      "name": "Effective communication"
+    },
+    {
+      "description": "Collaborates with colleagues and stakeholders",
+      "level": "Advanced",
+      "name": "Teamwork"
+    },
+    {
+      "description": "Prioritizes stakeholder needs and satisfaction",
+      "level": "Advanced",
+      "name": "Client focus"
+    },
+    {
+      "description": "Responds to new challenges with confidence",
+      "level": "Expert",
+      "name": "Adaptability and resilience"
+    },
+    {
+      "description": "Actively seeks improvements and stays current",
+      "level": "Expert",
+      "name": "Proactivity and continuous learning"
+    },
+    {
+      "description": "Pursues goals with persistence and enthusiasm",
+      "level": "Advanced",
+      "name": "Drive and energy"
+    },
+    {
+      "description": "Analytical thinking and creative solutions",
+      "level": "Expert",
+      "name": "Problem solving"
+    },
+    {
+      "description": "Guides teams and supports knowledge transfer",
+      "level": "Advanced",
+      "name": "Leadership & Mentoring"
+    }
+  ],
+  "technical": [
+    {
+      "category": "Key Competencies",
+      "skills": [
+        { "name": "End-to-end Software Delivery (SDLC, Clean Architecture)", "level": "Expert" },
+        { "name": "DevOps & CI/CD (Containers, IaC)", "level": "Proficient" },
+        { "name": "Networking Engineering (L1/L2/L3, VLAN/VPN, QoS)", "level": "Proficient" },
+        { "name": "Security & Hardening (Firewalls/IDS, VPNs, Secrets)", "level": "Advanced" },
+        { "name": "Observability & Reliability (Logs/Metrics/Traces, SLOs)", "level": "Proficient" },
+        { "name": "Automation & Scripting (Python/Bash/PowerShell, AI-assisted)", "level": "Advanced" },
+        { "name": "Systems Design, Process Optimization & Runbooks", "level": "Expert" },
+        { "name": "Streaming Operations (OBS, RTMP/SRT, NDI, Overlays)", "level": "Advanced" }
+      ]
+    },
+    {
+      "category": "Programming Languages",
+      "skills": [
+        { "name": "Python", "level": "Advanced" },
+        { "name": "TypeScript", "level": "Advanced" },
+        { "name": "JavaScript (ES6+)", "level": "Advanced" },
+        { "name": "Java", "level": "Advanced" },
+        { "name": "C#", "level": "Advanced" },
+        { "name": "C", "level": "Advanced" },
+        { "name": "C++", "level": "Advanced" },
+        { "name": "VB.NET / VBA", "level": "Advanced" },
+        { "name": "PHP", "level": "Advanced" },
+        { "name": "Lua", "level": "Advanced" },
+        { "name": "Bash / Shell", "level": "Advanced" },
+        { "name": "PowerShell", "level": "Advanced" },
+        { "name": "SQL", "level": "Advanced" },
+        { "name": "NoSQL", "level": "Proficient" }
+      ]
+    },
+    {
+      "category": "AI & Machine Learning",
+      "skills": [
+        { "name": "LLMs", "level": "Advanced" },
+        { "name": "RAG pipelines", "level": "Proficient" },
+        { "name": "Embeddings & Vector Databases", "level": "Proficient" },
+        { "name": "Agents", "level": "Advanced" },
+        { "name": "Prompt Engineering", "level": "Advanced" }
+      ]
+    },
+    {
+      "category": "Cybersecurity",
+      "skills": [
+        { "name": "Firewall/IDS", "level": "Proficient" },
+        { "name": "Encryption (AES, RSA, ECC, Hashing algorithms)", "level": "Advanced" },
+        { "name": "Log Analysis & Threat Hunting", "level": "Advanced" },
+        { "name": "Zero Trust Concepts", "level": "Advanced" }
+      ]
+    },
+    {
+      "category": "Tooling & Platforms",
+      "skills": [
+        { "name": "Linux / Windows", "level": "Expert" },
+        { "name": "Docker", "level": "Proficient" },
+        { "name": "CI/CD", "level": "Proficient" },
+        { "name": "Git", "level": "Advanced" },
+        { "name": "OBS Studio / Streamstar ", "level": "Advanced" },
+        { "name": "Encoders / Custom GUIs", "level": "Advanced" }
+      ]
+    },
+    {
+      "category": "Software Engineering",
+      "skills": [
+        { "name": "Systems Design", "level": "Expert" },
+        { "name": "Design Patterns", "level": "Advanced" },
+        { "name": "OOP", "level": "Advanced" },
+        { "name": "MVC Architecture", "level": "Expert" },
+        { "name": "RESTful APIs", "level": "Advanced" }
+      ]
+    }
+  ]
+}

@@ -8,16 +8,14 @@ export function useI18n() {
   useEffect(() => {
     const loadTranslations = async () => {
       try {
-        const dataFile = currentLanguage === 'pt-PT' ? 'portfolio-pt-PT.json' : 'portfolio-en.json'
-        console.log('🔄 useI18n: Loading translations for', currentLanguage, 'from', dataFile)
-        const response = await fetch(`/data/${dataFile}`)
+        const uiFile = `ui.json`
+        console.log('🔄 useI18n: Loading translations for', currentLanguage, 'from', uiFile)
+        const response = await fetch(`/data/${currentLanguage}/${uiFile}`)
         
         if (response.ok) {
           const data = await response.json()
-          if (data.ui) {
-            console.log('✅ useI18n: Successfully loaded UI translations for', currentLanguage)
-            setTranslations(data.ui)
-          }
+          console.log('✅ useI18n: Successfully loaded UI translations for', currentLanguage)
+          setTranslations(data)
         } else {
           console.warn('❌ useI18n: Failed to load translations, response not ok:', response.status)
         }

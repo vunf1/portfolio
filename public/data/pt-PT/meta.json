@@ -1,0 +1,17 @@
+{
+  "author": "João Maia",
+  "lastUpdated": "2025-09-01",
+  "seo": {
+    "description": "Programador full-stack focado em operações back-end, Azure e OOP. Baseado no Porto, Portugal.",
+    "keywords": [
+      "Full-Stack",
+      "Azulejo",
+      "OOP",
+      "Portugal",
+      "Porto"
+    ],
+    "ogImage": "{{OG_IMAGE_PATH}}",
+    "title": "João Maia — Full-Stack Developer | Porto, Portugal"
+  },
+  "version": "1.0.0"
+}

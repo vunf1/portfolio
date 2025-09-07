@@ -1,0 +1,24 @@
+[
+  {
+    "degree": "Licenciatura em Ciências Aplicadas (BASc), Informática",
+    "description": "Curso de Licenciatura em Informática.",
+    "institution": "Universidade de Coventry",
+    "location": "Coventry, Reino Unido"
+  },
+  {
+    "degree": "Curso Técnico de Gestão e Programação de Sistemas Informáticos",
+    "description": "Formação profissional em programação e gestão de sistemas de informação.",
+    "institution": "Escola S/3 Arquitecto Oliveira Ferreira"
+  },
+  {
+    "degree": "Programação e maquinagem - CNC/AutoCAD",
+    "description": "",
+    "institution": "Escola Profissional de Gaia",
+    "location": "Portugal"
+  },
+  {
+    "degree": "Curso Técnico Profissional de Gestão de Sistemas de Informação",
+    "institution": "ESAOF — Escola Arquitecto Oliveira Ferreira",
+    "location": "Portugal"
+  }
+]

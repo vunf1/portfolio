@@ -52,7 +52,7 @@ describe('useI18n Hook', () => {
 
     mockFetch.mockResolvedValueOnce({
       ok: true,
-      json: async () => ({ ui: mockTranslations })
+      json: async () => mockTranslations
     })
 
     const { result } = renderHook(() => useI18n())
@@ -62,7 +62,7 @@ describe('useI18n Hook', () => {
       await new Promise(resolve => setTimeout(resolve, 0))
     })
 
-    expect(mockFetch).toHaveBeenCalledWith('/data/portfolio-en.json')
+    expect(mockFetch).toHaveBeenCalledWith('/data/en/ui.json')
     expect(result.current.t('hero.title')).toBe('Software Developer')
     expect(result.current.t('hero.cta')).toBe('Get In Touch')
   })
@@ -87,11 +87,11 @@ describe('useI18n Hook', () => {
     mockFetch
       .mockResolvedValueOnce({
         ok: true,
-        json: async () => ({ ui: mockEnTranslations })
+        json: async () => mockEnTranslations
       })
       .mockResolvedValueOnce({
         ok: true,
-        json: async () => ({ ui: mockPtTranslations })
+        json: async () => mockPtTranslations
       })
 
     const { result } = renderHook(() => useI18n())
@@ -117,7 +117,7 @@ describe('useI18n Hook', () => {
       await new Promise(resolve => setTimeout(resolve, 0))
     })
 
-    expect(mockFetch).toHaveBeenCalledWith('/data/portfolio-pt-PT.json')
+    expect(mockFetch).toHaveBeenCalledWith('/data/pt-PT/ui.json')
     expect(result.current.t('hero.title')).toBe('Desenvolvedor de Software')
   })
 
@@ -127,7 +127,7 @@ describe('useI18n Hook', () => {
     const mockPtTranslations = { hero: { title: 'Desenvolvedor de Software' } }
     mockFetch.mockResolvedValueOnce({
       ok: true,
-      json: async () => ({ ui: mockPtTranslations })
+      json: async () => mockPtTranslations
     })
 
     const { result } = renderHook(() => useI18n())
@@ -149,7 +149,7 @@ describe('useI18n Hook', () => {
     const mockPtTranslations = { hero: { title: 'Desenvolvedor de Software' } }
     mockFetch.mockResolvedValueOnce({
       ok: true,
-      json: async () => ({ ui: mockPtTranslations })
+      json: async () => mockPtTranslations
     })
 
     const { result } = renderHook(() => useI18n())
@@ -174,7 +174,7 @@ describe('useI18n Hook', () => {
 
     mockFetch.mockResolvedValueOnce({
       ok: true,
-      json: async () => ({ ui: mockTranslations })
+      json: async () => mockTranslations
     })
 
     const { result } = renderHook(() => useI18n())
@@ -193,7 +193,7 @@ describe('useI18n Hook', () => {
 
     mockFetch.mockResolvedValueOnce({
       ok: true,
-      json: async () => ({ ui: mockTranslations })
+      json: async () => mockTranslations
     })
 
     const { result } = renderHook(() => useI18n())

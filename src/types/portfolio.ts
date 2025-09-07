@@ -36,22 +36,15 @@ export interface Experience {
   description: string
   impact: string
   technologies: string[]
-  achievements: string[]
+  achievements?: string[]
   highlights: string[]
 }
 
 export interface Education {
-  id: string
   degree: string
   institution: string
-  location: string
-  period: string
-  status: string
-  gpa: string
-  description: string
-  courses: string[]
-  projects: string[]
-  achievements: string[]
+  location?: string
+  description?: string
 }
 
 // Skill Proficiency Bands - supports both English and Portuguese level names
@@ -152,12 +145,20 @@ export interface Testimonial {
 
 export interface Contact {
   availability: string
-  responseTime: string
+  email: string
+  github: string
+  linkedin: string
+  location: string
+  phone: string
+  phoneSecondary: string
   preferredContact: string
+  responseTime: string
+  website: string
 }
 
 export interface PortfolioData {
   personal: Personal
+  contact: Contact
   social: Social[]
   experience: Experience[]
   education: Education[]
@@ -167,7 +168,6 @@ export interface PortfolioData {
   interests: InterestCategory[]
   awards: Award[]
   testimonials: Testimonial[]
-  contact: Contact
   meta: {
     lastUpdated: string
     version: string

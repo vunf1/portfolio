@@ -1,0 +1,250 @@
+{
+  "proficiencyLevels": {
+    "Foundational": "Realiza tarefas bem definidas com orientação e revisões de código, segue normas e manuais de procedimentos e apoia correcções e manutenção incrementais.",
+    "Proficient": "Planeia e implementa funcionalidades de ponta a ponta, toma decisões informadas, escreve código testável e mantível e comunica claramente os riscos e os prazos.",
+    "Advanced": "Lidera a conceção de serviços ou subsistemas, promove melhorias de desempenho, fiabilidade e segurança, orienta os colegas de equipa e eleva as práticas de engenharia.",
+    "Expert": "Define a direção e as normas técnicas, lidera iniciativas complexas de várias equipas, gere a ambiguidade e o risco e apresenta resultados arquitectónicos a longo prazo."
+  },
+  "soft": [
+    {
+      "description": "Comunicação escrita e verbal clara; mantém as equipas alinhadas",
+      "level": "Avançado",
+      "name": "Comunicação eficaz"
+    },
+    {
+      "description": "Colabora com colegas e partes interessadas",
+      "level": "Avançado",
+      "name": "Trabalho em equipa"
+    },
+    {
+      "description": "Dá prioridade às necessidades e à satisfação das partes interessadas",
+      "level": "Avançado",
+      "name": "Foco no cliente"
+    },
+    {
+      "description": "Responde a novos desafios com confiança",
+      "level": "Perito",
+      "name": "Adaptabilidade e resiliência"
+    },
+    {
+      "description": "Procura ativamente melhorias e mantém-se atualizado",
+      "level": "Perito",
+      "name": "Proactividade e aprendizagem contínua"
+    },
+    {
+      "description": "Persegue os objectivos com persistência e entusiasmo",
+      "level": "Avançado",
+      "name": "Força e energia"
+    },
+    {
+      "description": "Pensamento analítico e soluções criativas",
+      "level": "Perito",
+      "name": "Resolução de problemas"
+    },
+    {
+      "description": "Orienta as equipas e apoia a transferência de conhecimentos",
+      "level": "Avançado",
+      "name": "Liderança e tutoria"
+    }
+  ],
+  "technical": [
+    {
+      "category": "Competências-chave",
+      "skills": [
+        {
+          "name": "Entrega de software de ponta a ponta (SDLC, arquitetura limpa)",
+          "level": "Perito"
+        },
+        {
+          "name": "DevOps e CI/CD (contentores, IaC)",
+          "level": "Proficiente"
+        },
+        {
+          "name": "Engenharia de redes (L1/L2/L3, VLAN/VPN, QoS)",
+          "level": "Proficiente"
+        },
+        {
+          "name": "Segurança e proteção (Firewalls/IDS, VPNs, segredos)",
+          "level": "Avançado"
+        },
+        {
+          "name": "Observabilidade e fiabilidade (registos/métricas/rastreios, SLO)",
+          "level": "Proficiente"
+        },
+        {
+          "name": "Automatização e criação de scripts (Python/Bash/PowerShell, assistido por IA)",
+          "level": "Avançado"
+        },
+        {
+          "name": "Conceção de sistemas, otimização de processos e livros de execução",
+          "level": "Perito"
+        },
+        {
+          "name": "Operações de transmissão em fluxo contínuo (OBS, RTMP/SRT, NDI, sobreposições)",
+          "level": "Avançado"
+        }
+      ]
+    },
+    {
+      "category": "Linguagens de programação",
+      "skills": [
+        {
+          "name": "Python",
+          "level": "Avançado"
+        },
+        {
+          "name": "TypeScript",
+          "level": "Avançado"
+        },
+        {
+          "name": "JavaScript (ES6+)",
+          "level": "Avançado"
+        },
+        {
+          "name": "Java",
+          "level": "Avançado"
+        },
+        {
+          "name": "C#",
+          "level": "Avançado"
+        },
+        {
+          "name": "C",
+          "level": "Avançado"
+        },
+        {
+          "name": "C++",
+          "level": "Avançado"
+        },
+        {
+          "name": "VB.NET / VBA",
+          "level": "Avançado"
+        },
+        {
+          "name": "PHP",
+          "level": "Avançado"
+        },
+        {
+          "name": "Lua",
+          "level": "Avançado"
+        },
+        {
+          "name": "Bash / Shell",
+          "level": "Avançado"
+        },
+        {
+          "name": "PowerShell",
+          "level": "Avançado"
+        },
+        {
+          "name": "SQL",
+          "level": "Avançado"
+        },
+        {
+          "name": "NoSQL",
+          "level": "Proficiente"
+        }
+      ]
+    },
+    {
+      "category": "IA e aprendizagem automática",
+      "skills": [
+        {
+          "name": "LLMs",
+          "level": "Avançado"
+        },
+        {
+          "name": "Condutas RAG",
+          "level": "Proficiente"
+        },
+        {
+          "name": "Embeddings e bases de dados vectoriais",
+          "level": "Proficiente"
+        },
+        {
+          "name": "Agentes",
+          "level": "Avançado"
+        },
+        {
+          "name": "Engenharia rápida",
+          "level": "Avançado"
+        }
+      ]
+    },
+    {
+      "category": "Cibersegurança",
+      "skills": [
+        {
+          "name": "Firewall/IDS",
+          "level": "Proficiente"
+        },
+        {
+          "name": "Encriptação (AES, RSA, ECC, algoritmos de hashing)",
+          "level": "Avançado"
+        },
+        {
+          "name": "Análise de registos e caça a ameaças",
+          "level": "Avançado"
+        },
+        {
+          "name": "Conceitos de confiança zero",
+          "level": "Avançado"
+        }
+      ]
+    },
+    {
+      "category": "Ferramentas e plataformas",
+      "skills": [
+        {
+          "name": "Linux / Windows",
+          "level": "Perito"
+        },
+        {
+          "name": "Docker",
+          "level": "Proficiente"
+        },
+        {
+          "name": "CI/CD",
+          "level": "Proficiente"
+        },
+        {
+          "name": "Git",
+          "level": "Avançado"
+        },
+        {
+          "name": "OBS Studio / Streamstar",
+          "level": "Avançado"
+        },
+        {
+          "name": "Codificadores / GUIs personalizados",
+          "level": "Avançado"
+        }
+      ]
+    },
+    {
+      "category": "Engenharia de software",
+      "skills": [
+        {
+          "name": "Conceção de sistemas",
+          "level": "Perito"
+        },
+        {
+          "name": "Padrões de desenho",
+          "level": "Avançado"
+        },
+        {
+          "name": "OOP",
+          "level": "Avançado"
+        },
+        {
+          "name": "Arquitetura MVC",
+          "level": "Perito"
+        },
+        {
+          "name": "APIs RESTful",
+          "level": "Avançado"
+        }
+      ]
+    }
+  ]
+}

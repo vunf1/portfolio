@@ -1,0 +1,28 @@
+{
+  "name": "João Maia",
+  "title": "Full-Stack Developer",
+  "tagline": "Lifelong learner, shipping with creativity",
+  "subtitle": "Back-end operations, Azure, and OOP-focused problem solver",
+  "email": "joaomaia.trabalho@gmail.com",
+  "phone": "+351 934 330 807",
+  "phoneSecondary": "+44 7393 557259",
+  "location": "Porto, Portugal",
+  "website": "https://vunf1.github.io/portfolio/",
+  "profileImage": "./img/profile.jpg",
+  "summary": "Full-stack developer based in Porto, passionate about learning and creative problem-solving. Experienced across back-end operations, Microsoft Azure, and object-oriented development.",
+  "longSummary": "Since 2010, I've been exploring programming methodologies, computer science, and network architectures. I work across IT consulting, multi-camera live streaming, and web development—with a strong focus on efficiency, automation, and reliable delivery.",
+  "availability": "Open to new opportunities",
+  "relocation": "Willing to relocate",
+  "remote": "Open to remote work",
+  "languages": [
+    "Portuguese — C2 (speaking), C1 (writing), C2 (comprehension)",
+    "English — C1 (speaking), C1 (writing), C2 (comprehension)"
+  ],
+  "coreValues": [
+    "Continuous learning",
+    "Creativity with purpose",
+    "Quality and efficiency",
+    "Collaboration",
+    "Thoughtful automation"
+  ]
+}

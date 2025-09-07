@@ -1,0 +1,199 @@
+{
+  "about": {
+    "availability": "Available",
+    "coreValues": "Core Values",
+    "languages": "Languages",
+    "location": "Porto, Portugal",
+    "relocation": "Open to relocation",
+    "remote": "Remote work available",
+    "subtitle": "Get to know my work",
+    "summary": "Consulting, development, and operations focused on efficiency.",
+    "title": "About Me"
+  },
+  "awards": {
+    "certificateUrl": "Certificate URL",
+    "criteria": "Criteria",
+    "date": "Date",
+    "description": "Description",
+    "impact": "Impact",
+    "issuer": "Issuer",
+    "subtitle": "Honors and distinctions",
+    "title": "Awards & Recognition"
+  },
+  "certifications": {
+    "credentialId": "Credential ID",
+    "description": "Description",
+    "expiryDate": "Expiry Date",
+    "issueDate": "Issue Date",
+    "issuer": "Issuer",
+    "skills": "Skills Covered",
+    "subtitle": "Professional qualifications",
+    "title": "Certifications",
+    "verificationUrl": "Verification URL"
+  },
+  "common": {
+    "darkMode": "Dark Mode",
+    "error": "Error",
+    "language": "Language",
+    "lightMode": "Light Mode",
+    "loading": "Loading...",
+    "refresh": "Refresh",
+    "somethingWentWrong": "Something went wrong",
+    "theme": "Theme",
+    "tryRefreshing": "Please try refreshing the page."
+  },
+  "fab": {
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
+    "switchToDark": "Switch to dark mode",
+    "switchToLight": "Switch to light mode",
+    "switchToEnglish": "Switch to English",
+    "switchToPortuguese": "Switch to Portuguese"
+  },
+  "contact": {
+    "availability": "Availability",
+    "form": {
+      "cancel": "Cancel",
+      "company": "Company (Optional)",
+      "email": "Email Address",
+      "fullName": "Full Name",
+      "optional": "Optional",
+      "reason": "Reason for Contact (Optional)",
+      "reasonOptions": {
+        "consulting": "Consulting",
+        "jobOpportunity": "Job Opportunity",
+        "networking": "Networking",
+        "other": "Other",
+        "projectCollaboration": "Project Collaboration"
+      },
+      "required": "Required",
+      "submit": "Unlock",
+      "submitting": "Submitting...",
+      "title": "Unlock Contact Information",
+      "locked": "Form temporarily locked. Please wait {seconds} seconds.",
+      "attempts": "Attempts: {current}/{max}",
+      "characters": "2-100 characters",
+      "fullNamePlaceholder": "Enter your full name",
+      "emailPlaceholder": "Enter your email address",
+      "companyPlaceholder": "Enter your company name",
+      "reasonPlaceholder": "Select a reason...",
+      "security": "Security & Privacy",
+      "securityNotice": "Protected against spam and abuse. Data processed securely.",
+      "dataStorage": "Local storage: 30 days. No external transmission.",
+      "dataMetrics": "Hashed data. Auto-expires or manual clear."
+    },
+    "preferredContact": "Preferred Contact Method",
+    "responseTime": "Response Time",
+    "subtitle": "Let's talk about your project",
+    "title": "Contact",
+    "unlockInfo": "Unlock Contact Information",
+    "unlockTitle": "Click to unlock access to my information",
+    "unlockSubtitle": "Get in touch with me",
+    "unlockButton": "Unlock Contact Info",
+    "placeholderText": "Contact information will be displayed here after unlocking.",
+    "unlocked": "Contact Unlocked",
+    "ctaText": "Ready to work together?",
+    "sendMessage": "Send Message",
+    "labels": {
+      "email": "Email",
+      "phone": "Phone",
+      "location": "Location",
+      "website": "Website",
+      "connect": "Connect"
+    },
+    "badges": {
+      "remoteAvailable": "Remote Available",
+      "openToRelocation": "Open to Relocation"
+    }
+  },
+  "education": {
+    "achievements": "Achievements",
+    "courses": "Courses",
+    "degree": "Degree",
+    "gpa": "GPA",
+    "institution": "Institution",
+    "period": "Period",
+    "projects": "Projects",
+    "status": "Status",
+    "subtitle": "Academic and technical background",
+    "title": "Education"
+  },
+  "experience": {
+    "achievements": "Key Achievements",
+    "duration": "Duration",
+    "highlights": "Highlights",
+    "impact": "Impact",
+    "location": "Location",
+    "subtitle": "My journey in technology and operations",
+    "technologies": "Technologies",
+    "title": "Professional Experience"
+  },
+  "hero": {
+    "cta": "View Portfolio",
+    "scrollDown": "Scroll Down",
+    "subtitle": "Back-end Ops • Azure • OOP",
+    "tagline": "Always learning. Building with purpose.",
+    "title": "Full-Stack Developer"
+  },
+  "interests": {
+    "lifestyle": "Lifestyle & Wellness",
+    "personalDevelopment": "Personal Development",
+    "specificInterests": "Specific Interests",
+    "subtitle": "Beyond the code",
+    "technology": "Technology & Innovation",
+    "title": "Interests"
+  },
+  "navigation": {
+    "awards": "Awards",
+    "brand": "João Maia",
+    "certifications": "Certifications",
+    "contact": "Contact",
+    "education": "Education",
+    "experience": "Experience",
+    "interests": "Interests",
+    "projects": "Projects",
+    "skills": "Skills",
+    "testimonials": "Testimonials"
+  },
+  "projects": {
+    "challenges": "Challenges",
+    "code": "Code",
+    "demo": "Demo",
+    "features": "Features",
+    "highlights": "Highlights",
+    "links": "Links",
+    "role": "Role",
+    "solutions": "Solutions",
+    "subtitle": "Selected work",
+    "teamSize": "Team Size",
+    "technologies": "Technologies",
+    "title": "Featured Projects"
+  },
+  "skills": {
+    "description": "Description",
+    "experience": "Experience",
+    "level": "Level",
+    "proficiencyLevels": "Proficiency Levels",
+    "projects": "Projects",
+    "soft": "Soft Skills",
+    "subtitle": "Technologies and competencies",
+    "technical": "Technical Skills",
+    "title": "Skills",
+    "levelNames": {
+      "Foundational": "Foundational",
+      "Proficient": "Proficient",
+      "Advanced": "Advanced", 
+      "Expert": "Expert"
+    }
+  },
+  "testimonials": {
+    "company": "Company",
+    "date": "Date",
+    "position": "Position",
+    "rating": "Rating",
+    "subtitle": "What people say",
+    "title": "Testimonials"
+  }
+}

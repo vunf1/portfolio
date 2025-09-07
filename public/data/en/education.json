@@ -1,0 +1,24 @@
+[
+  {
+    "degree": "Bachelor of Applied Science (BASc), Computer Science",
+    "description": "Undergraduate program in Computer Science.",
+    "institution": "Coventry University",
+    "location": "Coventry, United Kingdom"
+  },
+  {
+    "degree": "Technical Course in Management and Programming of Computer Systems",
+    "description": "Vocational training in programming and information systems management.",
+    "institution": "Escola S/3 Arquitecto Oliveira Ferreira"
+  },
+  {
+    "degree": "Programming and Machining — CNC/AutoCAD",
+    "description": "",
+    "institution": "Escola Profissional de Gaia",
+    "location": "Portugal"
+  },
+  {
+    "degree": "Professional Technical Course in Information Systems Management ",
+    "institution": "ESAOF — Escola Arquitecto Oliveira Ferreira",
+    "location": "Portugal"
+  }
+]

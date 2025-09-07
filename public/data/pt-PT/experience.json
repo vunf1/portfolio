@@ -1,0 +1,188 @@
+[
+  {
+    "company": "Independente",
+    "description": "Aprendizagem autónoma estruturada e a longo prazo sobre os fundamentos generalistas da IA (LLM, RAG, agentes, engenharia de prontidão, ferramentas), ciências informáticas fundamentais (algoritmos e estruturas de dados, sistemas operativos, concorrência, sistemas distribuídos) e redes práticas/segurança cibernética (TCP/IP, encaminhamento/comutação, VLANs/VPN, QoS, DNS/DHCP, NAT). Ênfase na construção de protótipos, na documentação das aprendizagens e na sua aplicação em consultoria e fluxos de trabalho.",
+    "duration": "Mais de 15 anos",
+    "highlights": [
+      "Generalista de IA (LLMs, RAG & Agents, ferramentas)",
+      "Algoritmos e estruturas de dados; SO, concorrência, sistemas distribuídos",
+      "Redes e segurança (encaminhamento/comutação, VPNs, QoS, DNS/DHCP, NAT)",
+      "Conceção de sistemas e DevOps (contentores, CI/CD, Git, DevOps)"
+    ],
+    "impact": "Prototipagem acelerada e pilhas operacionais mais fiáveis; melhor enquadramento de problemas e qualidade de soluções em projectos de consultoria, back-end e streaming em tempo real.",
+    "location": "Portugal / UK",
+    "period": "junho de 2010 - Presente",
+    "technologies": [
+      "--- Linguagens de Programação ---",
+      "Python",
+      "TypeScript",
+      "JavaScript",
+      "Java",
+      "C#",
+      "C",
+      "C++",
+      "Visual Basic (VB.NET / VBA)",
+      "PHP",
+      "Lua",
+      "Bash / Shell",
+      "PowerShell",
+      "SQL",
+      "NoSQL",
+      "--- Generalista de IA---",
+      "LLMs",
+      "Condutas RAG",
+      "Embeddings e bases de dados vectoriais",
+      "Agentes",
+      "Engenharia rápida",
+      "--- Rede ---",
+      "TCP/IP",
+      "Encaminhamento e comutação",
+      "VLAN/VPN",
+      "DNS/DHCP",
+      "NAT (Network Address Translation)",
+      "QoS (Qualidade de serviço)",
+      "--- Cibersegurança ---",
+      "Firewall/IDS",
+      "Encriptação (AES, RSA, ECC, algoritmos de hashing)",
+      "Análise de registos e caça a ameaças",
+      "Conceitos de confiança zero",
+      "--- Ferramentas e plataformas ---",
+      "Linux / Windows",
+      "Docker",
+      "CI/CD",
+      "Git",
+      "--- Engenharia de Software ---",
+      "Conceção de sistemas",
+      "Padrões de desenho",
+      "OOP"
+    ],
+    "title": "Autónomo - Auto-estudo"
+  },
+  {
+    "achievements": [
+      "Serviços de produção através de arquitetura limpa, contentores, CI/CD.",
+      "Automatização de testes com gates de lançamento; registos, métricas e rastreios para observação.",
+      "Pipelines seguros por defeito: segredos, verificação de dependências, privilégio mínimo, registo de auditoria.",
+      "Afinação da interface de rede: bonding/teaming, 802.1Q VLANs, MTU/QoS, encaminhamento baseado em políticas.",
+      "Segurança de borda: firewall/IDS, OpenVPN/WireGuard; configurações de base com script.",
+      "Automatização do streaming: OBS/FFmpeg/NDI, RTMP/SRT, controlo de sobreposição, verificações de saúde, failover."
+    ],
+    "company": "Freelance",
+    "description": "Fornecer soluções de ponta a ponta para pequenas empresas e clientes individuais. Software: SDLC completo, desde os requisitos e o design até à implementação, testes, contentorização, CI/CD, observabilidade e implementações seguras por predefinição - privilegiando compilações reproduzíveis, padrões de infraestrutura como código e manuais de execução bem documentados.\n Redes: Conceção e configuração de L1/L2/L3 (encaminhamento/comutação), segmentação de VLAN, serviços DHCP/DNS, políticas NAT e QoS, planeamento sem fios e resolução de problemas e resposta a incidentes de acesso remoto seguro (VPNs site-to-site e utilizador remoto).\n Streaming: produções em direto com várias câmaras, com configuração de codificador, ingestão RTMP/SRT, encaminhamento NDI, mistura de áudio e sobreposições/quadros de pontuação em tempo real; planeamento de redundância, afinação de QoS e monitorização em direto para manter as transmissões estáveis em condições de rede variáveis. Em todos os domínios, aplico automação (Python, Bash, PowerShell, ferramentas assistidas por IA) para padronizar o provisionamento, a configuração, a documentação e os relatórios - reduzindo o trabalho, diminuindo o MTTR e melhorando a confiabilidade, o desempenho e a segurança.",
+    "duration": "Mais de 8 anos",
+    "highlights": [
+      "Engenharia de software de ponta a ponta (SDLC, arquitetura limpa, contentores, CI/CD, IaC)",
+      "Fiabilidade e observabilidade (registos estruturados, métricas, rastreios; mentalidade SLO)",
+      "Engenharia de segurança por defeito (gestão de segredos, controlo de dependências, privilégios mínimos, auditoria)",
+      "Engenharia de redes (L1-L3, encaminhamento/comutação, VLANs, DNS/DHCP, NAT, QoS)",
+      "Segurança de extremidade e acesso remoto (firewalls/IDS, OpenVPN/WireGuard)",
+      "Afinação do desempenho da interface (ligação/teaming de NIC, 802.1Q, MTU/jumbo frames, encaminhamento baseado em políticas)",
+      "Sistemas de transmissão em fluxo contínuo (OBS/codificadores, RTMP/SRT, NDI, mistura de áudio, sobreposições em tempo real/painéis de avaliação)",
+      "Automatização e ferramentas (Python/Bash/PowerShell, fluxos de trabalho assistidos por IA, cadernos de execução repetíveis)"
+    ],
+    "impact": "Maior fiabilidade, desempenho e segurança em redes de clientes e sistemas de produção; maior estabilidade e qualidade de streaming através do planeamento de redundância e afinação de QoS; redução do esforço manual através da automatização; maior qualidade de entrega para projectos de software com práticas modernas de DevOps.",
+    "location": "Portugal",
+    "period": "julho de 2017 - Presente",
+    "technologies": [],
+    "title": "Freelance - Engenheiro de Software e Redes, Consultor de TI, Técnico de Streaming"
+  },
+  {
+    "achievements": [
+      "Computadores recondicionados e mantidos para revenda, garantindo fiabilidade e desempenho.",
+      "Geriu encomendas e RMAs com uma forte ênfase na eficiência operacional.",
+      "Concebeu, implementou e manteve servidores PXE e SFTP para simplificar a instalação e o teste de sistemas operativos.",
+      "Redução do tempo médio de configuração da máquina de 15-20 minutos para 3-5 minutos através da automatização com ferramentas CLI personalizadas.",
+      "Automatização de tarefas repetitivas, aumentando significativamente a produtividade da equipa.",
+      "Ministrou formação prática a novos funcionários e estagiários, acelerando a adoção de processos optimizados."
+    ],
+    "company": "Hardstock Lda.",
+    "description": "Concebeu e implementou um fluxo de trabalho de remodelação e implementação de ponta a ponta e de elevado rendimento para PCs de revenda, combinando o aprovisionamento de arranque em rede (PXE) com um depósito de artefactos suportado por SFTP e ferramentas personalizadas Python/PowerShell CLI. Criou um pipeline de criação de imagens padronizado que carrega em cadeia um ambiente WinPE/manutenção mínimo via PXE, executa diagnósticos de hardware pré-voo (CPU/RAM/armazenamento SMART e verificações rápidas de superfície), captura metadados de ativos/seriais e impõe portas de ir/não ir antes da criação de imagens. Instalação orquestrada e não assistida do sistema operativo e aprovisionamento pós-instalação (preparação de pacotes de controladores, actualizações de firmware/BIOS quando aplicável, linhas de base de políticas/configurações), seguida de passos de verificação (verificações de saúde, recolha de telemetria e testes pontuais de burn-in) para garantir resultados consistentes com um mínimo de intervenção técnica.\n\nEstabeleceu um processo de lançamento SFTP controlado para imagens douradas, controladores e scripts com validação de soma de verificação e acesso de privilégio mínimo; implementou comandos CLI resilientes e idempotentes que suportam lotes paralelos, tentativas seguras e registos JSON estruturados para rastreabilidade. Adicionada observabilidade leve - rendimento por estação, modos de falha e painéis simples e relatórios diários para destacar gargalos e oportunidades de melhoria contínua.\n\n Tratamento de RMA (triagem de entrada, transições de estado e etiquetagem/rastreabilidade), reduzindo os estados de espera e o retrabalho. Automatização de passos técnicos repetitivos (listas de verificação, seleção de imagens, correspondência de condutores, geração de relatórios), reduzindo o tempo médio de ciclo por máquina de cerca de 15-20 minutos para cerca de 3-5 minutos e permitindo execuções consistentes de várias unidades. Formação prática (acompanhamento, guias de referência rápida) para técnicos e estagiários para acelerar a adoção, melhorar o rendimento na primeira passagem e manter a qualidade padronizada em toda a equipa.",
+    "duration": "10 meses",
+    "impact": "Aumento da eficiência global dos fluxos de trabalho de renovação e teste; melhoria da formação e da velocidade de integração; redução dos custos operacionais através da automatização.",
+    "location": "Arcozelo, Portugal",
+    "period": "agosto de 2024 - maio de 2025",
+    "technologies": [
+      "Servidor PXE",
+      "SFTP",
+      "Ferramentas CLI personalizadas (Python/PowerShell)",
+      "Implantação do Windows",
+      "Diagnóstico de hardware",
+      "Scripting de automatização",
+      "Otimização de processos"
+    ],
+    "title": "Técnico de TI e otimização de processos"
+  },
+  {
+    "achievements": [],
+    "company": "CoreLogic Reino Unido",
+    "description": "PWA com Angular 8 + Material UI/FX; CI/CD (Azure DevOps/Git); MongoDB + JSON; microsserviços dockerizados com Kubernetes.",
+    "duration": "1 ano",
+    "highlights": [
+      "PWA",
+      "Microsserviços",
+      "CI/CD"
+    ],
+    "impact": "",
+    "location": "Shirley, Solihull (6 meses à distância)",
+    "period": "setembro de 2019 - agosto de 2020",
+    "technologies": [
+      "--- Frontend ---",
+      "Angular 8",
+      "Material",
+      "--- Backend e base de dados",
+      "MongoDB",
+      "--- DevOps e Infraestrutura ---",
+      "DevOps do Azure",
+      "Git",
+      "Docker",
+      "Kubernetes"
+    ],
+    "title": "Programador Full-Stack"
+  },
+  {
+    "achievements": [],
+    "company": "Medsky",
+    "description": "Gestão de licenças multi-serviço (validação POST, HWID único, JSON por serviço). MVC com CodeIgniter; API RESTful (SCRUD); Bootstrap, jQuery, Alertify; SQL (phpMyAdmin).",
+    "duration": "3 meses",
+    "highlights": [
+      "APIs REST",
+      "Arquitetura MVC"
+    ],
+    "impact": "",
+    "location": "Porto District, Portugal",
+    "period": "janeiro de 2017 - março de 2017",
+    "technologies": [
+      "--- Backend ---",
+      "PHP (CodeIgniter)",
+      "REST",
+      "SQL",
+      "--- Frontend ---",
+      "Bootstrap",
+      "jQuery",
+      "Alertar"
+    ],
+    "title": "Programador de aplicações Web"
+  },
+  {
+    "achievements": [
+      "Redução da utilização de RAM e do espaço ocupado"
+    ],
+    "company": "Medsky",
+    "description": "Migração de C#/HTML para Visual Basic para reduzir a RAM e o espaço físico (execução baseada em CD). Configuração baseada em INI e manual do utilizador incluídos.",
+    "duration": "2 meses",
+    "highlights": [
+      "Otimização",
+      "Migração"
+    ],
+    "impact": "",
+    "location": "Porto District, Portugal",
+    "period": "maio de 2016 - junho de 2016",
+    "technologies": [
+      "C#",
+      "VB",
+      "HTML",
+      "INI"
+    ],
+    "title": "Programador de software de tecnologias da informação"
+  }
+]

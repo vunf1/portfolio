@@ -1,0 +1,199 @@
+{
+  "about": {
+    "availability": "Disponível",
+    "coreValues": "Valores fundamentais",
+    "languages": "Línguas",
+    "location": "Porto, Portugal",
+    "relocation": "Aberto à deslocalização",
+    "remote": "Possibilidade de trabalho à distância",
+    "subtitle": "Conhecer o meu trabalho",
+    "summary": "Consultoria, desenvolvimento e operações centradas na eficiência.",
+    "title": "Sobre mim"
+  },
+  "awards": {
+    "certificateUrl": "URL do certificado",
+    "criteria": "Critérios",
+    "date": "Data",
+    "description": "Descrição",
+    "impact": "Impacto",
+    "issuer": "Emissor",
+    "subtitle": "Honras e distinções",
+    "title": "Prémios e reconhecimentos"
+  },
+  "certifications": {
+    "credentialId": "ID da credencial",
+    "description": "Descrição",
+    "expiryDate": "Data de expiração",
+    "issueDate": "Data de emissão",
+    "issuer": "Emissor",
+    "skills": "Competências abrangidas",
+    "subtitle": "Qualificações profissionais",
+    "title": "Certificações",
+    "verificationUrl": "URL de verificação"
+  },
+  "common": {
+    "darkMode": "Modo escuro",
+    "error": "Erro",
+    "language": "Língua",
+    "lightMode": "Modo de luz",
+    "loading": "Carregando...",
+    "refresh": "Atualizar",
+    "somethingWentWrong": "Algo correu mal",
+    "theme": "Tema",
+    "tryRefreshing": "Tente atualizar a página."
+  },
+  "fab": {
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "darkMode": "Modo escuro",
+    "lightMode": "Modo claro",
+    "switchToDark": "Mudar para modo escuro",
+    "switchToLight": "Mudar para modo claro",
+    "switchToEnglish": "Mudar para inglês",
+    "switchToPortuguese": "Mudar para português"
+  },
+  "contact": {
+    "availability": "Disponibilidade",
+    "form": {
+      "cancel": "Cancel",
+      "company": "Empresa (facultativo)",
+      "email": "Endereço de correio eletrónico",
+      "fullName": "Nome completo",
+      "optional": "Opcional",
+      "reason": "Motivo do contacto (facultativo)",
+      "reasonOptions": {
+        "consulting": "Consultoria",
+        "jobOpportunity": "Oportunidade de emprego",
+        "networking": "Ligação em rede",
+        "other": "Outros",
+        "projectCollaboration": "Colaboração em projectos"
+      },
+      "required": "Necessário",
+      "submit": "Desbloquear",
+      "submitting": "A submeter...",
+      "title": "Desbloquear informações de contacto",
+      "locked": "Formulário temporariamente bloqueado. Por favor, aguarde {seconds} segundos.",
+      "attempts": "Tentativas: {current}/{max}",
+      "characters": "2-100 caracteres",
+      "fullNamePlaceholder": "Introduza o seu nome completo",
+      "emailPlaceholder": "Introduza o seu endereço de correio eletrónico",
+      "companyPlaceholder": "Introduza o nome da sua empresa",
+      "reasonPlaceholder": "Selecione um motivo...",
+      "security": "Segurança e Privacidade",
+      "securityNotice": "Protegido contra spam e abuso. Dados processados com segurança.",
+      "dataStorage": "Armazenamento local: 30 dias. Sem transmissão externa.",
+      "dataMetrics": "Dados codificados. Expiração automática ou limpeza manual."
+    },
+    "preferredContact": "Método de contacto preferido",
+    "responseTime": "Tempo de resposta",
+    "subtitle": "Vamos falar sobre o seu projeto",
+    "title": "Contacto",
+    "unlockInfo": "Desbloquear informações de contacto",
+    "unlockTitle": "Clique para desbloquear o acesso às minhas informações",
+    "unlockSubtitle": "Entre em contacto comigo",
+    "unlockButton": "Desbloquear Informações de Contacto",
+    "placeholderText": "As informações de contacto serão exibidas aqui após o desbloqueio.",
+    "unlocked": "Contacto Desbloqueado",
+    "ctaText": "Pronto para trabalharmos juntos?",
+    "sendMessage": "Enviar Mensagem",
+    "labels": {
+      "email": "Correio Eletrónico",
+      "phone": "Telefone",
+      "location": "Localização",
+      "website": "Sítio Web",
+      "connect": "Conectar"
+    },
+    "badges": {
+      "remoteAvailable": "Trabalho Remoto Disponível",
+      "openToRelocation": "Aberto à Relocalização"
+    }
+  },
+  "education": {
+    "achievements": "Realizações",
+    "courses": "Corridas",
+    "degree": "Grau",
+    "gpa": "GPA",
+    "institution": "Instituição",
+    "period": "Período",
+    "projects": "Projectos",
+    "status": "Estado",
+    "subtitle": "Formação académica e técnica",
+    "title": "Educação"
+  },
+  "experience": {
+    "achievements": "Principais realizações",
+    "duration": "Duração",
+    "highlights": "Destaques",
+    "impact": "Impacto",
+    "location": "Localização",
+    "subtitle": "O meu percurso em tecnologia e operações",
+    "technologies": "Tecnologias",
+    "title": "Experiência profissional"
+  },
+  "hero": {
+    "cta": "Ver a carteira",
+    "scrollDown": "Deslocação para baixo",
+    "subtitle": "Operações de back-end - Azure - OOP",
+    "tagline": "Sempre a aprender. Construir com objectivos.",
+    "title": "Programador Full-Stack"
+  },
+  "interests": {
+    "lifestyle": "Estilo de vida e bem-estar",
+    "personalDevelopment": "Desenvolvimento pessoal",
+    "specificInterests": "Interesses específicos",
+    "subtitle": "Para além do código",
+    "technology": "Tecnologia e inovação",
+    "title": "Interesses"
+  },
+  "navigation": {
+    "awards": "Prémios",
+    "brand": "João Maia",
+    "certifications": "Certificações",
+    "contact": "Contacto",
+    "education": "Educação",
+    "experience": "Experiência",
+    "interests": "Interesses",
+    "projects": "Projectos",
+    "skills": "Competências",
+    "testimonials": "Testemunhos"
+  },
+  "projects": {
+    "challenges": "Desafios",
+    "code": "Código",
+    "demo": "Demonstração",
+    "features": "Caraterísticas",
+    "highlights": "Destaques",
+    "links": "Ligações",
+    "role": "Papel",
+    "solutions": "Soluções",
+    "subtitle": "Obras selecionadas",
+    "teamSize": "Tamanho da equipa",
+    "technologies": "Tecnologias",
+    "title": "Projectos em destaque"
+  },
+  "skills": {
+    "description": "Descrição",
+    "experience": "Experiência",
+    "level": "Nível",
+    "proficiencyLevels": "Níveis de Proficiência",
+    "projects": "Projectos",
+    "soft": "Competências transversais",
+    "subtitle": "Tecnologias e competências",
+    "technical": "Competências técnicas",
+    "title": "Competências",
+    "levelNames": {
+      "Foundational": "Fundacional",
+      "Proficient": "Proficiente", 
+      "Advanced": "Avançado",
+      "Expert": "Perito"
+    }
+  },
+  "testimonials": {
+    "company": "Empresa",
+    "date": "Data",
+    "position": "Posição",
+    "rating": "Classificação",
+    "subtitle": "O que as pessoas dizem",
+    "title": "Testemunhos"
+  }
+}
