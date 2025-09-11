@@ -8,7 +8,7 @@
 [![Vitest](https://img.shields.io/badge/Vitest-1.3.1-6E9F18?logo=vitest&logoColor=white)](https://vitest.dev/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Security](https://img.shields.io/badge/Security-GDPR%20Compliant-green)](https://gdpr.eu/)
-[![Accessibility](https://img.shields.io/badge/Accessibility-WCAG%202.2%20AA-blue)](https://www.w3.org/WAI/WCAG21/)
+[![Accessibility](https://img.shields.io/badge/Accessibility-WCAG%202.2%20AA-blue)](https://www.w3.org/TR/WCAG22/)
 
 A modern, enterprise-grade portfolio website built with **Vite + Preact + TypeScript**, featuring privacy-gated content, GDPR compliance, and premium user experience optimized for Core Web Vitals and accessibility.
 
