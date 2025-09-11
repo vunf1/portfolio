@@ -7,17 +7,34 @@
     <script>
         // GitHub Pages 404.html for SPA routing
         // This handles client-side routing when users navigate directly to a route
-        const pathSegmentsToKeep = 0; // Root deployment, no subdirectory
-        
         const l = window.location;
         const baseUrl = l.origin + '/';
         
-        // Check if the current path is not the base path
-        if (l.pathname !== '/' && l.pathname !== '') {
-            // Redirect to base with hash for client-side routing
-            window.location.href = baseUrl + '#' + l.pathname.slice(1);
+        // Don't redirect asset requests (JS, CSS, images, etc.)
+        const isAssetRequest = l.pathname.includes('/assets/') || 
+                              l.pathname.endsWith('.js') || 
+                              l.pathname.endsWith('.css') || 
+                              l.pathname.endsWith('.png') || 
+                              l.pathname.endsWith('.jpg') || 
+                              l.pathname.endsWith('.jpeg') || 
+                              l.pathname.endsWith('.gif') || 
+                              l.pathname.endsWith('.svg') || 
+                              l.pathname.endsWith('.ico') || 
+                              l.pathname.endsWith('.woff') || 
+                              l.pathname.endsWith('.woff2') || 
+                              l.pathname.endsWith('.ttf') || 
+                              l.pathname.endsWith('.eot') ||
+                              l.pathname.endsWith('.map') ||
+                              l.pathname.endsWith('.json') ||
+                              l.pathname.endsWith('.xml') ||
+                              l.pathname.endsWith('.txt');
+        
+        if (isAssetRequest) {
+            // For asset requests, show 404 without redirect
+            document.body.innerHTML = '<h1>404 - Asset Not Found</h1><p>The requested asset could not be found.</p><p><a href="/">Go to Homepage</a></p>';
         } else {
-            // If we're at the base, just redirect to the main page
+            // Only redirect page requests to the main app
+            // Redirect to the main app and let it handle routing
             window.location.href = baseUrl;
         }
     </script>
