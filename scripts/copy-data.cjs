@@ -42,8 +42,15 @@ if (fs.existsSync(srcImgDir)) {
 }
 
 // Create .nojekyll file for GitHub Pages
-const nojekyllDest = path.join(__dirname, '..', 'dist', '.nojekyll');
+const distDir = path.join(__dirname, '..', 'dist');
+const nojekyllDest = path.join(distDir, '.nojekyll');
 const nojekyllContent = '# This file tells GitHub Pages to not process files with Jekyll\n# It\'s needed for SPAs and other non-Jekyll sites\n';
+
+// Ensure dist directory exists
+if (!fs.existsSync(distDir)) {
+  fs.mkdirSync(distDir, { recursive: true });
+  console.log('Created dist directory');
+}
 
 // Always create the .nojekyll file directly
 fs.writeFileSync(nojekyllDest, nojekyllContent);
