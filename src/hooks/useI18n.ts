@@ -10,7 +10,7 @@ export function useI18n() {
       try {
         const uiFile = `ui.json`
         // console.log('🔄 useI18n: Loading translations for', currentLanguage, 'from', uiFile)
-        const response = await fetch(`/data/${currentLanguage}/${uiFile}`)
+        const response = await fetch(`./data/${currentLanguage}/${uiFile}`)
         
         if (response.ok) {
           const data = await response.json()

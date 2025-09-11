@@ -41,7 +41,7 @@ i18n
 export async function loadTranslations(language: string) {
   try {
     const dataFile = language === 'pt-PT' ? 'portfolio-pt-PT.json' : 'portfolio-en.json'
-    const response = await fetch(`/data/${dataFile}`)
+    const response = await fetch(`./data/${dataFile}`)
     
     if (!response.ok) {
       throw new Error(`Failed to load ${language} translations: ${response.status}`)

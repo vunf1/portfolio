@@ -11,7 +11,8 @@ const NON_CRITICAL_SECTIONS = ['projects', 'certifications', 'interests', 'award
 
 // Helper function to get the correct data path
 function getDataPath(language: string, section: string): string {
-  return `/data/${language}/${section}.json`
+  // Use relative path to work with GitHub Pages base URL
+  return `./data/${language}/${section}.json`
 }
 
 // Helper function to load a single JSON file

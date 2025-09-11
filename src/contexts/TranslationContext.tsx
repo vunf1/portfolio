@@ -31,7 +31,7 @@ export function useTranslation() {
       const uiFile = `ui.json`
       // console.log('🔄 useTranslation: Loading translations for', lang, 'from', uiFile)
       
-      const response = await fetch(`/data/${lang}/${uiFile}`)
+      const response = await fetch(`./data/${lang}/${uiFile}`)
       
       if (response.ok) {
         const data = await response.json()
@@ -146,7 +146,7 @@ export async function preloadTranslations(lang: 'en' | 'pt-PT' = 'en'): Promise<
       const uiFile = `ui.json`
       // console.log(`📥 preloadTranslations: Loading ${language} from ${uiFile}`)
       
-      const response = await fetch(`/data/${language}/${uiFile}`)
+      const response = await fetch(`./data/${language}/${uiFile}`)
       
       if (response.ok) {
         const data = await response.json()
