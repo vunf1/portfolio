@@ -64,7 +64,7 @@ describe('useI18n Hook', () => {
       await new Promise(resolve => setTimeout(resolve, 0))
     })
 
-    expect(mockFetch).toHaveBeenCalledWith('/data/en/ui.json')
+    expect(mockFetch).toHaveBeenCalledWith('./data/en/ui.json')
     expect(result.current.t('hero.title')).toBe('Software Developer')
     expect(result.current.t('hero.cta')).toBe('Get In Touch')
   })
@@ -119,7 +119,7 @@ describe('useI18n Hook', () => {
       await new Promise(resolve => setTimeout(resolve, 0))
     })
 
-    expect(mockFetch).toHaveBeenCalledWith('/data/pt-PT/ui.json')
+    expect(mockFetch).toHaveBeenCalledWith('./data/pt-PT/ui.json')
     expect(result.current.t('hero.title')).toBe('Desenvolvedor de Software')
   })
 
