@@ -93,7 +93,7 @@ const mockTranslationData = {
       subtitle: 'Back-end Ops • Network • OOP',
       summary: 'Experienced full-stack developer specializing in React, Node.js, and cloud technologies',
       coreValues: ['Innovation', 'Quality', 'Collaboration'],
-      profileImage: '/img/profile.jpg'
+      profileImage: './img/profile.jpg'
     },
     social: [
       {

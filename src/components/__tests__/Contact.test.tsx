@@ -80,7 +80,7 @@ const mockPersonal = {
   phoneSecondary: '+44 7393 557259',
   location: 'Porto, Portugal',
   website: 'https://example.com',
-  profileImage: '/img/profile.jpg',
+  profileImage: './img/profile.jpg',
   availability: 'Open to new opportunities',
   remote: 'Available',
   relocation: 'Available'

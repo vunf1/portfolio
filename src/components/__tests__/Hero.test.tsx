@@ -51,7 +51,7 @@ const mockPersonal = {
   tagline: 'Back-end Ops • Network • OOP',
   summary: 'Full-stack developer with passion for modern web technologies',
   longSummary: 'Experienced full-stack developer specializing in React, Node.js, and cloud technologies',
-  profileImage: '/img/profile.jpg',
+  profileImage: './img/profile.jpg',
   coreValues: ['Innovation', 'Quality', 'Collaboration']
 }
 
@@ -92,7 +92,7 @@ describe('Hero Component', () => {
     
     const profileImage = screen.getByAltText('João Maia Profile')
     expect(profileImage).toBeInTheDocument()
-    expect(profileImage).toHaveAttribute('src', '/img/profile.jpg')
+    expect(profileImage).toHaveAttribute('src', './img/profile.jpg')
     expect(profileImage).toHaveAttribute('loading', 'lazy')
     expect(profileImage).toHaveAttribute('decoding', 'async')
   })
