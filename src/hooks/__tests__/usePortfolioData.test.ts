@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { renderHook, act } from '@testing-library/preact'
 import { usePortfolioData, useConsolidatedData, dataCache } from '../usePortfolioData'
@@ -109,73 +110,73 @@ const mockSkillsData = {
   ]
 }
 
-const mockProjectsData = [
-  {
-    id: "1",
-    name: "Test Project",
-    description: "Test description",
-    longDescription: "Test long description",
-    technologies: ["TypeScript"],
-    features: ["Test feature"],
-    url: "https://test.com",
-    demo: "https://demo.test.com",
-    image: "test.jpg",
-    period: "2023",
-    role: "Developer",
-    teamSize: 1,
-    highlights: ["Test highlight"],
-    challenges: "Test challenge",
-    solutions: "Test solution"
-  }
-]
+// const mockProjectsData = [
+//   {
+//     id: "1",
+//     name: "Test Project",
+//     description: "Test description",
+//     longDescription: "Test long description",
+//     technologies: ["TypeScript"],
+//     features: ["Test feature"],
+//     url: "https://test.com",
+//     demo: "https://demo.test.com",
+//     image: "test.jpg",
+//     period: "2023",
+//     role: "Developer",
+//     teamSize: 1,
+//     highlights: ["Test highlight"],
+//     challenges: "Test challenge",
+//     solutions: "Test solution"
+//   }
+// ]
 
-const mockCertificationsData = [
-  {
-    id: "1",
-    name: "Test Certification",
-    issuer: "Test Issuer",
-    issueDate: "2023-01-01",
-    expiryDate: "2024-01-01",
-    credentialId: "TEST123",
-    description: "Test description",
-    skills: ["Test skill"],
-    verificationUrl: "https://verify.test.com",
-    image: "cert.jpg"
-  }
-]
+// const mockCertificationsData = [
+//   {
+//     id: "1",
+//     name: "Test Certification",
+//     issuer: "Test Issuer",
+//     issueDate: "2023-01-01",
+//     expiryDate: "2024-01-01",
+//     credentialId: "TEST123",
+//     description: "Test description",
+//     skills: ["Test skill"],
+//     verificationUrl: "https://verify.test.com",
+//     image: "cert.jpg"
+//   }
+// ]
 
-const mockInterestsData = [
-  {
-    category: "Technology",
-    description: "Test description",
-    items: ["Test interest"]
-  }
-]
+// const mockInterestsData = [
+//   {
+//     category: "Technology",
+//     description: "Test description",
+//     items: ["Test interest"]
+//   }
+// ]
 
-const mockAwardsData = [
-  {
-    id: "1",
-    title: "Test Award",
-    issuer: "Test Issuer",
-    date: "2023-01-01",
-    description: "Test description",
-    criteria: "Test criteria",
-    impact: "Test impact",
-    certificateUrl: "https://cert.test.com"
-  }
-]
+// const mockAwardsData = [
+//   {
+//     id: "1",
+//     title: "Test Award",
+//     issuer: "Test Issuer",
+//     date: "2023-01-01",
+//     description: "Test description",
+//     criteria: "Test criteria",
+//     impact: "Test impact",
+//     certificateUrl: "https://cert.test.com"
+//   }
+// ]
 
-const mockTestimonialsData = [
-  {
-    id: "1",
-    name: "Test Person",
-    position: "Test Position",
-    company: "Test Company",
-    content: "Test testimonial",
-    rating: 5,
-    date: "2023-01-01"
-  }
-]
+// const mockTestimonialsData = [
+//   {
+//     id: "1",
+//     name: "Test Person",
+//     position: "Test Position",
+//     company: "Test Company",
+//     content: "Test testimonial",
+//     rating: 5,
+//     date: "2023-01-01"
+//   }
+// ]
 
 const mockMetaData = {
   author: "João Maia",

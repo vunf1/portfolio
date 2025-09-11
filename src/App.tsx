@@ -27,14 +27,14 @@ export function App() {
   const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false)
 
   // Debug: Add test message to see if component is rendering
-  console.log('🎯 App component rendering:', { 
-    portfolioData: portfolioData ? 'Available' : 'Not Available',
-    loading, 
-    error: error?.message || 'None',
-    currentLanguage: currentLanguage,
-    aboutTranslation: t('navigation.about'),
-    contactTranslation: t('navigation.contact')
-  })
+  // console.log('🎯 App component rendering:', { 
+  //   portfolioData: portfolioData ? 'Available' : 'Not Available',
+  //   loading, 
+  //   error: error?.message || 'None',
+  //   currentLanguage: currentLanguage,
+  //   aboutTranslation: t('navigation.about'),
+  //   contactTranslation: t('navigation.contact')
+  // })
 
   // Handle smooth language transitions
   useEffect(() => {
@@ -60,12 +60,12 @@ export function App() {
   }, [])
 
 
-  const handleScrollDown = () => {
-    const contactSection = document.getElementById('contact')
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
+  // const handleScrollDown = () => {
+  //   const contactSection = document.getElementById('contact')
+  //   if (contactSection) {
+  //     contactSection.scrollIntoView({ behavior: 'smooth' })
+  //   }
+  // }
 
   // Intersection Observer for active section tracking
   useEffect(() => {
@@ -164,7 +164,7 @@ export function App() {
 
   // Show debug info if no data
   if (!portfolioData) {
-    console.log('⚠️ Showing no data state')
+    // console.log('⚠️ Showing no data state')
     return (
       <div className="error">
         <div className="error-content">
@@ -183,7 +183,7 @@ export function App() {
     )
   }
 
-  console.log('✅ Portfolio data available, rendering main content')
+  // console.log('✅ Portfolio data available, rendering main content')
 
   return (
     <ErrorBoundary>
@@ -207,7 +207,6 @@ export function App() {
         {/* Hero Section */}
         <Hero 
           personal={portfolioData.personal}
-          onScrollDown={handleScrollDown}
         />
         
         <div className={`portfolio-container ${isLanguageTransitioning ? 'language-transitioning' : ''}`}>

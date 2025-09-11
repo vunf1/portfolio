@@ -21,9 +21,9 @@ export function FloatingActionButton({ className = '' }: FloatingActionButtonPro
   const [isDragging, setIsDragging] = useState(false)
   const [position, setPosition] = useState({ x: 20, y: 20 }) // Default bottom-right (right, bottom)
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
-  const [dragStartPos, setDragStartPos] = useState({ x: 0, y: 0 })
+  // const [dragStartPos, setDragStartPos] = useState({ x: 0, y: 0 })
   const [isPointerDown, setIsPointerDown] = useState(false)
-  const [longPressTimer, setLongPressTimer] = useState<NodeJS.Timeout | null>(null)
+  const [longPressTimer, setLongPressTimer] = useState<number | null>(null)
   const [isLongPressing, setIsLongPressing] = useState(false)
   
   const fabRef = useRef<HTMLDivElement>(null)
@@ -38,7 +38,7 @@ export function FloatingActionButton({ className = '' }: FloatingActionButtonPro
         // Check if position is reasonable (not way off screen)
         if (x > window.innerWidth || y > window.innerHeight || x < 0 || y < 0) {
           // Reset to default position if saved position is invalid
-          console.warn('Invalid FAB position detected, resetting to default')
+          // console.warn('Invalid FAB position detected, resetting to default')
           localStorage.removeItem('fab-position')
           setPosition({ x: 20, y: 20 })
         } else {
@@ -49,7 +49,7 @@ export function FloatingActionButton({ className = '' }: FloatingActionButtonPro
         }
       }
     } catch (error) {
-      console.warn('Failed to load FAB position from localStorage:', error)
+      // console.warn('Failed to load FAB position from localStorage:', error)
       setPosition({ x: 20, y: 20 })
     }
   }, [])
@@ -59,7 +59,7 @@ export function FloatingActionButton({ className = '' }: FloatingActionButtonPro
     try {
       localStorage.setItem('fab-position', JSON.stringify(newPosition))
     } catch (error) {
-      console.warn('Failed to save FAB position to localStorage:', error)
+      // console.warn('Failed to save FAB position to localStorage:', error)
     }
   }, [])
 
@@ -93,7 +93,9 @@ export function FloatingActionButton({ className = '' }: FloatingActionButtonPro
 
   // Long press and drag handlers
   const handlePointerDown = useCallback((e: PointerEvent) => {
-    if (isExpanded) return
+    if (isExpanded) {
+      return
+    }
     
     e.preventDefault()
     e.stopPropagation()
@@ -102,7 +104,7 @@ export function FloatingActionButton({ className = '' }: FloatingActionButtonPro
     setIsLongPressing(true)
     
     // Store initial position for drag detection
-    setDragStartPos({ x: e.clientX, y: e.clientY })
+    // setDragStartPos({ x: e.clientX, y: e.clientY })
     
     // Store event data for later use in timeout
     const eventData = {
@@ -127,12 +129,14 @@ export function FloatingActionButton({ className = '' }: FloatingActionButtonPro
       setIsLongPressing(false)
     }, 500)
     
-    setLongPressTimer(timer)
+    setLongPressTimer(timer as unknown as number)
   }, [isExpanded])
 
   const handlePointerMove = useCallback((e: PointerEvent) => {
     // Only handle movement if pointer is down and we're dragging
-    if (!isPointerDown || !isDragging) return
+    if (!isPointerDown || !isDragging) {
+      return
+    }
 
     // Calculate new position (from bottom-right corner)
     // x = distance from right edge, y = distance from bottom edge
@@ -278,7 +282,7 @@ export function FloatingActionButton({ className = '' }: FloatingActionButtonPro
         className={`fab-main ${isExpanded ? 'fab-main-expanded' : ''} ${isDragging ? 'fab-main-dragging' : ''} ${isLongPressing ? 'fab-main-longpressing' : ''}`}
         onClick={toggleExpanded}
         onPointerDown={handlePointerDown}
-        onDoubleClick={handleDoubleClick}
+        onDblClick={handleDoubleClick}
         aria-label={isExpanded ? t('fab.closeMenu', 'Close menu') : t('fab.openMenu', 'Open menu')}
         aria-expanded={isExpanded}
         aria-haspopup="menu"

@@ -1,12 +1,18 @@
 import '@testing-library/jest-dom'
+import { vi } from 'vitest'
 
 // Mock IntersectionObserver
 global.IntersectionObserver = class IntersectionObserver {
+  root = null
+  rootMargin = ''
+  thresholds = []
+  
   constructor() {}
   disconnect() {}
   observe() {}
   unobserve() {}
-}
+  takeRecords() { return [] }
+} as typeof IntersectionObserver
 
 // Mock ResizeObserver
 global.ResizeObserver = class ResizeObserver {
@@ -19,7 +25,7 @@ global.ResizeObserver = class ResizeObserver {
 // Mock matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: vi.fn().mockImplementation(query => ({
+  value: vi.fn().mockImplementation((query: string) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -35,13 +41,17 @@ Object.defineProperty(window, 'matchMedia', {
 const localStorageMock = {
   getItem: vi.fn((key: string) => {
     // Always return English for tests unless specifically testing language switching
-    if (key === 'i18nextLng') return 'en'
+    if (key === 'i18nextLng') {
+      return 'en'
+    }
     return null
   }),
   setItem: vi.fn(),
   removeItem: vi.fn(),
   clear: vi.fn(),
-}
+  length: 0,
+  key: vi.fn(),
+} as Storage
 global.localStorage = localStorageMock
 
 // Mock sessionStorage
@@ -50,22 +60,26 @@ const sessionStorageMock = {
   setItem: vi.fn(),
   removeItem: vi.fn(),
   clear: vi.fn(),
-}
+  length: 0,
+  key: vi.fn(),
+} as Storage
 global.sessionStorage = sessionStorageMock
 
 // Mock window.location
-delete (window as any).location
-window.location = {
-  ...window.location,
-  href: 'http://localhost:3000',
-  origin: 'http://localhost:3000',
-  pathname: '/',
-  search: '',
-  hash: '',
-  assign: vi.fn(),
-  replace: vi.fn(),
-  reload: vi.fn(),
-}
+// delete (window as any).location
+Object.defineProperty(window, 'location', {
+  value: {
+    href: 'http://localhost:3000',
+    origin: 'http://localhost:3000',
+    pathname: '/',
+    search: '',
+    hash: '',
+    assign: vi.fn(),
+    replace: vi.fn(),
+    reload: vi.fn(),
+  },
+  writable: true,
+})
 
 // Mock fetch for translation data
 global.fetch = vi.fn()
@@ -116,7 +130,7 @@ const mockTranslationData = {
 }
 
 // Mock fetch implementation
-;(global.fetch as any).mockImplementation((url: string) => {
+;(global.fetch as any).mockImplementation((url: string) => { // eslint-disable-line @typescript-eslint/no-explicit-any
   if (url.includes('portfolio-en.json') || url.includes('portfolio-pt-PT.json')) {
     return Promise.resolve({
       ok: true,

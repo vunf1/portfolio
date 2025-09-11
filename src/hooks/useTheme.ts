@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useState, useEffect } from 'preact/hooks'
 import type { UseThemeReturn } from '../types'
 

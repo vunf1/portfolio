@@ -3,6 +3,7 @@ import { useTranslation } from '../contexts/TranslationContext'
 import { useContactPrivacyGate } from '../hooks/useContactPrivacyGate'
 import { ContactUnlockForm } from './ContactUnlockForm'
 import type { Contact } from '../types/portfolio'
+import type { JSX } from 'preact'
 
 interface ContactPrivacyGateProps {
   contact: Contact

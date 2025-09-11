@@ -214,7 +214,7 @@ export interface ExperienceProps extends BaseComponentProps {
     description: string
     impact: string
     technologies: string[]
-    achievements: string[]
+    achievements?: string[]
     highlights: string[]
   }>
 }
@@ -264,17 +264,10 @@ export interface ProjectsProps extends BaseComponentProps {
 // Education Component Props
 export interface EducationProps extends BaseComponentProps {
   education: Array<{
-    id: string
     degree: string
     institution: string
-    location: string
-    period: string
-    status: string
-    gpa: string
-    description: string
-    courses: string[]
-    projects: string[]
-    achievements: string[]
+    location?: string
+    description?: string
   }>
 }
 

@@ -62,9 +62,9 @@ vi.mock('../../contexts/TranslationContext', () => ({
 
 // Mock the ContactUnlockForm component
 vi.mock('../ContactUnlockForm', () => ({
-  ContactUnlockForm: ({ onUnlock, onCancel }: any) => (
+  ContactUnlockForm: ({ onUnlock, onCancel }: { onUnlock?: (data: Record<string, string>) => void; onCancel?: () => void }) => (
     <div data-testid="contact-unlock-form">
-      <button onClick={() => onUnlock({ fullName: 'Test User', email: 'test@example.com', phone: '+351 934 330 807', reason: 'test' })}>
+      <button onClick={() => onUnlock?.({ fullName: 'Test User', email: 'test@example.com', phone: '+351 934 330 807', reason: 'test' })}>
         Submit
       </button>
       <button onClick={onCancel}>Cancel</button>
@@ -82,8 +82,8 @@ const mockPersonal = {
   website: 'https://example.com',
   profileImage: '/img/profile.jpg',
   availability: 'Open to new opportunities',
-  remote: true,
-  relocation: true
+  remote: 'Available',
+  relocation: 'Available'
 }
 
 const mockContact = {

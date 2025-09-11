@@ -18,7 +18,7 @@ interface ContactData {
 }
 
 export function Contact({ personal, contact }: ContactProps) {
-  const { t, currentLanguage } = useTranslation()
+  const { currentLanguage } = useTranslation()
   const [isUnlocked, setIsUnlocked] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [showUnlockForm, setShowUnlockForm] = useState(false)
@@ -39,7 +39,16 @@ export function Contact({ personal, contact }: ContactProps) {
         if (now - unlockTime < UNLOCK_DURATION) {
           setIsUnlocked(true)
           // Load contact data only when unlocked
-          setContactData(contact)
+          setContactData({
+            email: personal.email,
+            phone: personal.phone,
+            phoneSecondary: personal.phoneSecondary,
+            website: personal.website,
+            location: personal.location,
+            linkedin: contact.linkedin || '',
+            github: contact.github || '',
+            ...contact
+          })
         } else {
           // Unlock expired, clean up
           localStorage.removeItem('contact_unlocked')
@@ -48,16 +57,25 @@ export function Contact({ personal, contact }: ContactProps) {
         }
       }
     } catch (err) {
-      console.warn('Failed to check contact unlock status:', err)
+      // console.warn('Failed to check contact unlock status:', err)
     }
   }, [contact])
 
   // Update contact data when contact prop changes and we're unlocked
   useEffect(() => {
     if (isUnlocked && contact) {
-      setContactData({ ...contact })
+      setContactData({
+        email: personal.email,
+        phone: personal.phone,
+        phoneSecondary: personal.phoneSecondary,
+        website: personal.website,
+        location: personal.location,
+        linkedin: contact.linkedin || '',
+        github: contact.github || '',
+        ...contact
+      })
     }
-  }, [isUnlocked, contact])
+  }, [isUnlocked, contact, personal])
 
   // Force re-render when unlock state changes by updating a counter
   const [renderKey, setRenderKey] = useState(0)
@@ -71,7 +89,7 @@ export function Contact({ personal, contact }: ContactProps) {
     setShowUnlockForm(true)
   }
 
-  const handleUnlockSuccess = async (formData: any) => {
+  const handleUnlockSuccess = async (formData: Record<string, string>) => {
     try {
       setIsLoading(true)
       
@@ -85,11 +103,20 @@ export function Contact({ personal, contact }: ContactProps) {
       localStorage.setItem('contact_user_data', JSON.stringify(formData))
       
       setIsUnlocked(true)
-      setContactData({ ...contact })
+      setContactData({
+        email: personal.email,
+        phone: personal.phone,
+        phoneSecondary: personal.phoneSecondary,
+        website: personal.website,
+        location: personal.location,
+        linkedin: contact.linkedin || '',
+        github: contact.github || '',
+        ...contact
+      })
       setShowUnlockForm(false)
       setRenderKey(prev => prev + 1)
     } catch (err) {
-      console.error('❌ Failed to unlock contact:', err)
+      // console.error('❌ Failed to unlock contact:', err)
     } finally {
       setIsLoading(false)
     }

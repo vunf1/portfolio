@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/preact'
+import { render, screen } from '@testing-library/preact'
 import { Hero } from '../Hero'
 import type { HeroProps } from '../../types'
 
@@ -47,26 +47,28 @@ Object.defineProperty(navigator, 'hardwareConcurrency', {
 
 const mockPersonal = {
   name: 'João Maia',
-  profileImage: '/img/profile.jpg',
+  title: 'Full-Stack Developer',
+  tagline: 'Back-end Ops • Network • OOP',
   summary: 'Full-stack developer with passion for modern web technologies',
   longSummary: 'Experienced full-stack developer specializing in React, Node.js, and cloud technologies',
+  profileImage: '/img/profile.jpg',
   coreValues: ['Innovation', 'Quality', 'Collaboration']
 }
 
-const mockSocial = [
-  {
-    name: 'LinkedIn',
-    url: 'https://linkedin.com/in/joaomaia',
-    icon: 'fa-linkedin',
-    color: '#0077B5'
-  },
-  {
-    name: 'GitHub',
-    url: 'https://github.com/joaomaia',
-    icon: 'fa-github',
-    color: '#333'
-  }
-]
+// const mockSocial = [
+//   {
+//     name: 'LinkedIn',
+//     url: 'https://linkedin.com/in/joaomaia',
+//     icon: 'fa-linkedin',
+//     color: '#0077B5'
+//   },
+//   {
+//     name: 'GitHub',
+//     url: 'https://github.com/joaomaia',
+//     icon: 'fa-github',
+//     color: '#333'
+//   }
+// ]
 
 const defaultProps: HeroProps = {
   personal: mockPersonal

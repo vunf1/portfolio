@@ -12,7 +12,9 @@ const mockLocalStorage = {
   setItem: vi.fn(),
   removeItem: vi.fn(),
   clear: vi.fn(),
-}
+  length: 0,
+  key: vi.fn(),
+} as any // eslint-disable-line @typescript-eslint/no-explicit-any
 global.localStorage = mockLocalStorage
 
 // Mock navigator.language

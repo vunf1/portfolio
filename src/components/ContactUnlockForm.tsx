@@ -1,9 +1,9 @@
 import { useState } from 'preact/hooks'
-import { useContactPrivacyGate, type ContactUnlockForm } from '../hooks/useContactPrivacyGate'
+import { useContactPrivacyGate, type ContactUnlockForm as ContactUnlockFormData } from '../hooks/useContactPrivacyGate'
 import { useTranslation } from '../contexts/TranslationContext'
 
 interface ContactUnlockFormProps {
-  onUnlock?: (formData: any) => void
+  onUnlock?: (formData: Record<string, string>) => void
   onCancel?: () => void
 }
 
@@ -11,7 +11,7 @@ export function ContactUnlockForm({ onUnlock, onCancel }: ContactUnlockFormProps
   const { t } = useTranslation()
   const { unlockContact, isLoading, error } = useContactPrivacyGate()
   
-  const [formData, setFormData] = useState<ContactUnlockForm>({
+  const [formData, setFormData] = useState<ContactUnlockFormData>({
     fullName: '',
     email: '',
     phone: '',
@@ -19,9 +19,9 @@ export function ContactUnlockForm({ onUnlock, onCancel }: ContactUnlockFormProps
     reason: ''
   })
 
-  const [formErrors, setFormErrors] = useState<Partial<ContactUnlockForm>>({})
+  const [formErrors, setFormErrors] = useState<Partial<ContactUnlockFormData>>({})
 
-  const handleInputChange = (field: keyof ContactUnlockForm, value: string) => {
+  const handleInputChange = (field: keyof ContactUnlockFormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
     // Clear error when user starts typing
     if (formErrors[field]) {
@@ -36,7 +36,7 @@ export function ContactUnlockForm({ onUnlock, onCancel }: ContactUnlockFormProps
     setFormErrors({})
     
     // Basic validation
-    const errors: Partial<ContactUnlockForm> = {}
+    const errors: Partial<ContactUnlockFormData> = {}
     
     if (!formData.fullName.trim()) {
       errors.fullName = t('contact.form.fullName') + ' is required'
@@ -61,7 +61,7 @@ export function ContactUnlockForm({ onUnlock, onCancel }: ContactUnlockFormProps
     
     const success = await unlockContact(formData)
     if (success) {
-      onUnlock?.(formData)
+      onUnlock?.(formData as unknown as Record<string, string>)
     }
   }
 

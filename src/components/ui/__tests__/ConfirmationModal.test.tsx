@@ -109,7 +109,7 @@ describe('ConfirmationModal Component', () => {
   })
 
   it('renders with danger variant', () => {
-    const props = { ...defaultProps, isOpen: true, variant: 'danger' }
+    const props = { ...defaultProps, isOpen: true, variant: 'danger' as const }
     render(<ConfirmationModal {...props} />)
     
     const confirmButton = screen.getByText('Confirm')
@@ -117,7 +117,7 @@ describe('ConfirmationModal Component', () => {
   })
 
   it('renders with warning variant', () => {
-    const props = { ...defaultProps, isOpen: true, variant: 'warning' }
+    const props = { ...defaultProps, isOpen: true, variant: 'warning' as const }
     render(<ConfirmationModal {...props} />)
     
     const confirmButton = screen.getByText('Confirm')
@@ -125,7 +125,7 @@ describe('ConfirmationModal Component', () => {
   })
 
   it('renders with info variant', () => {
-    const props = { ...defaultProps, isOpen: true, variant: 'info' }
+    const props = { ...defaultProps, isOpen: true, variant: 'info' as const }
     render(<ConfirmationModal {...props} />)
     
     const confirmButton = screen.getByText('Confirm')

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { render } from 'preact'
 import { App } from './App'
 import { preloadTranslations } from './contexts/TranslationContext'

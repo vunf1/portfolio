@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Secure unlock persistence utility
  * Uses localStorage with cryptographic hashing for security
@@ -14,7 +15,9 @@ const SECRET_SALT = 'portfolio_2024_secure_unlock' // In production, this should
  */
 function simpleHash(input: string): string {
   let hash = 0
-  if (input.length === 0) return hash.toString()
+  if (input.length === 0) {
+    return hash.toString()
+  }
   
   for (let i = 0; i < input.length; i++) {
     const char = input.charCodeAt(i)
@@ -43,7 +46,9 @@ function createUnlockToken(userData: {
 export function isContactUnlocked(): boolean {
   try {
     const stored = localStorage.getItem(UNLOCK_STORAGE_KEY)
-    if (!stored) return false
+    if (!stored) {
+      return false
+    }
 
     const unlockData = JSON.parse(stored)
     
@@ -119,7 +124,9 @@ export function clearContactUnlock(): void {
 export function getUnlockExpiryInfo(): { isExpired: boolean; daysRemaining: number } | null {
   try {
     const stored = localStorage.getItem(UNLOCK_STORAGE_KEY)
-    if (!stored) return null
+    if (!stored) {
+      return null
+    }
 
     const unlockData = JSON.parse(stored)
     const now = Date.now()

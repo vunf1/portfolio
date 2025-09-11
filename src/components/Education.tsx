@@ -20,7 +20,7 @@ export function Education({ education, className = '', id }: EducationProps) {
       <div className="education-grid">
         {education.map((edu) => (
           <Card 
-            key={edu.id || `edu-${edu.institution}`} 
+            key={`edu-${edu.institution}`} 
             title={edu.degree} 
             subtitle={edu.institution} 
             className="education-card"

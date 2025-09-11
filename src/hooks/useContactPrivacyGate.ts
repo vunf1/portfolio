@@ -65,7 +65,7 @@ export function useContactPrivacyGate(): ContactPrivacyGateState {
         }
       }
     } catch (err) {
-      console.warn('Failed to check contact unlock status:', err)
+      // console.warn('Failed to check contact unlock status:', err)
     }
   }, [])
 
@@ -102,14 +102,14 @@ export function useContactPrivacyGate(): ContactPrivacyGateState {
       setIsUnlocked(true)
       setIsLoading(false)
       
-      console.log('✅ Contact information unlocked successfully')
+      // console.log('✅ Contact information unlocked successfully')
       return true
 
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to unlock contact information'
       setError(errorMessage)
       setIsLoading(false)
-      console.error('❌ Failed to unlock contact:', errorMessage)
+      // console.error('❌ Failed to unlock contact:', errorMessage)
       return false
     }
   }, [])
@@ -121,9 +121,9 @@ export function useContactPrivacyGate(): ContactPrivacyGateState {
       localStorage.removeItem(CONTACT_USER_DATA_KEY)
       setIsUnlocked(false)
       setError(null)
-      console.log('🔒 Contact information locked')
+      // console.log('🔒 Contact information locked')
     } catch (err) {
-      console.warn('Failed to lock contact:', err)
+      // console.warn('Failed to lock contact:', err)
     }
   }, [])
 
@@ -134,9 +134,9 @@ export function useContactPrivacyGate(): ContactPrivacyGateState {
       localStorage.removeItem(CONTACT_USER_DATA_KEY)
       setIsUnlocked(false)
       setError(null)
-      console.log('🗑️ Contact unlock data deleted')
+      // console.log('🗑️ Contact unlock data deleted')
     } catch (err) {
-      console.warn('Failed to delete unlock data:', err)
+      // console.warn('Failed to delete unlock data:', err)
     }
   }, [])
 

@@ -45,7 +45,9 @@ export function ConfirmationModal({
     }
   }
 
-  if (!isOpen) return null
+  if (!isOpen) {
+    return null
+  }
 
   const getVariantClasses = () => {
     switch (variant) {
