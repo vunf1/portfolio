@@ -44,9 +44,14 @@ if (fs.existsSync(srcImgDir)) {
 // Copy .nojekyll file for GitHub Pages
 const nojekyllSrc = path.join(__dirname, '..', 'public', '.nojekyll');
 const nojekyllDest = path.join(__dirname, '..', 'dist', '.nojekyll');
+
 if (fs.existsSync(nojekyllSrc)) {
   fs.copyFileSync(nojekyllSrc, nojekyllDest);
   console.log('Copied .nojekyll to dist/');
+} else {
+  // Create .nojekyll file if it doesn't exist
+  fs.writeFileSync(nojekyllDest, '');
+  console.log('Created .nojekyll in dist/');
 }
 
 console.log('Data and image files copied successfully!');
