@@ -76,7 +76,7 @@ const mockTranslationData = {
     personal: {
       name: 'João Maia',
       title: 'Full-Stack Developer',
-      subtitle: 'Back-end Ops • Azure • OOP',
+      subtitle: 'Back-end Ops • Network • OOP',
       summary: 'Experienced full-stack developer specializing in React, Node.js, and cloud technologies',
       coreValues: ['Innovation', 'Quality', 'Collaboration'],
       profileImage: '/img/profile.jpg'
@@ -99,7 +99,7 @@ const mockTranslationData = {
   ui: {
     hero: {
       title: 'Full-Stack Developer',
-      subtitle: 'Back-end Ops • Azure • OOP',
+      subtitle: 'Back-end Ops • Network • OOP',
       cta: 'Get In Touch',
       tagline: 'Always learning. Building with purpose.'
     },

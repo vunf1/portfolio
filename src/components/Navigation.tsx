@@ -161,8 +161,8 @@ export function Navigation({
             <div className="brand-avatar-container">
               <img 
                 className="brand-avatar" 
-                src="/img/optimized/profile-sm.jpeg"
-                alt="Profile"
+                src="/img/logo.png"
+                alt="Logo"
                 loading="lazy"
               />
             </div>

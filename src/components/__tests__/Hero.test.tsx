@@ -9,7 +9,7 @@ vi.mock('../../contexts/TranslationContext', () => ({
     t: (key: string) => {
       const translations: Record<string, string> = {
         'hero.title': 'Full-Stack Developer',
-        'hero.subtitle': 'Back-end Ops • Azure • OOP',
+        'hero.subtitle': 'Back-end Ops • Network • OOP',
         'hero.cta': 'Get In Touch',
         'navigation.projects': 'View Projects'
       }

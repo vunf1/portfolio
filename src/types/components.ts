@@ -352,25 +352,9 @@ export interface ContactProps extends BaseComponentProps {
     remote?: string
     relocation?: string
   }
-  isUnlocked: boolean
-  onUnlock: () => void
-  onLock?: () => void
 }
 
-// Contact Modal Props
-export interface ContactModalProps {
-  show: boolean
-  onClose: () => void
-  onSubmit: (formData: ContactFormData) => void
-}
 
-// Contact Form Data
-export interface ContactFormData {
-  visitorName: string
-  visitorEmail: string
-  visitorCompany: string
-  contactReason: string
-}
 
 // Error Boundary Props
 export interface ErrorBoundaryProps {

@@ -29,11 +29,11 @@ export function useI18n() {
     loadTranslations()
   }, [currentLanguage])
 
-  // Initialize language from localStorage or browser
+  // Initialize language from localStorage with English as default
   useEffect(() => {
     const savedLang = localStorage.getItem('i18nextLng') as 'en' | 'pt-PT'
-    const browserLang = navigator.language.startsWith('pt') ? 'pt-PT' : 'en'
-    const initialLang = savedLang || browserLang || 'en'
+    // Always default to English, only use saved language if it exists
+    const initialLang = savedLang || 'en'
     setCurrentLanguage(initialLang)
   }, [])
 

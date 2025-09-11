@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'preact/hooks'
 import type { PortfolioData, UsePortfolioDataReturn } from '../types'
 
 // Cache for preloaded data
-const dataCache = new Map<string, Map<string, any>>()
+export const dataCache = new Map<string, Map<string, any>>()
 
 // Define critical vs. non-critical sections
 const CRITICAL_SECTIONS = ['personal', 'contact', 'social', 'experience', 'education', 'skills', 'meta', 'ui']

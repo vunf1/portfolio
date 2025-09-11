@@ -54,6 +54,11 @@
   },
   "contact": {
     "availability": "Disponibilidade",
+    "email": "Correio eletrónico",
+    "phone": "Telefone",
+    "location": "Localização",
+    "responseTime": "Tempo de resposta",
+    "preferredContact": "Contacto preferido",
     "form": {
       "cancel": "Cancel",
       "company": "Empresa (facultativo)",
@@ -88,20 +93,33 @@
     "responseTime": "Tempo de resposta",
     "subtitle": "Vamos falar sobre o seu projeto",
     "title": "Contacto",
-    "unlockInfo": "Desbloquear informações de contacto",
+    "unlockInfo": "Por favor, forneça os seus dados para desbloquear as informações de contacto",
     "unlockTitle": "Clique para desbloquear o acesso às minhas informações",
     "unlockSubtitle": "Entre em contacto comigo",
     "unlockButton": "Desbloquear Informações de Contacto",
     "placeholderText": "As informações de contacto serão exibidas aqui após o desbloqueio.",
     "unlocked": "Contacto Desbloqueado",
+    "unlockedSubtitle": "As informações de contacto estão agora disponíveis",
+    "lockedSubtitle": "As informações de contacto estão protegidas",
+    "deleteUnlock": "Eliminar Dados de Desbloqueio",
     "ctaText": "Pronto para trabalharmos juntos?",
     "sendMessage": "Enviar Mensagem",
+    "deleteConfirmation": {
+      "title": "Eliminar Dados de Desbloqueio",
+      "message": "Tem a certeza de que pretende eliminar os seus dados de desbloqueio? Isto irá bloquear as informações de contacto e terá de desbloqueá-las novamente para ver os detalhes.",
+      "confirm": "Eliminar",
+      "cancel": "Cancelar"
+    },
     "labels": {
       "email": "Correio Eletrónico",
       "phone": "Telefone",
+      "phoneSecondary": "Telefone Secundário",
       "location": "Localização",
       "website": "Sítio Web",
-      "connect": "Conectar"
+      "connect": "Conectar",
+      "availability": "Disponibilidade",
+      "responseTime": "Tempo de Resposta",
+      "preferredContact": "Contacto Preferido"
     },
     "badges": {
       "remoteAvailable": "Trabalho Remoto Disponível",
@@ -133,7 +151,7 @@
   "hero": {
     "cta": "Ver a carteira",
     "scrollDown": "Deslocação para baixo",
-    "subtitle": "Operações de back-end - Azure - OOP",
+    "subtitle": "Operações de back-end - Network - OOP",
     "tagline": "Sempre a aprender. Construir com objectivos.",
     "title": "Programador Full-Stack"
   },
@@ -147,7 +165,7 @@
   },
   "navigation": {
     "awards": "Prémios",
-    "brand": "João Maia",
+    "brand": "Soluções Informáticas e Tecnológicas",
     "certifications": "Certificações",
     "contact": "Contacto",
     "education": "Educação",

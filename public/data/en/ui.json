@@ -54,6 +54,11 @@
   },
   "contact": {
     "availability": "Availability",
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Location",
+    "responseTime": "Response Time",
+    "preferredContact": "Preferred Contact",
     "form": {
       "cancel": "Cancel",
       "company": "Company (Optional)",
@@ -88,20 +93,33 @@
     "responseTime": "Response Time",
     "subtitle": "Let's talk about your project",
     "title": "Contact",
-    "unlockInfo": "Unlock Contact Information",
+    "unlockInfo": "Please provide your details to unlock contact information",
     "unlockTitle": "Click to unlock access to my information",
     "unlockSubtitle": "Get in touch with me",
     "unlockButton": "Unlock Contact Info",
     "placeholderText": "Contact information will be displayed here after unlocking.",
     "unlocked": "Contact Unlocked",
+    "unlockedSubtitle": "Contact information is now available",
+    "lockedSubtitle": "Contact information is protected",
+    "deleteUnlock": "Delete Unlock Data",
     "ctaText": "Ready to work together?",
     "sendMessage": "Send Message",
+    "deleteConfirmation": {
+      "title": "Delete Unlock Data",
+      "message": "Are you sure you want to delete your unlock data? This will lock the contact information and you will need to unlock it again to view the details.",
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    },
     "labels": {
       "email": "Email",
       "phone": "Phone",
+      "phoneSecondary": "Secondary Phone",
       "location": "Location",
       "website": "Website",
-      "connect": "Connect"
+      "connect": "Connect",
+      "availability": "Availability",
+      "responseTime": "Response Time",
+      "preferredContact": "Preferred Contact"
     },
     "badges": {
       "remoteAvailable": "Remote Available",
@@ -133,7 +151,7 @@
   "hero": {
     "cta": "View Portfolio",
     "scrollDown": "Scroll Down",
-    "subtitle": "Back-end Ops • Azure • OOP",
+    "subtitle": "Back-end Ops • Network • OOP",
     "tagline": "Always learning. Building with purpose.",
     "title": "Full-Stack Developer"
   },
@@ -147,7 +165,7 @@
   },
   "navigation": {
     "awards": "Awards",
-    "brand": "João Maia",
+    "brand": "IT and Technology Solutions",
     "certifications": "Certifications",
     "contact": "Contact",
     "education": "Education",

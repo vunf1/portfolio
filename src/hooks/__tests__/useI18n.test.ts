@@ -140,16 +140,16 @@ describe('useI18n Hook', () => {
     expect(mockLocalStorage.getItem).toHaveBeenCalledWith('i18nextLng')
   })
 
-  it('detects Portuguese browser language', async () => {
+  it('always defaults to English regardless of browser language', async () => {
     Object.defineProperty(navigator, 'language', {
       writable: true,
       value: 'pt-BR'
     })
 
-    const mockPtTranslations = { hero: { title: 'Desenvolvedor de Software' } }
+    const mockEnTranslations = { hero: { title: 'Software Developer' } }
     mockFetch.mockResolvedValueOnce({
       ok: true,
-      json: async () => mockPtTranslations
+      json: async () => mockEnTranslations
     })
 
     const { result } = renderHook(() => useI18n())
@@ -158,7 +158,8 @@ describe('useI18n Hook', () => {
       await new Promise(resolve => setTimeout(resolve, 0))
     })
 
-    expect(result.current.currentLanguage).toBe('pt-PT')
+    // Should always default to English, even with Portuguese browser language
+    expect(result.current.currentLanguage).toBe('en')
   })
 
   it('handles nested translation keys', async () => {

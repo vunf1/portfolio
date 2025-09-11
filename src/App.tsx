@@ -2,10 +2,8 @@ import { lazy, Suspense, useEffect, useState } from 'preact/compat'
 import { usePortfolioData } from './hooks/usePortfolioData'
 import { useTranslation } from './contexts/TranslationContext'
 import { useTheme } from './hooks/useTheme'
-import { useContactUnlock } from './hooks/useContactUnlock'
 import { Navigation } from './components/Navigation'
 import { Contact } from './components/Contact'
-import { ContactModal } from './components/ContactModal'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { Hero } from './components/Hero'
 import { SectionSkeleton } from './components/SectionSkeleton'
@@ -25,8 +23,6 @@ export function App() {
   const { t, currentLanguage } = useTranslation()
   const { portfolioData, loading, error } = usePortfolioData(currentLanguage)
   useTheme() // Initialize theme system
-  const { isUnlocked: contactUnlocked, unlockContact, lockContact } = useContactUnlock()
-  const [showContactModal, setShowContactModal] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
   const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false)
 
@@ -63,20 +59,6 @@ export function App() {
     return () => observer.disconnect()
   }, [])
 
-  const handleContactUnlock = (formData: any) => {
-    // Extract name and email from form data
-    const userData = {
-      name: formData.visitorName,
-      email: formData.visitorEmail
-    }
-    
-    // Store unlock state persistently
-    const success = unlockContact(userData)
-    if (success) {
-      setShowContactModal(false)
-    }
-    // Note: unlockContact already updates the state, so no need to call setContactUnlocked
-  }
 
   const handleScrollDown = () => {
     const contactSection = document.getElementById('contact')
@@ -233,9 +215,6 @@ export function App() {
           <Contact 
             personal={portfolioData.personal}
             contact={portfolioData.contact}
-            isUnlocked={contactUnlocked}
-            onUnlock={() => setShowContactModal(true)}
-            onLock={lockContact}
           />
           
           {/* Experience Section */}
@@ -289,11 +268,6 @@ export function App() {
           )}
         </div>
 
-        <ContactModal 
-          show={showContactModal}
-          onClose={() => setShowContactModal(false)}
-          onSubmit={handleContactUnlock}
-        />
 
         <FloatingActionButton />
       </>

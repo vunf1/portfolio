@@ -25,28 +25,26 @@ export function useTranslation() {
     }
   }, [])
 
-  // Load translations from data files
+  // Load translations from modular data files
   const loadTranslations = useCallback(async (lang: 'en' | 'pt-PT') => {
     try {
-      const dataFile = lang === 'pt-PT' ? 'portfolio-pt-PT.json' : 'portfolio-en.json'
-      console.log('🔄 useTranslation: Loading translations for', lang, 'from', dataFile)
+      const uiFile = `ui.json`
+      console.log('🔄 useTranslation: Loading translations for', lang, 'from', uiFile)
       
-      const response = await fetch(`/data/${dataFile}`)
+      const response = await fetch(`/data/${lang}/${uiFile}`)
       
       if (response.ok) {
         const data = await response.json()
-        if (data.ui) {
-          console.log('✅ useTranslation: Successfully loaded UI translations for', lang)
-          globalTranslations = data.ui
-          globalCurrentLanguage = lang
-          translationsLoaded = true
-          
-          // Cache the translations for instant switching
-          allTranslationsCache.set(lang, data.ui)
-          
-          // Notify all listeners
-          translationListeners.forEach(listener => listener())
-        }
+        console.log('✅ useTranslation: Successfully loaded UI translations for', lang)
+        globalTranslations = data
+        globalCurrentLanguage = lang
+        translationsLoaded = true
+        
+        // Cache the translations for instant switching
+        allTranslationsCache.set(lang, data)
+        
+        // Notify all listeners
+        translationListeners.forEach(listener => listener())
       } else {
         console.warn('❌ useTranslation: Failed to load translations, response not ok:', response.status)
       }
@@ -145,18 +143,16 @@ export async function preloadTranslations(lang: 'en' | 'pt-PT' = 'en'): Promise<
         return { language, data: allTranslationsCache.get(language)! }
       }
       
-      const dataFile = language === 'pt-PT' ? 'portfolio-pt-PT.json' : 'portfolio-en.json'
-      console.log(`📥 preloadTranslations: Loading ${language} from ${dataFile}`)
+      const uiFile = `ui.json`
+      console.log(`📥 preloadTranslations: Loading ${language} from ${uiFile}`)
       
-      const response = await fetch(`/data/${dataFile}`)
+      const response = await fetch(`/data/${language}/${uiFile}`)
       
       if (response.ok) {
         const data = await response.json()
-        if (data.ui) {
-          console.log(`✅ preloadTranslations: Successfully loaded ${language}`)
-          allTranslationsCache.set(language, data.ui)
-          return { language, data: data.ui }
-        }
+        console.log(`✅ preloadTranslations: Successfully loaded ${language}`)
+        allTranslationsCache.set(language, data)
+        return { language, data }
       } else {
         console.warn(`❌ preloadTranslations: Failed to load ${language}, response not ok:`, response.status)
       }
