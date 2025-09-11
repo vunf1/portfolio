@@ -7,7 +7,11 @@ export default defineConfig(({ mode }) => {
   // Load environment variables
   const env = loadEnv(mode, process.cwd(), '')
   
+  // Set base URL for GitHub Pages
+  const base = mode === 'production' ? '/portfolio/' : '/'
+  
   return {
+  base,
   plugins: [
     preact(),
     createHtmlPlugin({
@@ -61,7 +65,7 @@ export default defineConfig(({ mode }) => {
         unknownGlobalSideEffects: true,
       },
     },
-    sourcemap: true, // Enable source maps for debugging
+    sourcemap: mode !== 'production', // Disable source maps in production
     commonjsOptions: {
       include: [/node_modules/],
       transformMixedEsModules: true,
