@@ -1,7 +1,6 @@
 import { defineConfig, loadEnv } from 'vite'
 import preact from '@preact/preset-vite'
 import { resolve } from 'path'
-import { createHtmlPlugin } from 'vite-plugin-html'
 
 export default defineConfig(({ mode }) => {
   // Load environment variables
@@ -13,15 +12,7 @@ export default defineConfig(({ mode }) => {
   return {
   base,
   plugins: [
-    preact(),
-    createHtmlPlugin({
-      minify: true,
-      inject: {
-        data: {
-          title: 'João Maia - Software Developer Portfolio'
-        }
-      }
-    })
+    preact()
   ],
   resolve: {
     alias: {
