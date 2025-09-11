@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite'
 import preact from '@preact/preset-vite'
 import { resolve } from 'path'
+import { createHtmlPlugin } from 'vite-plugin-html'
 
 export default defineConfig(({ mode }) => {
   // Load environment variables
@@ -12,7 +13,15 @@ export default defineConfig(({ mode }) => {
   return {
   base,
   plugins: [
-    preact()
+    preact(),
+    createHtmlPlugin({
+      minify: true,
+      inject: {
+        data: {
+          title: 'João Maia - Software Developer Portfolio'
+        }
+      }
+    })
   ],
   resolve: {
     alias: {
@@ -48,6 +57,8 @@ export default defineConfig(({ mode }) => {
         chunkFileNames: 'assets/[name]-[hash].js',
         entryFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]',
+        // Ensure no source references
+        sourcemap: false,
       },
       // Conservative tree shaking
       treeshake: {
@@ -56,13 +67,15 @@ export default defineConfig(({ mode }) => {
         unknownGlobalSideEffects: true,
       },
     },
-    sourcemap: mode !== 'production', // Disable source maps in production
+    sourcemap: false, // Completely disable source maps in production
     commonjsOptions: {
       include: [/node_modules/],
       transformMixedEsModules: true,
     },
     chunkSizeWarningLimit: 2000, // Increase warning limit
     assetsInlineLimit: 4096,
+    // Ensure no source files are included
+    emptyOutDir: true,
   },
   css: {
     postcss: './postcss.config.cjs',
