@@ -1,6 +1,6 @@
 {
   "name": "João Maia",
-  "title": "Programador Full-Stack",
+  "title": "Engenheiro Full Stack (IA Generativa & Automação)",
   "tagline": "Aprendizagem ao longo da vida, expedição com criatividade",
   "subtitle": "Operações de back-end, Network e solucionador de problemas centrado em OOP",
   "email": "joaomaia.trabalho@gmail.com",
@@ -9,8 +9,8 @@
   "location": "Porto, Portugal",
   "website": "https://vunf1.github.io/portfolio/",
   "profileImage": "./img/profile.jpg",
-  "summary": "Programador full-stack sediado no Porto, apaixonado pela aprendizagem e pela resolução criativa de problemas. Experiência em operações de back-end, Microsoft Azure e desenvolvimento orientado a objectos.",
-  "longSummary": "Desde 2010, tenho vindo a explorar metodologias de programação, ciência da computação e arquitecturas de rede. Trabalho em consultoria de TI, live streaming multicâmara e desenvolvimento web - com um forte foco na eficiência, automação e entrega fiável.",
+  "summary": "Engenheiro Full Stack especializado em IA Generativa e automação, sediado no Porto. Apaixonado por construir aplicações completas desde o front-end até ao back-end, integrando fluxos de trabalho de automação inteligente e soluções cloud. Competente em desenvolvimento orientado a objectos, engenharia de prompts para funcionalidades alimentadas por IA, e entrega de sistemas inovadores e escaláveis que resolvem problemas criativos.",
+  "longSummary": "Desde 2010 tenho-me imerso em metodologias de programação, fundamentos de ciência da computação e arquitecturas de rede. Especializo-me como engenheiro full-stack construindo sistemas de software de ponta a ponta—desde serviços de backend até aplicações front-end—e integrando automação inteligente e fluxos de trabalho alimentados por IA para aumentar a eficiência e garantir entrega fiável.",
   "availability": "Aberto a novas oportunidades",
   "relocation": "Disponibilidade para se deslocar",
   "remote": "Aberto ao trabalho remoto",
@@ -19,10 +19,11 @@
     "Inglês - C1 (expressão oral), C1 (expressão escrita), C2 (compreensão)"
   ],
   "coreValues": [
-    "Aprendizagem contínua",
-    "Criatividade com objetivo",
-    "Qualidade e eficiência",
-    "Colaboração",
-    "Automatização ponderada"
+    "Impacto do utilizador em primeiro lugar",
+    "Segurança e privacidade por design",
+    "IA responsável e transparente",
+    "Entregar em pequenos incrementos seguros para aprender mais rapidamente.",
+    "Excelência operacional",
+    "Automação centrada no ser humano com supervisão humana significativa."
   ]
 }
