@@ -3,7 +3,6 @@ import { usePortfolioData } from './hooks/usePortfolioData'
 import { useTranslation } from './contexts/TranslationContext'
 import { useTheme } from './hooks/useTheme'
 import { Navigation } from './components/Navigation'
-import { Contact } from './components/Contact'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { Hero } from './components/Hero'
 import { SectionSkeleton } from './components/SectionSkeleton'
@@ -33,7 +32,6 @@ export function App() {
   //   error: error?.message || 'None',
   //   currentLanguage: currentLanguage,
   //   aboutTranslation: t('navigation.about'),
-  //   contactTranslation: t('navigation.contact')
   // })
 
   // Handle smooth language transitions
@@ -60,12 +58,6 @@ export function App() {
   }, [])
 
 
-  // const handleScrollDown = () => {
-  //   const contactSection = document.getElementById('contact')
-  //   if (contactSection) {
-  //     contactSection.scrollIntoView({ behavior: 'smooth' })
-  //   }
-  // }
 
   // Intersection Observer for active section tracking
   useEffect(() => {
@@ -198,7 +190,6 @@ export function App() {
             ...(portfolioData.testimonials && portfolioData.testimonials.length > 0 ? [{ id: 'testimonials', label: String(t('navigation.testimonials')), icon: 'fa-solid fa-quote-left' }] : []),
             ...(portfolioData.interests && portfolioData.interests.length > 0 ? [{ id: 'interests', label: String(t('navigation.interests')), icon: 'fa-solid fa-heart' }] : []),
             ...(portfolioData.awards && portfolioData.awards.length > 0 ? [{ id: 'awards', label: String(t('navigation.awards')), icon: 'fa-solid fa-trophy' }] : []),
-            { id: 'contact', label: String(t('navigation.contact')), icon: 'fa-solid fa-envelope' }
           ]}
           activeId={activeSection}
           onNavigate={setActiveSection}
@@ -210,12 +201,6 @@ export function App() {
         />
         
         <div className={`portfolio-container ${isLanguageTransitioning ? 'language-transitioning' : ''}`}>
-          {/* Contact Section */}
-          <Contact 
-            personal={portfolioData.personal}
-            contact={portfolioData.contact}
-          />
-          
           {/* Experience Section */}
           <Suspense fallback={<SectionSkeleton />}>
             <Experience experiences={portfolioData.experience} />
