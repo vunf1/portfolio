@@ -7,6 +7,7 @@ import { ErrorBoundary } from './components/ErrorBoundary'
 import { Hero } from './components/Hero'
 import { SectionSkeleton } from './components/SectionSkeleton'
 import { FloatingActionButton } from './components/FloatingActionButton'
+import { LandingPage } from './components/landing/LandingPage'
 
 // Lazy load non-critical components
 const Experience = lazy(() => import('./components/Experience').then(module => ({ default: module.Experience })))
@@ -24,6 +25,7 @@ export function App() {
   useTheme() // Initialize theme system
   const [activeSection, setActiveSection] = useState('hero')
   const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false)
+  const [showPortfolio, setShowPortfolio] = useState(false)
 
   // Debug: Add test message to see if component is rendering
   // console.log('🎯 App component rendering:', { 
@@ -134,6 +136,15 @@ export function App() {
     )
   }
 
+  // Show landing page if portfolio is not requested
+  if (!showPortfolio) {
+    return (
+      <ErrorBoundary>
+        <LandingPage onNavigateToPortfolio={() => setShowPortfolio(true)} />
+      </ErrorBoundary>
+    )
+  }
+
   // Show error state
   if (error) {
     return (
@@ -180,6 +191,16 @@ export function App() {
   return (
     <ErrorBoundary>
       <>
+        {/* Back to Landing Button */}
+        <button 
+          className="back-to-landing"
+          onClick={() => setShowPortfolio(false)}
+          title="Back to Landing Page"
+        >
+          <i className="fas fa-arrow-left"></i>
+          <span>Back to Home</span>
+        </button>
+
         <Navigation 
           items={[
             { id: 'experience', label: String(t('navigation.experience')), icon: 'fa-solid fa-briefcase' },
