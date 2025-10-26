@@ -147,7 +147,7 @@ export function ContactUnlockForm({ onUnlock, onCancel }: ContactUnlockFormProps
                   value={formData.phone}
                   onInput={(e) => handleInputChange('phone', (e.target as HTMLInputElement).value)}
                   class="form-input-compact"
-                  placeholder="+351 934 330 807"
+                  placeholder="+351 933 330 303"
                   disabled={isLoading}
                   required
                 />

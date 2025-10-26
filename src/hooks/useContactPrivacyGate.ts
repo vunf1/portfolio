@@ -84,7 +84,7 @@ export function useContactPrivacyGate(): ContactPrivacyGateState {
       }
 
       if (!validatePhone(formData.phone)) {
-        throw new Error('Please provide a valid phone number in E.164 format (e.g., +351 934 330 807)')
+        throw new Error('Please provide a valid phone number in E.164 format (e.g., +351 933 330 303)')
       }
 
       if (!formData.reason.trim()) {
