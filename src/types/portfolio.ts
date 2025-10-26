@@ -143,22 +143,9 @@ export interface Testimonial {
   date: string
 }
 
-export interface Contact {
-  availability: string
-  email: string
-  github: string
-  linkedin: string
-  location: string
-  phone: string
-  phoneSecondary: string
-  preferredContact: string
-  responseTime: string
-  website: string
-}
 
 export interface PortfolioData {
   personal: Personal
-  contact: Contact
   social: Social[]
   experience: Experience[]
   education: Education[]
@@ -193,7 +180,6 @@ export interface UI {
     interests: string
     awards: string
     testimonials: string
-    contact: string
   }
   hero: {
     title: string
@@ -295,32 +281,6 @@ export interface UI {
     company: string
     rating: string
     date: string
-  }
-  contact: {
-    title: string
-    subtitle: string
-    unlockInfo: string
-    form: {
-      title: string
-      fullName: string
-      email: string
-      company: string
-      reason: string
-      reasonOptions: {
-        jobOpportunity: string
-        projectCollaboration: string
-        consulting: string
-        networking: string
-        other: string
-      }
-      submit: string
-      cancel: string
-      required: string
-      optional: string
-    }
-    availability: string
-    responseTime: string
-    preferredContact: string
   }
   common: {
     loading: string

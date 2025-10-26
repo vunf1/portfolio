@@ -323,29 +323,6 @@ export interface InterestsProps extends BaseComponentProps {
   }>
 }
 
-// Contact Component Props
-export interface ContactProps extends BaseComponentProps {
-  contact: {
-    availability: string
-    responseTime: string
-    preferredContact: string
-    linkedin?: string
-    github?: string
-  }
-  personal: {
-    name: string
-    title: string
-    email: string
-    phone: string
-    phoneSecondary: string
-    location: string
-    website: string
-    profileImage: string
-    availability: string
-    remote?: string
-    relocation?: string
-  }
-}
 
 
 

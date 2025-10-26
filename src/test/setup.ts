@@ -124,7 +124,6 @@ const mockTranslationData = {
       education: 'Education',
       skills: 'Skills',
       projects: 'View Projects',
-      contact: 'Contact'
     }
   }
 }

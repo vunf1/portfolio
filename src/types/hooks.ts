@@ -24,7 +24,6 @@ export interface FormErrors {
   visitorName?: string
   visitorEmail?: string
   visitorCompany?: string
-  contactReason?: string
 }
 
 // Form Data Type

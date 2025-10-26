@@ -6,7 +6,7 @@ import type { PortfolioData, UsePortfolioDataReturn } from '../types'
 const dataCache = new Map<string, Map<string, Record<string, unknown>>>()
 
 // Define critical vs. non-critical sections
-const CRITICAL_SECTIONS = ['personal', 'contact', 'social', 'experience', 'education', 'skills', 'meta']
+const CRITICAL_SECTIONS = ['personal', 'social', 'experience', 'education', 'skills', 'meta']
 const NON_CRITICAL_SECTIONS = ['projects', 'certifications', 'interests', 'awards', 'testimonials']
 
 // Helper function to get the correct data path
@@ -64,8 +64,6 @@ function createPortfolioData(sections: Map<string, Record<string, unknown>>): Po
   return {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     personal: sections.get('personal') as any,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    contact: sections.get('contact') as any,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     social: sections.get('social') as any,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

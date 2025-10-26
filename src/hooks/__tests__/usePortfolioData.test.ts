@@ -40,18 +40,6 @@ const mockPersonalData = {
   coreValues: ["Continuous learning", "Creativity with purpose"]
 }
 
-const mockContactData = {
-  availability: "Open to new opportunities",
-  email: "joaomaia.trabalho@gmail.com",
-  github: "https://github.com/vunf1",
-  linkedin: "https://www.linkedin.com/in/joao-maia",
-  location: "Porto, Portugal",
-  phone: "+351 934 330 807",
-  phoneSecondary: "+44 7393 557259",
-  preferredContact: "Email or LinkedIn",
-  responseTime: "Within 24 hours",
-  website: "https://vunf1.github.io/portfolio/"
-}
 
 const mockSocialData = [
   {
@@ -202,7 +190,6 @@ const mockUIData = {
     interests: "Interests",
     awards: "Awards",
     testimonials: "Testimonials",
-    contact: "Contact"
   },
   hero: {
     title: "Full-Stack Developer",
@@ -244,7 +231,6 @@ describe('usePortfolioData Hook', () => {
     // Mock successful responses for all required files
     mockFetch
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockPersonalData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockContactData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSocialData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockExperienceData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockEducationData) })
@@ -258,7 +244,6 @@ describe('usePortfolioData Hook', () => {
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockUIData) }) // ui
       // Repeat for pt-PT
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockPersonalData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockContactData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSocialData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockExperienceData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockEducationData) })
@@ -283,15 +268,12 @@ describe('usePortfolioData Hook', () => {
     expect(result.current.portfolioData).toBeDefined()
     expect(result.current.portfolioData?.personal).toEqual(mockPersonalData)
     
-    // Contact data should now be returned as-is (filtering handled by Contact component)
-    expect(result.current.portfolioData?.contact).toEqual(mockContactData)
   })
 
   it('loads only critical sections initially', async () => {
     // Mock successful responses for all required files
     mockFetch
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockPersonalData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockContactData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSocialData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockExperienceData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockEducationData) })
@@ -305,7 +287,6 @@ describe('usePortfolioData Hook', () => {
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockUIData) }) // ui
       // Repeat for pt-PT
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockPersonalData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockContactData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSocialData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockExperienceData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockEducationData) })
@@ -353,7 +334,6 @@ describe('usePortfolioData Hook', () => {
     // Mock responses that return invalid data
     mockFetch
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // personal
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // contact
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // social
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // experience
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // education
@@ -427,7 +407,6 @@ describe('usePortfolioData Hook', () => {
     
     // Critical sections should be considered loaded initially
     expect(result.current.isSectionLoaded('personal')).toBe(true)
-    expect(result.current.isSectionLoaded('contact')).toBe(true)
     expect(result.current.isSectionLoaded('social')).toBe(true)
     expect(result.current.isSectionLoaded('experience')).toBe(true)
     expect(result.current.isSectionLoaded('education')).toBe(true)
@@ -443,7 +422,6 @@ describe('usePortfolioData Hook', () => {
     // Mock successful responses for all required files
     mockFetch
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockPersonalData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockContactData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSocialData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockExperienceData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockEducationData) })
@@ -457,7 +435,6 @@ describe('usePortfolioData Hook', () => {
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // testimonials
       // Repeat for pt-PT
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockPersonalData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockContactData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSocialData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockExperienceData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockEducationData) })
@@ -478,7 +455,6 @@ describe('usePortfolioData Hook', () => {
     
     // Critical sections should be marked as 'loaded' after loading
     expect(result.current.getSectionLoadingStatus('personal')).toBe('loaded')
-    expect(result.current.getSectionLoadingStatus('contact')).toBe('loaded')
     expect(result.current.getSectionLoadingStatus('social')).toBe('loaded')
     expect(result.current.getSectionLoadingStatus('experience')).toBe('loaded')
     expect(result.current.getSectionLoadingStatus('education')).toBe('loaded')
@@ -523,7 +499,6 @@ describe('useConsolidatedData Hook', () => {
     // Mock successful responses for all required files
     mockFetch
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockPersonalData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockContactData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSocialData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockExperienceData) })
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockEducationData) })
@@ -547,8 +522,6 @@ describe('useConsolidatedData Hook', () => {
     expect(result.current.data).toBeDefined()
     expect(result.current.data?.portfolio.personal).toEqual(mockPersonalData)
     
-    // Contact data should now be returned as-is (filtering handled by Contact component)
-    expect(result.current.data?.portfolio.contact).toEqual(mockContactData)
     expect(result.current.data?.ui).toEqual(mockUIData)
   })
 
@@ -573,7 +546,6 @@ describe('useConsolidatedData Hook', () => {
     // Mock responses that return invalid data
     mockFetch
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // personal
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // contact
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // social
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // experience
       .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // education

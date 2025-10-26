@@ -169,7 +169,6 @@ describe('useI18n Hook', () => {
       hero: {
         title: 'Software Developer',
         actions: {
-          contact: 'Get In Touch',
           projects: 'View Projects'
         }
       }
@@ -187,7 +186,6 @@ describe('useI18n Hook', () => {
     })
 
     expect(result.current.t('hero.title')).toBe('Software Developer')
-    expect(result.current.t('hero.actions.contact')).toBe('Get In Touch')
     expect(result.current.t('hero.actions.projects')).toBe('View Projects')
   })
 
