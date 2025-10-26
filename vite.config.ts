@@ -6,8 +6,8 @@ export default defineConfig(({ mode }) => {
   // Load environment variables
   const env = loadEnv(mode, process.cwd(), '')
   
-  // Set base URL for GitHub Pages
-  const base = mode === 'production' ? '/portfolio/' : '/'
+  // Set base URL for deployment
+  const base = '/'
   
   return {
   base,

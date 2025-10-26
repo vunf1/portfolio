@@ -52,9 +52,25 @@ if (!fs.existsSync(distDir)) {
   console.log('Created dist directory');
 }
 
+// Copy HTML error pages from src to public
+const srcHtmlDir = path.join(__dirname, '..', 'src');
+const publicHtmlDir = path.join(__dirname, '..', 'public');
+
+if (fs.existsSync(srcHtmlDir)) {
+  const files = fs.readdirSync(srcHtmlDir);
+  files.forEach(file => {
+    if (file.endsWith('.html') && file !== 'index.html') {
+      const src = path.join(srcHtmlDir, file);
+      const dest = path.join(publicHtmlDir, file);
+      fs.copyFileSync(src, dest);
+      console.log(`Copied ${file} to public/`);
+    }
+  });
+}
+
 // Always create the .nojekyll file directly
 fs.writeFileSync(nojekyllDest, nojekyllContent);
 console.log('Created .nojekyll in dist/');
 
-console.log('Data and image files copied successfully!');
+console.log('Data, image, and HTML files copied successfully!');
 
