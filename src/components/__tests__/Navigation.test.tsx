@@ -15,7 +15,6 @@ vi.mock('../../contexts/TranslationContext', () => ({
         'navigation.education': 'Education',
         'navigation.skills': 'Skills',
         'navigation.projects': 'Projects',
-        'navigation.contact': 'Contact'
       }
       return translations[key] || key
     },
@@ -39,7 +38,6 @@ const mockNavigationItems = [
   { id: 'about', label: 'About', icon: 'fa-user' },
   { id: 'experience', label: 'Experience', icon: 'fa-briefcase' },
   { id: 'projects', label: 'Projects', icon: 'fa-code' },
-  { id: 'contact', label: 'Contact', icon: 'fa-envelope' }
 ]
 
 const defaultProps: NavigationProps = {
@@ -77,7 +75,6 @@ describe('Navigation Component', () => {
     expect(screen.getByText('About')).toBeInTheDocument()
     expect(screen.getByText('Experience')).toBeInTheDocument()
     expect(screen.getByText('Projects')).toBeInTheDocument()
-    expect(screen.getByText('Contact')).toBeInTheDocument()
   })
 
   it('highlights active navigation item', () => {
