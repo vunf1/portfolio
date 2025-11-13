@@ -13,12 +13,6 @@ export interface UsePortfolioDataReturn {
   getSectionLoadingStatus: (section: string) => 'loaded' | 'critical' | 'pending'
 }
 
-// useTheme Hook Return Type
-export interface UseThemeReturn {
-  isDarkMode: boolean
-  toggleTheme: () => void
-}
-
 // Form Error Type
 export interface FormErrors {
   visitorName?: string

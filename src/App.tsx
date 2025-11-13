@@ -1,7 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'preact/compat'
 import { usePortfolioData } from './hooks/usePortfolioData'
 import { useTranslation } from './contexts/TranslationContext'
-import { useTheme } from './hooks/useTheme'
 import { Navigation } from './components/Navigation'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { Hero } from './components/Hero'
@@ -22,7 +21,6 @@ const Testimonials = lazy(() => import('./components/Testimonials').then(module 
 export function App() {
   const { t, currentLanguage } = useTranslation()
   const { portfolioData, loading, error } = usePortfolioData(currentLanguage)
-  useTheme() // Initialize theme system
   const [activeSection, setActiveSection] = useState('hero')
   const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false)
   const [showPortfolio, setShowPortfolio] = useState(false)
