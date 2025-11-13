@@ -33,7 +33,7 @@
     "ci:security": "npm audit --audit-level moderate",
     "ci:dependencies": "npm outdated || true",
     "ci:components": "npm run type-check && npm run lint:components && npm run build:components",
-    "verify-dist": "node verify-dist.js",
+    "verify-dist": "node scripts/verify-dist.js",
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
     "test": "vitest",

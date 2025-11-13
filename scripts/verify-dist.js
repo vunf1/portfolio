@@ -116,3 +116,4 @@ function calculateFolderSize(folderPath) {
   
   return totalSize;
 }
+

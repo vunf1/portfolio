@@ -174,3 +174,9 @@ dist/
 /coverage
 /coverage
 coverage/
+
+# Build artifacts and generated files
+public/img/
+
+# Backup and temporary files
+.backup/
