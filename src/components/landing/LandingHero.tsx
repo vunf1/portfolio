@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'preact/hooks'
+import { useTranslation } from '../../contexts/TranslationContext'
 import type { Personal } from '../../types/portfolio'
+import logoUrl from '@/img/logo.png'
 
 interface LandingHeroProps {
   personal: Personal
@@ -8,6 +10,7 @@ interface LandingHeroProps {
 
 export function LandingHero({ personal, className = '' }: LandingHeroProps) {
   const [isVisible, setIsVisible] = useState(false)
+  const { t, currentLanguage } = useTranslation()
 
   useEffect(() => {
     setIsVisible(true)
@@ -23,7 +26,9 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
       <div className="hero-content">
         <div className={`hero-text ${isVisible ? 'hero-text-visible' : ''}`}>
           <div className="hero-badge">
-            <span>Professional Portfolio</span>
+            <span>
+              {currentLanguage === 'pt-PT' ? 'Serviços de TI & Tecnologia' : 'IT & Technology Services'}
+            </span>
           </div>
           
           <h1 className="hero-title">
@@ -34,7 +39,9 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
           <p className="hero-tagline">{personal.tagline}</p>
           
           <p className="hero-summary">
-            {personal.summary}
+            {currentLanguage === 'pt-PT'
+              ? 'Especialista em desenvolvimento de software, automação e soluções tecnológicas. Ofereço serviços completos desde desenvolvimento full-stack e integração de IA até reparação de computadores, instalação de racks de servidores e consultoria em TI. Trabalho com empresas e particulares para criar soluções práticas que resolvem problemas reais e melhoram a eficiência operacional.'
+              : 'Specialist in software development, automation, and technology solutions. I offer comprehensive services from full-stack development and AI integration to computer repair, server rack installation, and IT consulting. I work with businesses and individuals to create practical solutions that solve real problems and improve operational efficiency.'}
           </p>
           
           <div className="hero-meta">
@@ -53,7 +60,7 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
               className="btn-hero-primary"
               onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <span>Learn More</span>
+              <span>{currentLanguage === 'pt-PT' ? 'Saber Mais' : 'Learn More'}</span>
               <i className="fa-solid fa-arrow-right"></i>
             </button>
             
@@ -62,19 +69,26 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
               onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
             >
               <i className="fa-solid fa-briefcase"></i>
-              <span>Services</span>
+              <span>{currentLanguage === 'pt-PT' ? 'Serviços' : 'Services'}</span>
             </button>
           </div>
         </div>
         
         <div className={`hero-visual ${isVisible ? 'hero-visual-visible' : ''}`}>
           <div className="hero-image-container">
-            <img 
-              src="./img/full-logo.png" 
-              alt={`${personal.name} - Portfolio Logo`}
-              className="hero-logo-image"
-            />
-            <div className="hero-image-border"></div>
+            <div className="hero-logo-wrapper">
+              <img 
+                src={logoUrl} 
+                alt={`${personal.name} - Portfolio Logo`}
+                className="hero-logo-image"
+              />
+              <div className="hero-image-border"></div>
+            </div>
+            <p className="hero-logo-subtitle">
+              {currentLanguage === 'pt-PT' 
+                ? 'Segurança | Inteligência | Tecnologia'
+                : 'Security | Intelligence | Technology'}
+            </p>
           </div>
           
           <div className="hero-highlights">
@@ -83,8 +97,8 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
                 <i className="fa-solid fa-code"></i>
               </div>
               <div className="highlight-text">
-                <h4>Full Stack</h4>
-                <p>End-to-end solutions</p>
+                <h4>{currentLanguage === 'pt-PT' ? 'Engenharia Full-Stack' : 'Full-Stack Engineering'}</h4>
+                <p>{currentLanguage === 'pt-PT' ? 'Soluções completas' : 'End-to-end solutions'}</p>
               </div>
             </div>
             
@@ -93,8 +107,8 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
                 <i className="fa-solid fa-robot"></i>
               </div>
               <div className="highlight-text">
-                <h4>AI & Automation</h4>
-                <p>Intelligent workflows</p>
+                <h4>{currentLanguage === 'pt-PT' ? 'IA e Automação' : 'AI & Automation'}</h4>
+                <p>{currentLanguage === 'pt-PT' ? 'Fluxos de trabalho inteligentes' : 'Intelligent workflows'}</p>
               </div>
             </div>
           </div>
@@ -103,7 +117,7 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
       
       <div className="hero-scroll-indicator">
         <div className="scroll-line"></div>
-        <span>Scroll to explore</span>
+        <span>{currentLanguage === 'pt-PT' ? 'Deslize para explorar' : 'Scroll to explore'}</span>
       </div>
     </section>
   )

@@ -83,10 +83,14 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
                 {currentLanguage === 'pt-PT' ? 'Especialidades' : 'Expertise'}
               </h4>
               <ul className="footer-list">
-                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'IA e Automação' : 'AI & Automation'}</a></li>
-                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Desenvolvimento Full Stack' : 'Full Stack Development'}</a></li>
-                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Aplicações Web' : 'Web Applications'}</a></li>
-                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Soluções Cloud' : 'Cloud Solutions'}</a></li>
+                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Engenharia de Software Full-Stack' : 'Full-Stack Software Engineering'}</a></li>
+                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Integração de IA e Automação' : 'AI Integration & Process Automation'}</a></li>
+                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Aplicações Web Empresariais' : 'Enterprise Web Applications'}</a></li>
+                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Infraestrutura Cloud' : 'Cloud Infrastructure & Solutions'}</a></li>
+                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Transmissão em Direto e Overlays' : 'Live Streaming & Overlays'}</a></li>
+                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Reparação e Manutenção de Computadores' : 'Computer Repair & Maintenance'}</a></li>
+                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Consultoria em TI' : 'IT Consulting'}</a></li>
+                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Instalação e Manutenção de Racks de Servidores' : 'Server Rack Installation & Maintenance'}</a></li>
               </ul>
             </div>
             
