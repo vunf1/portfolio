@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'preact/hooks'
 import { useTranslation } from '../../contexts/TranslationContext'
+import type { Personal, Social } from '../../types/portfolio'
 
 interface LandingAboutProps {
+  personal: Personal
+  social: Social[]
   className?: string
   onNavigateToPortfolio: () => void
 }
 
-export function LandingAbout({ className = '', onNavigateToPortfolio }: LandingAboutProps) {
-  const { t } = useTranslation()
+export function LandingAbout({ personal, social, className = '', onNavigateToPortfolio }: LandingAboutProps) {
+  const { t, currentLanguage } = useTranslation()
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
@@ -29,136 +32,113 @@ export function LandingAbout({ className = '', onNavigateToPortfolio }: LandingA
   }, [])
 
   return (
-    <section id="about" className={`landing-about ${className}`}>
+    <section id="about" className={`landing-about landing-section ${className}`}>
       <div className="about-container">
+        <div className={`about-header ${isVisible ? 'about-header-visible' : ''}`}>
+          <h2 className="about-title">
+            <span className="about-title-main">{currentLanguage === 'pt-PT' ? 'Sobre' : 'About'}</span>
+          </h2>
+          <p className="about-subtitle">{personal.subtitle}</p>
+        </div>
+        
         <div className={`about-content ${isVisible ? 'about-content-visible' : ''}`}>
           <div className="about-text">
-            <h2 className="about-title">
-              <span className="about-title-main">Meet</span>
-              <span className="about-title-accent">João Maia</span>
-            </h2>
-            
-            <p className="about-description">
-              A passionate Full Stack Engineer specializing in Generative AI and automation, 
-              based in Porto, Portugal. With over a decade of experience in programming 
-              methodologies and computer science fundamentals, I build intelligent systems 
-              that bridge the gap between human creativity and artificial intelligence.
-            </p>
-            
-            <div className="about-highlights">
-              <div className="highlight-item">
-                <div className="highlight-icon">
-                  <i className="fas fa-graduation-cap"></i>
-                </div>
-                <div className="highlight-content">
-                  <h4>AI Specialization</h4>
-                  <p>Expert in prompt engineering and AI-powered feature development</p>
-                </div>
-              </div>
+            <div className="about-profile-section">
+              <picture className="about-profile-picture">
+                <source srcSet="./img/optimized/profile-lg.avif" type="image/avif" />
+                <source srcSet="./img/optimized/profile-lg.webp" type="image/webp" />
+                <source srcSet="./img/optimized/profile-lg.jpeg" type="image/jpeg" />
+                <img 
+                  src={personal.profileImage} 
+                  alt={`${personal.name} - ${personal.title}`}
+                  className="about-profile-image"
+                />
+              </picture>
               
-              <div className="highlight-item">
-                <div className="highlight-icon">
-                  <i className="fas fa-code"></i>
-                </div>
-                <div className="highlight-content">
-                  <h4>Full Stack Expertise</h4>
-                  <p>End-to-end development from backend services to frontend applications</p>
-                </div>
-              </div>
-              
-              <div className="highlight-item">
-                <div className="highlight-icon">
-                  <i className="fas fa-cloud"></i>
-                </div>
-                <div className="highlight-content">
-                  <h4>Cloud Solutions</h4>
-                  <p>Scalable and secure cloud-based applications and automation workflows</p>
-                </div>
+              <div className="about-profile-info">
+                <h3 className="about-profile-name">{personal.name}</h3>
+                <p className="about-profile-title">{personal.title}</p>
+                <p className="about-profile-tagline">{personal.tagline}</p>
               </div>
             </div>
             
+            <p className="about-description">
+              {personal.longSummary || personal.summary}
+            </p>
+            
+            <div className="about-details">
+              <div className="about-detail-item">
+                <i className="fa-solid fa-map-marker-alt"></i>
+                <div>
+                  <strong>{currentLanguage === 'pt-PT' ? 'Localização' : 'Location'}</strong>
+                  <p>{personal.location}</p>
+                </div>
+              </div>
+              
+              <div className="about-detail-item">
+                <i className="fa-solid fa-clock"></i>
+                <div>
+                  <strong>{currentLanguage === 'pt-PT' ? 'Disponibilidade' : 'Availability'}</strong>
+                  <p>{personal.availability}</p>
+                </div>
+              </div>
+              
+              {personal.remote && (
+                <div className="about-detail-item">
+                  <i className="fa-solid fa-laptop"></i>
+                  <div>
+                    <strong>{currentLanguage === 'pt-PT' ? 'Trabalho Remoto' : 'Remote Work'}</strong>
+                    <p>{personal.remote}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+            
             <div className="about-actions">
-              <button 
+              <button
                 className="btn-about-primary"
                 onClick={onNavigateToPortfolio}
               >
-                <span>View Full Portfolio</span>
-                <i className="fas fa-arrow-right"></i>
-              </button>
-              
-              <button 
-                className="btn-about-secondary"
-                onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                <i className="fas fa-info-circle"></i>
-                <span>Learn More</span>
+                <i className="fa-solid fa-arrow-right"></i>
+                <span>{currentLanguage === 'pt-PT' ? 'Ver Portfolio Completo' : 'View Full Portfolio'}</span>
               </button>
             </div>
           </div>
           
-          <div className="about-visual">
-            <div className="about-image">
-              <div className="image-placeholder">
-                <i className="fas fa-user-circle"></i>
-              </div>
-              <div className="image-overlay">
-                <div className="overlay-content">
-                  <h4>Full Stack Engineer</h4>
-                  <p>Generative AI & Automation</p>
-                </div>
-              </div>
+          <div className="about-sidebar">
+            <div className="about-core-values">
+              <h3 className="core-values-title">
+                {currentLanguage === 'pt-PT' ? 'Valores Fundamentais' : 'Core Values'}
+              </h3>
+              <ul className="core-values-list">
+                {personal.coreValues.map((value, index) => (
+                  <li key={index} className="core-value-item">
+                    <i className="fa-solid fa-check-circle"></i>
+                    <span>{value}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
             
-            <div className="about-stats">
-              <div className="stat-item">
-                <div className="stat-number">10+</div>
-                <div className="stat-label">Years Experience</div>
+            <div className="about-social">
+              <h3 className="social-title">
+                {currentLanguage === 'pt-PT' ? 'Conecte-se Comigo' : 'Connect with Me'}
+              </h3>
+              <div className="social-links-grid">
+                {social.map((socialItem) => (
+                  <a 
+                    key={socialItem.name} 
+                    href={socialItem.url} 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-link-item"
+                    style={{ '--social-color': socialItem.color || '#3b82f6' }}
+                  >
+                    <i className={`fa ${socialItem.icon}`}></i>
+                    <span className="social-name">{socialItem.name}</span>
+                  </a>
+                ))}
               </div>
-              <div className="stat-item">
-                <div className="stat-number">50+</div>
-                <div className="stat-label">Projects Completed</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number">100%</div>
-                <div className="stat-label">Client Satisfaction</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div className="about-values">
-          <h3 className="values-title">Core Values</h3>
-          <div className="values-grid">
-            <div className="value-item">
-              <div className="value-icon">
-                <i className="fas fa-users"></i>
-              </div>
-              <h4>User Impact First</h4>
-              <p>Every solution is designed with the end user in mind, ensuring maximum value and usability.</p>
-            </div>
-            
-            <div className="value-item">
-              <div className="value-icon">
-                <i className="fas fa-shield-alt"></i>
-              </div>
-              <h4>Security & Privacy</h4>
-              <p>Security and privacy are built into every solution from the ground up, not added as an afterthought.</p>
-            </div>
-            
-            <div className="value-item">
-              <div className="value-icon">
-                <i className="fas fa-brain"></i>
-              </div>
-              <h4>Responsible AI</h4>
-              <p>Transparent and ethical AI implementation that enhances human capabilities without replacing them.</p>
-            </div>
-            
-            <div className="value-item">
-              <div className="value-icon">
-                <i className="fas fa-rocket"></i>
-              </div>
-              <h4>Continuous Learning</h4>
-              <p>Ship in small, safe increments to learn faster and deliver value more effectively.</p>
             </div>
           </div>
         </div>

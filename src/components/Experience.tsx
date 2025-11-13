@@ -56,10 +56,10 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
         <div className="highlights-list">
           {highlights.map((highlight, highlightIndex) => (
             <div key={highlightIndex} className="highlight-item">
-              <div className="highlight-icon">
-                <i className="fa-solid fa-arrow-right"></i>
+              <i className="fa-solid fa-arrow-right highlight-arrow"></i>
+              <div className="highlight-text-container">
+                <span className="highlight-text">{highlight}</span>
               </div>
-              <span className="highlight-text">{highlight}</span>
             </div>
           ))}
         </div>

@@ -1,52 +1,111 @@
 import { useTranslation } from '../../contexts/TranslationContext'
+import type { Personal, Social } from '../../types/portfolio'
 
 interface LandingFooterProps {
+  personal: Personal
+  social: Social[]
   className?: string
 }
 
-export function LandingFooter({ className = '' }: LandingFooterProps) {
-  const { t } = useTranslation()
+export function LandingFooter({ personal, social, className = '' }: LandingFooterProps) {
+  const { currentLanguage } = useTranslation()
 
   return (
-    <footer className={`landing-footer ${className}`}>
+    <footer className={`landing-footer landing-section ${className}`}>
       <div className="footer-container">
         <div className="footer-content">
           <div className="footer-brand">
-            <h3 className="footer-title">João Maia</h3>
-            <p className="footer-subtitle">Full Stack Engineer</p>
+            <h3 className="footer-title">{personal.name}</h3>
+            <p className="footer-subtitle">{personal.title}</p>
             <p className="footer-description">
-              Specializing in Generative AI and automation solutions that drive innovation and efficiency.
+              {personal.tagline}
             </p>
+            
+            <div className="footer-contact">
+              {personal.location && (
+                <div className="footer-contact-item">
+                  <i className="fa-solid fa-map-marker-alt"></i>
+                  <span>{personal.location}</span>
+                </div>
+              )}
+              {personal.availability && (
+                <div className="footer-contact-item">
+                  <i className="fa-solid fa-clock"></i>
+                  <span>{personal.availability}</span>
+                </div>
+              )}
+            </div>
           </div>
           
           <div className="footer-links">
             <div className="footer-section">
-              <h4 className="footer-section-title">Portfolio</h4>
+              <h4 className="footer-section-title">
+                {currentLanguage === 'pt-PT' ? 'Navegação' : 'Navigation'}
+              </h4>
               <ul className="footer-list">
-                <li><a href="#about">About</a></li>
-                <li><a href="#features">Services</a></li>
-                <li><a href="#about">Experience</a></li>
-                <li><a href="#about">Projects</a></li>
+                <li>
+                  <a href="#about" onClick={(e) => { 
+                    e.preventDefault(); 
+                    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); 
+                  }}>
+                    {currentLanguage === 'pt-PT' ? 'Sobre' : 'About'}
+                  </a>
+                </li>
+                <li>
+                  <a href="#features" onClick={(e) => { 
+                    e.preventDefault(); 
+                    document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); 
+                  }}>
+                    {currentLanguage === 'pt-PT' ? 'Serviços' : 'Services'}
+                  </a>
+                </li>
+                <li>
+                  <a href="#" onClick={(e) => { 
+                    e.preventDefault(); 
+                    window.dispatchEvent(new CustomEvent('navigateToPortfolio')); 
+                  }}>
+                    {currentLanguage === 'pt-PT' ? 'Experiência' : 'Experience'}
+                  </a>
+                </li>
+                <li>
+                  <a href="#" onClick={(e) => { 
+                    e.preventDefault(); 
+                    window.dispatchEvent(new CustomEvent('navigateToPortfolio')); 
+                  }}>
+                    {currentLanguage === 'pt-PT' ? 'Projetos' : 'Projects'}
+                  </a>
+                </li>
               </ul>
             </div>
             
             <div className="footer-section">
-              <h4 className="footer-section-title">Expertise</h4>
+              <h4 className="footer-section-title">
+                {currentLanguage === 'pt-PT' ? 'Especialidades' : 'Expertise'}
+              </h4>
               <ul className="footer-list">
-                <li><a href="#features">AI Integration</a></li>
-                <li><a href="#features">Full Stack Development</a></li>
-                <li><a href="#features">Process Automation</a></li>
-                <li><a href="#features">Cloud Solutions</a></li>
+                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'IA e Automação' : 'AI & Automation'}</a></li>
+                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Desenvolvimento Full Stack' : 'Full Stack Development'}</a></li>
+                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Aplicações Web' : 'Web Applications'}</a></li>
+                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Soluções Cloud' : 'Cloud Solutions'}</a></li>
               </ul>
             </div>
             
             <div className="footer-section">
-              <h4 className="footer-section-title">Connect</h4>
+              <h4 className="footer-section-title">
+                {currentLanguage === 'pt-PT' ? 'Contacto' : 'Contact'}
+              </h4>
               <ul className="footer-list">
-                <li><a href="https://github.com/vunf1" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                <li><a href="https://linkedin.com/in/joaomaia" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-                <li><a href="mailto:joaomaia.trabalho@gmail.com">Email</a></li>
-                <li><a href="#about">Portfolio</a></li>
+                {social.map((socialItem) => (
+                  <li key={socialItem.name}>
+                    <a 
+                      href={socialItem.url} 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {socialItem.name}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -54,17 +113,15 @@ export function LandingFooter({ className = '' }: LandingFooterProps) {
         
         <div className="footer-bottom">
           <div className="footer-copyright">
-            <p>&copy; 2024 João Maia. All rights reserved.</p>
-            <p>Built with modern web technologies and AI-powered development practices.</p>
+            <p>&copy; {new Date().getFullYear()} {personal.name}. {currentLanguage === 'pt-PT' ? 'Todos os direitos reservados.' : 'All rights reserved.'}</p>
           </div>
           
           <div className="footer-tech">
-            <span className="tech-label">Powered by:</span>
+            <span className="tech-label">{currentLanguage === 'pt-PT' ? 'Desenvolvido com:' : 'Built with:'}</span>
             <div className="tech-stack">
-              <span className="tech-item">React</span>
+              <span className="tech-item">Preact</span>
               <span className="tech-item">TypeScript</span>
               <span className="tech-item">Vite</span>
-              <span className="tech-item">AI</span>
             </div>
           </div>
         </div>

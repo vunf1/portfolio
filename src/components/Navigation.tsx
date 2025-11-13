@@ -8,8 +8,10 @@ export function Navigation({
   onNavigate, 
   variant = 'horizontal',
   className = '',
-  id 
-}: NavigationProps) {
+  id,
+  showBackButton = false,
+  onBackClick
+}: NavigationProps & { showBackButton?: boolean; onBackClick?: () => void }) {
   const [isNavCollapsed, setIsNavCollapsed] = useState(true)
   const [isScrolled, setIsScrolled] = useState(false)
   const { t } = useTranslation()
@@ -27,6 +29,7 @@ export function Navigation({
       
       if (nav && toggle && !nav.contains(target) && !toggle.contains(target)) {
         setIsNavCollapsed(true)
+        document.body.classList.remove('menu-open')
       }
     }
 
@@ -36,11 +39,20 @@ export function Navigation({
     return () => {
       window.removeEventListener('scroll', handleScroll)
       document.removeEventListener('click', handleClickOutside)
+      document.body.classList.remove('menu-open')
     }
   }, [])
 
   const toggleNav = () => {
-    setIsNavCollapsed(!isNavCollapsed)
+    const newCollapsed = !isNavCollapsed
+    setIsNavCollapsed(newCollapsed)
+    
+    // Add/remove blur effect to page content
+    if (newCollapsed) {
+      document.body.classList.remove('menu-open')
+    } else {
+      document.body.classList.add('menu-open')
+    }
   }
 
   const scrollToSection = (sectionId: string) => {
@@ -147,31 +159,45 @@ export function Navigation({
 
   return (
     <nav className={navClasses} id={id || 'sideNav'}>
-      <div className="nav-container">
-        {/* Brand */}
-        <a 
-          className="nav-brand" 
-          href="#hero" 
-          onClick={(e) => {
-            e.preventDefault()
-            scrollToSection('hero')
-          }}
-        >
-          <div className="brand-content">
-            <div className="brand-avatar-container">
-              <img 
-                className="brand-avatar" 
-                src="./img/logo.png"
-                alt="Logo"
-                loading="lazy"
-              />
+        <div className="nav-container">
+          {/* Back Button - Desktop Only */}
+          {showBackButton && (
+            <div className="nav-back-desktop">
+              <button
+                className="nav-back-button"
+                onClick={onBackClick}
+                title="Back to Landing Page"
+              >
+                <i className="fa-solid fa-arrow-left"></i>
+                <span className="nav-text">Back to Home</span>
+              </button>
             </div>
-            <div className="brand-text">
-              <span className="brand-name">{t('navigation.brand')}</span>
-              <span className="brand-title">{t('hero.title')}</span>
+          )}
+
+          {/* Brand */}
+          <a 
+            className="nav-brand" 
+            href="#hero" 
+            onClick={(e) => {
+              e.preventDefault()
+              scrollToSection('hero')
+            }}
+          >
+            <div className="brand-content">
+              <div className="brand-avatar-container">
+                <img 
+                  className="brand-avatar" 
+                  src="./img/logo.png"
+                  alt="Logo"
+                  loading="lazy"
+                />
+              </div>
+              <div className="brand-text">
+                <span className="brand-name">{t('navigation.brand')}</span>
+                <span className="brand-title">{t('hero.title')}</span>
+              </div>
             </div>
-          </div>
-        </a>
+          </a>
 
         {/* Navigation Items */}
         <div className={`nav-menu ${isNavCollapsed ? 'collapsed' : ''}`}>
@@ -184,6 +210,11 @@ export function Navigation({
                   onClick={(e) => {
                     e.preventDefault()
                     scrollToSection(item.id)
+                    // Close mobile menu after navigation with small delay
+                    setTimeout(() => {
+                      setIsNavCollapsed(true)
+                      document.body.classList.remove('menu-open')
+                    }, 100)
                   }}
                 >
                   {item.icon && <i className={item.icon}></i>}
@@ -191,6 +222,19 @@ export function Navigation({
                 </a>
               </li>
             ))}
+            {/* Back Button - Mobile Only */}
+            {showBackButton && (
+              <li className="nav-item nav-back-mobile">
+                <button
+                  className="nav-link nav-back-button"
+                  onClick={onBackClick}
+                  title="Back to Landing Page"
+                >
+                  <i className="fa-solid fa-arrow-left"></i>
+                  <span className="nav-text">Back to Home</span>
+                </button>
+              </li>
+            )}
           </ul>
         </div>
 

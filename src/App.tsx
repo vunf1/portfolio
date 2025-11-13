@@ -68,24 +68,50 @@ export function App() {
     }
 
     const observerOptions = {
-      threshold: [0.1, 0.3, 0.5, 0.7, 0.9], // Multiple thresholds for better detection
-      rootMargin: '-10% 0px -10% 0px' // Less restrictive margin
+      threshold: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], // More granular thresholds
+      rootMargin: '-20% 0px -20% 0px' // Better margin for section detection
     }
 
     const observer = new IntersectionObserver((entries) => {
-      // Find the section with the highest intersection ratio
-      let mostVisibleSection = null
-      let highestRatio = 0
-      
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.intersectionRatio > highestRatio) {
-          highestRatio = entry.intersectionRatio
-          mostVisibleSection = entry.target.id
+      // Get all currently visible sections with their intersection ratios
+      const visibleSections = entries
+        .filter(entry => entry.isIntersecting)
+        .map(entry => ({
+          id: entry.target.id,
+          ratio: entry.intersectionRatio,
+          element: entry.target
+        }))
+        .sort((a, b) => b.ratio - a.ratio) // Sort by visibility ratio
+
+      // If we have visible sections, select the most visible one
+      if (visibleSections.length > 0) {
+        const mostVisible = visibleSections[0]
+        setActiveSection(mostVisible.id)
+      } else {
+        // If no sections are visible, find the closest one by position
+        const allSections = Array.from(document.querySelectorAll('section[id]'))
+        const scrollPosition = window.scrollY + window.innerHeight / 2
+        
+        let closestSection = null
+        let closestDistance = Infinity
+        
+        allSections.forEach(section => {
+          const rect = section.getBoundingClientRect()
+          const sectionTop = rect.top + window.scrollY
+          const sectionCenter = sectionTop + rect.height / 2
+          
+          // Calculate distance from scroll position to section center
+          const distance = Math.abs(scrollPosition - sectionCenter)
+          
+          if (distance < closestDistance) {
+            closestDistance = distance
+            closestSection = section.id
+          }
+        })
+        
+        if (closestSection) {
+          setActiveSection(closestSection)
         }
-      })
-      
-      if (mostVisibleSection) {
-        setActiveSection(mostVisibleSection)
       }
     }, observerOptions)
 
@@ -117,10 +143,48 @@ export function App() {
       subtree: true
     })
 
+    // Fallback scroll listener for better section detection
+    const handleScroll = () => {
+      const sections = Array.from(document.querySelectorAll('section[id]'))
+      const scrollPosition = window.scrollY + window.innerHeight / 2
+      
+      let closestSection = null
+      let closestDistance = Infinity
+      
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect()
+        const sectionTop = rect.top + window.scrollY
+        const sectionCenter = sectionTop + rect.height / 2
+        
+        // Calculate distance from scroll position to section center
+        const distance = Math.abs(scrollPosition - sectionCenter)
+        
+        if (distance < closestDistance) {
+          closestDistance = distance
+          closestSection = section.id
+        }
+      })
+      
+      if (closestSection) {
+        setActiveSection(closestSection)
+      }
+    }
+
+    // Throttled scroll listener
+    let scrollTimeout: NodeJS.Timeout
+    const throttledScrollHandler = () => {
+      clearTimeout(scrollTimeout)
+      scrollTimeout = setTimeout(handleScroll, 100)
+    }
+
+    window.addEventListener('scroll', throttledScrollHandler, { passive: true })
+
     return () => {
       observer.disconnect()
       mutationObserver.disconnect()
       clearTimeout(timeoutId)
+      clearTimeout(scrollTimeout)
+      window.removeEventListener('scroll', throttledScrollHandler)
     }
   }, [portfolioData])
 
@@ -191,16 +255,6 @@ export function App() {
   return (
     <ErrorBoundary>
       <>
-        {/* Back to Landing Button */}
-        <button 
-          className="back-to-landing"
-          onClick={() => setShowPortfolio(false)}
-          title="Back to Landing Page"
-        >
-          <i className="fas fa-arrow-left"></i>
-          <span>Back to Home</span>
-        </button>
-
         <Navigation 
           items={[
             { id: 'experience', label: String(t('navigation.experience')), icon: 'fa-solid fa-briefcase' },
@@ -214,6 +268,8 @@ export function App() {
           ]}
           activeId={activeSection}
           onNavigate={setActiveSection}
+          showBackButton={true}
+          onBackClick={() => setShowPortfolio(false)}
         />
         
         {/* Hero Section */}

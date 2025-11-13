@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'preact/hooks'
+import { useTranslation } from '../../contexts/TranslationContext'
+import type { Personal } from '../../types/portfolio'
 
-interface Feature {
+interface Service {
   id: string
   title: string
   description: string
@@ -9,41 +11,51 @@ interface Feature {
 }
 
 interface LandingFeaturesProps {
+  personal: Personal
   className?: string
 }
 
-export function LandingFeatures({ className = '' }: LandingFeaturesProps) {
-  const [activeFeature, setActiveFeature] = useState(0)
+export function LandingFeatures({ personal, className = '' }: LandingFeaturesProps) {
+  const { currentLanguage } = useTranslation()
+  const [activeService, setActiveService] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
 
-  const features: Feature[] = [
-    {
-      id: 'ai-integration',
-      title: 'AI Integration',
-      description: 'Seamlessly integrate generative AI and machine learning models into web applications, creating intelligent user experiences.',
-      icon: 'fas fa-robot',
-      color: 'var(--color-primary)'
-    },
+  const services: Service[] = [
     {
       id: 'full-stack',
-      title: 'Full Stack Development',
-      description: 'Complete end-to-end development from database design to user interface, ensuring scalable and maintainable solutions.',
-      icon: 'fas fa-layer-group',
-      color: 'var(--color-secondary)'
+      title: currentLanguage === 'pt-PT' ? 'Desenvolvimento Full Stack' : 'Full Stack Development',
+      description: currentLanguage === 'pt-PT' 
+        ? 'Desenvolvimento completo de aplicações desde o frontend até o backend, incluindo arquitetura de base de dados e integração de sistemas.'
+        : 'Comprehensive application development from frontend to backend, including database architecture and system integration.',
+      icon: 'fa-solid fa-code',
+      color: '#3b82f6'
     },
     {
-      id: 'automation',
-      title: 'Process Automation',
-      description: 'Design and implement intelligent automation workflows that enhance efficiency and reduce manual intervention.',
-      icon: 'fas fa-cogs',
-      color: 'var(--color-accent)'
+      id: 'ai-automation',
+      title: currentLanguage === 'pt-PT' ? 'IA e Automação' : 'AI & Automation',
+      description: currentLanguage === 'pt-PT'
+        ? 'Integração de inteligência artificial e automação de processos para melhorar eficiência operacional e experiência do utilizador.'
+        : 'Artificial intelligence integration and process automation to improve operational efficiency and user experience.',
+      icon: 'fa-solid fa-robot',
+      color: '#8b5cf6'
+    },
+    {
+      id: 'web-applications',
+      title: currentLanguage === 'pt-PT' ? 'Aplicações Web' : 'Web Applications',
+      description: currentLanguage === 'pt-PT'
+        ? 'Desenvolvimento de aplicações web modernas, responsivas e performantes utilizando tecnologias de ponta e melhores práticas.'
+        : 'Development of modern, responsive, and performant web applications using cutting-edge technologies and best practices.',
+      icon: 'fa-solid fa-globe',
+      color: '#06b6d4'
     },
     {
       id: 'cloud-solutions',
-      title: 'Cloud Solutions',
-      description: 'Deploy and manage applications on cloud platforms with focus on scalability, security, and performance optimization.',
-      icon: 'fas fa-cloud',
-      color: 'var(--color-success)'
+      title: currentLanguage === 'pt-PT' ? 'Soluções Cloud' : 'Cloud Solutions',
+      description: currentLanguage === 'pt-PT'
+        ? 'Implementação de soluções em nuvem escaláveis e seguras para aplicações empresariais e sistemas distribuídos.'
+        : 'Implementation of scalable and secure cloud solutions for enterprise applications and distributed systems.',
+      icon: 'fa-solid fa-cloud',
+      color: '#10b981'
     }
   ]
 
@@ -67,103 +79,143 @@ export function LandingFeatures({ className = '' }: LandingFeaturesProps) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveFeature((prev) => (prev + 1) % features.length)
-    }, 4000)
+      setActiveService((prev) => (prev + 1) % services.length)
+    }, 5000)
 
     return () => clearInterval(interval)
-  }, [features.length])
+  }, [services.length])
 
   return (
-    <section id="features" className={`landing-features ${className}`}>
+    <section id="features" className={`landing-features landing-section ${className}`}>
       <div className="features-container">
         <div className={`features-header ${isVisible ? 'features-header-visible' : ''}`}>
           <h2 className="features-title">
-            <span className="features-title-main">Why Choose</span>
-            <span className="features-title-accent">AI-Powered Development</span>
+            <span className="features-title-main">
+              {currentLanguage === 'pt-PT' ? 'Serviços e' : 'Services &'}
+            </span>
+            <span className="features-title-accent">
+              {currentLanguage === 'pt-PT' ? 'Especialidades' : 'Expertise'}
+            </span>
           </h2>
           <p className="features-subtitle">
-            Experience the future of software development with intelligent automation and cutting-edge AI integration
+            {currentLanguage === 'pt-PT'
+              ? 'Soluções profissionais de desenvolvimento de software com foco em qualidade, eficiência e inovação'
+              : 'Professional software development solutions focused on quality, efficiency, and innovation'}
           </p>
         </div>
 
         <div className="features-grid">
-          {features.map((feature, index) => (
+          {services.map((service, index) => (
             <div
-              key={feature.id}
-              className={`feature-card ${activeFeature === index ? 'feature-card-active' : ''} ${isVisible ? 'feature-card-visible' : ''}`}
-              style={{ '--delay': `${index * 0.1}s` }}
-              onMouseEnter={() => setActiveFeature(index)}
+              key={service.id}
+              className={`feature-card ${activeService === index ? 'feature-card-active' : ''} ${isVisible ? 'feature-card-visible' : ''}`}
+              style={{ '--delay': `${index * 0.15}s`, '--service-color': service.color }}
+              onMouseEnter={() => setActiveService(index)}
+              onFocus={() => setActiveService(index)}
             >
               <div className="feature-card-inner">
-                <div 
-                  className="feature-icon"
-                  style={{ '--feature-color': feature.color }}
-                >
-                  <i className={feature.icon}></i>
+                <div className="feature-icon" style={{ '--feature-color': service.color }}>
+                  <i className={service.icon}></i>
                 </div>
                 
                 <div className="feature-content">
-                  <h3 className="feature-title">{feature.title}</h3>
-                  <p className="feature-description">{feature.description}</p>
+                  <h3 className="feature-title">{service.title}</h3>
+                  <p className="feature-description">{service.description}</p>
                 </div>
                 
                 <div className="feature-indicator">
-                  <div className="indicator-dot"></div>
+                  <div className="indicator-line"></div>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="features-showcase">
-          <div className={`showcase-content ${isVisible ? 'showcase-content-visible' : ''}`}>
-            <div className="showcase-visual">
-              <div className="showcase-card">
-                <div className="showcase-header">
-                  <div className="showcase-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
+        <div className="features-approach">
+          <div className={`approach-content ${isVisible ? 'approach-content-visible' : ''}`}>
+            <div className="approach-text">
+              <h3 className="approach-title">
+                {currentLanguage === 'pt-PT' ? 'Abordagem Profissional' : 'Professional Approach'}
+              </h3>
+              <p className="approach-description">
+                {personal.summary}
+              </p>
+              
+              <div className="approach-highlights">
+                <div className="approach-highlight">
+                  <i className="fa-solid fa-check-circle"></i>
+                  <span>
+                    {currentLanguage === 'pt-PT' ? 'Desenvolvimento Orientado ao Utilizador' : 'User-Centered Development'}
+                  </span>
                 </div>
-                <div className="showcase-body">
-                  <div className="showcase-code">
-                    <div className="code-line">
-                      <span className="code-keyword">const</span>
-                      <span className="code-variable"> aiSolution</span>
-                      <span className="code-operator"> =</span>
-                      <span className="code-string"> 'Intelligent'</span>
-                    </div>
-                    <div className="code-line">
-                      <span className="code-keyword">return</span>
-                      <span className="code-function"> generateResponse</span>
-                      <span className="code-punctuation">(</span>
-                      <span className="code-variable">userInput</span>
-                      <span className="code-punctuation">)</span>
-                    </div>
-                  </div>
+                <div className="approach-highlight">
+                  <i className="fa-solid fa-check-circle"></i>
+                  <span>
+                    {currentLanguage === 'pt-PT' ? 'Qualidade e Segurança' : 'Quality & Security'}
+                  </span>
+                </div>
+                <div className="approach-highlight">
+                  <i className="fa-solid fa-check-circle"></i>
+                  <span>
+                    {currentLanguage === 'pt-PT' ? 'Inovação Contínua' : 'Continuous Innovation'}
+                  </span>
                 </div>
               </div>
             </div>
             
-            <div className="showcase-text">
-              <h3>Real-World AI Implementation</h3>
-              <p>
-                See how AI-powered features are integrated into modern web applications, 
-                creating intelligent user experiences that adapt and learn.
-              </p>
-              <div className="showcase-stats">
-                <div className="stat">
-                  <span className="stat-number">95%</span>
-                  <span className="stat-label">Efficiency Gain</span>
+            <div className="approach-visual">
+              <div className="approach-card">
+                <div className="approach-card-header">
+                  <div className="approach-card-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
                 </div>
-                <div className="stat">
-                  <span className="stat-number">24/7</span>
-                  <span className="stat-label">Automation</span>
-                </div>
-                <div className="stat">
-                  <span className="stat-number">100%</span>
-                  <span className="stat-label">Scalable</span>
+                <div className="approach-card-body">
+                  <div className="approach-stats">
+                    <div className="approach-stat">
+                      <div className="approach-stat-icon">
+                        <i className="fa-solid fa-code-branch"></i>
+                      </div>
+                      <div className="approach-stat-content">
+                        <h4>
+                          {currentLanguage === 'pt-PT' ? 'Desenvolvimento' : 'Development'}
+                        </h4>
+                        <p>
+                          {currentLanguage === 'pt-PT' ? 'End-to-end' : 'End-to-end'}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="approach-stat">
+                      <div className="approach-stat-icon">
+                        <i className="fa-solid fa-shield-halved"></i>
+                      </div>
+                      <div className="approach-stat-content">
+                        <h4>
+                          {currentLanguage === 'pt-PT' ? 'Segurança' : 'Security'}
+                        </h4>
+                        <p>
+                          {currentLanguage === 'pt-PT' ? 'Prioritizada' : 'Prioritized'}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="approach-stat">
+                      <div className="approach-stat-icon">
+                        <i className="fa-solid fa-rocket"></i>
+                      </div>
+                      <div className="approach-stat-content">
+                        <h4>
+                          {currentLanguage === 'pt-PT' ? 'Performance' : 'Performance'}
+                        </h4>
+                        <p>
+                          {currentLanguage === 'pt-PT' ? 'Otimizada' : 'Optimized'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
