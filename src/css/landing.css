@@ -9,10 +9,6 @@
   --color-background: var(--color-white);
 }
 
-[data-theme="dark"] {
-  --color-text: var(--color-gray-100);
-  --color-background: var(--color-gray-900);
-}
 
 /* ===== LANDING PAGE LAYOUT ===== */
 .landing-page {
@@ -24,6 +20,7 @@
   position: relative;
   width: 100%;
   height: auto;
+  display: block;
 }
 
 /* Apply text justify to landing page text content */
@@ -44,45 +41,74 @@
 /* Ensure body has proper overflow when landing page is active */
 body.landing-page-active {
   overflow-x: hidden !important;
-  overflow-y: auto !important;
+  overflow-y: visible !important;
   height: auto !important;
+  min-height: 100% !important;
+  max-height: none !important;
+  position: relative !important;
 }
 
 html.landing-page-active {
   overflow-x: hidden !important;
-  height: auto !important;
+  overflow-y: auto !important;
+  height: 100% !important;
+  max-height: none !important;
 }
 
 /* Remove any nested scroll containers */
 body.landing-page-active > *,
-html.landing-page-active > body,
-body.landing-page-active .landing-page,
+html.landing-page-active > body {
+  overflow-y: visible !important;
+  overflow-x: hidden !important;
+}
+
+/* Ensure #app container doesn't constrain height */
+body.landing-page-active #app {
+  height: auto !important;
+  min-height: auto !important;
+  overflow-y: visible !important;
+  overflow-x: hidden !important;
+}
+
+/* Ensure landing-page container allows natural flow */
+body.landing-page-active .landing-page {
+  overflow-y: visible !important;
+  overflow-x: hidden !important;
+  height: auto !important;
+  min-height: 100vh;
+  position: relative;
+  display: block;
+}
+
+/* Ensure direct children of landing-page don't create scroll containers */
 body.landing-page-active .landing-page > * {
   overflow-y: visible !important;
   overflow-x: hidden !important;
 }
 
 /* Ensure landing-hero and landing-section don't create scrollbars */
-body.landing-page-active .landing-hero,
-body.landing-page-active .landing-section {
-  overflow: hidden !important;
+body.landing-page-active .landing-hero {
   overflow-x: hidden !important;
-  overflow-y: hidden !important;
+  overflow-y: visible !important;
+}
+
+body.landing-page-active .landing-section {
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
 }
 
 /* Specifically target landing-hero to prevent scrollbars */
 .landing-hero,
 .landing-hero.landing-section {
-  overflow: hidden !important;
   overflow-x: hidden !important;
-  overflow-y: hidden !important;
+  overflow-y: visible !important;
 }
 
 /* Ensure hero-content doesn't cause overflow */
 .landing-hero .hero-content {
   overflow: visible;
-  max-height: 100%;
   height: auto;
+  min-height: auto;
 }
 
 /* Only allow body to scroll */
@@ -102,6 +128,10 @@ body.landing-page-active .landing-page {
               transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   overflow-x: hidden;
   overflow-y: visible;
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .landing-section.section-visible {
@@ -112,33 +142,24 @@ body.landing-page-active .landing-page {
 /* ===== HERO SECTION ===== */
 .landing-hero {
   position: relative;
-  height: 100vh;
-  max-height: 100vh;
+  min-height: 100vh;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden !important;
   overflow-x: hidden !important;
-  overflow-y: hidden !important;
+  overflow-y: visible !important;
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f1f3f5 100%);
   padding: var(--space-6);
   box-sizing: border-box;
-  /* Prevent any scrollbar from appearing */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  pointer-events: auto;
 }
 
-.landing-hero::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-}
 
 /* Override landing-section overflow for hero specifically */
 .landing-hero.landing-section {
-  overflow: hidden !important;
   overflow-x: hidden !important;
-  overflow-y: hidden !important;
+  overflow-y: visible !important;
 }
 
 /* Corporate Background */
@@ -150,6 +171,7 @@ body.landing-page-active .landing-page {
   bottom: 0;
   z-index: 1;
   overflow: visible;
+  pointer-events: none;
 }
 
 .hero-pattern {
@@ -185,7 +207,7 @@ body.landing-page-active .landing-page {
   gap: var(--space-12);
   align-items: center;
   overflow: visible;
-  max-height: 100%;
+  height: auto;
   box-sizing: border-box;
 }
 
@@ -242,14 +264,6 @@ body.landing-page-active .landing-page {
   text-shadow: none !important;
 }
 
-[data-theme="dark"] .landing-hero .hero-title-main,
-[data-theme="dark"] .landing-page .hero-title-main,
-[data-theme="dark"] .hero-title .hero-title-main,
-[data-theme="dark"] .landing-hero .hero-title .hero-title-main,
-[data-theme="dark"] .landing-page .landing-hero .hero-title .hero-title-main {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
 
 .hero-title-subtitle {
   display: block;
@@ -488,6 +502,10 @@ body.landing-page-active .landing-page {
   padding: var(--space-20) 0;
   background: white;
   position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: auto;
 }
 
 .features-container {
@@ -791,6 +809,10 @@ body.landing-page-active .landing-page {
   padding: var(--space-20) 0;
   background: var(--color-gray-50);
   position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: auto;
 }
 
 .about-container {
@@ -1064,6 +1086,11 @@ body.landing-page-active .landing-page {
   color: var(--color-gray-300);
   padding: var(--space-16) 0 var(--space-8);
   border-top: 1px solid var(--color-gray-700);
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: auto;
+  position: relative;
 }
 
 .footer-container {

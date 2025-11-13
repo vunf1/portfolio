@@ -1,210 +1,253 @@
 /* Import design tokens */
 @import './tokens.css';
 
-/* Static FAB Items - No container, no animations, no drag/drop */
+/* ===== FLOATING ACTION BUTTON - REDESIGNED ===== */
+
+/* FAB Container */
 .fab-items-static {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: var(--z-fixed);
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
   display: flex;
   flex-direction: column-reverse;
-  gap: var(--space-3);
+  gap: 12px;
   pointer-events: auto;
+  overflow: visible;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 48px);
 }
 
-/* Individual FAB Items - Static Design */
+/* FAB Item Wrapper - prevents label from causing overflow */
+.fab-item-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  /* Ensure wrapper has no background, border, or shadow */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  /* Prevent wrapper from affecting document layout */
+  contain: layout style;
+  /* Ensure wrapper doesn't extend beyond viewport */
+  max-width: 100vw;
+  /* Prevent horizontal overflow - clip anything extending beyond viewport */
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+/* Account for scrollbar width - position FAB to the left of scrollbar */
+@media (min-width: 768px) {
+  .fab-items-static {
+    right: calc(24px + 17px); /* Standard scrollbar width (15-17px) */
+    max-width: calc(100vw - 48px - 17px);
+  }
+}
+
+/* Individual FAB Button */
 .fab-item-static {
   width: 56px;
   height: 56px;
-  border-radius: var(--radius-full);
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.95) 0%, 
-    rgba(248, 250, 252, 0.95) 50%, 
-    rgba(241, 245, 249, 0.95) 100%);
+  border-radius: 50%;
+  background: var(--color-white);
   color: var(--color-gray-700);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.2),
-    0 4px 16px rgba(0, 0, 0, 0.15),
-    0 2px 8px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-  backdrop-filter: blur(20px);
-}
-
-.fab-item-static::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: var(--radius-full);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.fab-item-static:hover {
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 1) 0%, 
-    rgba(248, 250, 252, 1) 50%, 
-    rgba(241, 245, 249, 1) 100%);
-  transform: translateY(-3px) scale(1.08);
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 
-    0 12px 48px rgba(0, 0, 0, 0.25),
-    0 8px 24px rgba(0, 0, 0, 0.2),
     0 4px 12px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: visible;
+  z-index: 10000;
+  transition: 
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  isolation: isolate;
+  flex-shrink: 0;
 }
 
-.fab-item-static:hover::before {
-  opacity: 1;
+/* Hover State - Simple and Clean */
+.fab-item-static:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 16px rgba(0, 0, 0, 0.2),
+    0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
+/* Ensure language and theme buttons override base hover shadow */
+.fab-item-language:hover,
+.fab-item-theme:hover {
+  /* These have their own hover shadows defined below */
+}
+
+/* Active State */
 .fab-item-static:active {
-  transform: translateY(0) scale(0.98);
-  transition: all 0.1s ease;
+  transform: translateY(0) scale(0.95);
+  transition: transform 0.1s ease;
 }
 
-.fab-item-static:focus {
-  outline: 3px solid rgba(0, 123, 255, 0.5);
+/* Focus State */
+.fab-item-static:focus-visible {
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
-/* Flag emoji styling in FAB items */
+/* Remove default button styles */
+.fab-item-static::before {
+  display: none;
+}
+
+/* Flag Emoji Styling */
 .fab-item-static .flag-emoji {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  line-height: 1;
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  text-align: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Icon Styling */
+.fab-item-static i {
+  display: block;
   line-height: 1;
 }
 
-/* Item Labels - Static Design */
+/* ===== LABEL - Clean Design ===== */
 .fab-item-label {
   position: absolute;
-  right: 68px;
+  right: calc(100% + 12px);
   top: 50%;
   transform: translateY(-50%);
   background: rgba(0, 0, 0, 0.9);
   color: var(--color-white);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-lg);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
   white-space: nowrap;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.3),
-    0 2px 8px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 10001;
+  /* Constrain label width to prevent overflow - ensure it fits in available space */
+  /* Button at right: ~41px, button width: 56px, gap: 12px, margin: 12px */
+  /* Available space from button left edge to viewport left: 100vw - 41px - 56px - 12px - 12px */
+  max-width: min(200px, calc(100vw - 121px));
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  backdrop-filter: blur(8px);
+  will-change: opacity;
 }
 
+/* Specific fix for language button label - Portuguese text "Mudar para inglês" is longer */
+.fab-item-language .fab-item-label {
+  /* Smaller max-width for longer Portuguese text to prevent overflow */
+  /* More conservative calculation to ensure it never extends beyond viewport */
+  max-width: min(150px, calc(100vw - 160px));
+  /* Ensure text truncates with ellipsis if too long */
+  text-overflow: ellipsis;
+}
+
+/* Mobile: labels hidden, so no overflow issues */
+@media (max-width: 767px) {
+  .fab-item-label {
+    display: none;
+  }
+}
+
+/* Label Arrow */
+.fab-item-label::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-left-color: rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+}
+
+/* Label on Hover - Only show when hovering */
 .fab-item-static:hover .fab-item-label {
   opacity: 1;
+  visibility: visible;
 }
 
-/* Theme-specific item styles - Static Design */
+/* Ensure labels don't extend beyond viewport */
+@media (max-width: 480px) {
+  .fab-item-label {
+    max-width: calc(100vw - 100px);
+    font-size: 0.75rem;
+    padding: 6px 10px;
+  }
+}
+
+/* ===== THEME BUTTON ===== */
 .fab-item-theme {
-  background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+  background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
   color: var(--color-gray-900);
-  border-color: rgba(255, 193, 7, 0.3);
+  border-color: rgba(255, 193, 7, 0.2);
+  /* Completely override base box-shadow */
   box-shadow: 
-    0 4px 20px rgba(255, 193, 7, 0.3),
-    0 2px 8px rgba(255, 193, 7, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 4px 12px rgba(255, 193, 7, 0.25),
+    0 2px 4px rgba(255, 193, 7, 0.15);
 }
 
 .fab-item-theme:hover {
-  background: linear-gradient(135deg, #e0a800 0%, #d39e00 100%);
+  background: linear-gradient(135deg, #ffb300 0%, #ffa000 100%);
+  /* Override hover shadow */
   box-shadow: 
-    0 8px 32px rgba(255, 193, 7, 0.4),
-    0 4px 16px rgba(255, 193, 7, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    0 6px 16px rgba(255, 193, 7, 0.3),
+    0 3px 6px rgba(255, 193, 7, 0.2);
+  transform: translateY(-2px);
 }
 
+/* ===== LANGUAGE BUTTON ===== */
 .fab-item-language {
   background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
   color: var(--color-white);
-  border-color: rgba(23, 162, 184, 0.3);
-  box-shadow: 
-    0 4px 20px rgba(23, 162, 184, 0.3),
-    0 2px 8px rgba(23, 162, 184, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border-color: rgba(23, 162, 184, 0.2);
+  /* Remove shadow completely - override base shadow with !important */
+  box-shadow: none !important;
 }
 
 .fab-item-language:hover {
   background: linear-gradient(135deg, #138496 0%, #117a8b 100%);
-  box-shadow: 
-    0 8px 32px rgba(23, 162, 184, 0.4),
-    0 4px 16px rgba(23, 162, 184, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  /* No shadow on hover either - override base hover shadow */
+  box-shadow: none !important;
+  transform: translateY(-2px);
 }
 
-/* Dark mode adjustments - Static Design */
-[data-theme="dark"] .fab-item-static {
-  background: rgba(30, 30, 30, 0.95);
-  color: var(--color-gray-200);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.3),
-    0 2px 8px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
 
-[data-theme="dark"] .fab-item-static:hover {
-  background: rgba(40, 40, 40, 1);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    0 4px 16px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
 
-[data-theme="dark"] .fab-item-label {
-  background: rgba(0, 0, 0, 0.9);
-  color: var(--color-white);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
 
-/* Mobile optimizations - Static Design */
+/* ===== MOBILE RESPONSIVE ===== */
 @media (max-width: 767px) {
   .fab-items-static {
     bottom: 20px;
     right: 20px;
+    gap: 10px;
   }
 
   .fab-item-static {
-    width: 48px;
-    height: 48px;
-    font-size: var(--font-size-base);
-  }
-
-  .fab-item-label {
-    display: none; /* Hide labels on mobile to save space */
-  }
-
-  .fab-items-static {
-    gap: var(--space-3);
-  }
-}
-
-/* Touch device optimizations - Static Design */
-@media (hover: none) and (pointer: coarse) {
-  .fab-item-static {
-    width: 50px;
-    height: 50px;
+    width: 52px;
+    height: 52px;
+    font-size: 1.1rem;
   }
 
   .fab-item-label {
@@ -212,36 +255,87 @@
   }
 }
 
-/* High contrast mode support */
-@media (prefers-contrast: high) {
+/* Touch devices */
+@media (hover: none) and (pointer: coarse) {
   .fab-item-static {
-    border: 2px solid var(--color-gray-700);
+    width: 52px;
+    height: 52px;
+  }
+
+  .fab-item-label {
+    display: none;
+  }
+
+  .fab-item-static:active {
+    transform: scale(0.92);
   }
 }
 
-/* Focus visible for better accessibility */
-.fab-item-static:focus-visible {
-  outline: 3px solid var(--color-primary);
-  outline-offset: 2px;
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .fab-item-static {
+    border: 2px solid currentColor;
+  }
 }
 
-/* Ensure FAB doesn't interfere with other elements */
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .fab-item-static,
+  .fab-item-label {
+    transition: none;
+  }
+
+  .fab-item-static:hover {
+    transform: none;
+  }
+}
+
+/* Ensure FAB doesn't interfere */
 .fab-items-static * {
   box-sizing: border-box;
 }
 
-/* Force FAB positioning - override any conflicting styles */
+/* Prevent FAB from causing horizontal scrollbars */
 .fab-items-static {
-  position: fixed !important;
-  bottom: 20px !important;
-  right: 20px !important;
-  z-index: 1030 !important;
+  contain: layout style;
+  /* Ensure container doesn't extend beyond viewport */
+  max-width: 100vw;
+  max-height: 100vh;
 }
 
-/* Safe area support for mobile devices */
-@supports (padding: max(0px)) {
+/* Force positioning - ensure FAB stays above scrollbar and doesn't overlap */
+.fab-items-static {
+  position: fixed !important;
+  bottom: 24px !important;
+  z-index: 9999 !important;
+  isolation: isolate;
+}
+
+/* Desktop: position to account for scrollbar */
+@media (min-width: 768px) {
   .fab-items-static {
-    bottom: max(20px, env(safe-area-inset-bottom));
-    right: max(20px, env(safe-area-inset-right));
+    right: calc(24px + 17px) !important;
   }
 }
+
+/* Mobile: standard position */
+@media (max-width: 767px) {
+  .fab-items-static {
+    right: 20px !important;
+  }
+}
+
+/* Ensure FAB buttons are always above scrollbar */
+.fab-item-static {
+  z-index: 10000 !important;
+  position: relative !important;
+}
+
+/* Safe area support */
+@supports (padding: max(0px)) {
+  .fab-items-static {
+    bottom: max(24px, env(safe-area-inset-bottom));
+    right: max(24px, env(safe-area-inset-right));
+  }
+}
+

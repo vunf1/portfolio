@@ -12,6 +12,8 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
 }
 
 body {
@@ -20,17 +22,15 @@ body {
   font-size: var(--font-size-base);
   line-height: var(--line-height-normal);
   color: var(--color-gray-900);
-  background-color: var(--color-white);
+  /* Use neutral variables for consistency with premium.css */
+  background-color: var(--neutral-50, var(--color-white));
   transition: background-color var(--transition-base), color var(--transition-base);
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: visible;
+  min-height: 100%;
+  height: auto;
 }
 
-/* Dark mode body adjustments */
-[data-theme="dark"] body {
-  color: var(--color-gray-100);
-  background-color: var(--color-gray-900);
-}
 
 /* Focus styles for accessibility */
 *:focus {
