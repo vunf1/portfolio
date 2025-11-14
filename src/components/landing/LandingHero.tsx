@@ -90,28 +90,6 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
                 : 'Security | Intelligence | Technology'}
             </p>
           </div>
-          
-          <div className="hero-highlights">
-            <div className="hero-highlight-item">
-              <div className="highlight-icon">
-                <i className="fa-solid fa-code"></i>
-              </div>
-              <div className="highlight-text">
-                <h4>{currentLanguage === 'pt-PT' ? 'Engenharia Full-Stack' : 'Full-Stack Engineering'}</h4>
-                <p>{currentLanguage === 'pt-PT' ? 'Soluções completas' : 'End-to-end solutions'}</p>
-              </div>
-            </div>
-            
-            <div className="hero-highlight-item">
-              <div className="highlight-icon">
-                <i className="fa-solid fa-robot"></i>
-              </div>
-              <div className="highlight-text">
-                <h4>{currentLanguage === 'pt-PT' ? 'IA e Automação' : 'AI & Automation'}</h4>
-                <p>{currentLanguage === 'pt-PT' ? 'Fluxos de trabalho inteligentes' : 'Intelligent workflows'}</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
       
