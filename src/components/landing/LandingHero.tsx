@@ -10,7 +10,7 @@ interface LandingHeroProps {
 
 export function LandingHero({ personal, className = '' }: LandingHeroProps) {
   const [isVisible, setIsVisible] = useState(false)
-  const { t, currentLanguage } = useTranslation()
+  const { currentLanguage } = useTranslation()
 
   useEffect(() => {
     setIsVisible(true)
@@ -60,8 +60,8 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
               className="btn-hero-primary"
               onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <span>{currentLanguage === 'pt-PT' ? 'Saber Mais' : 'Learn More'}</span>
-              <i className="fa-solid fa-arrow-right"></i>
+              <span>{currentLanguage === 'pt-PT' ? 'Sobre' : 'About'}</span>
+              <i className="fa-solid fa-circle-info"></i>
             </button>
             
             <button 
