@@ -242,12 +242,23 @@
     bottom: 20px;
     right: 20px;
     gap: 10px;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
   .fab-item-static {
     width: 52px;
     height: 52px;
     font-size: 1.1rem;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .fab-item-wrapper {
+    display: flex !important;
+    visibility: visible !important;
   }
 
   .fab-item-label {
@@ -322,6 +333,10 @@
 @media (max-width: 767px) {
   .fab-items-static {
     right: 20px !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 }
 
