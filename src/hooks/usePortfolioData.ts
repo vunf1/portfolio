@@ -2,64 +2,112 @@
 import { useState, useEffect, useCallback } from 'preact/hooks'
 import type { PortfolioData, UsePortfolioDataReturn } from '../types'
 
-// Cache for preloaded data
-export const dataCache = new Map<string, Map<string, Record<string, unknown>>>()
+type SupportedLanguage = 'en' | 'pt-PT'
+type LoadedSectionsByLanguage = Record<SupportedLanguage, Set<string>>
 
-// Define critical vs. non-critical sections
+// Cache for preloaded data (shared across hook instances)
+export const dataCache = new Map<SupportedLanguage, Map<string, Record<string, unknown>>>()
+
+// Track in-flight section fetches to deduplicate concurrent requests
+const sectionFetchPromises = new Map<string, Promise<void>>()
+
 const CRITICAL_SECTIONS = ['personal', 'social', 'experience', 'education', 'skills', 'meta', 'ui']
 const NON_CRITICAL_SECTIONS = ['projects', 'certifications', 'interests', 'awards', 'testimonials']
+const ALL_SECTIONS = [...CRITICAL_SECTIONS, ...NON_CRITICAL_SECTIONS]
 
-// Helper function to get the correct data path
-function getDataPath(language: string, section: string): string {
-  // Use relative path to work with GitHub Pages base URL
+const criticalPrefetched: Record<SupportedLanguage, boolean> = { en: false, 'pt-PT': false }
+const nonCriticalPrefetched: Record<SupportedLanguage, boolean> = { en: false, 'pt-PT': false }
+
+function getDataPath(language: SupportedLanguage, section: string): string {
   return `./data/${language}/${section}.json`
 }
 
-// Helper function to load a single JSON file
 async function loadJsonFile<T>(path: string): Promise<T> {
   const response = await fetch(path)
-  
+
   if (!response.ok) {
     throw new Error(`Failed to load ${path}: ${response.status} ${response.statusText}`)
   }
-  
+
   return await response.json()
 }
 
-// Helper function to load all sections for a language
-async function loadLanguageData(language: string): Promise<Map<string, Record<string, unknown>>> {
-  if (dataCache.has(language)) {
-    return dataCache.get(language)!
+async function ensureSectionLoaded(
+  language: SupportedLanguage,
+  section: string,
+  languageData: Map<string, Record<string, unknown>>
+): Promise<void> {
+  if (languageData.has(section)) {
+    return
   }
 
-  const languageData = new Map<string, Record<string, unknown>>()
-  
-  // Load all sections in parallel
-  const loadPromises = [...CRITICAL_SECTIONS, ...NON_CRITICAL_SECTIONS].map(async (section) => {
-    try {
-      const dataPath = getDataPath(language, section)
-      const data = await loadJsonFile(dataPath)
-      languageData.set(section, data as Record<string, unknown>)
-      console.log(`✅ Loaded ${section} for ${language}`)
-    } catch (error) {
-      console.warn(`⚠️ Failed to load ${section} for ${language}:`, error)
-      // Set empty data for failed sections
-      if (section === 'projects' || section === 'certifications' || section === 'interests' || section === 'awards' || section === 'testimonials') {
-        languageData.set(section, [] as unknown as Record<string, unknown>)
-      } else {
-        throw error // Critical sections must load
-      }
-    }
-  })
+  const cacheKey = `${language}:${section}`
+  let fetchPromise = sectionFetchPromises.get(cacheKey)
 
-  await Promise.all(loadPromises)
-  
-  // Cache the data
-  dataCache.set(language, languageData)
+  if (!fetchPromise) {
+    fetchPromise = (async () => {
+      try {
+        const dataPath = getDataPath(language, section)
+        const data = await loadJsonFile<Record<string, unknown>>(dataPath)
+        languageData.set(section, data)
+      } catch (error) {
+        console.warn(`⚠️ Failed to load ${section} for ${language}:`, error)
+        if (NON_CRITICAL_SECTIONS.includes(section)) {
+          languageData.set(section, [] as unknown as Record<string, unknown>)
+        } else {
+          throw error
+        }
+      } finally {
+        sectionFetchPromises.delete(cacheKey)
+      }
+    })()
+    sectionFetchPromises.set(cacheKey, fetchPromise)
+  }
+
+  await fetchPromise
+}
+
+async function loadLanguageSections(
+  language: SupportedLanguage,
+  sections: string[] = ALL_SECTIONS
+): Promise<Map<string, Record<string, unknown>>> {
+  let languageData = dataCache.get(language)
+
+  if (!languageData) {
+    languageData = new Map<string, Record<string, unknown>>()
+    dataCache.set(language, languageData)
+  }
+
+  const sectionsToLoad = sections.filter(section => !languageData!.has(section))
+  await Promise.all(sectionsToLoad.map(section => ensureSectionLoaded(language, section, languageData!)))
+
   return languageData
 }
 
-// Helper function to create portfolio data from loaded sections
+function scheduleIdleLoad(language: SupportedLanguage, sections: string[]): Promise<boolean> {
+  return new Promise((resolve) => {
+    const execute = () => {
+      loadLanguageSections(language, sections)
+        .then(() => resolve(true))
+        .catch(error => {
+          console.warn(`⚠️ Prefetch failed for ${language}:`, error)
+          resolve(false)
+        })
+    }
+
+    if (typeof window === 'undefined') {
+      execute()
+      return
+    }
+
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(() => execute())
+    } else {
+      window.setTimeout(() => execute(), 200)
+    }
+  })
+}
+
 function createPortfolioData(sections: Map<string, Record<string, unknown>>): PortfolioData {
   return {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -87,161 +135,224 @@ function createPortfolioData(sections: Map<string, Record<string, unknown>>): Po
   }
 }
 
-export function usePortfolioData(currentLanguage: 'en' | 'pt-PT' = 'en'): UsePortfolioDataReturn {
+function createCriticalData(sections: Map<string, Record<string, unknown>>): PortfolioData {
+  const portfolio = createPortfolioData(sections)
+
+  return {
+    ...portfolio,
+    projects: Array.isArray(portfolio.projects) ? portfolio.projects.slice(0, 2) : [],
+    certifications: Array.isArray(portfolio.certifications) ? portfolio.certifications.slice(0, 1) : [],
+    interests: Array.isArray(portfolio.interests) ? portfolio.interests.slice(0, 3) : [],
+    awards: Array.isArray(portfolio.awards) ? portfolio.awards.slice(0, 1) : [],
+    testimonials: Array.isArray(portfolio.testimonials) ? portfolio.testimonials.slice(0, 1) : []
+  }
+}
+
+export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): UsePortfolioDataReturn {
   const [portfolioData, setPortfolioData] = useState<PortfolioData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
-  const [loadedSections, setLoadedSections] = useState<Set<string>>(new Set(CRITICAL_SECTIONS))
+  const [loadedSectionsByLanguage, setLoadedSectionsByLanguage] = useState<LoadedSectionsByLanguage>({
+    en: new Set<string>(),
+    'pt-PT': new Set<string>()
+  })
 
-  // Load critical data first
-  useEffect(() => {
-    const loadCriticalData = async () => {
-      const languages = ['en', 'pt-PT']
-      
-      try {
-        console.log('🔄 Starting to load critical data...')
-        setLoading(true)
-        setError(null)
-        
-        // Load all language datasets in parallel
-        const loadPromises = languages.map(async (lang) => {
-          try {
-            await loadLanguageData(lang)
-          } catch (error) {
-            console.error(`❌ Failed to load ${lang} data:`, error)
-            throw error
-          }
-        })
-        
-        await Promise.all(loadPromises)
-        console.log('✅ All language data loaded successfully')
-        
-        // Set initial data with only critical sections
-        const languageData = dataCache.get(currentLanguage) || dataCache.get('en')
-        if (languageData) {
-          const criticalData = createCriticalData(languageData)
-          console.log('✅ Setting initial portfolio data for:', currentLanguage, criticalData)
-          setPortfolioData(criticalData)
-        } else {
-          console.error('❌ No initial data available after loading')
+  const markSectionsLoaded = useCallback((language: SupportedLanguage, sections: string[]) => {
+    setLoadedSectionsByLanguage(prev => {
+      const nextSet = new Set(prev[language])
+      let changed = false
+
+      sections.forEach(section => {
+        if (!nextSet.has(section)) {
+          nextSet.add(section)
+          changed = true
         }
-        
-      } catch (err) {
-        console.error('❌ Error loading portfolio data:', err)
-        setError(err instanceof Error ? err : new Error('Unknown error occurred'))
-      } finally {
-        console.log('🏁 Finished loading attempt, setting loading to false')
+      })
+
+      if (!changed) {
+        return prev
+      }
+
+      return {
+        ...prev,
+        [language]: nextSet
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    let cancelled = false
+
+    const ensureCriticalSections = async () => {
+      setError(null)
+      const cachedData = dataCache.get(currentLanguage)
+      const missingCritical = CRITICAL_SECTIONS.filter(section => !(cachedData?.has(section)))
+
+      if (missingCritical.length === 0 && cachedData) {
+        setPortfolioData(createCriticalData(cachedData))
+        markSectionsLoaded(currentLanguage, CRITICAL_SECTIONS)
         setLoading(false)
+        criticalPrefetched[currentLanguage] = true
+        return
+      }
+
+      setLoading(true)
+
+      try {
+        const languageData = await loadLanguageSections(currentLanguage, CRITICAL_SECTIONS)
+        if (cancelled) {
+          return
+        }
+
+        setPortfolioData(createCriticalData(languageData))
+        markSectionsLoaded(currentLanguage, CRITICAL_SECTIONS)
+        criticalPrefetched[currentLanguage] = true
+      } catch (err) {
+        if (cancelled) {
+          return
+        }
+
+        const normalizedError = err instanceof Error ? err : new Error('Unknown error occurred')
+        setError(normalizedError)
+        console.error('❌ Error loading portfolio data:', normalizedError)
+      } finally {
+        if (!cancelled) {
+          setLoading(false)
+        }
       }
     }
 
-    loadCriticalData()
-  }, []) // Only run once on mount
+    ensureCriticalSections()
 
-  // Switch language instantly using cached data
+    return () => {
+      cancelled = true
+    }
+  }, [currentLanguage, markSectionsLoaded])
+
   useEffect(() => {
-    console.log('🔄 Language changed to:', currentLanguage)
-    if (dataCache.has(currentLanguage)) {
-      const languageData = dataCache.get(currentLanguage)!
-      const criticalData = createCriticalData(languageData)
-      console.log('✅ Switching to cached data for:', currentLanguage, criticalData)
-      setPortfolioData(criticalData)
-    } else {
-      console.log('⚠️ No cached data found for language:', currentLanguage)
+    if (loading || !portfolioData) {
+      return
     }
-  }, [currentLanguage]) // Switch instantly when language changes
 
-  // Load additional sections on demand
+    let cancelled = false
+
+    const runPrefetches = async () => {
+      const secondaryLanguage: SupportedLanguage = currentLanguage === 'en' ? 'pt-PT' : 'en'
+
+      if (!nonCriticalPrefetched[currentLanguage]) {
+        const success = await scheduleIdleLoad(currentLanguage, NON_CRITICAL_SECTIONS)
+        if (!success) {
+          nonCriticalPrefetched[currentLanguage] = false
+        } else {
+          nonCriticalPrefetched[currentLanguage] = true
+          if (!cancelled) {
+            markSectionsLoaded(currentLanguage, NON_CRITICAL_SECTIONS)
+          }
+        }
+      }
+
+      if (!criticalPrefetched[secondaryLanguage]) {
+        const success = await scheduleIdleLoad(secondaryLanguage, CRITICAL_SECTIONS)
+        if (!success) {
+          criticalPrefetched[secondaryLanguage] = false
+        } else {
+          criticalPrefetched[secondaryLanguage] = true
+          if (!cancelled) {
+            markSectionsLoaded(secondaryLanguage, CRITICAL_SECTIONS)
+          }
+        }
+      }
+    }
+
+    void runPrefetches()
+
+    return () => {
+      cancelled = true
+    }
+  }, [currentLanguage, loading, markSectionsLoaded, portfolioData])
+
+  const updateSectionFromCache = useCallback((language: SupportedLanguage, section: string) => {
+    const languageData = dataCache.get(language)
+    if (!languageData) {
+      return
+    }
+
+    setPortfolioData(prev => {
+      if (!prev) {
+        return prev
+      }
+
+      const sectionData = languageData.get(section)
+      if (typeof sectionData === 'undefined') {
+        return prev
+      }
+
+      return {
+        ...prev,
+        [section]: sectionData
+      }
+    })
+  }, [])
+
   const loadSection = useCallback(async (section: string) => {
-    if (loadedSections.has(section) || !dataCache.has(currentLanguage)) {
+    const language = currentLanguage
+    if (loadedSectionsByLanguage[language]?.has(section)) {
       return
     }
 
     try {
-      const languageData = dataCache.get(currentLanguage)!
-      
-      // Simulate progressive loading for better UX
-      await new Promise(resolve => setTimeout(resolve, 100))
-      
-      setPortfolioData(prev => {
-        if (!prev) {
-          return prev
-        }
-        
-        return {
-          ...prev,
-          [section]: languageData.get(section)
-        }
-      })
-      
-      setLoadedSections(prev => new Set([...prev, section]))
-      
-    } catch (error) {
-      console.warn(`Failed to load ${section} section:`, error)
+      await loadLanguageSections(language, [section])
+      updateSectionFromCache(language, section)
+      markSectionsLoaded(language, [section])
+    } catch (err) {
+      console.warn(`Failed to load ${section} section:`, err)
     }
-  }, [currentLanguage, loadedSections])
+  }, [currentLanguage, loadedSectionsByLanguage, markSectionsLoaded, updateSectionFromCache])
 
-  // Load all sections at once (for users who want everything)
   const loadAllSections = useCallback(async () => {
-    if (!dataCache.has(currentLanguage)) {
-      return
-    }
-
     try {
-      const languageData = dataCache.get(currentLanguage)!
-      const fullData = createPortfolioData(languageData)
-      setPortfolioData(fullData)
-      setLoadedSections(new Set([...CRITICAL_SECTIONS, ...NON_CRITICAL_SECTIONS]))
-    } catch (error) {
-      console.warn('Failed to load all sections:', error)
+      await loadLanguageSections(currentLanguage, ALL_SECTIONS)
+      const languageData = dataCache.get(currentLanguage)
+      if (!languageData) {
+        return
+      }
+
+      setPortfolioData(createPortfolioData(languageData))
+      markSectionsLoaded(currentLanguage, ALL_SECTIONS)
+      criticalPrefetched[currentLanguage] = true
+      nonCriticalPrefetched[currentLanguage] = true
+    } catch (err) {
+      console.warn('Failed to load all sections:', err)
     }
-  }, [currentLanguage])
+  }, [currentLanguage, markSectionsLoaded])
 
-  // Check if section is loaded
   const isSectionLoaded = useCallback((section: string) => {
-    return loadedSections.has(section)
-  }, [loadedSections])
+    return loadedSectionsByLanguage[currentLanguage]?.has(section) ?? false
+  }, [currentLanguage, loadedSectionsByLanguage])
 
-  // Get loading status for specific section
   const getSectionLoadingStatus = useCallback((section: string) => {
-    if (loadedSections.has(section)) {
+    if (isSectionLoaded(section)) {
       return 'loaded'
     }
     if (CRITICAL_SECTIONS.includes(section)) {
       return 'critical'
     }
     return 'pending'
-  }, [loadedSections])
+  }, [isSectionLoaded])
 
-  return { 
-    portfolioData, 
-    loading, 
-    error, 
-    loadSection, 
+  return {
+    portfolioData,
+    loading,
+    error,
+    loadSection,
     loadAllSections,
-    loadedSections: Array.from(loadedSections),
+    loadedSections: Array.from(loadedSectionsByLanguage[currentLanguage] ?? []),
     isSectionLoaded,
     getSectionLoadingStatus
   }
 }
 
-// Helper function to create critical data with only essential sections
-function createCriticalData(sections: Map<string, Record<string, unknown>>): PortfolioData {
-  const portfolio = createPortfolioData(sections)
-  
-  return {
-    ...portfolio,
-    // Limit non-critical sections for initial load
-    projects: Array.isArray(portfolio.projects) ? portfolio.projects.slice(0, 2) : [], // Only first 2 projects
-    certifications: Array.isArray(portfolio.certifications) ? portfolio.certifications.slice(0, 1) : [], // Only first certification
-    interests: Array.isArray(portfolio.interests) ? portfolio.interests.slice(0, 3) : [], // Only first 3 interests
-    awards: Array.isArray(portfolio.awards) ? portfolio.awards.slice(0, 1) : [], // Only first award
-    testimonials: Array.isArray(portfolio.testimonials) ? portfolio.testimonials.slice(0, 1) : [] // Only first testimonial
-  }
-}
-
-// New hook for accessing both portfolio data and UI translations
-export function useConsolidatedData(currentLanguage: 'en' | 'pt-PT' = 'en') {
+export function useConsolidatedData(currentLanguage: SupportedLanguage = 'en') {
   const [data, setData] = useState<{ portfolio: PortfolioData; ui: Record<string, unknown> } | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
@@ -251,17 +362,16 @@ export function useConsolidatedData(currentLanguage: 'en' | 'pt-PT' = 'en') {
       try {
         setLoading(true)
         setError(null)
-        
-        const languageData = await loadLanguageData(currentLanguage)
+
+        const languageData = await loadLanguageSections(currentLanguage)
         const portfolio = createPortfolioData(languageData)
         const ui = languageData.get('ui')
-        
+
         if (!portfolio || !ui) {
           throw new Error(`${currentLanguage} data is missing required sections`)
         }
-        
+
         setData({ portfolio, ui })
-        
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Unknown error occurred'))
       } finally {
@@ -275,6 +385,28 @@ export function useConsolidatedData(currentLanguage: 'en' | 'pt-PT' = 'en') {
   return { data, loading, error }
 }
 
+export function resetPortfolioDataCaches() {
+  dataCache.clear()
+  sectionFetchPromises.clear()
+  criticalPrefetched.en = false
+  criticalPrefetched['pt-PT'] = false
+  nonCriticalPrefetched.en = false
+  nonCriticalPrefetched['pt-PT'] = false
+}
 
+declare global {
+  interface Window {
+    requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number
+  }
+}
 
+interface IdleDeadline {
+  didTimeout: boolean
+  timeRemaining: () => number
+}
 
+type IdleRequestCallback = (deadline: IdleDeadline) => void
+
+interface IdleRequestOptions {
+  timeout?: number
+}

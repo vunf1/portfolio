@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { renderHook, act } from '@testing-library/preact'
-import { usePortfolioData, useConsolidatedData, dataCache } from '../usePortfolioData'
+import { usePortfolioData, useConsolidatedData, resetPortfolioDataCaches } from '../usePortfolioData'
 
 // Mock fetch
 const mockFetch = vi.fn()
@@ -45,7 +45,7 @@ const mockSocialData = [
   {
     color: "#0077B5",
     description: "Professional profile",
-    icon: "devicon-linkedin-plain",
+    icon: "fa-brands fa-linkedin-in",
     name: "LinkedIn",
     url: "https://www.linkedin.com/in/joao-maia"
   }
@@ -200,22 +200,56 @@ const mockUIData = {
   }
 }
 
+const buildResponse = (data: unknown) => ({
+  ok: true,
+  json: () => Promise.resolve(data)
+})
+
+const sectionResponses: Record<string, unknown> = {
+  personal: mockPersonalData,
+  social: mockSocialData,
+  experience: mockExperienceData,
+  education: mockEducationData,
+  skills: mockSkillsData,
+  meta: mockMetaData,
+  ui: mockUIData,
+  projects: [],
+  certifications: [],
+  interests: [],
+  awards: [],
+  testimonials: []
+}
+
+const setupSuccessfulFetches = () => {
+  mockFetch.mockImplementation((input: RequestInfo) => {
+    const target = typeof input === 'string' ? input : input.toString()
+    const match = target.match(/\/([a-z-]+)\.json/i)
+    const section = match?.[1]
+
+    if (!section || !(section in sectionResponses)) {
+      return Promise.reject(new Error(`Unhandled fetch for ${target}`))
+    }
+
+    return Promise.resolve(buildResponse(sectionResponses[section]))
+  })
+}
+
 describe('usePortfolioData Hook', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    mockFetch.mockClear()
+    mockFetch.mockReset()
+    mockFetch.mockImplementation(() => Promise.resolve(buildResponse({})))
     console.log = vi.fn()
     console.error = vi.fn()
     console.warn = vi.fn()
-    
-    // Clear the data cache to ensure fresh state for each test
-    dataCache.clear()
+    resetPortfolioDataCaches()
   })
 
   afterEach(() => {
     console.log = originalConsoleLog
     console.error = originalConsoleError
     console.warn = originalConsoleWarn
+    resetPortfolioDataCaches()
     vi.restoreAllMocks()
   })
 
@@ -228,33 +262,7 @@ describe('usePortfolioData Hook', () => {
   })
 
   it('loads portfolio data successfully', async () => {
-    // Mock successful responses for all required files
-    mockFetch
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockPersonalData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSocialData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockExperienceData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockEducationData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSkillsData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockMetaData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // projects
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // certifications
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // interests
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // awards
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // testimonials
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockUIData) }) // ui
-      // Repeat for pt-PT
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockPersonalData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSocialData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockExperienceData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockEducationData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSkillsData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockMetaData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // projects
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // certifications
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // interests
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // awards
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // testimonials
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockUIData) }) // ui
+    setupSuccessfulFetches()
 
     const { result } = renderHook(() => usePortfolioData())
 
@@ -271,33 +279,7 @@ describe('usePortfolioData Hook', () => {
   })
 
   it('loads only critical sections initially', async () => {
-    // Mock successful responses for all required files
-    mockFetch
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockPersonalData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSocialData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockExperienceData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockEducationData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSkillsData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockMetaData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // projects
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // certifications
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // interests
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // awards
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // testimonials
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockUIData) }) // ui
-      // Repeat for pt-PT
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockPersonalData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSocialData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockExperienceData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockEducationData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSkillsData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockMetaData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // projects
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // certifications
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // interests
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // awards
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // testimonials
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockUIData) }) // ui
+    setupSuccessfulFetches()
 
     const { result } = renderHook(() => usePortfolioData())
 
@@ -402,10 +384,16 @@ describe('usePortfolioData Hook', () => {
     expect(Array.isArray(result.current.loadedSections)).toBe(true)
   })
 
-  it('checks if section is loaded correctly', () => {
+  it('checks if section is loaded correctly', async () => {
+    setupSuccessfulFetches()
+
     const { result } = renderHook(() => usePortfolioData())
+
+    await act(async () => {
+      await new Promise(resolve => setTimeout(resolve, 100))
+    })
     
-    // Critical sections should be considered loaded initially
+    // Critical sections should be considered loaded after initial fetch
     expect(result.current.isSectionLoaded('personal')).toBe(true)
     expect(result.current.isSectionLoaded('social')).toBe(true)
     expect(result.current.isSectionLoaded('experience')).toBe(true)
@@ -413,39 +401,13 @@ describe('usePortfolioData Hook', () => {
     expect(result.current.isSectionLoaded('skills')).toBe(true)
     expect(result.current.isSectionLoaded('meta')).toBe(true)
     
-    // Non-critical sections should not be loaded initially
+    // Non-critical sections should not be loaded before explicit request
     expect(result.current.isSectionLoaded('projects')).toBe(false)
     expect(result.current.isSectionLoaded('certifications')).toBe(false)
   })
 
   it('returns correct loading status for sections', async () => {
-    // Mock successful responses for all required files
-    mockFetch
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockPersonalData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSocialData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockExperienceData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockEducationData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSkillsData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockMetaData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockUIData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // projects
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // certifications
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // interests
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // awards
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // testimonials
-      // Repeat for pt-PT
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockPersonalData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSocialData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockExperienceData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockEducationData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSkillsData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockMetaData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockUIData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // projects
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // certifications
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // interests
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // awards
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // testimonials
+    setupSuccessfulFetches()
 
     const { result } = renderHook(() => usePortfolioData())
 
@@ -471,19 +433,19 @@ describe('usePortfolioData Hook', () => {
 describe('useConsolidatedData Hook', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    mockFetch.mockClear()
+    mockFetch.mockReset()
+    mockFetch.mockImplementation(() => Promise.resolve(buildResponse({})))
     console.log = vi.fn()
     console.error = vi.fn()
     console.warn = vi.fn()
-    
-    // Clear the data cache to ensure fresh state for each test
-    dataCache.clear()
+    resetPortfolioDataCaches()
   })
 
   afterEach(() => {
     console.log = originalConsoleLog
     console.error = originalConsoleError
     console.warn = originalConsoleWarn
+    resetPortfolioDataCaches()
     vi.restoreAllMocks()
   })
 
@@ -496,20 +458,7 @@ describe('useConsolidatedData Hook', () => {
   })
 
   it('loads consolidated data successfully', async () => {
-    // Mock successful responses for all required files
-    mockFetch
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockPersonalData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSocialData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockExperienceData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockEducationData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockSkillsData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockMetaData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockUIData) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // projects
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // certifications
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // interests
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // awards
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // testimonials
+    setupSuccessfulFetches()
 
     const { result } = renderHook(() => useConsolidatedData())
 
