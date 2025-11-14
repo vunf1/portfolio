@@ -3,7 +3,6 @@ import { usePortfolioData } from './hooks/usePortfolioData'
 import { useTranslation } from './contexts/TranslationContext'
 import { Navigation } from './components/Navigation'
 import { ErrorBoundary } from './components/ErrorBoundary'
-import { Hero } from './components/Hero'
 import { SectionSkeleton } from './components/SectionSkeleton'
 import { FloatingActionButton } from './components/FloatingActionButton'
 import { LandingPage } from './components/landing/LandingPage'
@@ -21,7 +20,7 @@ const Testimonials = lazy(() => import('./components/Testimonials').then(module 
 export function App() {
   const { t, currentLanguage } = useTranslation()
   const { portfolioData, loading, error } = usePortfolioData(currentLanguage)
-  const [activeSection, setActiveSection] = useState('hero')
+  const [activeSection, setActiveSection] = useState('experience')
   const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false)
   const [showPortfolio, setShowPortfolio] = useState(false)
 
@@ -268,11 +267,6 @@ export function App() {
           onNavigate={setActiveSection}
           showBackButton={true}
           onBackClick={() => setShowPortfolio(false)}
-        />
-        
-        {/* Hero Section */}
-        <Hero 
-          personal={portfolioData.personal}
         />
         
         <div className={`portfolio-container ${isLanguageTransitioning ? 'language-transitioning' : ''}`}>
