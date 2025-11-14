@@ -481,6 +481,19 @@ p,
     padding: var(--space-8) 0;
   }
   
+  /* Ensure sections appear below navbar on small mobile */
+  .section,
+  #experience {
+    scroll-margin-top: calc(var(--navbar-height) + var(--space-2));
+  }
+  
+  /* Add padding-top to experience section to prevent navbar overlap on small mobile */
+  /* Account for portfolio-container padding-top (var(--space-6)) */
+  #experience {
+    padding-top: calc(var(--navbar-height) - var(--space-6) + var(--space-3));
+    margin-top: 0;
+  }
+  
   .section-header {
     margin-bottom: var(--space-6);
   }

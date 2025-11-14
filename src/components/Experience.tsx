@@ -1,12 +1,58 @@
+import { useState, useRef } from 'preact/hooks'
 import { useTranslation } from '../contexts/TranslationContext'
 import { Section } from './ui'
 import type { ExperienceProps } from '../types'
 
 export function Experience({ experiences, className = '', id }: ExperienceProps) {
   const { t } = useTranslation()
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
+
   // Safety check: if no experiences data, return null
   if (!experiences || experiences.length === 0) {
     return null
+  }
+
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index)
+  }
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % experiences.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + experiences.length) % experiences.length)
+  }
+
+  // Touch handlers for swipe gestures
+  const onTouchStart = (e: JSX.TargetedTouchEvent<HTMLDivElement>) => {
+    setTouchEnd(null)
+    setTouchStart(e.touches[0].clientX)
+  }
+
+  const onTouchMove = (e: JSX.TargetedTouchEvent<HTMLDivElement>) => {
+    setTouchEnd(e.touches[0].clientX)
+  }
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+
+    if (isLeftSwipe) {
+      nextSlide()
+    }
+    if (isRightSwipe) {
+      prevSlide()
+    }
   }
 
   const renderTechnologies = (technologies: string[]) => {
@@ -67,21 +113,11 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
     )
   }
 
-  return (
-    <Section 
-      id={id || 'experience'} 
-      data-section="experience"
-      className={className} 
-      title={String(t('experience.title'))} 
-      subtitle={String(t('experience.subtitle'))}
+  const renderExperienceCard = (exp: typeof experiences[0], index: number) => (
+    <div 
+      key={index} 
+      className="experience-card premium-card"
     >
-      <div className="experience-grid-3x3">
-                  {experiences.map((exp, index) => {
-          return (
-            <div 
-              key={index} 
-              className="experience-card premium-card"
-            >
                 <div className="card-header">
                   <h3 className="card-title">{exp.title}</h3>
                   <div className="card-company">
@@ -131,9 +167,74 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
                     </div> 
                   )}
                 </div>
+    </div>
+  )
+
+  return (
+    <Section 
+      id={id || 'experience'} 
+      data-section="experience"
+      className={className} 
+      title={String(t('experience.title'))} 
+      subtitle={String(t('experience.subtitle'))}
+    >
+      {/* Carousel - Works on all screen sizes */}
+      <div className="experience-carousel-wrapper">
+        <div 
+          className="experience-carousel-container"
+          ref={carouselRef}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
+          <div 
+            className="experience-carousel-track"
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          >
+            {experiences.map((exp, index) => (
+              <div key={index} className="experience-carousel-slide">
+                {renderExperienceCard(exp, index)}
               </div>
-            )
-          })}
+            ))}
+          </div>
+          
+          {/* Navigation Arrows */}
+          {experiences.length > 1 && (
+            <>
+              <button
+                className="experience-carousel-nav experience-carousel-prev"
+                onClick={prevSlide}
+                aria-label="Previous experience"
+                type="button"
+              >
+                <i className="fa-solid fa-chevron-left"></i>
+              </button>
+              <button
+                className="experience-carousel-nav experience-carousel-next"
+                onClick={nextSlide}
+                aria-label="Next experience"
+                type="button"
+              >
+                <i className="fa-solid fa-chevron-right"></i>
+              </button>
+            </>
+          )}
+        </div>
+        
+        {/* Navigation Dots */}
+        {experiences.length > 1 && (
+          <div className="experience-carousel-dots">
+            {experiences.map((_, index) => (
+              <button
+                key={index}
+                className={`experience-carousel-dot ${index === currentIndex ? 'active' : ''}`}
+                onClick={() => goToSlide(index)}
+                aria-label={`Go to experience ${index + 1}`}
+                type="button"
+              />
+            ))}
+          </div>
+        )}
       </div>
     </Section>
   )
