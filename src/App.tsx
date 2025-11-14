@@ -272,7 +272,7 @@ export function App() {
         <div className={`portfolio-container ${isLanguageTransitioning ? 'language-transitioning' : ''}`}>
           {/* Experience Section */}
           <Suspense fallback={<SectionSkeleton />}>
-            <Experience experiences={portfolioData.experience} />
+            <Experience experiences={portfolioData.experience} id="experience" />
           </Suspense>
           
           {/* Education Section */}
