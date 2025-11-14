@@ -9,29 +9,51 @@
 .experience-carousel-container {
   position: relative;
   width: 100%;
+  /* Add padding to prevent nav buttons from overlapping cards */
+  padding: 0 64px;
+  /* Clip overflow to hide adjacent slides */
   overflow: hidden;
   border-radius: var(--radius-xl);
 }
 
 .experience-carousel-track {
   display: flex;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   will-change: transform;
+  /* Enable smooth touch scrolling on mobile */
+  touch-action: pan-x pan-y pinch-zoom;
+  /* Track spans full width for proper translation */
+  width: 100%;
+  /* Ensure no overflow shows adjacent slides */
+  position: relative;
+  /* Optimize for smooth animations */
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-font-smoothing: antialiased;
+}
+
+.experience-carousel-track.no-transition {
+  transition: none;
 }
 
 .experience-carousel-slide {
-  min-width: 100%;
-  width: 100%;
+  /* Each slide should match the visible area width (container width minus padding) */
+  /* Container has 64px padding on each side = 128px total */
+  min-width: calc(100% - 128px);
+  width: calc(100% - 128px);
   flex-shrink: 0;
   padding: 0 var(--space-2);
   box-sizing: border-box;
+  /* Optimize for smooth animations */
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .experience-carousel-nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--neutral-200);
   border-radius: 50%;
   width: 48px;
@@ -44,6 +66,9 @@
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   color: var(--neutral-700);
+  /* Ensure buttons are always visible on desktop */
+  opacity: 1;
+  visibility: visible;
 }
 
 .experience-carousel-nav:hover {
@@ -97,22 +122,84 @@
 }
 
 @media (max-width: 1025px) {
+  .experience-carousel-container {
+    /* Remove padding on mobile to use full width */
+    padding: 0;
+  }
+  
+  /* Hide navigation buttons on mobile */
   .experience-carousel-nav {
-    width: 40px;
-    height: 40px;
-    font-size: 0.875rem;
-  }
-  
-  .experience-carousel-prev {
-    left: var(--space-2);
-  }
-  
-  .experience-carousel-next {
-    right: var(--space-2);
+    display: none;
   }
   
   .experience-carousel-slide {
+    /* On mobile, slides are full width since there's no padding */
+    min-width: 100%;
+    width: 100%;
     padding: 0;
+  }
+  
+  /* Add swipe indicator animation on mobile */
+  .experience-carousel-container:focus-within,
+  .experience-carousel-container:active {
+    cursor: grab;
+  }
+  
+  .experience-carousel-container:active {
+    cursor: grabbing;
+  }
+  
+  /* Add subtle slide hint animation when carousel is focused */
+  .experience-carousel-track {
+    position: relative;
+  }
+  
+  .experience-carousel-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(59, 130, 246, 0.08) 10%,
+      rgba(59, 130, 246, 0.08) 90%,
+      transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+    border-radius: var(--radius-xl);
+  }
+  
+  .experience-carousel-container:focus-within::before,
+  .experience-carousel-container:active::before {
+    opacity: 1;
+    animation: swipeHint 2s ease-in-out infinite;
+  }
+}
+
+@keyframes swipeHint {
+  0%, 100% {
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(59, 130, 246, 0.1) 10%,
+      rgba(59, 130, 246, 0.1) 90%,
+      transparent 100%
+    );
+  }
+  50% {
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(59, 130, 246, 0.15) 10%,
+      rgba(59, 130, 246, 0.15) 90%,
+      transparent 100%
+    );
   }
 }
 

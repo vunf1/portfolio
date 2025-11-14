@@ -1,4 +1,5 @@
 import { useState, useRef } from 'preact/hooks'
+import type { JSX } from 'preact'
 import { useTranslation } from '../contexts/TranslationContext'
 import { Section } from './ui'
 import type { ExperienceProps } from '../types'
@@ -8,6 +9,8 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
+  const [isDragging, setIsDragging] = useState(false)
+  const [dragOffset, setDragOffset] = useState(0)
   const carouselRef = useRef<HTMLDivElement>(null)
 
   // Safety check: if no experiences data, return null
@@ -19,44 +22,74 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
   const minSwipeDistance = 50
 
   const goToSlide = (index: number) => {
+    // Ensure drag state is reset before transition
+    setIsDragging(false)
+    setDragOffset(0)
     setCurrentIndex(index)
   }
 
   const nextSlide = () => {
+    // Ensure drag state is reset before transition
+    setIsDragging(false)
+    setDragOffset(0)
     setCurrentIndex((prev) => (prev + 1) % experiences.length)
   }
 
   const prevSlide = () => {
+    // Ensure drag state is reset before transition
+    setIsDragging(false)
+    setDragOffset(0)
     setCurrentIndex((prev) => (prev - 1 + experiences.length) % experiences.length)
   }
 
-  // Touch handlers for swipe gestures
+  // Touch handlers for swipe gestures with visual feedback
   const onTouchStart = (e: JSX.TargetedTouchEvent<HTMLDivElement>) => {
     setTouchEnd(null)
     setTouchStart(e.touches[0].clientX)
+    setIsDragging(true)
+    setDragOffset(0)
   }
 
   const onTouchMove = (e: JSX.TargetedTouchEvent<HTMLDivElement>) => {
-    setTouchEnd(e.touches[0].clientX)
+    if (!touchStart) {
+      return
+    }
+    const currentX = e.touches[0].clientX
+    setTouchEnd(currentX)
+    const offset = currentX - touchStart
+    setDragOffset(offset)
   }
 
   const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
+    if (!touchStart || !touchEnd) {
+      setIsDragging(false)
+      setDragOffset(0)
+      return
+    }
     
     const distance = touchStart - touchEnd
     const isLeftSwipe = distance > minSwipeDistance
     const isRightSwipe = distance < -minSwipeDistance
 
-    if (isLeftSwipe) {
-      nextSlide()
-    }
-    if (isRightSwipe) {
-      prevSlide()
-    }
+    // Reset drag state first
+    setDragOffset(0)
+    setIsDragging(false)
+
+    // Use requestAnimationFrame to ensure smooth transition after drag
+    requestAnimationFrame(() => {
+      if (isLeftSwipe) {
+        nextSlide()
+      }
+      if (isRightSwipe) {
+        prevSlide()
+      }
+    })
   }
 
   const renderTechnologies = (technologies: string[]) => {
-    if (!technologies || technologies.length === 0) {return null}
+    if (!technologies || technologies.length === 0) {
+      return null
+    }
 
     return (
       <div className="card-technologies">
@@ -89,7 +122,9 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
   }
 
   const renderHighlights = (highlights: string[]) => {
-    if (!highlights || highlights.length === 0) {return null}
+    if (!highlights || highlights.length === 0) {
+      return null
+    }
 
     return (
       <div className="card-highlights">
@@ -186,10 +221,15 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
+          tabIndex={0}
+          role="region"
+          aria-label="Experience carousel"
         >
           <div 
-            className="experience-carousel-track"
-            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            className={`experience-carousel-track ${isDragging ? 'no-transition' : ''}`}
+            style={{ 
+              transform: `translateX(calc(-${currentIndex * 100}% + ${currentIndex * 128}px + ${isDragging ? dragOffset : 0}px))`
+            }}
           >
             {experiences.map((exp, index) => (
               <div key={index} className="experience-carousel-slide">
@@ -198,7 +238,7 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
             ))}
           </div>
           
-          {/* Navigation Arrows */}
+          {/* Navigation Arrows - Hidden on mobile */}
           {experiences.length > 1 && (
             <>
               <button
