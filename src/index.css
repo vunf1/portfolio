@@ -1,6 +1,23 @@
 @import './css/tokens.css';
+@import './css/variables.css';
 @import './css/components.css';
-@import './css/premium.css';
+@import './css/base.css';
+@import './css/modal.css';
+@import './css/navigation.css';
+@import './css/grid.css';
+@import './css/components/about.css';
+@import './css/components/awards.css';
+@import './css/components/contact.css';
+@import './css/components/contact-modal.css';
+@import './css/components/experience.css';
+@import './css/components/hero.css';
+@import './css/components/interests.css';
+@import './css/components/projects.css';
+@import './css/components/skills.css';
+@import './css/components/skeleton.css';
+@import './css/components/testimonials.css';
+@import './css/responsive.css';
+@import './css/performance.css';
 @import './css/fab.css';
 @import './css/landing.css';
 
@@ -9,26 +26,77 @@
   box-sizing: border-box;
 }
 
+/* Override Bootstrap and ensure only html scrolls */
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
-  overflow-y: auto;
-  height: 100%;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  height: 100% !important;
+  max-height: none !important;
 }
 
-body {
+/* Override Bootstrap body styles - must come after Bootstrap loads */
+/* Use very specific selectors to ensure our styles take precedence */
+html body,
+html body.landing-page-active,
+body,
+body.landing-page-active {
   margin: 0;
   font-family: var(--font-family-sans);
   font-size: var(--font-size-base);
   line-height: var(--line-height-normal);
   color: var(--color-gray-900);
-  /* Use neutral variables for consistency with premium.css */
+  /* Use neutral variables for consistency with variables.css */
   background-color: var(--neutral-50, var(--color-white));
   transition: background-color var(--transition-base), color var(--transition-base);
-  overflow-x: hidden;
-  overflow-y: visible;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+  min-height: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  position: relative !important;
+}
+
+/* Prevent #app container from creating scrollbars */
+#app {
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+  height: auto !important;
   min-height: 100%;
-  height: auto;
+  position: relative;
+}
+
+/* Prevent any nested containers from creating scrollbars - only html should scroll */
+/* This is a comprehensive rule to catch all potential scrollbar-creating containers */
+body > *:not(html):not(.modal):not(.modal-backdrop),
+#app,
+#app > *:not(.modal):not(.modal-backdrop),
+.landing-page,
+.portfolio-container,
+.portfolio-section,
+.landing-section,
+.landing-hero,
+.premium-nav,
+.nav-container,
+section,
+.section {
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+/* Exception: nav-menu when open on mobile can scroll its content */
+.nav-menu:not(.collapsed) {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  max-height: calc(100vh - var(--navbar-height)) !important;
+}
+
+/* Exception: modals can scroll their content */
+.modal {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
 }
 
 

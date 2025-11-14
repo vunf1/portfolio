@@ -1,0 +1,252 @@
+/* ===== PROJECTS COMPONENT MOBILE-FRIENDLY STYLES ===== */
+
+.projects-grid {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+}
+
+.project-item {
+  background: var(--neutral-50);
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  transition: var(--transition-all);
+  position: relative;
+  overflow: hidden;
+}
+
+.project-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--primary-gradient);
+  opacity: 0;
+  transition: var(--transition-opacity);
+}
+
+.project-item:hover::before {
+  opacity: 1;
+}
+
+.project-item:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--primary-300);
+}
+
+.project-header {
+  margin-bottom: var(--space-4);
+}
+
+.project-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--neutral-900);
+  margin-bottom: var(--space-2);
+  line-height: 1.3;
+}
+
+.project-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.project-period {
+  font-size: var(--font-size-sm);
+  color: var(--primary-600);
+  font-weight: 600;
+}
+
+.project-role {
+  font-size: var(--font-size-sm);
+  color: var(--neutral-600);
+}
+
+.project-description {
+  font-size: var(--font-size-base);
+  color: var(--neutral-700);
+  line-height: 1.6;
+  margin-bottom: var(--space-4);
+  text-align: justify;
+}
+
+.project-technologies,
+.project-features,
+.project-links {
+  margin-bottom: var(--space-4);
+}
+
+.project-technologies strong,
+.project-features strong,
+.project-links strong {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--neutral-800);
+  margin-bottom: var(--space-2);
+  font-weight: 600;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tech-tag {
+  background: var(--primary-100);
+  color: var(--primary-700);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  border: 1px solid var(--primary-200);
+  transition: var(--transition-all);
+}
+
+.tech-tag:hover {
+  background: var(--primary-200);
+  color: var(--primary-800);
+  transform: translateY(-1px);
+}
+
+.tech-section-title {
+  width: 100%;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--neutral-700);
+  margin: var(--space-2) 0 var(--space-1) 0;
+  padding: var(--space-1) 0;
+  border-bottom: 1px solid var(--neutral-200);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.features-list li {
+  font-size: var(--font-size-sm);
+  color: var(--neutral-700);
+  padding: var(--space-1) 0;
+  position: relative;
+  padding-left: var(--space-4);
+}
+
+.features-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--success-500);
+  font-weight: bold;
+}
+
+.link-buttons {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.link-buttons .btn {
+  margin: 0;
+}
+
+/* Mobile Responsive Adjustments for Projects */
+@media (max-width: 1200px) {
+  .projects-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--space-4);
+  }
+}
+
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+  
+  .project-item {
+    padding: var(--space-4);
+  }
+  
+  .project-title {
+    font-size: var(--font-size-lg);
+  }
+  
+  .project-description {
+    font-size: var(--font-size-sm);
+  }
+  
+  .project-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+  }
+  
+  .project-period,
+  .project-role {
+    font-size: var(--font-size-xs);
+  }
+  
+  .tech-tags {
+    gap: var(--space-1);
+  }
+  
+  .tech-tag {
+    font-size: var(--font-size-xs);
+    padding: var(--space-1) var(--space-2);
+  }
+  
+  .features-list li {
+    font-size: var(--font-size-xs);
+    padding-left: var(--space-3);
+  }
+  
+  .link-buttons {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  
+  .link-buttons .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-item {
+    padding: var(--space-3);
+  }
+  
+  .project-title {
+    font-size: var(--font-size-base);
+  }
+  
+  .project-description {
+    font-size: var(--font-size-xs);
+  }
+  
+  .tech-tag {
+    font-size: var(--font-size-xs);
+    padding: var(--space-1) var(--space-2);
+  }
+}
+
+/* Dark Theme Adjustments for Projects */
+
+
+
+
+
+
+
+
+

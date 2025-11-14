@@ -1,0 +1,58 @@
+/* ===== SECTION SKELETON LOADING ===== */
+.section-skeleton {
+  padding: var(--space-8);
+  background: var(--neutral-50);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--neutral-200);
+  margin: var(--space-6) 0;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-header {
+  margin-bottom: var(--space-6);
+}
+
+.skeleton-title {
+  height: 2rem;
+  background: var(--neutral-200);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+  width: 60%;
+}
+
+.skeleton-subtitle {
+  height: 1.25rem;
+  background: var(--neutral-200);
+  border-radius: var(--radius-md);
+  width: 80%;
+}
+
+.skeleton-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.skeleton-line {
+  height: 1rem;
+  background: var(--neutral-200);
+  border-radius: var(--radius-md);
+  width: 100%;
+}
+
+.skeleton-line.short {
+  width: 70%;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Dark theme skeleton */
+
+

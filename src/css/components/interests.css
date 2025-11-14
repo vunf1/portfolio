@@ -1,0 +1,111 @@
+/* ===== INTERESTS COMPONENT MOBILE-FRIENDLY STYLES ===== */
+
+.interests-grid {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.interest-item {
+  background: var(--neutral-50);
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  transition: var(--transition-all);
+  position: relative;
+  overflow: hidden;
+}
+
+.interest-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--secondary-gradient);
+  opacity: 0;
+  transition: var(--transition-opacity);
+}
+
+.interest-item:hover::before {
+  opacity: 1;
+}
+
+.interest-item:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--primary-300);
+}
+
+.interest-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.interest-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: var(--secondary-gradient);
+  border-radius: var(--radius-lg);
+  color: white;
+  font-size: var(--font-size-lg);
+  flex-shrink: 0;
+}
+
+.interest-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--neutral-900);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.interest-description {
+  font-size: var(--font-size-base);
+  color: var(--neutral-700);
+  line-height: 1.6;
+  margin-bottom: var(--space-4);
+  text-align: justify;
+}
+
+.interest-items {
+  margin-top: auto;
+}
+
+.interest-items strong {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--neutral-800);
+  margin-bottom: var(--space-2);
+  font-weight: 600;
+}
+
+.interest-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.interest-tag {
+  background: var(--secondary-100);
+  color: var(--secondary-700);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  border: 1px solid var(--secondary-200);
+  transition: var(--transition-all);
+}
+
+.interest-tag:hover {
+  background: var(--secondary-200);
+  color: var(--secondary-800);
+  transform: translateY(-1px);
+}
+

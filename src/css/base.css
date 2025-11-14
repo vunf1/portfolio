@@ -1,0 +1,195 @@
+/* ===== DEVICON IMPORT ===== */
+@import url('../../node_modules/devicon/devicon.min.css');
+
+/* ===== BASE LAYOUT STYLES ===== */
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  height: 100%;
+}
+
+/* Body overflow is handled in index.css to ensure single scrollbar */
+/* This ensures base.css doesn't conflict with index.css body rules */
+
+
+/* Apply text justify to all paragraph and text content */
+p,
+.section-subtitle,
+.card-description,
+.project-description,
+.interest-description,
+.about-content p,
+.hero-summary,
+.hero-tagline {
+  text-align: justify;
+}
+
+/* Portfolio Container - Main Layout */
+.portfolio-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-16) var(--space-6) 0;
+  position: relative;
+  z-index: 1;
+  /* Use theme-aware background */
+  background-color: var(--neutral-50);
+  transition: background-color var(--transition-base);
+}
+
+/* Portfolio Sections */
+.portfolio-section {
+  width: 100%;
+  padding: var(--space-16) 0;
+  position: relative;
+  /* Use theme-aware background */
+  background-color: var(--neutral-50);
+  transition: background-color var(--transition-base);
+}
+
+/* Section Scroll Offset - Ensure sections appear below navbar */
+.section {
+  scroll-margin-top: calc(var(--navbar-height) + var(--space-4));
+}
+
+/* Ensure experience section is properly positioned below navbar */
+#experience {
+  scroll-margin-top: calc(var(--navbar-height) + var(--space-4));
+}
+
+/* Section Headers */
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-title {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  color: var(--neutral-900);
+  margin-bottom: var(--space-4);
+  line-height: 1.2;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--neutral-600);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: justify;
+}
+
+/* Responsive Container Adjustments */
+@media (max-width: 1200px) {
+  .portfolio-container {
+    max-width: 1000px;
+    padding: var(--space-12) var(--space-5) 0;
+  }
+}
+
+@media (max-width: 992px) {
+  .portfolio-container {
+    max-width: 900px;
+    padding: var(--space-10) var(--space-4) 0;
+  }
+  
+  .section-title {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .section-subtitle {
+    font-size: var(--font-size-base);
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-container {
+    max-width: 100%;
+    padding: var(--space-8) var(--space-4) 0;
+  }
+  
+  .portfolio-section {
+    padding: var(--space-12) 0;
+  }
+  
+  /* Ensure sections appear below navbar on mobile */
+  .section,
+  #experience {
+    scroll-margin-top: calc(var(--navbar-height) + var(--space-3));
+  }
+  
+  /* Add padding-top to experience section to prevent navbar overlap on mobile */
+  /* Account for portfolio-container padding-top (var(--space-8)) */
+  #experience {
+    padding-top: calc(var(--navbar-height) - var(--space-8) + var(--space-4));
+    margin-top: 0;
+  }
+  
+  .section-header {
+    margin-bottom: var(--space-8);
+    padding: 0 var(--space-3);
+  }
+  
+  .section-title {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .section-subtitle {
+    font-size: var(--font-size-sm);
+    padding: 0 var(--space-2);
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolio-container {
+    padding: var(--space-6) var(--space-3) 0;
+  }
+  
+  .portfolio-section {
+    padding: var(--space-8) 0;
+  }
+  
+  /* Ensure sections appear below navbar on small mobile */
+  .section,
+  #experience {
+    scroll-margin-top: calc(var(--navbar-height) + var(--space-2));
+  }
+  
+  /* Add padding-top to experience section to prevent navbar overlap on small mobile */
+  /* Account for portfolio-container padding-top (var(--space-6)) */
+  #experience {
+    padding-top: calc(var(--navbar-height) - var(--space-6) + var(--space-3));
+    margin-top: 0;
+  }
+  
+  .section-header {
+    margin-bottom: var(--space-6);
+  }
+  
+  .section-title {
+    font-size: var(--font-size-xl);
+  }
+  
+  .section-subtitle {
+    font-size: var(--font-size-xs);
+  }
+}
+

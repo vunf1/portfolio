@@ -16,7 +16,6 @@ const CRITICAL_RESOURCES = [
 // Static assets to cache
 const STATIC_RESOURCES = [
   '/assets/index.css',
-  '/assets/premium.css',
   '/assets/vendor.js',
   '/assets/utils.js',
   '/assets/components.js'
