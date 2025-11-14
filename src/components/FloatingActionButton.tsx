@@ -15,10 +15,14 @@ interface FABItem {
 export function FloatingActionButton({ className = '' }: FloatingActionButtonProps) {
   const { currentLanguage, changeLanguage, t } = useTranslation()
 
+  // Get the flag class for the language that will be switched TO
+  const targetLanguage = currentLanguage === 'en' ? 'pt-PT' : 'en'
+  const flagClass = targetLanguage === 'pt-PT' ? 'fi fi-pt' : 'fi fi-gb'
+
   const fabItems: FABItem[] = [
     {
       id: 'language',
-      icon: 'flag-emoji',
+      icon: 'flag-icon',
       label: t(currentLanguage === 'en' ? 'fab.switchToPortuguese' : 'fab.switchToEnglish'),
       onClick: () => changeLanguage(currentLanguage === 'en' ? 'pt-PT' : 'en'),
       ariaLabel: t('common.language')
@@ -34,10 +38,8 @@ export function FloatingActionButton({ className = '' }: FloatingActionButtonPro
             onClick={item.onClick}
             aria-label={item.ariaLabel}
           >
-            {item.icon === 'flag-emoji' ? (
-              <span className="flag-emoji" aria-hidden="true">
-                {currentLanguage === 'en' ? '🇵🇹' : '🇬🇧'}
-              </span>
+            {item.icon === 'flag-icon' ? (
+              <span className={`${flagClass} fab-flag-icon`} aria-hidden="true"></span>
             ) : (
               <i className={item.icon} aria-hidden="true"></i>
             )}
