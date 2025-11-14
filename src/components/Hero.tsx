@@ -1,98 +1,23 @@
-import { useState, useEffect, useRef } from 'preact/hooks'
 import { useTranslation } from '../contexts/TranslationContext'
 import type { HeroProps } from '../types'
 
-// Device capability detection - simplified for consistent performance
-const isLowEndDevice = () => {
-  // Check for reduced motion preference
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    return true
-  }
-  
-  // Check for very low-end device indicators
-  if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) {
-    return true
-  }
-  
-  // Check for very low memory devices
-  if ('deviceMemory' in navigator && (navigator as Navigator & { deviceMemory?: number }).deviceMemory && (navigator as Navigator & { deviceMemory?: number }).deviceMemory! <= 2) {
-    return true
-  }
-  
-  return false
-}
-
 export function Hero({ personal }: HeroProps) {
-  const [isLowEnd, setIsLowEnd] = useState(false)
   const { t } = useTranslation()
-  const heroRef = useRef<HTMLElement>(null)
-  
-
-
-  useEffect(() => {
-    // Check device capabilities on mount for potential future optimizations
-    const lowEnd = isLowEndDevice()
-    setIsLowEnd(lowEnd)
-  }, [])
-
-  useEffect(() => {
-    if (!isLowEnd) {
-      return
-    }
-
-    // Set random positions for floating icons on load
-    const setRandomPositions = () => {
-      if (!heroRef.current) {return}
-      
-      const shapes = heroRef.current.querySelectorAll('.floating-shape') as NodeListOf<HTMLElement>
-      
-      // Array of available animations
-      const animations = [
-        'float-1', 'float-2', 'float-3', 'float-4', 'float-5', 'float-6', 'float-7', 'float-8',
-        'pulse-1', 'pulse-2', 'pulse-3',
-        'bounce-1', 'bounce-2',
-        'spin-1', 'spin-2',
-        'wave-1', 'wave-2',
-        'zigzag-1', 'zigzag-2'
-      ]
-      
-      // Array of animation durations (in seconds)
-      const durations = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-      
-      shapes.forEach((shape) => {
-        const randomX = Math.random() * 80 + 10 // 10% to 90% of width
-        const randomY = Math.random() * 80 + 10 // 10% to 90% of height
-        const randomAnimation = animations[Math.floor(Math.random() * animations.length)]
-        const randomDuration = durations[Math.floor(Math.random() * durations.length)]
-        const randomDelay = Math.random() * 5 // 0 to 5 seconds delay
-        
-        shape.style.left = `${randomX}%`
-        shape.style.top = `${randomY}%`
-        shape.style.animation = `${randomAnimation} ${randomDuration}s ease-in-out infinite`
-        shape.style.animationDelay = `${randomDelay}s`
-      })
-    }
-
-    // Set random positions on load
-    setRandomPositions()
-  }, [isLowEnd])
-
-
 
   return (
-    <section className="portfolio-hero" id="hero" ref={heroRef}>
+    <section className="portfolio-hero" id="hero">
       <div className="hero-profile">
         {/* Profile Avatar */}
         <img 
           src={personal.profileImage} 
           alt={`${personal.name} Profile`}
-          className="hero-avatar hover-scale"
+          className="hero-avatar"
           loading="lazy"
           decoding="async"
         />
         
         {/* Hero Content */}
-        <h1 className="hero-name text-gradient" data-text={personal.name}>
+        <h1 className="hero-name text-gradient">
           {personal.name}
         </h1>
         
@@ -124,36 +49,7 @@ export function Hero({ personal }: HeroProps) {
             </div>
           </div>
         )}
-        
-        
       </div>
-      
-      
-      {/* Background Elements - Show reduced animations on all devices for better performance */}
-      <div className="hero-bg-elements mobile-optimized">
-        {/* Optimized floating shapes for all devices */}
-        <div className="floating-shape shape-1 mobile-shape">
-          <i className="fa-solid fa-microchip"></i>
-        </div>
-        <div className="floating-shape shape-2 mobile-shape">
-          <i className="fa-solid fa-code"></i>
-        </div>
-        <div className="floating-shape shape-3 mobile-shape">
-          <i className="fa-solid fa-database"></i>
-        </div>
-        <div className="floating-shape shape-4 mobile-shape">
-          <i className="fa-solid fa-server"></i>
-        </div>
-        <div className="floating-shape shape-5 mobile-shape">
-          <i className="fa-solid fa-cloud"></i>
-        </div>
-        
-        {/* Simple data streams for all devices */}
-        <div className="data-stream data-stream-1 mobile-stream"></div>
-        <div className="data-stream data-stream-2 mobile-stream"></div>
-      </div>
-      
-
     </section>
   )
 }
