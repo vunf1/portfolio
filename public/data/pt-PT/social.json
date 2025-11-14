@@ -2,21 +2,21 @@
   {
     "color": "#0077B5",
     "description": "Perfil profissional",
-    "icon": "devicon-linkedin-plain",
+    "icon": "fa-brands fa-linkedin-in",
     "name": "LinkedIn",
     "url": "https://www.linkedin.com/in/joao-maia"
   },
   {
     "color": "#2c5aa0",
     "description": "Sítio Web pessoal e portefólio",
-    "icon": "devicon-firefox-plain",
+    "icon": "fa-brands fa-firefox-browser",
     "name": "Carteira",
     "url": "https://vunf1.github.io/portfolio/"
   },
   {
     "color": "#333333",
     "description": "Projectos e códigos de fonte aberta",
-    "icon": "devicon-github-original",
+    "icon": "fa-brands fa-github",
     "name": "GitHub",
     "url": "https://github.com/vunf1"
   }
