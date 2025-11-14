@@ -21,18 +21,64 @@
     <!-- Font Awesome - For other UI icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     
+    <!-- Flag Icons - For country flag display -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css">
+    
+    <!-- Critical CSS to prevent double scrollbars - must load after Bootstrap -->
+    <!-- This uses maximum specificity to override everything -->
+    <style>
+      /* Ensure only html scrolls, not body or other containers */
+      html {
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        height: 100% !important;
+      }
+      body,
+      body.landing-page-active {
+        overflow-x: hidden !important;
+        overflow-y: visible !important;
+        height: auto !important;
+        min-height: 100% !important;
+        max-height: none !important;
+      }
+      #app {
+        overflow-x: hidden !important;
+        overflow-y: visible !important;
+        height: auto !important;
+        max-height: none !important;
+      }
+      /* MAXIMUM SPECIFICITY - Override Bootstrap and all other CSS */
+      html body #app .landing-page,
+      html body.landing-page-active #app .landing-page,
+      html body .landing-page,
+      html body.landing-page-active .landing-page,
+      body #app .landing-page,
+      body.landing-page-active #app .landing-page,
+      body .landing-page,
+      body.landing-page-active .landing-page,
+      #app .landing-page,
+      .landing-page {
+        overflow: visible !important;
+        overflow-x: hidden !important;
+        overflow-y: visible !important;
+        height: auto !important;
+        max-height: none !important;
+        min-height: 100vh !important;
+      }
+    </style>
+    
     <!-- SEO Meta Tags -->
     <meta property="og:title" content="João Maia - Software Developer Portfolio">
     <meta property="og:description" content="Full-Stack Software Engineer specializing in modern web technologies and cloud solutions">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://joaomaia.dev">
+    <meta property="og:url" content="https://jmsit.cloud/">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="João Maia - Software Developer Portfolio">
     <meta name="twitter:description" content="Full-Stack Software Engineer specializing in modern web technologies and cloud solutions">
     
     <!-- Security Headers -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
+    <!-- X-Frame-Options should be set via HTTP headers, not meta tags -->
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
 </head>
 
@@ -44,5 +90,42 @@
     
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- FINAL CSS OVERRIDE - Must load after ALL stylesheets including Vite's -->
+    <!-- This ensures our scrollbar fix takes precedence over everything -->
+    <script>
+      // Inject CSS after page loads to override everything
+      document.addEventListener('DOMContentLoaded', function() {
+        const style = document.createElement('style');
+        style.id = 'scrollbar-fix-override';
+        style.textContent = `
+          /* FINAL OVERRIDE - Maximum specificity */
+          html body #app .landing-page,
+          html body.landing-page-active #app .landing-page,
+          body #app .landing-page,
+          body.landing-page-active #app .landing-page,
+          #app .landing-page,
+          .landing-page {
+            overflow: visible !important;
+            overflow-y: visible !important;
+            overflow-x: hidden !important;
+            height: auto !important;
+            max-height: none !important;
+            min-height: 100vh !important;
+          }
+          body,
+          body.landing-page-active {
+            overflow-y: visible !important;
+            overflow-x: hidden !important;
+          }
+          #app {
+            overflow-y: visible !important;
+            overflow-x: hidden !important;
+            height: auto !important;
+          }
+        `;
+        document.head.appendChild(style);
+      });
+    </script>
 </body>
 </html>
