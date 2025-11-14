@@ -61,7 +61,14 @@ portfolio/
 │   │   └── TranslationContext.tsx
 │   ├── css/                 # Styling
 │   │   ├── tokens.css       # Design tokens
-│   │   ├── premium.css      # Premium components
+│   │   ├── variables.css    # CSS variables
+│   │   ├── base.css         # Base layout styles
+│   │   ├── modal.css        # Modal components
+│   │   ├── navigation.css   # Navigation styles
+│   │   ├── grid.css         # Grid system
+│   │   ├── responsive.css   # Responsive styles
+│   │   ├── performance.css  # Performance optimizations
+│   │   └── components/    # Component-specific styles
 │   │   └── components.css   # Component styles
 │   ├── utils/               # Utility functions
 │   │   ├── __tests__/       # Utility tests
@@ -313,7 +320,13 @@ Edit `src/css/tokens.css` for design tokens:
 
 ### **Component Styling**
 - **UI Components**: `src/css/components.css`
-- **Premium Styles**: `src/css/premium.css`
+- **Premium Styles**: Refactored into modular CSS files:
+  - `src/css/variables.css` - CSS variables
+  - `src/css/base.css` - Base layout
+  - `src/css/modal.css` - Modal components
+  - `src/css/navigation.css` - Navigation
+  - `src/css/grid.css` - Grid system
+  - `src/css/components/*.css` - Component-specific styles
 - **Contact Styles**: `src/css/contact.css`
 
 ### **Adding New Sections**
