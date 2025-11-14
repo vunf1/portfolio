@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from 'preact/compat'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'preact/compat'
 import { usePortfolioData } from './hooks/usePortfolioData'
 import { useTranslation } from './contexts/TranslationContext'
 import { Navigation } from './components/Navigation'
@@ -6,6 +6,14 @@ import { ErrorBoundary } from './components/ErrorBoundary'
 import { SectionSkeleton } from './components/SectionSkeleton'
 import { FloatingActionButton } from './components/FloatingActionButton'
 import { LandingPage } from './components/landing/LandingPage'
+import { preloadPortfolioChunks } from './utils/preloadPortfolioChunks'
+
+const logWarning = (message: string, detail: unknown) => {
+  if (import.meta.env.DEV) {
+    // eslint-disable-next-line no-console
+    console.warn(message, detail)
+  }
+}
 
 // Lazy load non-critical components
 const Experience = lazy(() => import('./components/Experience').then(module => ({ default: module.Experience })))
@@ -19,10 +27,11 @@ const Testimonials = lazy(() => import('./components/Testimonials').then(module 
 
 export function App() {
   const { t, currentLanguage } = useTranslation()
-  const { portfolioData, loading, error } = usePortfolioData(currentLanguage)
+  const { portfolioData, loading, error, loadAllSections } = usePortfolioData(currentLanguage)
   const [activeSection, setActiveSection] = useState('experience')
   const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false)
   const [showPortfolio, setShowPortfolio] = useState(false)
+  const hasWarmedPortfolio = useRef(false)
 
   // Debug: Add test message to see if component is rendering
   // console.log('🎯 App component rendering:', { 
@@ -168,10 +177,12 @@ export function App() {
     }
 
     // Throttled scroll listener
-    let scrollTimeout: NodeJS.Timeout
+    let scrollTimeout: ReturnType<typeof setTimeout> | undefined
     const throttledScrollHandler = () => {
-      clearTimeout(scrollTimeout)
-      scrollTimeout = setTimeout(handleScroll, 100)
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout)
+      }
+      scrollTimeout = window.setTimeout(handleScroll, 100)
     }
 
     window.addEventListener('scroll', throttledScrollHandler, { passive: true })
@@ -180,10 +191,49 @@ export function App() {
       observer.disconnect()
       mutationObserver.disconnect()
       clearTimeout(timeoutId)
-      clearTimeout(scrollTimeout)
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout)
+      }
       window.removeEventListener('scroll', throttledScrollHandler)
     }
   }, [portfolioData])
+
+  useEffect(() => {
+    if (showPortfolio) {
+      void loadAllSections()
+    }
+  }, [loadAllSections, showPortfolio])
+
+  const warmPortfolio = useCallback(() => {
+    if (hasWarmedPortfolio.current) {
+      return
+    }
+
+    hasWarmedPortfolio.current = true
+
+    const triggerChunkPreload = () => {
+      preloadPortfolioChunks().catch((error) => {
+        logWarning('⚠️ Failed to preload portfolio UI chunks:', error)
+        hasWarmedPortfolio.current = false
+      })
+    }
+
+    if (typeof window !== 'undefined') {
+      const idleWindow = window as typeof window & { requestIdleCallback?: (callback: () => void) => number }
+      if (idleWindow.requestIdleCallback) {
+        idleWindow.requestIdleCallback(() => triggerChunkPreload())
+      } else {
+        window.setTimeout(() => triggerChunkPreload(), 0)
+      }
+    } else {
+      triggerChunkPreload()
+    }
+
+    loadAllSections().catch((error) => {
+      logWarning('⚠️ Failed to warm portfolio data:', error)
+      hasWarmedPortfolio.current = false
+    })
+  }, [loadAllSections])
 
   // Show loading state
   if (loading) {
@@ -201,7 +251,10 @@ export function App() {
   if (!showPortfolio) {
     return (
       <ErrorBoundary>
-        <LandingPage onNavigateToPortfolio={() => setShowPortfolio(true)} />
+        <LandingPage 
+          onNavigateToPortfolio={() => setShowPortfolio(true)} 
+          onWarmPortfolio={warmPortfolio}
+        />
       </ErrorBoundary>
     )
   }

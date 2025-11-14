@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/preact'
+import { render, screen, fireEvent } from '@testing-library/preact'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { FloatingActionButton } from '../FloatingActionButton'
 import { useTranslation } from '../../contexts/TranslationContext'
