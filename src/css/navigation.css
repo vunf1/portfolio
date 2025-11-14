@@ -102,19 +102,9 @@
   border: 2px solid transparent;
 }
 
-/* Ensure Devicon icons are visible */
+/* Social icon styling */
 .social-link i {
   font-size: 24px !important;
-  color: white !important;
-  display: block !important;
-  line-height: 1;
-}
-
-/* Devicon specific styling */
-.social-link .devicon-linkedin-plain,
-.social-link .devicon-github-original,
-.social-link .devicon-firefox-plain {
-  font-size: 28px !important;
   color: white !important;
   display: block !important;
   line-height: 1;
@@ -922,4 +912,4 @@ body.menu-open::before {
   margin: 4px 0;
   transition: var(--transition-all);
 }
-
+
