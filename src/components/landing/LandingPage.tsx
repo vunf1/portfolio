@@ -10,18 +10,16 @@ import { SectionSkeleton } from '../SectionSkeleton'
 
 interface LandingPageProps {
   onNavigateToPortfolio: () => void
+  onWarmPortfolio?: () => void
   className?: string
 }
 
-export function LandingPage({ onNavigateToPortfolio, className = '' }: LandingPageProps) {
+export function LandingPage({ onNavigateToPortfolio, onWarmPortfolio, className = '' }: LandingPageProps) {
   const { currentLanguage } = useTranslation()
   const { portfolioData, loading } = usePortfolioData(currentLanguage)
   const [isPortfolioVisible, setIsPortfolioVisible] = useState(false)
 
-  // Add smooth scroll behavior and section scroll animations
   useEffect(() => {
-    document.documentElement.style.scrollBehavior = 'smooth'
-    
     // Add classes to body and html to prevent double scrollbars
     document.body.classList.add('landing-page-active')
     document.documentElement.classList.add('landing-page-active')
@@ -52,7 +50,6 @@ export function LandingPage({ onNavigateToPortfolio, className = '' }: LandingPa
     sections.forEach(section => observer.observe(section))
 
     return () => {
-      document.documentElement.style.scrollBehavior = 'auto'
       document.body.classList.remove('landing-page-active')
       document.documentElement.classList.remove('landing-page-active')
       window.removeEventListener('navigateToPortfolio', handleNavigateToPortfolio)
@@ -61,6 +58,7 @@ export function LandingPage({ onNavigateToPortfolio, className = '' }: LandingPa
   }, [onNavigateToPortfolio])
 
   const handleNavigateToPortfolio = () => {
+    onWarmPortfolio?.()
     setIsPortfolioVisible(true)
     onNavigateToPortfolio()
   }
@@ -84,7 +82,8 @@ export function LandingPage({ onNavigateToPortfolio, className = '' }: LandingPa
       <LandingAbout 
         personal={portfolioData.personal} 
         social={portfolioData.social}
-        onNavigateToPortfolio={handleNavigateToPortfolio} 
+        onNavigateToPortfolio={handleNavigateToPortfolio}
+        onWarmPortfolio={onWarmPortfolio}
       />
       <LandingFooter personal={portfolioData.personal} social={portfolioData.social} />
       <FloatingActionButton />

@@ -135,8 +135,8 @@ export function LandingFeatures({ personal, className = '' }: LandingFeaturesPro
           </h2>
           <p className="features-subtitle">
             {currentLanguage === 'pt-PT'
-              ? 'Soluções profissionais de desenvolvimento de software com foco em qualidade, eficiência e inovação'
-              : 'Professional software development solutions focused on quality, efficiency, and innovation'}
+              ? `Soluções profissionais lideradas por ${personal.name}, com foco em qualidade, eficiência e inovação`
+              : `Professional solutions led by ${personal.name}, focused on quality, efficiency, and innovation`}
           </p>
         </div>
 

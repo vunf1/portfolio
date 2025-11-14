@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 import { useTranslation } from '../../contexts/TranslationContext'
 import type { Personal, Social } from '../../types/portfolio'
 import profileUrl from '@/img/profile.jpg'
@@ -8,14 +8,16 @@ interface LandingAboutProps {
   social: Social[]
   className?: string
   onNavigateToPortfolio: () => void
+  onWarmPortfolio?: () => void
 }
 
-export function LandingAbout({ personal, social, className = '', onNavigateToPortfolio }: LandingAboutProps) {
-  const { t, currentLanguage } = useTranslation()
+export function LandingAbout({ personal, social, className = '', onNavigateToPortfolio, onWarmPortfolio }: LandingAboutProps) {
+  const { currentLanguage } = useTranslation()
   const [isVisible, setIsVisible] = useState(false)
+  const ctaRef = useRef<HTMLButtonElement | null>(null)
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    const sectionObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true)
@@ -26,11 +28,37 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
 
     const element = document.getElementById('about')
     if (element) {
-      observer.observe(element)
+      sectionObserver.observe(element)
     }
 
-    return () => observer.disconnect()
+    return () => sectionObserver.disconnect()
   }, [])
+
+  useEffect(() => {
+    if (!onWarmPortfolio || typeof IntersectionObserver === 'undefined' || !ctaRef.current) {
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            onWarmPortfolio()
+            observer.disconnect()
+          }
+        })
+      },
+      { threshold: 0.5 }
+    )
+
+    observer.observe(ctaRef.current)
+
+    return () => observer.disconnect()
+  }, [onWarmPortfolio])
+
+  const handleWarmIntent = () => {
+    onWarmPortfolio?.()
+  }
 
   return (
     <section id="about" className={`landing-about landing-section ${className}`}>
@@ -101,7 +129,11 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
             <div className="about-actions">
               <button
                 className="btn-about-primary"
+                ref={ctaRef}
                 onClick={onNavigateToPortfolio}
+                onMouseEnter={handleWarmIntent}
+                onFocus={handleWarmIntent}
+                onTouchStart={handleWarmIntent}
               >
                 <i className="fa-solid fa-arrow-right"></i>
                 <span>{currentLanguage === 'pt-PT' ? 'Ver Portfolio Completo' : 'View Full Portfolio'}</span>
@@ -141,7 +173,7 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
                       style={{ '--social-color': socialItem.color || '#3b82f6' }}
                       title={socialItem.description}
                     >
-                      <i className={`fa ${socialItem.icon}`}></i>
+                      <i className={socialItem.icon} aria-hidden="true"></i>
                       <span className="social-name">{socialItem.name}</span>
                     </a>
                   ))}
