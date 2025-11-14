@@ -42,7 +42,7 @@ export function About({ personal, social, className = '', id }: AboutProps) {
                 rel="noopener noreferrer"
                 className="social-link-item"
               >
-                <i className={`fa ${socialItem.icon}`}></i>
+                <i className={socialItem.icon} aria-hidden="true"></i>
                 <span className="social-name">{socialItem.name}</span>
               </a>
             ))}

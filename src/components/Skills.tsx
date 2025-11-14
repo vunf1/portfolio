@@ -2,6 +2,25 @@ import { useTranslation } from '../contexts/TranslationContext'
 import { Section } from './ui'
 import type { SkillsProps } from '../types/components'
 import type { SkillLevel } from '../types/portfolio'
+import pythonIcon from 'devicon/icons/python/python-original.svg'
+import typescriptIcon from 'devicon/icons/typescript/typescript-original.svg'
+import javascriptIcon from 'devicon/icons/javascript/javascript-original.svg'
+import javaIcon from 'devicon/icons/java/java-original.svg'
+import csharpIcon from 'devicon/icons/csharp/csharp-original.svg'
+import cplusplusIcon from 'devicon/icons/cplusplus/cplusplus-original.svg'
+import cIcon from 'devicon/icons/c/c-original.svg'
+import visualbasicIcon from 'devicon/icons/visualbasic/visualbasic-original.svg'
+import phpIcon from 'devicon/icons/php/php-original.svg'
+import luaIcon from 'devicon/icons/lua/lua-original.svg'
+import powershellIcon from 'devicon/icons/powershell/powershell-original.svg'
+import bashIcon from 'devicon/icons/bash/bash-original.svg'
+import mysqlIcon from 'devicon/icons/mysql/mysql-original.svg'
+import mongodbIcon from 'devicon/icons/mongodb/mongodb-original.svg'
+import linuxIcon from 'devicon/icons/linux/linux-original.svg'
+import windowsIcon from 'devicon/icons/windows8/windows8-original.svg'
+import dockerIcon from 'devicon/icons/docker/docker-original.svg'
+import gitIcon from 'devicon/icons/git/git-original.svg'
+import vueIcon from 'devicon/icons/vuejs/vuejs-original.svg'
 
 export function Skills({ skills }: SkillsProps) {
   const { t } = useTranslation()
@@ -47,54 +66,50 @@ export function Skills({ skills }: SkillsProps) {
     }
   }
 
-  const getLanguageIcon = (languageName: string, categoryName?: string): string => {
+  const getLanguageIcon = (languageName: string, categoryName?: string): string | undefined => {
     const language = languageName.toLowerCase()
     
-    // Return no icons for specific categories
     if (categoryName === 'Key Competencies' || categoryName === 'Tooling & Platforms') {
-      return ''
+      return undefined
     }
 
-    // Programming Languages
-    if (language.includes('python')) {return 'devicon-python-plain colored'}
-    if (language.includes('typescript')) {return 'devicon-typescript-plain colored'}
-    if (language.includes('javascript')) {return 'devicon-javascript-plain colored'}
-    if (language.includes('java')) {return 'devicon-java-plain colored'}
-    if (language.includes('c#')) {return 'devicon-csharp-plain colored'}
-    if (language.includes('c++')) {return 'devicon-cplusplus-plain colored'}
-    if (language === 'c') {return 'devicon-c-plain colored'}
-    if (language.includes('visual basic') || language.includes('vb.net') || language.includes('vba')) {return 'devicon-visualbasic-plain colored'}
-    if (language.includes('php')) {return 'devicon-php-plain colored'}
-    if (language.includes('lua')) {return 'devicon-lua-plain colored'}
-    if (language.includes('powershell')) {return 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/powershell/powershell-original.svg'}
-    if (language.includes('bash') || language.includes('shell')) {return 'devicon-bash-plain colored'}
-    if (language.includes('nosql')) {return 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg'}
-    if (language.includes('sql')) {return 'devicon-mysql-plain colored'}
+    if (language.includes('python')) {return pythonIcon}
+    if (language.includes('typescript')) {return typescriptIcon}
+    if (language.includes('javascript')) {return javascriptIcon}
+    if (language.includes('java')) {return javaIcon}
+    if (language.includes('c#')) {return csharpIcon}
+    if (language.includes('c++')) {return cplusplusIcon}
+    if (language === 'c') {return cIcon}
+    if (language.includes('visual basic') || language.includes('vb.net') || language.includes('vba')) {return visualbasicIcon}
+    if (language.includes('php')) {return phpIcon}
+    if (language.includes('lua')) {return luaIcon}
+    if (language.includes('powershell')) {return powershellIcon}
+    if (language.includes('bash') || language.includes('shell')) {return bashIcon}
+    if (language.includes('nosql')) {return mongodbIcon}
+    if (language.includes('sql')) {return mysqlIcon}
+    if (language.includes('linux')) {return linuxIcon}
+    if (language.includes('windows')) {return windowsIcon}
+    if (language.includes('docker')) {return dockerIcon}
+    if (language.includes('ci/cd') || language.includes('git')) {return gitIcon}
+    if (language.includes('obs') || language.includes('streaming')) {return vueIcon}
 
-    // AI & ML
-    if (language.includes('llm') || language.includes('rag') || language.includes('ai')) {return ''}
-    if (language.includes('embedding') || language.includes('vector')) {return ''}
-    if (language.includes('prompt')) {return ''}
+    return undefined
+  }
 
-    // Cybersecurity
-    if (language.includes('firewall') || language.includes('ids') || language.includes('security')) {return ''}
-    if (language.includes('encryption') || language.includes('aes') || language.includes('rsa')) {return ''}
-    if (language.includes('threat') || language.includes('hunting')) {return ''}
-    if (language.includes('zero trust')) {return ''}
+  const renderSkillIcon = (iconSrc?: string, altLabel?: string) => {
+    if (!iconSrc) {
+      return null
+    }
 
-    // Tooling & Platforms
-    if (language.includes('linux')) {return 'devicon-linux-plain colored'}
-    if (language.includes('windows')) {return 'devicon-windows8-plain colored'}
-    if (language.includes('docker')) {return 'devicon-docker-plain colored'}
-    if (language.includes('ci/cd') || language.includes('git')) {return 'devicon-git-plain colored'}
-    if (language.includes('obs') || language.includes('streaming')) {return 'devicon-vuejs-plain colored'}
-
-    // Software Engineering
-    if (language.includes('design pattern') || language.includes('oop') || language.includes('mvc')) {return ''}
-    if (language.includes('api') || language.includes('rest')) {return ''}
-
-    // Default icon for other skills
-    return ''
+    return (
+      <img
+        src={iconSrc}
+        alt={`${altLabel ?? 'Skill'} icon`}
+        className="skill-language-icon"
+        loading="lazy"
+        decoding="async"
+      />
+    )
   }
 
   // Type assertion for proficiencyLevels
@@ -147,17 +162,8 @@ export function Skills({ skills }: SkillsProps) {
                 {skillGroup.skills.map((skill, skillIndex) => (
                   <div key={skillIndex} className="skill-compact-card">
                     <div className="skill-compact-header">
-                      <div className="skill-compact-name">
-                        {getLanguageIcon(skill.name, skillGroup.category) && getLanguageIcon(skill.name, skillGroup.category).startsWith('http') ? (
-                          <img
-                            src={getLanguageIcon(skill.name, skillGroup.category)}
-                            alt={`${skill.name} icon`}
-                            className="skill-language-icon"
-                            style={{ width: '16px', height: '16px' }}
-                          />
-                        ) : getLanguageIcon(skill.name, skillGroup.category) ? (
-                          <i className={`${getLanguageIcon(skill.name, skillGroup.category)} skill-language-icon`}></i>
-                        ) : null}
+                    <div className="skill-compact-name">
+                      {renderSkillIcon(getLanguageIcon(skill.name, skillGroup.category), skill.name)}
                         <span>{skill.name}</span>
                       </div>
                       <div className="skill-compact-level skill-proficiency">
@@ -194,14 +200,7 @@ export function Skills({ skills }: SkillsProps) {
                   <div key={skillIndex} className="skill-compact-card">
                     <div className="skill-compact-header">
                       <div className="skill-compact-name">
-                        {getLanguageIcon(skill.name, 'Soft Skills') && getLanguageIcon(skill.name, 'Soft Skills').startsWith('http') ? (
-                          <img
-                            src={getLanguageIcon(skill.name, 'Soft Skills')}
-                            alt={`${skill.name} icon`}
-                          />
-                        ) : getLanguageIcon(skill.name, 'Soft Skills') ? (
-                          <i className={`${getLanguageIcon(skill.name, 'Soft Skills')} skill-language-icon`}></i>
-                        ) : null}
+                        {renderSkillIcon(getLanguageIcon(skill.name, 'Soft Skills'), skill.name)}
                         <span>{skill.name}</span>
                       </div>
                       <div className="skill-compact-level skill-proficiency">

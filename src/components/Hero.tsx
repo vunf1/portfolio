@@ -50,6 +50,16 @@ export function Hero({ personal }: HeroProps) {
           </div>
         )}
       </div>
+
+      <div className="hero-bg-elements" aria-hidden="true">
+        <span className="floating-shape shape-1">◆</span>
+        <span className="floating-shape shape-2">●</span>
+        <span className="floating-shape shape-3">▲</span>
+        <span className="floating-shape shape-4">■</span>
+        <span className="floating-shape shape-5">✦</span>
+        <span className="data-stream data-stream-1"></span>
+        <span className="data-stream data-stream-2"></span>
+      </div>
     </section>
   )
 }
