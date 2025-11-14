@@ -371,6 +371,16 @@ p,
   transition: background-color var(--transition-base);
 }
 
+/* Section Scroll Offset - Ensure sections appear below navbar */
+.section {
+  scroll-margin-top: calc(var(--navbar-height) + var(--space-4));
+}
+
+/* Ensure experience section is properly positioned below navbar */
+#experience {
+  scroll-margin-top: calc(var(--navbar-height) + var(--space-4));
+}
+
 /* Section Headers */
 .section-header {
   text-align: center;
@@ -432,6 +442,19 @@ p,
   
   .portfolio-section {
     padding: var(--space-12) 0;
+  }
+  
+  /* Ensure sections appear below navbar on mobile */
+  .section,
+  #experience {
+    scroll-margin-top: calc(var(--navbar-height) + var(--space-3));
+  }
+  
+  /* Add padding-top to experience section to prevent navbar overlap on mobile */
+  /* Account for portfolio-container padding-top (var(--space-8)) */
+  #experience {
+    padding-top: calc(var(--navbar-height) - var(--space-8) + var(--space-4));
+    margin-top: 0;
   }
   
   .section-header {
