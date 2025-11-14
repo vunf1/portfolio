@@ -109,8 +109,8 @@
 /* Flag Icon Styling - Using flag-icons library */
 .fab-item-static .fab-flag-icon {
   display: inline-block;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 3rem;
+  height: 3rem;
   line-height: 1;
   flex-shrink: 0;
   background-size: cover;
@@ -121,8 +121,8 @@
 }
 
 .fab-item-static .fab-flag-icon.fi {
-  width: 1.5rem;
-  height: 1.125rem;
+  width: 3rem;
+  height: 2.25rem;
   border-radius: 2px;
 }
 
@@ -227,15 +227,17 @@
 
 /* ===== LANGUAGE BUTTON ===== */
 .fab-item-language {
-  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
-  color: var(--color-white);
-  border-color: rgba(23, 162, 184, 0.2);
+  /* Make language FAB visually just the flag, with no visible circular background */
+  background: transparent;
+  color: inherit;
+  border: none;
   /* Remove shadow completely - override base shadow with !important */
   box-shadow: none !important;
 }
 
 .fab-item-language:hover {
-  background: linear-gradient(135deg, #138496 0%, #117a8b 100%);
+  /* Keep hover visually minimal: no background or shadow, just slight lift */
+  background: transparent;
   /* No shadow on hover either - override base hover shadow */
   box-shadow: none !important;
   transform: translateY(-2px);
