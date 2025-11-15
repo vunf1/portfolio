@@ -38,23 +38,23 @@ export function FloatingActionButton({ className = '' }: FloatingActionButtonPro
 
   return (
     <>
-      <div className={`fab-items-static ${className}`}>
-        {fabItems.map((item) => (
-          <div key={item.id} className="fab-item-wrapper">
-            <button
-              className={`fab-item-static fab-item-${item.id}`}
-              onClick={item.onClick}
-              aria-label={item.ariaLabel}
-            >
-              {item.icon === 'flag-icon' ? (
-                <span className={`${flagClass} fab-flag-icon`} aria-hidden="true"></span>
-              ) : (
-                <i className={item.icon} aria-hidden="true"></i>
-              )}
-            </button>
-          </div>
-        ))}
-      </div>
+    <div className={`fab-items-static ${className}`}>
+      {fabItems.map((item) => (
+        <div key={item.id} className="fab-item-wrapper">
+          <button
+            className={`fab-item-static fab-item-${item.id}`}
+            onClick={item.onClick}
+            aria-label={item.ariaLabel}
+          >
+            {item.icon === 'flag-icon' ? (
+              <span className={`${flagClass} fab-flag-icon`} aria-hidden="true"></span>
+            ) : (
+              <i className={item.icon} aria-hidden="true"></i>
+            )}
+          </button>
+        </div>
+      ))}
+    </div>
       <ContactModal
         isOpen={isContactModalOpen}
         onClose={() => setIsContactModalOpen(false)}
