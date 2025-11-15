@@ -31,21 +31,53 @@ import {
 } from '../types/n8n'
 
 /**
- * Default webhook URL from environment variable or fallback
- * Configure via VITE_N8N_WEBHOOK_URL environment variable
+ * Gets the webhook URL from environment variable
+ * 
+ * @returns The webhook URL from VITE_N8N_WEBHOOK_URL
+ * @throws {N8nClientError} If URL is missing in production mode
  */
-const DEFAULT_WEBHOOK_URL =
-  import.meta.env.VITE_N8N_WEBHOOK_URL ||
-  'https://n8n.jmsit.cloud/webhook-test/a86fbdb6-e4e6-4972-a502-37af612d2f6a'
+function getWebhookUrl(): string {
+  const url = import.meta.env.VITE_N8N_WEBHOOK_URL
+  
+  if (!url || url.trim() === '') {
+    if (import.meta.env.PROD) {
+      throw new N8nClientErrorClass(
+        'VITE_N8N_WEBHOOK_URL environment variable is required in production. ' +
+        'Set it in .env.production or as a build environment variable.'
+      )
+    }
+    console.warn('⚠️ VITE_N8N_WEBHOOK_URL not set. Contact form will not work.')
+    return ''
+  }
+  
+  return url
+}
 
 /**
- * Default authentication token from environment variable or fallback
- * Configure via VITE_N8N_AUTH_TOKEN environment variable
+ * Gets the authentication token from environment variable
+ * 
+ * Supports both VITE_N8N_AUTH_TOKEN (new) and VITE_N8N_JWT_TOKEN (legacy) for backward compatibility
+ * 
+ * @returns The authentication token from environment variable
+ * @throws {N8nClientError} If token is missing in production mode
  */
-const DEFAULT_AUTH_TOKEN =
-  import.meta.env.VITE_N8N_AUTH_TOKEN ||
-  import.meta.env.VITE_N8N_JWT_TOKEN ||
-  'cd324c00a80c293b3993805f45f4c23281a06f23e4381dc2008eefa223e73e97'
+function getAuthToken(): string {
+  const token = import.meta.env.VITE_N8N_AUTH_TOKEN || 
+                import.meta.env.VITE_N8N_JWT_TOKEN
+  
+  if (!token || token.trim() === '') {
+    if (import.meta.env.PROD) {
+      throw new N8nClientErrorClass(
+        'VITE_N8N_AUTH_TOKEN environment variable is required in production. ' +
+        'Set it in .env.production or as a build environment variable.'
+      )
+    }
+    console.warn('⚠️ VITE_N8N_AUTH_TOKEN not set. Contact form authentication will fail.')
+    return ''
+  }
+  
+  return token
+}
 
 /**
  * Default authentication method (n8n Header Auth)
@@ -81,10 +113,10 @@ export class N8nClient {
    */
   constructor(config?: Partial<N8nClientConfig>) {
     // Validate webhook URL first
-    // If webhookUrl is explicitly provided (even if empty), use it; otherwise use default
+    // If webhookUrl is explicitly provided (even if empty), use it; otherwise get from env
     const webhookUrl = config?.webhookUrl !== undefined 
       ? config.webhookUrl 
-      : DEFAULT_WEBHOOK_URL
+      : getWebhookUrl()
     
     if (!webhookUrl || webhookUrl.trim() === '') {
       throw new N8nClientErrorClass('Webhook URL is required')
@@ -95,7 +127,7 @@ export class N8nClient {
     
     // Get authentication configuration
     const authMethod = config?.authMethod || DEFAULT_AUTH_METHOD
-    const authToken = config?.authToken || DEFAULT_AUTH_TOKEN
+    const authToken = config?.authToken || getAuthToken()
     const authHeaderName = config?.authHeaderName || DEFAULT_AUTH_HEADER_NAME
     
     // Build headers based on authentication method (n8n compatible)

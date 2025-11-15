@@ -2,10 +2,16 @@
  * Integration tests for N8nClient
  * These tests make actual HTTP requests to the n8n webhook
  * 
+ * REQUIRED: Set environment variables before running these tests:
+ * - VITE_N8N_WEBHOOK_URL: Your n8n webhook URL
+ * - VITE_N8N_AUTH_TOKEN: Your n8n authentication token
+ * 
  * To run these tests:
- * 1. Ensure your n8n webhook is accessible
- * 2. Set VITE_N8N_WEBHOOK_URL and VITE_N8N_AUTH_TOKEN in .env.test or environment
+ * 1. Set VITE_N8N_WEBHOOK_URL and VITE_N8N_AUTH_TOKEN in .env.test or environment
+ * 2. Ensure your n8n webhook is accessible
  * 3. Run: npm test -- n8nClient.integration.test.ts
+ * 
+ * Note: Tests will be skipped if environment variables are not set
  */
 
 import { describe, it, expect, beforeAll, beforeEach, afterEach, vi } from 'vitest'
@@ -13,18 +19,22 @@ import { N8nClient } from '../n8nClient'
 import type { ContactFormData } from '../../types/n8n'
 
 describe('N8nClient Integration Tests', () => {
-  const webhookUrl =
-    import.meta.env.VITE_N8N_WEBHOOK_URL ||
-    'https://n8n.jmsit.cloud/webhook-test/a86fbdb6-e4e6-4972-a502-37af612d2f6a'
+  // Get environment variables - REQUIRED for integration tests
+  const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL
+  const authToken = import.meta.env.VITE_N8N_AUTH_TOKEN || import.meta.env.VITE_N8N_JWT_TOKEN
 
-  const authToken =
-    import.meta.env.VITE_N8N_AUTH_TOKEN ||
-    'cd324c00a80c293b3993805f45f4c23281a06f23e4381dc2008eefa223e73e97'
+  // Skip all tests if environment variables are not set
+  const shouldSkipTests = !webhookUrl || !authToken || webhookUrl.trim() === '' || authToken.trim() === ''
 
   let client: N8nClient
   let realFetch: typeof fetch
 
   beforeAll(() => {
+    // Skip if environment variables are not set
+    if (shouldSkipTests) {
+      console.warn('⚠️ Skipping integration tests: VITE_N8N_WEBHOOK_URL and VITE_N8N_AUTH_TOKEN must be set')
+      return
+    }
     // Restore real fetch for integration tests
     // The setup.ts mocks fetch with vi.fn(), so we need to unmock it
     vi.restoreAllMocks()
@@ -86,7 +96,7 @@ describe('N8nClient Integration Tests', () => {
     }
   })
 
-  it('should successfully send data to n8n webhook with X-API-Key authentication', async () => {
+  it.skipIf(shouldSkipTests)('should successfully send data to n8n webhook with X-API-Key authentication', async () => {
     const testPayload: ContactFormData = {
       name: 'Integration Test User',
       email: 'integration-test@example.com',
@@ -125,7 +135,7 @@ describe('N8nClient Integration Tests', () => {
     }
   }, 30000) // 30 second timeout for integration test
 
-  it('should include X-API-Key header in the request', async () => {
+  it.skipIf(shouldSkipTests)('should include X-API-Key header in the request', async () => {
     // This test verifies the header is sent by checking the request
     // We'll intercept fetch to verify headers
     let capturedHeaders: Record<string, string> | null = null
@@ -165,7 +175,7 @@ describe('N8nClient Integration Tests', () => {
     }
   }, 30000)
 
-  it('should handle network errors gracefully', async () => {
+  it.skipIf(shouldSkipTests)('should handle network errors gracefully', async () => {
     const invalidClient = new N8nClient({
       webhookUrl: 'https://invalid-webhook-url-that-does-not-exist.com/webhook',
       authToken,
@@ -184,7 +194,7 @@ describe('N8nClient Integration Tests', () => {
     await expect(invalidClient.sendToWebhook(testPayload)).rejects.toThrow()
   }, 30000)
 
-  it('should send minimal required fields correctly', async () => {
+  it.skipIf(shouldSkipTests)('should send minimal required fields correctly', async () => {
     const minimalPayload: ContactFormData = {
       name: 'Minimal Test',
       email: 'minimal@example.com',
@@ -203,7 +213,7 @@ describe('N8nClient Integration Tests', () => {
     }
   }, 30000)
 
-  it('should send complete payload with all optional fields', async () => {
+  it.skipIf(shouldSkipTests)('should send complete payload with all optional fields', async () => {
     const completePayload: ContactFormData = {
       name: 'Complete Test User',
       email: 'complete@example.com',

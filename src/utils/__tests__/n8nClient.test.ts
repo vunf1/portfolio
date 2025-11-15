@@ -11,6 +11,7 @@ describe('N8nClient', () => {
   const mockPayload: ContactFormData = {
     name: 'John Doe',
     email: 'john@example.com',
+    subject: 'Test Subject',
     message: 'Hello, this is a test message'
   }
 
@@ -31,7 +32,6 @@ describe('N8nClient', () => {
     })
 
     it('should use default webhook URL from environment variable', () => {
-      const originalEnv = import.meta.env.VITE_N8N_WEBHOOK_URL
       // Note: We can't easily mock import.meta.env in Vitest, so we test the fallback
       const client = new N8nClient()
       expect(client.getWebhookUrl()).toBeTruthy()
