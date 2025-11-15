@@ -1,0 +1,36 @@
+/* Landing Page Accessibility */
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  .landing-section,
+  .hero-text,
+  .hero-visual,
+  .features-header,
+  .feature-card,
+  .approach-content,
+  .about-content,
+  .scroll-line {
+    transition: none;
+    animation: none;
+  }
+  
+  .landing-section {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+  .feature-card,
+  .about-core-values,
+  .about-social {
+    border: 2px solid var(--color-text);
+  }
+  
+  .btn-hero-primary,
+  .btn-about-primary {
+    border: 2px solid white;
+  }
+}
+

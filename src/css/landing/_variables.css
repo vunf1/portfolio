@@ -1,0 +1,11 @@
+/* Landing Page Color Variables */
+
+/* Import design tokens */
+@import '../tokens.css';
+
+/* ===== COLOR VARIABLES ===== */
+:root {
+  --color-text: var(--color-gray-900);
+  --color-background: var(--color-white);
+}
+
