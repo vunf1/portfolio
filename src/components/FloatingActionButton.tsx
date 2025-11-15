@@ -21,11 +21,15 @@ export function FloatingActionButton({ className = '' }: FloatingActionButtonPro
   const targetLanguage = currentLanguage === 'en' ? 'pt-PT' : 'en'
   const flagClass = targetLanguage === 'pt-PT' ? 'fi fi-pt' : 'fi fi-gb'
 
+  const handleContactClick = () => {
+    setIsContactModalOpen(true)
+  }
+
   const fabItems: FABItem[] = [
     {
       id: 'contact',
       icon: 'fa-solid fa-comment-dots',
-      onClick: () => setIsContactModalOpen(true),
+      onClick: handleContactClick,
       ariaLabel: t('contact.title', 'Contact Me')
     },
     {
@@ -43,8 +47,13 @@ export function FloatingActionButton({ className = '' }: FloatingActionButtonPro
         <div key={item.id} className="fab-item-wrapper">
           <button
             className={`fab-item-static fab-item-${item.id}`}
-            onClick={item.onClick}
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              item.onClick()
+            }}
             aria-label={item.ariaLabel}
+            type="button"
           >
             {item.icon === 'flag-icon' ? (
               <span className={`${flagClass} fab-flag-icon`} aria-hidden="true"></span>
@@ -57,7 +66,9 @@ export function FloatingActionButton({ className = '' }: FloatingActionButtonPro
     </div>
       <ContactModal
         isOpen={isContactModalOpen}
-        onClose={() => setIsContactModalOpen(false)}
+        onClose={() => {
+          setIsContactModalOpen(false)
+        }}
       />
     </>
   )

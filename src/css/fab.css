@@ -9,10 +9,10 @@
   bottom: 24px !important;
   right: 24px;
   z-index: 9999 !important;
-  display: flex;
+  display: flex !important;
   flex-direction: column-reverse;
   gap: 12px;
-  pointer-events: auto;
+  pointer-events: auto !important;
   overflow: visible;
   max-width: calc(100vw - 48px);
   max-height: calc(100vh - 48px);
@@ -23,6 +23,9 @@
   transition: none;
   /* Add padding to prevent clipping when buttons scale */
   padding-right: 8px;
+  /* Ensure FAB is always visible and clickable */
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* FAB Item Wrapper - prevents layout shifts when buttons scale */
@@ -65,17 +68,17 @@
   background: var(--color-white);
   color: var(--color-gray-700);
   border: 1px solid rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  display: flex;
+  cursor: pointer !important;
+  display: flex !important;
   align-items: center;
   justify-content: center;
   font-size: 1.25rem;
   box-shadow: 
     0 4px 12px rgba(0, 0, 0, 0.15),
     0 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative;
+  position: relative !important;
   overflow: visible;
-  z-index: 10000;
+  z-index: 10000 !important;
   transition: 
     transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
@@ -87,6 +90,10 @@
   transform-origin: center center;
   /* Prevent affecting other buttons */
   will-change: transform;
+  /* Ensure button is always clickable */
+  pointer-events: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* Hover State - Smooth scale animation (only for default buttons without specific styles) */
@@ -193,6 +200,11 @@
   transform-origin: center center;
   /* Prevent affecting other buttons */
   will-change: transform;
+  /* Ensure contact button is always clickable */
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  z-index: 10001 !important;
+  position: relative !important;
 }
 
 .fab-item-contact:hover {
