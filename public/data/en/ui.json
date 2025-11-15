@@ -139,5 +139,45 @@
     "rating": "Rating",
     "subtitle": "What people say",
     "title": "Testimonials"
+  },
+  "contact": {
+    "title": "Contact Me",
+    "close": "Close",
+    "cancel": "Cancel",
+    "submit": "Send Message",
+    "submitting": "Sending...",
+    "success": "Thank you! Your message has been sent successfully.",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "phoneHint": "Optional, E.164 format",
+      "phoneExample": "Example: +351912345678",
+      "companyName": "Company Name",
+      "companyNamePlaceholder": "Your company name",
+      "companyIdentifier": "Company Identifier",
+      "companyIdentifierPlaceholder": "VAT number, tax ID, or company registration number",
+      "companyIdentifierHint": "Helps us identify and fetch your company information",
+      "subject": "Subject",
+      "subjectPlaceholder": "What is this regarding?",
+      "message": "Message",
+      "wordCount": "{{count}} / {{max}} words",
+      "optional": "Optional"
+    },
+    "errors": {
+      "nameRequired": "Name is required",
+      "nameInvalid": "Please enter a valid name (at least 2 characters, letters only)",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email address",
+      "phoneInvalid": "Please enter a valid phone number in E.164 format (e.g., +351912345678)",
+      "messageRequired": "Message is required",
+      "messageTooShort": "Message must be at least 10 characters",
+      "messageTooLong": "Message must not exceed {{max}} words. Current: {{current}} words.",
+      "subjectRequired": "Subject is required",
+      "subjectTooShort": "Subject must be at least 3 characters",
+      "submitFailed": "Failed to send message. Please try again.",
+      "timeout": "Request timed out. Please check your connection and try again.",
+      "networkError": "Network error. Please check your connection and try again."
+    }
   }
 }

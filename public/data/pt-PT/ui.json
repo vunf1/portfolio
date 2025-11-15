@@ -139,5 +139,45 @@
     "rating": "Classificação",
     "subtitle": "O que as pessoas dizem",
     "title": "Testemunhos"
+  },
+  "contact": {
+    "title": "Contacte-me",
+    "close": "Fechar",
+    "cancel": "Cancelar",
+    "submit": "Enviar Mensagem",
+    "submitting": "A enviar...",
+    "success": "Obrigado! A sua mensagem foi enviada com sucesso.",
+    "fields": {
+      "name": "Nome",
+      "email": "Email",
+      "phone": "Telefone",
+      "phoneHint": "Opcional, formato E.164",
+      "phoneExample": "Exemplo: +351912345678",
+      "companyName": "Nome da Empresa",
+      "companyNamePlaceholder": "Nome da sua empresa",
+      "companyIdentifier": "Identificador da Empresa",
+      "companyIdentifierPlaceholder": "Número de contribuinte, NIF, ou número de registo da empresa",
+      "companyIdentifierHint": "Ajuda-nos a identificar e obter informações da sua empresa",
+      "subject": "Assunto",
+      "subjectPlaceholder": "Sobre o que se trata?",
+      "message": "Mensagem",
+      "wordCount": "{{count}} / {{max}} palavras",
+      "optional": "Opcional"
+    },
+    "errors": {
+      "nameRequired": "O nome é obrigatório",
+      "nameInvalid": "Por favor, introduza um nome válido (mínimo 2 caracteres, apenas letras)",
+      "emailRequired": "O email é obrigatório",
+      "emailInvalid": "Por favor, introduza um endereço de email válido",
+      "phoneInvalid": "Por favor, introduza um número de telefone válido no formato E.164 (ex: +351912345678)",
+      "messageRequired": "A mensagem é obrigatória",
+      "messageTooShort": "A mensagem deve ter pelo menos 10 caracteres",
+      "messageTooLong": "A mensagem não deve exceder {{max}} palavras. Atual: {{current}} palavras.",
+      "subjectRequired": "O assunto é obrigatório",
+      "subjectTooShort": "O assunto deve ter pelo menos 3 caracteres",
+      "submitFailed": "Falha ao enviar mensagem. Por favor, tente novamente.",
+      "timeout": "Tempo de espera esgotado. Por favor, verifique a sua ligação e tente novamente.",
+      "networkError": "Erro de rede. Por favor, verifique a sua ligação e tente novamente."
+    }
   }
 }
