@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'preact/hooks'
 import { useTranslation } from '../../contexts/TranslationContext'
+import { ContactModal } from '../ui/ContactModal'
 import type { Personal } from '../../types/portfolio'
 import logoUrl from '@/img/logo.png'
 
@@ -10,6 +11,7 @@ interface LandingHeroProps {
 
 export function LandingHero({ personal, className = '' }: LandingHeroProps) {
   const [isVisible, setIsVisible] = useState(false)
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false)
   const { currentLanguage } = useTranslation()
 
   useEffect(() => {
@@ -58,10 +60,10 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
           <div className="hero-actions">
             <button 
               className="btn-hero-primary"
-              onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => setIsContactModalOpen(true)}
             >
-              <span>{currentLanguage === 'pt-PT' ? 'Sobre' : 'About'}</span>
-              <i className="fa-solid fa-circle-info"></i>
+              <span>{currentLanguage === 'pt-PT' ? 'Contacto' : 'Contact'}</span>
+              <i className="fa-solid fa-comment-dots"></i>
             </button>
             
             <button 
@@ -70,6 +72,14 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
             >
               <i className="fa-solid fa-briefcase"></i>
               <span>{currentLanguage === 'pt-PT' ? 'Serviços' : 'Services'}</span>
+            </button>
+            
+            <button 
+              className="btn-hero-secondary"
+              onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              <i className="fa-solid fa-user"></i>
+              <span>{currentLanguage === 'pt-PT' ? 'Sobre' : 'About'}</span>
             </button>
           </div>
         </div>
@@ -97,6 +107,10 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
         <div className="scroll-line"></div>
         <span>{currentLanguage === 'pt-PT' ? 'Deslize para explorar' : 'Scroll to explore'}</span>
       </div>
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
     </section>
   )
 }
