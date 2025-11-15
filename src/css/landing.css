@@ -38,14 +38,19 @@ html.landing-page-active body .landing-page {
 
 /* Use left-align for better readability, especially for Portuguese */
 .landing-page p,
-.landing-page .hero-summary,
-.landing-page .hero-tagline,
+.landing-page .hero-summary {
+  text-align: center;
+  word-spacing: normal;
+  letter-spacing: normal;
+}
+
 .landing-page .about-content p,
 .landing-page .about-subtitle,
 .landing-page .section-subtitle,
 .landing-page .feature-description,
 .landing-page .feature-title,
-.landing-page .about-description {
+.landing-page .about-description,
+.landing-page .approach-description {
   text-align: left;
   word-spacing: normal;
   letter-spacing: normal;
@@ -280,6 +285,7 @@ body.landing-page-active .landing-page {
   -webkit-text-fill-color: unset !important;
   animation: none !important;
   overflow: visible !important;
+  text-align: center;
 }
 
 .landing-hero .hero-title-main,
@@ -318,6 +324,12 @@ body.landing-page-active .landing-page {
   text-align: left;
   word-spacing: normal;
   letter-spacing: normal;
+}
+
+/* Center only the hero-tagline in landing-hero section */
+.landing-hero .hero-tagline,
+.landing-hero .hero-text .hero-tagline {
+  text-align: center;
 }
 
 .hero-summary {
@@ -451,11 +463,12 @@ body.landing-page-active .landing-page {
 .hero-logo-image {
   width: 100%;
   height: auto;
-  max-width: 500px;
-  max-height: 500px;
+  max-width: 625px;
+  max-height: 625px;
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  transform: scale(1.25);
 }
 
 .hero-image-border {
@@ -465,7 +478,7 @@ body.landing-page-active .landing-page {
 .hero-logo-subtitle {
   margin-top: var(--space-6);
   text-align: center;
-  font-size: var(--font-size-lg);
+  font-size: calc(var(--font-size-lg) * 1.25);
   font-weight: var(--font-weight-semibold);
   color: var(--color-primary);
   letter-spacing: 0.1em;
@@ -476,7 +489,7 @@ body.landing-page-active .landing-page {
   margin-left: auto;
   margin-right: auto;
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(10px) scale(1.25);
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
   position: relative;
   z-index: 2;
@@ -484,7 +497,7 @@ body.landing-page-active .landing-page {
 
 .hero-visual-visible .hero-logo-subtitle {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1.25);
 }
 
 .hero-highlights {
@@ -611,6 +624,18 @@ body.landing-page-active .landing-page {
   color: var(--color-gray-600);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+  animation: scrollIndicatorSlide 2s ease-in-out infinite;
+}
+
+@keyframes scrollIndicatorSlide {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+    opacity: 1;
+  }
 }
 
 .scroll-line {
@@ -829,6 +854,7 @@ body.landing-page-active .landing-page {
   line-height: var(--line-height-relaxed);
   color: var(--color-gray-700);
   margin-bottom: var(--space-6);
+  text-align: left !important;
 }
 
 .approach-highlights {
@@ -1460,8 +1486,9 @@ body.landing-page-active .landing-page {
   }
   
   .hero-logo-image {
-    max-width: 400px;
-    max-height: 400px;
+    max-width: 500px;
+    max-height: 500px;
+    transform: scale(1.25);
   }
   
   .hero-profile-picture {
@@ -1557,13 +1584,19 @@ body.landing-page-active .landing-page {
   }
   
   .hero-logo-image {
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 375px;
+    max-height: 375px;
+    transform: scale(1.25);
   }
   
   .hero-logo-subtitle {
-    font-size: var(--font-size-base);
+    font-size: calc(var(--font-size-base) * 1.25);
     margin-top: var(--space-4);
+    transform: scale(1.25);
+  }
+  
+  .hero-visual-visible .hero-logo-subtitle {
+    transform: translateY(0) scale(1.25);
   }
   
   .hero-profile-picture {
@@ -1688,8 +1721,13 @@ body.landing-page-active .landing-page {
   }
   
   .hero-logo-subtitle {
-    font-size: var(--font-size-sm);
+    font-size: calc(var(--font-size-sm) * 1.25);
     letter-spacing: 0.05em;
+    transform: scale(1.25);
+  }
+  
+  .hero-visual-visible .hero-logo-subtitle {
+    transform: translateY(0) scale(1.25);
   }
   
   .features-title,
@@ -1707,8 +1745,9 @@ body.landing-page-active .landing-page {
   }
   
   .hero-logo-image {
-    max-width: 250px;
-    max-height: 250px;
+    max-width: 312px;
+    max-height: 312px;
+    transform: scale(1.25);
   }
   
   .hero-profile-picture {

@@ -3,12 +3,12 @@
 
 /* ===== FLOATING ACTION BUTTON - REDESIGNED ===== */
 
-/* FAB Container */
+/* FAB Container - Properly structured with no animations */
 .fab-items-static {
-  position: fixed;
-  bottom: 24px;
+  position: fixed !important;
+  bottom: 24px !important;
   right: 24px;
-  z-index: 9999;
+  z-index: 9999 !important;
   display: flex;
   flex-direction: column-reverse;
   gap: 12px;
@@ -16,26 +16,35 @@
   overflow: visible;
   max-width: calc(100vw - 48px);
   max-height: calc(100vh - 48px);
+  /* Allow overflow for scaled buttons - remove contain that clips */
+  isolation: isolate;
+  /* No animations on container */
+  animation: none;
+  transition: none;
+  /* Add padding to prevent clipping when buttons scale */
+  padding-right: 8px;
 }
 
-/* FAB Item Wrapper - prevents label from causing overflow */
+/* FAB Item Wrapper - prevents layout shifts when buttons scale */
 .fab-item-wrapper {
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   /* Ensure wrapper has no background, border, or shadow */
   background: transparent;
   border: none;
   box-shadow: none;
   padding: 0;
   margin: 0;
-  /* Prevent wrapper from affecting document layout */
-  contain: layout style;
+  /* Fixed size to prevent layout shifts when button scales */
+  width: 56px;
+  height: 56px;
+  /* Allow overflow for scaled buttons - remove contain that clips */
   /* Ensure wrapper doesn't extend beyond viewport */
   max-width: 100vw;
-  /* Prevent horizontal overflow - clip anything extending beyond viewport */
-  overflow-x: hidden;
-  overflow-y: visible;
+  /* Allow overflow for scaled buttons */
+  overflow: visible;
 }
 
 /* Account for scrollbar width - position FAB to the left of scrollbar */
@@ -43,6 +52,8 @@
   .fab-items-static {
     right: calc(24px + 17px); /* Standard scrollbar width (15-17px) */
     max-width: calc(100vw - 48px - 17px);
+    /* Add extra padding for scaled buttons */
+    padding-right: 8px;
   }
 }
 
@@ -66,32 +77,32 @@
   overflow: visible;
   z-index: 10000;
   transition: 
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background-color 0.2s ease;
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   isolation: isolate;
   flex-shrink: 0;
+  transform-origin: center center;
+  /* Prevent affecting other buttons */
+  will-change: transform;
 }
 
-/* Hover State - Simple and Clean */
-.fab-item-static:hover {
-  transform: translateY(-2px);
+/* Hover State - Smooth scale animation (only for default buttons without specific styles) */
+.fab-item-static:hover:not(.fab-item-contact):not(.fab-item-language):not(.fab-item-theme) {
+  transform: translateY(-2px) scale(1.15);
   box-shadow: 
     0 6px 16px rgba(0, 0, 0, 0.2),
     0 3px 6px rgba(0, 0, 0, 0.15);
-}
-
-/* Ensure language and theme buttons override base hover shadow */
-.fab-item-language:hover,
-.fab-item-theme:hover {
-  /* These have their own hover shadows defined below */
+  /* Keep original width/height to prevent layout shift */
+  width: 56px;
+  height: 56px;
 }
 
 /* Active State */
 .fab-item-static:active {
-  transform: translateY(0) scale(0.95);
+  transform: translateY(0) scale(1.05);
   transition: transform 0.1s ease;
 }
 
@@ -118,6 +129,7 @@
   background-repeat: no-repeat;
   border-radius: 2px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .fab-item-static .fab-flag-icon.fi {
@@ -132,78 +144,7 @@
   line-height: 1;
 }
 
-/* ===== LABEL - Clean Design ===== */
-.fab-item-label {
-  position: absolute;
-  right: calc(100% + 12px);
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.9);
-  color: var(--color-white);
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  z-index: 10001;
-  /* Constrain label width to prevent overflow - ensure it fits in available space */
-  /* Button at right: ~41px, button width: 56px, gap: 12px, margin: 12px */
-  /* Available space from button left edge to viewport left: 100vw - 41px - 56px - 12px - 12px */
-  max-width: min(200px, calc(100vw - 121px));
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  backdrop-filter: blur(8px);
-  will-change: opacity;
-}
-
-/* Specific fix for language button label - Portuguese text "Mudar para inglês" is longer */
-.fab-item-language .fab-item-label {
-  /* Smaller max-width for longer Portuguese text to prevent overflow */
-  /* More conservative calculation to ensure it never extends beyond viewport */
-  max-width: min(150px, calc(100vw - 160px));
-  /* Ensure text truncates with ellipsis if too long */
-  text-overflow: ellipsis;
-}
-
-/* Mobile: labels hidden, so no overflow issues */
-@media (max-width: 767px) {
-  .fab-item-label {
-    display: none;
-  }
-}
-
-/* Label Arrow */
-.fab-item-label::after {
-  content: '';
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  border: 6px solid transparent;
-  border-left-color: rgba(0, 0, 0, 0.9);
-  pointer-events: none;
-}
-
-/* Label on Hover - Only show when hovering */
-.fab-item-static:hover .fab-item-label {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Ensure labels don't extend beyond viewport */
-@media (max-width: 480px) {
-  .fab-item-label {
-    max-width: calc(100vw - 100px);
-    font-size: 0.75rem;
-    padding: 6px 10px;
-  }
-}
+/* Labels removed - no longer used */
 
 /* ===== THEME BUTTON ===== */
 .fab-item-theme {
@@ -214,6 +155,14 @@
   box-shadow: 
     0 4px 12px rgba(255, 193, 7, 0.25),
     0 2px 4px rgba(255, 193, 7, 0.15);
+  /* Smooth transitions for hover scale */
+  transition: 
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+  /* Prevent affecting other buttons */
+  will-change: transform;
 }
 
 .fab-item-theme:hover {
@@ -222,7 +171,58 @@
   box-shadow: 
     0 6px 16px rgba(255, 193, 7, 0.3),
     0 3px 6px rgba(255, 193, 7, 0.2);
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.15);
+  /* Keep original width/height to prevent layout shift */
+  width: 56px;
+  height: 56px;
+}
+
+/* ===== CONTACT BUTTON ===== */
+.fab-item-contact {
+  /* Remove background - make it transparent like language button */
+  background: transparent;
+  color: var(--color-primary, #2196f3);
+  border: none;
+  /* Remove shadow completely */
+  box-shadow: none !important;
+  /* Remove outline */
+  outline: none;
+  /* Smooth transitions for hover scale */
+  transition: 
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+  /* Prevent affecting other buttons */
+  will-change: transform;
+}
+
+.fab-item-contact:hover {
+  /* Smooth scale animation on hover */
+  background: transparent;
+  color: var(--color-primary, #2196f3);
+  box-shadow: none !important;
+  transform: scale(1.15);
+  /* Keep original width/height to prevent layout shift */
+  width: 56px;
+  height: 56px;
+}
+
+.fab-item-contact:active {
+  background: transparent;
+  transform: scale(1.05);
+}
+
+/* Contact icon - same size as flag icon */
+.fab-item-contact i {
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  line-height: 1;
+  display: inline-block;
+  transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fab-item-contact:hover i {
+  font-size: 3.45rem;
 }
 
 /* ===== LANGUAGE BUTTON ===== */
@@ -233,14 +233,33 @@
   border: none;
   /* Remove shadow completely - override base shadow with !important */
   box-shadow: none !important;
+  /* Smooth transitions for hover scale */
+  transition: 
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+  /* Prevent affecting other buttons */
+  will-change: transform;
 }
 
 .fab-item-language:hover {
-  /* Keep hover visually minimal: no background or shadow, just slight lift */
+  /* Smooth scale animation on hover */
   background: transparent;
   /* No shadow on hover either - override base hover shadow */
   box-shadow: none !important;
-  transform: translateY(-2px);
+  transform: scale(1.15);
+  /* Keep original width/height to prevent layout shift */
+  width: 56px;
+  height: 56px;
+}
+
+.fab-item-language:active {
+  transform: scale(1.05);
+}
+
+/* Flag icon scale on hover */
+.fab-item-language:hover .fab-flag-icon {
+  transform: scale(1.15);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 
@@ -270,10 +289,6 @@
     display: flex !important;
     visibility: visible !important;
   }
-
-  .fab-item-label {
-    display: none;
-  }
 }
 
 /* Touch devices */
@@ -281,10 +296,6 @@
   .fab-item-static {
     width: 52px;
     height: 52px;
-  }
-
-  .fab-item-label {
-    display: none;
   }
 
   .fab-item-static:active {
@@ -301,8 +312,7 @@
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .fab-item-static,
-  .fab-item-label {
+  .fab-item-static {
     transition: none;
   }
 
@@ -316,26 +326,21 @@
   box-sizing: border-box;
 }
 
-/* Prevent FAB from causing horizontal scrollbars */
+/* Additional container constraints */
 .fab-items-static {
-  contain: layout style;
   /* Ensure container doesn't extend beyond viewport */
   max-width: 100vw;
   max-height: 100vh;
-}
-
-/* Force positioning - ensure FAB stays above scrollbar and doesn't overlap */
-.fab-items-static {
-  position: fixed !important;
-  bottom: 24px !important;
-  z-index: 9999 !important;
-  isolation: isolate;
+  /* Ensure padding is maintained for scaled buttons */
+  padding-right: 8px;
 }
 
 /* Desktop: position to account for scrollbar */
 @media (min-width: 768px) {
   .fab-items-static {
     right: calc(24px + 17px) !important;
+    /* Add extra padding for scaled buttons */
+    padding-right: 8px !important;
   }
 }
 
@@ -347,6 +352,8 @@
     display: flex !important;
     visibility: visible !important;
     opacity: 1 !important;
+    /* Add extra padding for scaled buttons */
+    padding-right: 8px !important;
   }
 }
 

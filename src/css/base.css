@@ -26,9 +26,8 @@ p,
 .project-description,
 .interest-description,
 .about-content p,
-.hero-summary,
-.hero-tagline {
-  text-align: justify;
+.hero-summary {
+  text-align: center;
 }
 
 /* Portfolio Container - Main Layout */
