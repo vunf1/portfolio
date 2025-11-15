@@ -1,0 +1,582 @@
+/* ===== PREMIUM COMPACT CONTACT MODAL ===== */
+
+/* Modal Backdrop - Premium blur effect */
+.contact-modal-premium {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: modalBackdropFadeIn 0.3s ease-out;
+  overflow: hidden;
+}
+
+@keyframes modalBackdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Dialog - Centered positioning */
+.contact-modal-dialog {
+  position: fixed;
+  width: auto;
+  max-width: 90vw;
+  margin: 0;
+  pointer-events: none;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation: modalFadeIn 0.3s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Modal Content - Modern compact design */
+.contact-modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  pointer-events: auto;
+  background: var(--color-white, #ffffff);
+  border-radius: 20px;
+  box-shadow: 
+    0 20px 60px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+  outline: 0;
+  overflow: visible;
+  animation: modalContentFadeIn 0.3s ease-out;
+  max-height: calc(100vh - 4rem);
+}
+
+@keyframes modalContentFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Premium Header - Using website color palette */
+.contact-modal-content .modal-header {
+  background: var(--primary-gradient, linear-gradient(135deg, #4facfe 0%, #00f2fe 100%));
+  color: var(--color-white, #ffffff);
+  border: none;
+  border-radius: 0;
+  padding: 1.25rem 2rem;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  flex: 0 0 auto;
+}
+
+.contact-modal-content .modal-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.05) 100%);
+  pointer-events: none;
+}
+
+/* Modal Title */
+.contact-modal-content .modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  letter-spacing: -0.01em;
+  font-family: var(--font-family-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  line-height: 1.3;
+}
+
+/* Modal Body - Compact form styling */
+.contact-modal-content .modal-body {
+  padding: 1.5rem 2rem;
+  background: var(--color-white, #ffffff);
+  position: relative;
+  flex: 0 1 auto;
+  overflow: visible;
+  min-height: 0;
+  max-height: none;
+}
+
+/* Form Row - For side-by-side fields */
+.contact-modal-content .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.contact-modal-content .form-row:last-child {
+  margin-bottom: 0;
+}
+
+/* Form Group - Compact spacing */
+.contact-modal-content .form-group {
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.contact-modal-content .form-group:last-child {
+  margin-bottom: 0;
+}
+
+.contact-modal-content .form-group-half {
+  margin-bottom: 0;
+}
+
+/* Form Label - Modern typography */
+.contact-modal-content .form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--neutral-700, #616161);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+  font-family: var(--font-family-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+}
+
+.contact-modal-content .form-label .text-danger {
+  color: var(--color-danger, #dc3545);
+  margin-left: 0.25rem;
+}
+
+.contact-modal-content .form-label .text-muted {
+  color: var(--neutral-500, #9e9e9e);
+  font-weight: 400;
+  font-size: 0.8125rem;
+}
+
+/* Form Control - Modern input styling */
+.contact-modal-content .form-control {
+  width: 100%;
+  padding: 0.875rem 1.125rem;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--neutral-900, #212121);
+  background-color: var(--color-white, #ffffff);
+  border: 1.5px solid var(--neutral-300, #e0e0e0);
+  border-radius: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: var(--font-family-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  appearance: none;
+  -webkit-appearance: none;
+  transform: scale(1);
+}
+
+.contact-modal-content .form-control:focus {
+  outline: none;
+  border-color: var(--primary-500, #2196f3);
+  background-color: var(--color-white, #ffffff);
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.15), 0 0 0 1px var(--primary-500, #2196f3);
+  transform: scale(1.01);
+  animation: inputFocusPulse 0.4s ease-out;
+}
+
+@keyframes inputFocusPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.1);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.2);
+  }
+  100% {
+    transform: scale(1.01);
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.15), 0 0 0 1px var(--primary-500, #2196f3);
+  }
+}
+
+.contact-modal-content .form-control::placeholder {
+  color: var(--neutral-400, #bdbdbd);
+  opacity: 1;
+}
+
+.contact-modal-content .form-control:disabled {
+  background-color: var(--neutral-100, #f5f5f5);
+  color: var(--neutral-500, #9e9e9e);
+  cursor: not-allowed;
+  border-color: var(--neutral-200, #eeeeee);
+}
+
+/* Invalid Input */
+.contact-modal-content .form-control.is-invalid {
+  border-color: var(--color-danger, #dc3545);
+  background-color: #fff5f5;
+}
+
+.contact-modal-content .form-control.is-invalid:focus {
+  border-color: var(--color-danger, #dc3545);
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+/* Textarea */
+.contact-modal-content textarea.form-control {
+  resize: vertical;
+  min-height: 70px;
+  max-height: 100px;
+}
+
+/* Form Text Hint */
+.contact-modal-content .form-text {
+  font-size: 0.8125rem;
+  color: var(--neutral-500, #9e9e9e);
+  margin-top: 0.375rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* Invalid Feedback */
+.contact-modal-content .invalid-feedback {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--color-danger, #dc3545);
+  margin-top: 0.375rem;
+  font-weight: 500;
+  animation: errorFadeIn 0.3s ease-out;
+}
+
+@keyframes errorFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Footer - Natural button styling */
+.contact-modal-content .modal-footer {
+  background: var(--neutral-50, #fafafa);
+  border-top: 1px solid var(--neutral-200, #eeeeee);
+  padding: 1rem 2rem;
+  border-radius: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.875rem;
+  flex: 0 0 auto;
+}
+
+/* Premium Buttons - Using website color palette */
+.contact-modal-content .btn {
+  padding: 0.875rem 1.75rem;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-family-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+.contact-modal-content .btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+}
+
+.contact-modal-content .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Secondary Button */
+.contact-modal-content .btn-outline-secondary {
+  background: var(--color-white, #ffffff);
+  color: var(--neutral-700, #616161);
+  border: 1.5px solid var(--neutral-300, #e0e0e0);
+}
+
+.contact-modal-content .btn-outline-secondary:hover:not(:disabled) {
+  background: var(--neutral-50, #fafafa);
+  border-color: var(--neutral-400, #bdbdbd);
+  color: var(--neutral-900, #212121);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.contact-modal-content .btn-outline-secondary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Primary Button */
+.contact-modal-content .btn-primary {
+  background: var(--primary-gradient, linear-gradient(135deg, #4facfe 0%, #00f2fe 100%));
+  color: var(--color-white, #ffffff);
+  box-shadow: 0 2px 8px rgba(79, 172, 254, 0.3);
+}
+
+.contact-modal-content .btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #3d9bfe 0%, #00e0fe 100%);
+  box-shadow: 0 4px 12px rgba(79, 172, 254, 0.4);
+  transform: translateY(-1px);
+}
+
+.contact-modal-content .btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(79, 172, 254, 0.3);
+}
+
+/* Alert Styling */
+.contact-modal-content .alert {
+  border-radius: 12px;
+  border: 1.5px solid;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  font-family: var(--font-family-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  animation: alertFadeIn 0.3s ease-out;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+@keyframes alertFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.contact-modal-content .alert-success {
+  background: linear-gradient(135deg, 
+    rgba(76, 175, 80, 0.1) 0%, 
+    rgba(56, 142, 60, 0.1) 100%);
+  border-color: var(--success-500, #4caf50);
+  color: var(--success-600, #388e3c);
+}
+
+.contact-modal-content .alert-danger {
+  background: linear-gradient(135deg, 
+    rgba(220, 53, 69, 0.1) 0%, 
+    rgba(198, 40, 40, 0.1) 100%);
+  border-color: var(--color-danger, #dc3545);
+  color: var(--color-danger, #dc3545);
+}
+
+.contact-modal-content .alert i {
+  margin-right: 0.5rem;
+}
+
+/* Spinner */
+.contact-modal-content .spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.15em;
+}
+
+/* Mobile Responsive - Starting at 1025px */
+@media (max-width: 1025px) {
+  .contact-modal-premium {
+    padding: 0;
+  }
+
+  .contact-modal-dialog {
+    max-width: 100vw;
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    left: 0;
+    top: 0;
+    transform: none;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    animation: modalFadeInMobile 0.3s ease-out;
+  }
+
+  @keyframes modalFadeInMobile {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .contact-modal-content {
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .contact-modal-content .modal-header {
+    padding: 0.875rem 1.25rem;
+    flex: 0 0 auto;
+  }
+
+  .contact-modal-content .modal-title {
+    font-size: 1.25rem;
+  }
+
+  .contact-modal-content .modal-body {
+    padding: 0.875rem 1.25rem;
+    flex: 1 1 auto;
+    overflow-y: visible;
+    overflow-x: hidden;
+    max-height: none;
+  }
+
+  .contact-modal-content .form-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-modal-content .form-group {
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-modal-content .form-label {
+    font-size: 0.8125rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .contact-modal-content .form-control {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+  }
+
+  .contact-modal-content textarea.form-control {
+    min-height: 50px;
+    max-height: 70px;
+  }
+
+  .contact-modal-content .form-text {
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  .contact-modal-content .invalid-feedback {
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  .contact-modal-content .alert {
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.875rem;
+    font-size: 0.875rem;
+  }
+
+  .contact-modal-content .modal-footer {
+    padding: 0.75rem 1.25rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 0 0 auto;
+  }
+
+  .contact-modal-content .btn {
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+  }
+
+  /* Enhanced focus animation for mobile */
+  .contact-modal-content .form-control:focus {
+    transform: scale(1.02);
+    animation: inputFocusPulseMobile 0.4s ease-out;
+  }
+
+  @keyframes inputFocusPulseMobile {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.1);
+    }
+    50% {
+      transform: scale(1.03);
+      box-shadow: 0 0 0 5px rgba(33, 150, 243, 0.25);
+    }
+    100% {
+      transform: scale(1.02);
+      box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.15), 0 0 0 1px var(--primary-500, #2196f3);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-modal-content .modal-header {
+    padding: 1.25rem 1.25rem;
+  }
+
+  .contact-modal-content .modal-title {
+    font-size: 1.25rem;
+  }
+
+  .contact-modal-content .modal-body {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .contact-modal-content .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .contact-modal-content .form-control {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .contact-modal-content .modal-footer {
+    padding: 1.25rem 1.25rem;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .contact-modal-premium,
+  .contact-modal-dialog,
+  .contact-modal-content,
+  .contact-modal-content .form-control,
+  .contact-modal-content .btn,
+  .contact-modal-content .alert,
+  .contact-modal-content .invalid-feedback {
+    animation: none !important;
+    transition: none !important;
+  }
+}
