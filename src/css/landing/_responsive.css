@@ -54,6 +54,34 @@
   }
 }
 
+/* Fix for 1026px-1090px range where text gets cut off */
+@media (min-width: 1026px) and (max-width: 1090px) {
+  .hero-logo-subtitle {
+    font-size: calc(var(--font-size-base) * 1.1);
+    white-space: normal;
+    padding: 0 var(--space-4);
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    transform: scale(1.1);
+    letter-spacing: 0.08em;
+  }
+  
+  .hero-visual-visible .hero-logo-subtitle {
+    transform: translateY(0) scale(1.1);
+  }
+  
+  .hero-image-container {
+    width: 100%;
+    max-width: 100%;
+    padding: var(--space-4);
+    box-sizing: border-box;
+    overflow: visible;
+  }
+}
+
 @media (max-width: 1025px) {
   .hero-scroll-indicator {
     display: none;
@@ -126,6 +154,13 @@
     font-size: calc(var(--font-size-base) * 1.25);
     margin-top: var(--space-4);
     transform: scale(1.25);
+    white-space: normal;
+    padding: 0 var(--space-3);
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   
   .hero-visual-visible .hero-logo-subtitle {
@@ -291,6 +326,14 @@
     font-size: calc(var(--font-size-sm) * 1.25);
     letter-spacing: 0.05em;
     transform: scale(1.25);
+    white-space: normal;
+    padding: 0 var(--space-2);
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.4;
   }
   
   .hero-visual-visible .hero-logo-subtitle {
