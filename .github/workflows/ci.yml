@@ -71,6 +71,12 @@ jobs:
         run: npm run build:gh-pages
         env:
           NODE_ENV: production
+          # n8n Webhook Integration - Required for contact form
+          # These secrets must be configured in GitHub repository settings:
+          # Settings > Secrets and variables > Actions > New repository secret
+          # Add: VITE_N8N_WEBHOOK_URL and VITE_N8N_AUTH_TOKEN
+          VITE_N8N_WEBHOOK_URL: ${{ secrets.VITE_N8N_WEBHOOK_URL }}
+          VITE_N8N_AUTH_TOKEN: ${{ secrets.VITE_N8N_AUTH_TOKEN }}
           
       - name: Copy 404.html to dist
         run: cp 404.html dist/
