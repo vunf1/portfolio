@@ -116,6 +116,14 @@
   font-size: var(--font-size-lg);
   width: 20px;
   text-align: center;
+  display: inline-block;
+  font-family: "Font Awesome 6 Brands", "Font Awesome 6 Free", "Font Awesome 6 Pro", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .social-name {
@@ -215,6 +223,14 @@
   
   .social-link-item i {
     font-size: var(--font-size-base);
+    display: inline-block;
+    font-family: "Font Awesome 6 Brands", "Font Awesome 6 Free", "Font Awesome 6 Pro", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
@@ -342,6 +358,14 @@
   font-size: var(--font-size-lg);
   width: 20px;
   text-align: center;
+  display: inline-block;
+  font-family: "Font Awesome 6 Brands", "Font Awesome 6 Free", "Font Awesome 6 Pro", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .social-name {
@@ -441,6 +465,14 @@
   
   .social-link-item i {
     font-size: var(--font-size-base);
+    display: inline-block;
+    font-family: "Font Awesome 6 Brands", "Font Awesome 6 Free", "Font Awesome 6 Pro", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
@@ -451,4 +483,4 @@
 
 
 
-
+
