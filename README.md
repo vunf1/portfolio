@@ -42,11 +42,16 @@ portfolio/
 ├── src/                      # Source code
 │   ├── components/           # React/Preact components
 │   │   ├── ui/              # Reusable UI components
+│   │   ├── landing/         # Landing page components
+│   │   │   ├── LandingPage.tsx      # Main landing page
+│   │   │   ├── LandingHero.tsx     # Hero section
+│   │   │   ├── LandingFeatures.tsx  # Features section
+│   │   │   ├── LandingAbout.tsx     # About section
+│   │   │   └── LandingFooter.tsx     # Footer section
 │   │   ├── __tests__/       # Component tests
 │   │   ├── About.tsx        # About section
 │   │   ├── Contact.tsx      # Contact section
-│   │   ├── ContactPrivacyGate.tsx  # Privacy gate component
-│   │   ├── ContactUnlockForm.tsx   # Unlock form
+│   │   ├── FloatingActionButton.tsx  # FAB component
 │   │   └── ...              # Other sections
 │   ├── hooks/               # Custom React hooks
 │   │   ├── __tests__/       # Hook tests
@@ -68,8 +73,19 @@ portfolio/
 │   │   ├── grid.css         # Grid system
 │   │   ├── responsive.css   # Responsive styles
 │   │   ├── performance.css  # Performance optimizations
-│   │   └── components/    # Component-specific styles
-│   │   └── components.css   # Component styles
+│   │   ├── landing.css      # Landing page styles (entry point)
+│   │   ├── landing/         # Landing page modular CSS
+│   │   │   ├── _variables.css    # Landing color variables
+│   │   │   ├── _layout.css       # Landing layout & critical overrides
+│   │   │   ├── _animations.css   # Scroll animations
+│   │   │   ├── _hero.css         # Hero section styles
+│   │   │   ├── _features.css     # Features section styles
+│   │   │   ├── _about.css        # About section styles
+│   │   │   ├── _footer.css       # Footer section styles
+│   │   │   ├── _responsive.css   # Responsive design rules
+│   │   │   └── _accessibility.css # Accessibility features
+│   │   └── components/      # Component-specific styles
+│   │       └── components.css   # Component styles
 │   ├── utils/               # Utility functions
 │   │   ├── __tests__/       # Utility tests
 │   │   └── validation.ts    # Form validation
@@ -88,10 +104,17 @@ portfolio/
 │   └── _headers             # Security headers
 ├── scripts/                 # Build and utility scripts
 │   ├── copy-data.cjs        # Data copying script
-│   └── optimize-images.cjs  # Image optimization
+│   ├── optimize-images.cjs  # Image optimization
+│   └── verify-dist.js       # Build verification script
+├── .github/                 # GitHub configuration
+│   └── workflows/           # GitHub Actions workflows
+│       ├── ci.yml          # CI/CD pipeline
+│       ├── quality.yml     # Quality assurance
+│       └── security.yml    # Security & dependencies
 ├── vite.config.ts           # Vite configuration
 ├── tsconfig.json            # TypeScript configuration
 ├── vitest.config.ts         # Test configuration
+├── postcss.config.cjs       # PostCSS configuration
 ├── package.json             # Dependencies and scripts
 └── README.md                # This file
 ```
@@ -179,31 +202,49 @@ VITE_CDN_URL=https://your-cdn-domain.com
 VITE_ASSET_OPTIMIZATION=true
 
 # n8n Webhook Integration
-# Configure your n8n webhook URL for contact form submissions
-# If not set, defaults to: https://n8n.jmsit.cloud/webhook-test/bf8c26ff-3f60-412d-b244-d170267fa9e0
+# REQUIRED: These environment variables are mandatory for the contact form to work
+# Copy .env.example to .env.local and fill in your actual values
 VITE_N8N_WEBHOOK_URL=https://n8n.jmsit.cloud/webhook-test/your-webhook-id
-# Authentication token for webhook (sent as custom header, default header name: 'Authorization')
-# If not set, uses the default authentication token
+# Authentication token for webhook (sent as custom header, default header name: 'X-API-Key')
 # Supports both VITE_N8N_AUTH_TOKEN (new) and VITE_N8N_JWT_TOKEN (legacy) for backward compatibility
 VITE_N8N_AUTH_TOKEN=your-auth-token-here
 ```
 
-> **⚠️ Security Note**: Never commit `.env.local` or `.env` files to version control. The `.gitignore` file already excludes these files to prevent accidental commits of sensitive data.
+> **⚠️ CRITICAL SECURITY WARNING**: 
+> - **NEVER commit `.env.local`, `.env.production`, or any `.env*` files with real values to version control**
+> - The `.gitignore` file already excludes these files to prevent accidental commits
+> - **In production builds, these environment variables are REQUIRED** - the build will fail if they are missing
+> - For GitHub Actions CI/CD, configure these as GitHub Secrets (see CI/CD section below)
+> - Use `.env.example` as a template only - it contains placeholders, not real values
 
 ### **n8n Webhook Integration**
 
 The portfolio includes a contact form that sends submissions to an n8n webhook for processing. The integration is handled by the `N8nClient` class located in `src/utils/n8nClient.ts`.
 
 **Configuration:**
-- Set `VITE_N8N_WEBHOOK_URL` in your `.env.local` file with your n8n webhook URL
-- Set `VITE_N8N_AUTH_TOKEN` in your `.env.local` file with your authentication token
-- If not configured, the system uses default values (webhook URL and authentication token)
+
+**REQUIRED Environment Variables:**
+- `VITE_N8N_WEBHOOK_URL`: Your n8n webhook URL (REQUIRED in production)
+- `VITE_N8N_AUTH_TOKEN`: Your n8n authentication token (REQUIRED in production)
+
+**Setup Instructions:**
+1. Copy `.env.example` to `.env.local`
+2. Fill in your actual n8n webhook URL and authentication token
+3. For production builds, create `.env.production` with production values
+4. For GitHub Actions, configure GitHub Secrets (see CI/CD section)
+
+**Important Notes:**
+- These environment variables are **REQUIRED** in production - builds will fail if missing
+- In development, the app will warn if variables are missing but may still run (for testing)
+- Never commit `.env.local` or `.env.production` files with real values
 - The webhook receives contact form data in JSON format with the following structure:
   ```json
   {
     "name": "John Doe",
     "email": "john@example.com",
     "phone": "+351912345678",
+    "companyName": "Company Inc.",
+    "companyIdentifier": "PT123456789",
     "subject": "Project Inquiry",
     "message": "Hello, I'm interested in...",
     "timestamp": "2024-01-01T00:00:00.000Z"
@@ -220,10 +261,10 @@ The `N8nClient` supports three authentication methods compatible with n8n webhoo
      webhookUrl: 'https://n8n.jmsit.cloud/webhook-test/...',
      authToken: 'your-token',
      authMethod: 'header',
-     authHeaderName: 'Authorization' // or 'X-API-Key', 'X-Auth-Token', etc.
+     authHeaderName: 'X-API-Key' // Default: 'X-API-Key' (or 'Authorization', 'X-Auth-Token', etc.)
    })
    ```
-   Sends: `Authorization: <token>` (or custom header name)
+   Sends: `X-API-Key: <token>` (default) or custom header name
 
 2. **Bearer Auth**: Standard Bearer token authentication
    ```typescript
@@ -503,24 +544,116 @@ npm run performance:budget
 
 ## 🚀 **Deployment & CI/CD**
 
-### **Deployment Options**
-```bash
-# GitHub Pages deployment
-npm run deploy
+### **GitHub Pages Deployment**
 
+The project uses GitHub Actions for automated deployment to GitHub Pages:
+
+- **Automatic**: Deploys automatically on push to `main` or `master` branch
+- **Method**: GitHub Pages Actions (`actions/deploy-pages@v4`)
+- **Build**: Uses `npm run build:gh-pages` to create production build
+- **Artifact**: Uploads `./dist` folder as deployment artifact
+- **No gh-pages branch**: Uses GitHub Pages Actions workflow, not branch-based deployment
+- **404 Handling**: Includes `404.html` for SPA routing support
+
+**Manual Deployment:**
+```bash
+# Build for GitHub Pages
+npm run build:gh-pages
+
+# Or use the deploy script (requires gh-pages CLI)
+npm run deploy
+```
+
+**Other Build Options:**
+```bash
 # Production build
 npm run build:production
 
 # Staging build
 npm run build:staging
+
+# Build with bundle analysis
+npm run build:analyze
 ```
 
+### **GitHub Secrets Configuration**
+
+**REQUIRED for Production Builds:**
+
+The CI/CD pipeline requires environment variables for the n8n webhook integration. Configure these as GitHub Secrets:
+
+1. Go to your repository on GitHub
+2. Navigate to **Settings** > **Secrets and variables** > **Actions**
+3. Click **New repository secret**
+4. Add the following secrets:
+   - **Name**: `VITE_N8N_WEBHOOK_URL`
+     - **Value**: Your n8n webhook URL (e.g., `https://n8n.jmsit.cloud/webhook-test/your-webhook-id`)
+   - **Name**: `VITE_N8N_AUTH_TOKEN`
+     - **Value**: Your n8n authentication token
+
+**Important:**
+- These secrets are used during the build process in GitHub Actions
+- They are injected as environment variables during `npm run build:gh-pages`
+- The build will fail if these secrets are not configured
+- Secrets are encrypted and never exposed in logs or build artifacts
+
 ### **CI/CD Pipeline**
-- **Automated Testing**: Runs on every commit
+
+The project includes three GitHub Actions workflows for automated CI/CD:
+
+- **Automated Testing**: Runs on every commit and pull request
 - **Security Audits**: Dependency vulnerability scanning
-- **Performance Budgets**: Lighthouse CI integration
 - **Type Checking**: TypeScript compilation validation
 - **Linting**: Code quality enforcement
+- **Quality Assurance**: Component validation and bundle analysis on PRs
+- **Automated Deployment**: Automatic deployment to GitHub Pages on main/master branch
+
+### **GitHub Actions Workflows**
+
+The project uses three GitHub Actions workflows for continuous integration and deployment:
+
+#### **CI/CD Pipeline** (`.github/workflows/ci.yml`)
+- **Triggers**: 
+  - Push to `main` or `master` branch
+  - Pull requests to `main` or `master`
+  - Manual workflow dispatch
+- **Jobs**:
+  - `test`: Type checking, linting, test execution with coverage, security audit
+  - `build`: Production build for GitHub Pages (main/master only)
+  - `deploy`: Deploy to GitHub Pages using `actions/deploy-pages@v4` (main/master only)
+- **Permissions**: `contents: read`, `pages: write`, `id-token: write`
+- **Concurrency**: Single deployment per branch (does not cancel in-progress)
+
+#### **Quality Assurance** (`.github/workflows/quality.yml`)
+- **Triggers**: 
+  - Pull requests to `main` or `master`
+  - Manual workflow dispatch
+- **Jobs**:
+  - `quality`: Component structure validation, bundle size analysis, PR comments with quality metrics
+- **Features**:
+  - Validates UI component structure
+  - Checks design system files (tokens, component CSS)
+  - Analyzes bundle sizes
+  - Posts quality report as PR comment
+
+#### **Security & Dependencies** (`.github/workflows/security.yml`)
+- **Triggers**: 
+  - Weekly schedule (Mondays at 9 AM UTC)
+  - Pull requests to any branch
+  - Manual workflow dispatch
+- **Jobs**:
+  - `security`: Security audit, dependency check, component security validation
+- **Features**:
+  - Runs `npm audit` for vulnerability scanning
+  - Checks for outdated packages
+  - Validates component security
+  - Generates dependency report artifact
+  - Posts security report as PR comment
+
+**Workflow Configuration:**
+- All workflows use Node.js 18 (LTS)
+- Dependencies installed with `npm ci` for reproducible builds
+- Cache enabled for faster builds
 
 ### **Browser Support**
 - ✅ **Chrome** 90+ (ES2020 support)
