@@ -177,13 +177,102 @@ VITE_ANALYTICS_ID=your-analytics-id-here
 # CDN Configuration (optional)
 VITE_CDN_URL=https://your-cdn-domain.com
 VITE_ASSET_OPTIMIZATION=true
+
+# n8n Webhook Integration
+# Configure your n8n webhook URL for contact form submissions
+# If not set, defaults to: https://n8n.jmsit.cloud/webhook-test/bf8c26ff-3f60-412d-b244-d170267fa9e0
+VITE_N8N_WEBHOOK_URL=https://n8n.jmsit.cloud/webhook-test/your-webhook-id
+# Authentication token for webhook (sent as custom header, default header name: 'Authorization')
+# If not set, uses the default authentication token
+# Supports both VITE_N8N_AUTH_TOKEN (new) and VITE_N8N_JWT_TOKEN (legacy) for backward compatibility
+VITE_N8N_AUTH_TOKEN=your-auth-token-here
 ```
 
 > **⚠️ Security Note**: Never commit `.env.local` or `.env` files to version control. The `.gitignore` file already excludes these files to prevent accidental commits of sensitive data.
 
+### **n8n Webhook Integration**
+
+The portfolio includes a contact form that sends submissions to an n8n webhook for processing. The integration is handled by the `N8nClient` class located in `src/utils/n8nClient.ts`.
+
+**Configuration:**
+- Set `VITE_N8N_WEBHOOK_URL` in your `.env.local` file with your n8n webhook URL
+- Set `VITE_N8N_AUTH_TOKEN` in your `.env.local` file with your authentication token
+- If not configured, the system uses default values (webhook URL and authentication token)
+- The webhook receives contact form data in JSON format with the following structure:
+  ```json
+  {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "phone": "+351912345678",
+    "subject": "Project Inquiry",
+    "message": "Hello, I'm interested in...",
+    "timestamp": "2024-01-01T00:00:00.000Z"
+  }
+  ```
+
+**Authentication Methods (n8n Compatible):**
+
+The `N8nClient` supports three authentication methods compatible with n8n webhook authentication:
+
+1. **Header Auth** (default): Custom header with token value
+   ```typescript
+   const client = new N8nClient({
+     webhookUrl: 'https://n8n.jmsit.cloud/webhook-test/...',
+     authToken: 'your-token',
+     authMethod: 'header',
+     authHeaderName: 'Authorization' // or 'X-API-Key', 'X-Auth-Token', etc.
+   })
+   ```
+   Sends: `Authorization: <token>` (or custom header name)
+
+2. **Bearer Auth**: Standard Bearer token authentication
+   ```typescript
+   const client = new N8nClient({
+     webhookUrl: 'https://n8n.jmsit.cloud/webhook-test/...',
+     authToken: 'your-token',
+     authMethod: 'bearer'
+   })
+   ```
+   Sends: `Authorization: Bearer <token>`
+
+3. **Custom Auth**: Multiple custom headers
+   ```typescript
+   const client = new N8nClient({
+     webhookUrl: 'https://n8n.jmsit.cloud/webhook-test/...',
+     authMethod: 'custom',
+     headers: {
+       'X-API-Key': 'api-key-value',
+       'X-Auth-Token': 'auth-token-value',
+       'X-Custom-Header': 'custom-value'
+     }
+   })
+   ```
+   Sends: All custom headers specified
+
+**Features:**
+- Automatic timestamp generation
+- Request timeout handling (default: 10 seconds)
+- Optional retry logic with exponential backoff
+- Comprehensive error handling (network errors, HTTP errors, timeouts)
+- TypeScript type safety
+- Full n8n authentication compatibility (Bearer, Header, Custom Auth)
+
+**Usage:**
+The contact form modal can be triggered from:
+- Floating Action Button (FAB) - always visible
+- Landing Hero section - primary CTA button
+
+**Testing:**
+Run the test suite to verify the integration:
+```bash
+npm test src/utils/__tests__/n8nClient.test.ts
+npm test src/components/ui/__tests__/ContactModal.test.tsx
+```
+
 ### **Security Best Practices**
 - **Environment Variables**: Use `.env.local` for local development, never commit to repository
 - **API Keys**: Store sensitive keys in environment variables, not in code
+- **Webhook URLs**: Keep webhook URLs secure and consider implementing authentication if needed
 - **Personal Data**: Replace real personal information with placeholders in examples
 - **Secrets Management**: Use proper secrets management for production deployments
 
