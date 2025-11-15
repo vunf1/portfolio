@@ -88,6 +88,13 @@ export interface ConfirmationModalProps extends BaseComponentProps {
   icon?: string
 }
 
+// Contact Modal Props
+export interface ContactModalProps extends BaseComponentProps {
+  isOpen: boolean
+  onClose: () => void
+  onSuccess?: (data: import('./n8n').ContactFormData) => void
+}
+
 // Form Component Props
 export interface InputProps extends BaseComponentProps {
   type?: 'text' | 'email' | 'password' | 'tel' | 'url' | 'number'

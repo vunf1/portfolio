@@ -1,20 +1,5 @@
 import { describe, it, expect } from 'vitest'
-
-// Simple validation utilities for testing
-export const validateEmail = (email: string): boolean => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  return emailRegex.test(email)
-}
-
-export const validatePhone = (phone: string): boolean => {
-  // E.164 format validation - must be 7-15 digits after country code
-  const phoneRegex = /^\+[1-9]\d{6,14}$/
-  return phoneRegex.test(phone)
-}
-
-export const validateName = (name: string): boolean => {
-  return name.trim().length >= 2 && /^[a-zA-ZÀ-ÿ\s]+$/.test(name.trim())
-}
+import { validateEmail, validatePhone, validateName } from '../validation'
 
 describe('Validation Utilities', () => {
   describe('validateEmail', () => {
