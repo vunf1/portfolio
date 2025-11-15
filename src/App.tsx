@@ -201,6 +201,19 @@ export function App() {
   useEffect(() => {
     if (showPortfolio) {
       void loadAllSections()
+      // Scroll to top when portfolio page loads
+      // Use requestAnimationFrame to ensure DOM is ready
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' })
+        document.documentElement.scrollTop = 0
+        document.body.scrollTop = 0
+        // Double-check after a small delay to handle any async rendering
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'instant' })
+          document.documentElement.scrollTop = 0
+          document.body.scrollTop = 0
+        }, 0)
+      })
     }
   }, [loadAllSections, showPortfolio])
 
