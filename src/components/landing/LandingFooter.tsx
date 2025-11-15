@@ -117,15 +117,50 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
         
         <div className="footer-bottom">
           <div className="footer-copyright">
-            <p>&copy; {new Date().getFullYear()} {personal.name}. {currentLanguage === 'pt-PT' ? 'Todos os direitos reservados.' : 'All rights reserved.'}</p>
+            <p>&copy; {new Date().getFullYear()} {personal.name}. {currentLanguage === 'pt-PT' ? 'Código aberto sob licença MIT.' : 'Open source under MIT License.'}</p>
+            <div className="footer-badges">
+              <span className="footer-badge" title={currentLanguage === 'pt-PT' ? 'Conformidade WCAG 2.2 AA' : 'WCAG 2.2 AA Compliant'}>
+                <i className="fa-solid fa-universal-access"></i>
+                <span>WCAG 2.2 AA</span>
+              </span>
+              <span className="footer-badge" title={currentLanguage === 'pt-PT' ? 'Conformidade GDPR' : 'GDPR Compliant'}>
+                <i className="fa-solid fa-shield-halved"></i>
+                <span>GDPR</span>
+              </span>
+              <span className="footer-badge" title={currentLanguage === 'pt-PT' ? 'Otimizado para Core Web Vitals' : 'Core Web Vitals Optimized'}>
+                <i className="fa-solid fa-gauge-high"></i>
+                <span>Performance</span>
+              </span>
+            </div>
           </div>
           
-          <div className="footer-tech">
-            <span className="tech-label">{currentLanguage === 'pt-PT' ? 'Desenvolvido com:' : 'Built with:'}</span>
-            <div className="tech-stack">
-              <span className="tech-item">Preact</span>
-              <span className="tech-item">TypeScript</span>
-              <span className="tech-item">Vite</span>
+          <div className="footer-tech-section">
+            <div className="footer-tech">
+              <span className="tech-label">{currentLanguage === 'pt-PT' ? 'Desenvolvido com:' : 'Built with:'}</span>
+              <div className="tech-stack">
+                <span className="tech-item" title="Preact - Fast 3kB alternative to React">Preact</span>
+                <span className="tech-item" title="TypeScript - Typed JavaScript">TypeScript</span>
+                <span className="tech-item" title="Vite - Next generation frontend tooling">Vite</span>
+                <span className="tech-item" title="Vitest - Fast unit test framework">Vitest</span>
+                <span className="tech-item" title="ESLint - Code quality tool">ESLint</span>
+                <span className="tech-item" title="PostCSS - CSS processing tool">PostCSS</span>
+              </div>
+            </div>
+            <div className="footer-project-info">
+              <a 
+                href="https://github.com/vunf1/portfolio" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="footer-github-link"
+                title={currentLanguage === 'pt-PT' ? 'Ver código fonte no GitHub' : 'View source code on GitHub'}
+              >
+                <i className="fa-brands fa-github"></i>
+                <span>{currentLanguage === 'pt-PT' ? 'Código Fonte' : 'Source Code'}</span>
+              </a>
+              <span className="footer-license">
+                <i className="fa-solid fa-scale-balanced"></i>
+                <span>MIT License</span>
+              </span>
             </div>
           </div>
         </div>
