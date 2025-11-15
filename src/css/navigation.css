@@ -416,6 +416,7 @@
   max-width: var(--max-width);
   margin: 0 auto;
   height: var(--navbar-height);
+  position: relative;
 }
 
 /* Back Button Styles */
@@ -626,6 +627,14 @@ body.menu-open::before {
   .nav-back-mobile {
     display: block;
   }
+  
+  /* Ensure nav-brand stays centered on mobile */
+  .nav-brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
 }
 
 @media (min-width: 992px) {
@@ -678,6 +687,10 @@ body.menu-open::before {
   font-weight: 700;
   color: var(--primary-600);
   text-decoration: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 }
 
 .brand-content {
