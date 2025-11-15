@@ -135,9 +135,9 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
           </div>
           
           <div className="footer-tech-section">
-            <div className="footer-tech">
-              <span className="tech-label">{currentLanguage === 'pt-PT' ? 'Desenvolvido com:' : 'Built with:'}</span>
-              <div className="tech-stack">
+          <div className="footer-tech">
+            <span className="tech-label">{currentLanguage === 'pt-PT' ? 'Desenvolvido com:' : 'Built with:'}</span>
+            <div className="tech-stack">
                 <span className="tech-item" title="Preact - Fast 3kB alternative to React">Preact</span>
                 <span className="tech-item" title="TypeScript - Typed JavaScript">TypeScript</span>
                 <span className="tech-item" title="Vite - Next generation frontend tooling">Vite</span>
