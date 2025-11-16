@@ -118,7 +118,7 @@ describe('ContactModal Component', () => {
     
     const nameInput = screen.getByLabelText(/Full Name/i)
     const emailInput = screen.getByLabelText(/Email/i)
-    const messageInput = screen.getByLabelText(/Message/i)
+    const messageInput = screen.getByRole('textbox', { name: /Message/i })
     
     fireEvent.input(nameInput, { target: { value: 'John Doe' } })
     fireEvent.input(emailInput, { target: { value: 'invalid-email' } })
@@ -139,7 +139,7 @@ describe('ContactModal Component', () => {
     const nameInput = screen.getByLabelText(/Full Name/i)
     const emailInput = screen.getByLabelText(/Email/i)
     const phoneInput = screen.getByLabelText(/Phone/i)
-    const messageInput = screen.getByLabelText(/Message/i)
+    const messageInput = screen.getByRole('textbox', { name: /Message/i })
     
     fireEvent.input(nameInput, { target: { value: 'John Doe' } })
     fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
@@ -160,7 +160,7 @@ describe('ContactModal Component', () => {
     
     const nameInput = screen.getByLabelText(/Full Name/i)
     const emailInput = screen.getByLabelText(/Email/i)
-    const messageInput = screen.getByLabelText(/Message/i)
+    const messageInput = screen.getByRole('textbox', { name: /Message/i })
     
     fireEvent.input(nameInput, { target: { value: 'John Doe' } })
     fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
@@ -181,7 +181,7 @@ describe('ContactModal Component', () => {
     
     const nameInput = screen.getByLabelText(/Full Name/i)
     const emailInput = screen.getByLabelText(/Email/i)
-    const messageInput = screen.getByLabelText(/Message/i)
+    const messageInput = screen.getByRole('textbox', { name: /Message/i })
     
     fireEvent.input(nameInput, { target: { value: 'John Doe' } })
     fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
@@ -210,7 +210,7 @@ describe('ContactModal Component', () => {
     
     const nameInput = screen.getByLabelText(/Full Name/i)
     const emailInput = screen.getByLabelText(/Email/i)
-    const messageInput = screen.getByLabelText(/Message/i)
+    const messageInput = screen.getByRole('textbox', { name: /Message/i })
     
     fireEvent.input(nameInput, { target: { value: 'John Doe' } })
     fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
@@ -252,7 +252,7 @@ describe('ContactModal Component', () => {
     
     const nameInput = screen.getByLabelText(/Full Name/i)
     const emailInput = screen.getByLabelText(/Email/i)
-    const messageInput = screen.getByLabelText(/Message/i)
+    const messageInput = screen.getByRole('textbox', { name: /Message/i })
     
     fireEvent.input(nameInput, { target: { value: 'John Doe' } })
     fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
@@ -281,7 +281,7 @@ describe('ContactModal Component', () => {
     
     const nameInput = screen.getByLabelText(/Full Name/i)
     const emailInput = screen.getByLabelText(/Email/i)
-    const messageInput = screen.getByLabelText(/Message/i)
+    const messageInput = screen.getByRole('textbox', { name: /Message/i })
     
     fireEvent.input(nameInput, { target: { value: 'John Doe' } })
     fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
@@ -336,7 +336,7 @@ describe('ContactModal Component', () => {
     
     const nameInput = screen.getByLabelText(/Full Name/i)
     const emailInput = screen.getByLabelText(/Email/i)
-    const messageInput = screen.getByLabelText(/Message/i)
+    const messageInput = screen.getByRole('textbox', { name: /Message/i })
     
     fireEvent.input(nameInput, { target: { value: 'John Doe' } })
     fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
@@ -358,7 +358,7 @@ describe('ContactModal Component', () => {
     const nameInput = screen.getByLabelText(/Full Name/i)
     const emailInput = screen.getByLabelText(/Email/i)
     const phoneInput = screen.getByLabelText(/Phone/i)
-    const messageInput = screen.getByLabelText(/Message/i)
+    const messageInput = screen.getByRole('textbox', { name: /Message/i })
     
     fireEvent.input(nameInput, { target: { value: 'John Doe' } })
     fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
