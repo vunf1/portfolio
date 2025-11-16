@@ -113,6 +113,146 @@ export function ContactModal({
     }
   }, [isOpen])
 
+  // Detect autofill using best practices for password manager compatibility
+  useEffect(() => {
+    if (!isOpen) return
+
+    const form = document.querySelector('form[name="contact-form"]') as HTMLFormElement
+    if (!form) return
+
+    let syncTimeout: ReturnType<typeof setTimeout> | null = null
+    let isSyncing = false
+    let inputEventCount = 0
+    let lastInputTime = 0
+
+    // Debounced sync function - waits for autofill to complete before syncing
+    // This prevents interference with password manager fills
+    const syncFormDataFromDOM = (delay = 300) => {
+      // Clear any pending sync
+      if (syncTimeout) {
+        clearTimeout(syncTimeout)
+        syncTimeout = null
+      }
+
+      syncTimeout = setTimeout(() => {
+        if (isSyncing) return
+        isSyncing = true
+
+        const formDataFromDOM: ContactFormData = {
+          name: (form.querySelector('[name="name"]') as HTMLInputElement)?.value || '',
+          email: (form.querySelector('[name="email"]') as HTMLInputElement)?.value || '',
+          phone: (form.querySelector('[name="phone"]') as HTMLInputElement)?.value || '',
+          companyName: (form.querySelector('[name="companyName"]') as HTMLInputElement)?.value || '',
+          companyIdentifier: (form.querySelector('[name="companyIdentifier"]') as HTMLInputElement)?.value || '',
+          subject: (form.querySelector('[name="subject"]') as HTMLInputElement)?.value || '',
+          message: (form.querySelector('[name="message"]') as HTMLTextAreaElement)?.value || ''
+        }
+
+        setFormData(prevData => {
+          // Check if any values changed
+          const hasChanges = Object.keys(formDataFromDOM).some(
+            key => formDataFromDOM[key as keyof ContactFormData] !== prevData[key as keyof ContactFormData]
+          )
+
+          if (hasChanges) {
+            saveFormData(formDataFromDOM)
+            setWordCount(countWords(formDataFromDOM.message))
+            
+            // Clear errors for fields that have values
+            setErrors(prevErrors => {
+              const newErrors = { ...prevErrors }
+              Object.keys(formDataFromDOM).forEach(key => {
+                if (formDataFromDOM[key as keyof ContactFormData]) {
+                  delete newErrors[key as keyof ContactFormData]
+                }
+              })
+              return newErrors
+            })
+            
+            setSubmitError(null)
+            
+            isSyncing = false
+            return formDataFromDOM
+          }
+          isSyncing = false
+          return prevData
+        })
+      }, delay)
+    }
+
+    // Method 1: Listen for animationstart event (browser autofill)
+    const handleAnimationStart = (e: AnimationEvent) => {
+      if (e.animationName === 'onAutoFillStart' || e.animationName === 'onAutoFillCancel') {
+        // Wait for browser to finish filling
+        syncFormDataFromDOM(100)
+      }
+    }
+
+    // Method 2: Listen for input events (works for both browser and password managers)
+    // Detect password manager fills by tracking multiple rapid input events
+    const handleInput = (e: Event) => {
+      const now = Date.now()
+      
+      // Detect if this might be a password manager fill
+      // Password managers often fill multiple fields rapidly without user interaction
+      // Check if event is not trusted (programmatic) or multiple fields filling rapidly
+      const isProgrammatic = !e.isTrusted
+      const isRapidFill = now - lastInputTime < 150
+      
+      if (isRapidFill) {
+        inputEventCount++
+      } else {
+        inputEventCount = 1
+      }
+      lastInputTime = now
+
+      // If multiple fields are being filled rapidly or programmatically, it's likely autofill
+      // Use longer debounce to allow all fields to be filled
+      const isLikelyAutofill = isProgrammatic || inputEventCount > 1
+      const delay = isLikelyAutofill ? 500 : 0 // Immediate for user input, debounced for autofill
+      
+      syncFormDataFromDOM(delay)
+    }
+
+    // Method 3: Listen for change events (fallback for password managers)
+    const handleChange = () => {
+      // Change events usually indicate autofill completion
+      syncFormDataFromDOM(200)
+    }
+
+    // Observe all form inputs
+    const inputs = form.querySelectorAll('input, textarea')
+    inputs.forEach((input) => {
+      // Browser autofill detection (animation events)
+      input.addEventListener('animationstart', handleAnimationStart as EventListener)
+      // Password manager detection - input events are most reliable
+      // Password managers trigger input events when filling fields
+      input.addEventListener('input', handleInput, { passive: true })
+      // Change events as fallback
+      input.addEventListener('change', handleChange, { passive: true })
+    })
+
+    // Method 4: Watch for focus events (password managers often fill on focus)
+    const handleFocus = () => {
+      // Check after a delay to allow password manager to fill
+      syncFormDataFromDOM(200)
+    }
+
+    form.addEventListener('focusin', handleFocus, true)
+
+    return () => {
+      if (syncTimeout) {
+        clearTimeout(syncTimeout)
+      }
+      inputs.forEach((input) => {
+        input.removeEventListener('animationstart', handleAnimationStart as EventListener)
+        input.removeEventListener('input', handleInput)
+        input.removeEventListener('change', handleChange)
+      })
+      form.removeEventListener('focusin', handleFocus, true)
+    }
+  }, [isOpen])
+
   // Handle escape key - preserve form data
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -206,12 +346,15 @@ export function ContactModal({
     }
   }
 
-  // Handle input change
+  // Handle input change - for direct user input
   const handleInputChange = (name: keyof ContactFormData, value: string) => {
-    const updatedData = { ...formData, [name]: value }
-    setFormData(updatedData)
-    // Save to sessionStorage
-    saveFormData(updatedData)
+    // Update state immediately for user input (not autofill)
+    setFormData(prevData => {
+      const updatedData = { ...prevData, [name]: value }
+      // Save to sessionStorage
+      saveFormData(updatedData)
+      return updatedData
+    })
     
     // Clear error for this field when user starts typing
     if (errors[name]) {
@@ -227,6 +370,7 @@ export function ContactModal({
       setSubmitError(null)
     }
   }
+
 
   // Handle form submission
   const handleSubmit = async (e: Event) => {
@@ -362,7 +506,7 @@ export function ContactModal({
                     </h5>
                   </div>
 
-          <form onSubmit={handleSubmit}>
+          <form name="contact-form" onSubmit={handleSubmit}>
             <div className="modal-body">
               {submitSuccess ? (
                 <div className="alert alert-success" role="alert">
@@ -387,9 +531,12 @@ export function ContactModal({
                         ref={nameInputRef}
                         type="text"
                         id="contact-name"
+                        name="name"
+                        autoComplete="name"
                         className={`form-control ${errors.name ? 'is-invalid' : ''}`}
                         value={formData.name}
                         onChange={(e) => handleInputChange('name', (e.target as HTMLInputElement).value)}
+                        onInput={(e) => handleInputChange('name', (e.target as HTMLInputElement).value)}
                         disabled={isSubmitting}
                         required
                         aria-required="true"
@@ -410,9 +557,12 @@ export function ContactModal({
                       <input
                         type="email"
                         id="contact-email"
+                        name="email"
+                        autoComplete="email"
                         className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                         value={formData.email}
                         onChange={(e) => handleInputChange('email', (e.target as HTMLInputElement).value)}
+                        onInput={(e) => handleInputChange('email', (e.target as HTMLInputElement).value)}
                         disabled={isSubmitting}
                         required
                         aria-required="true"
@@ -435,9 +585,12 @@ export function ContactModal({
                       <input
                         type="tel"
                         id="contact-phone"
+                        name="phone"
+                        autoComplete="tel"
                         className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
                         value={formData.phone}
                         onChange={(e) => handleInputChange('phone', (e.target as HTMLInputElement).value)}
+                        onInput={(e) => handleInputChange('phone', (e.target as HTMLInputElement).value)}
                         disabled={isSubmitting}
                         placeholder="+351912345678"
                         aria-invalid={!!errors.phone}
@@ -462,9 +615,12 @@ export function ContactModal({
                       <input
                         type="text"
                         id="contact-subject"
+                        name="subject"
+                        autoComplete="off"
                         className={`form-control ${errors.subject ? 'is-invalid' : ''}`}
                         value={formData.subject}
                         onChange={(e) => handleInputChange('subject', (e.target as HTMLInputElement).value)}
+                        onInput={(e) => handleInputChange('subject', (e.target as HTMLInputElement).value)}
                         disabled={isSubmitting}
                         required
                         aria-required="true"
@@ -488,9 +644,12 @@ export function ContactModal({
                       <input
                         type="text"
                         id="contact-company-name"
+                        name="companyName"
+                        autoComplete="organization"
                         className="form-control"
                         value={formData.companyName}
                         onChange={(e) => handleInputChange('companyName', (e.target as HTMLInputElement).value)}
+                        onInput={(e) => handleInputChange('companyName', (e.target as HTMLInputElement).value)}
                         disabled={isSubmitting}
                         placeholder={t('contact.fields.companyNamePlaceholder', 'Your company name')}
                       />
@@ -503,9 +662,12 @@ export function ContactModal({
                       <input
                         type="text"
                         id="contact-company-identifier"
+                        name="companyIdentifier"
+                        autoComplete="off"
                         className="form-control"
                         value={formData.companyIdentifier}
                         onChange={(e) => handleInputChange('companyIdentifier', (e.target as HTMLInputElement).value)}
+                        onInput={(e) => handleInputChange('companyIdentifier', (e.target as HTMLInputElement).value)}
                         disabled={isSubmitting}
                         placeholder={t('contact.fields.companyIdentifierPlaceholder', 'VAT/Tax ID')}
                         aria-describedby="contact-company-identifier-hint"
@@ -522,9 +684,12 @@ export function ContactModal({
                     </label>
                     <textarea
                       id="contact-message"
+                      name="message"
+                      autoComplete="off"
                       className={`form-control ${errors.message ? 'is-invalid' : ''} ${wordCount > MAX_WORDS ? 'is-invalid' : ''}`}
                       value={formData.message}
                       onChange={(e) => handleInputChange('message', (e.target as HTMLTextAreaElement).value)}
+                      onInput={(e) => handleInputChange('message', (e.target as HTMLTextAreaElement).value)}
                       disabled={isSubmitting}
                       required
                       rows={2}

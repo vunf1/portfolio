@@ -587,7 +587,7 @@
 @media (prefers-reduced-motion: reduce) {
   .contact-modal-premium,
   .contact-modal-dialog,
-  .contact-modal-content,
+  .contact-modal-content, 
   .contact-modal-content .form-control,
   .contact-modal-content .btn,
   .contact-modal-content .alert,
@@ -595,4 +595,36 @@
     animation: none !important;
     transition: none !important;
   }
+}
+
+/* Autofill detection animation - triggers when browser autofills fields */
+@keyframes onAutoFillStart {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes onAutoFillCancel {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Apply animation to inputs to detect autofill */
+.contact-modal-content input:-webkit-autofill,
+.contact-modal-content textarea:-webkit-autofill {
+  animation-name: onAutoFillStart;
+  animation-duration: 0.001s;
+}
+
+.contact-modal-content input:not(:-webkit-autofill),
+.contact-modal-content textarea:not(:-webkit-autofill) {
+  animation-name: onAutoFillCancel;
+  animation-duration: 0.001s;
 }
