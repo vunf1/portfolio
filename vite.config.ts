@@ -4,7 +4,8 @@ import { resolve } from 'path'
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  const base = '/'
+  // Use VITE_APP_URL for base URL, fallback to '/' for local development
+  const base = env.VITE_APP_URL ? new URL(env.VITE_APP_URL).pathname : '/'
   const isProductionLike = mode === 'production' || mode === 'staging'
   const pureConsoleFunctions = isProductionLike
     ? ['console.log', 'console.info', 'console.debug', 'console.warn']

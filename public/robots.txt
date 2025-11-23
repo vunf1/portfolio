@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://vunf1.github.io/portfolio/sitemap.xml
+Sitemap: https://jmsit.cloud/sitemap.xml
 
 # Crawl-delay for respectful crawling
 Crawl-delay: 1
