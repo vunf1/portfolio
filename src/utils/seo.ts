@@ -9,13 +9,14 @@ import type {
   PersonSchema,
   ProfessionalServiceSchema,
   WebSiteSchema,
+  OrganizationSchema,
   StructuredData,
   SupportedLocale
 } from '../types/seo'
 import type { Personal, Social, PortfolioData } from '../types/portfolio'
 
 // Constants
-const BRAND_NAME = 'jmsit'
+const BRAND_NAME = 'JMSIT'
 const DEFAULT_BASE_URL = 'https://jmsit.cloud'
 const LOCALE_MAP: Record<SupportedLocale, string> = {
   'en': 'en_US',
@@ -126,13 +127,17 @@ export function updateSEOMetaTags(
   setMetaTag('og:url', baseUrl, true)
   setMetaTag('og:image', ogImage, true)
   setMetaTag('og:locale', LOCALE_MAP[locale], true)
-  setMetaTag('og:site_name', `${BRAND_NAME} - ${personal.name}`, true)
+  setMetaTag('og:site_name', `${BRAND_NAME} - ${personal.name} Portfolio`, true)
+  setMetaTag('og:image:width', '1200', true)
+  setMetaTag('og:image:height', '630', true)
+  setMetaTag('og:image:alt', `${BRAND_NAME} - ${personal.name} Portfolio | Full-Stack Developer & Network Engineer`, true)
 
   // Twitter Card tags
   setMetaTag('twitter:card', 'summary_large_image')
   setMetaTag('twitter:title', meta.title)
   setMetaTag('twitter:description', meta.description)
   setMetaTag('twitter:image', ogImage)
+  setMetaTag('twitter:image:alt', `${BRAND_NAME} - ${personal.name} Portfolio | Full-Stack Developer & Network Engineer`)
 }
 
 /**
@@ -170,10 +175,20 @@ function createPersonSchema(
       addressLocality: city || 'Porto',
       addressCountry: country || 'PT'
     },
-    knowsAbout: skills || ['Full-Stack Development', 'AI', 'Automation', 'Network', 'OOP'],
+    knowsAbout: skills || [
+      'Full-Stack Development',
+      'Network Engineering',
+      'AI Solutions',
+      'Generative AI',
+      'Automation',
+      'Cybersecurity',
+      'DevOps',
+      'Cloud Solutions',
+      'Software Architecture',
+      'Object-Oriented Programming'
+    ],
     worksFor: {
-      '@type': 'Organization',
-      name: BRAND_NAME
+      '@id': `${baseUrl}#organization`
     },
     inLanguage: locale === 'pt-PT' ? 'pt-PT' : 'en'
   }
@@ -192,18 +207,26 @@ function createProfessionalServiceSchema(
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
     name: BRAND_NAME,
-    alternateName: 'jmsit.cloud',
+    alternateName: 'JMSIT.cloud',
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'PT',
+      addressCountryName: 'Portugal'
+    },
     provider: {
       '@type': 'Person',
       name: personal.name,
       alternateName: BRAND_NAME
     },
     serviceType: [
-      'Full-Stack Development',
-      'AI Solutions',
-      'Automation',
-      'Network Engineering',
-      'Software Consulting'
+      'Full-Stack Software Development',
+      'Network Engineering & Infrastructure',
+      'AI Solutions & Generative AI',
+      'Automation & Workflow Optimization',
+      'Cybersecurity & Network Security',
+      'DevOps & CI/CD',
+      'Cloud Solutions & Architecture',
+      'Software Consulting & IT Solutions'
     ],
     areaServed: 'Worldwide',
     url: baseUrl,
@@ -224,7 +247,7 @@ function createWebSiteSchema(
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: `${BRAND_NAME} - ${personal.name} Portfolio`,
-    alternateName: 'jmsit.cloud',
+    alternateName: 'JMSIT.cloud',
     url: baseUrl,
     author: {
       '@type': 'Person',
@@ -232,6 +255,41 @@ function createWebSiteSchema(
       alternateName: BRAND_NAME
     },
     inLanguage: ['en', 'pt-PT']
+  }
+}
+
+/**
+ * Create Organization schema
+ */
+function createOrganizationSchema(
+  personal: Personal
+): OrganizationSchema {
+  const baseUrl = getBaseUrl()
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${baseUrl}#organization`,
+    name: BRAND_NAME,
+    legalName: BRAND_NAME,
+    url: baseUrl,
+    alternateName: 'JMSIT.cloud',
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'PT',
+      addressCountryName: 'Portugal'
+    },
+    logo: {
+      '@type': 'ImageObject',
+      url: `${baseUrl}/img/logo.png`
+    },
+    founder: {
+      '@type': 'Person',
+      name: personal.name
+    },
+    foundingDate: '2010',
+    description: `${BRAND_NAME} provides professional technology services including full-stack software development, network engineering, AI solutions, automation, cybersecurity, DevOps, and cloud architecture. Expert IT consulting and solutions based in Porto, Portugal.`,
+    sameAs: [baseUrl]
   }
 }
 
@@ -263,6 +321,13 @@ function injectStructuredData(structuredData: StructuredData): void {
   websiteScript.textContent = JSON.stringify(structuredData.website, null, 2)
   websiteScript.id = 'schema-website'
   document.head.appendChild(websiteScript)
+
+  // Inject Organization schema
+  const organizationScript = document.createElement('script')
+  organizationScript.type = 'application/ld+json'
+  organizationScript.textContent = JSON.stringify(structuredData.organization, null, 2)
+  organizationScript.id = 'schema-organization'
+  document.head.appendChild(organizationScript)
 }
 
 /**
@@ -282,7 +347,8 @@ export function updateStructuredData(
   const structuredData: StructuredData = {
     person: createPersonSchema(locale, personal, social, skills),
     professionalService: createProfessionalServiceSchema(locale, personal),
-    website: createWebSiteSchema(locale, personal)
+    website: createWebSiteSchema(locale, personal),
+    organization: createOrganizationSchema(personal)
   }
 
   injectStructuredData(structuredData)
@@ -296,10 +362,10 @@ export function updateHreflangTags(baseUrl: string): void {
   const existingHreflang = document.querySelectorAll('link[rel="alternate"][hreflang]')
   existingHreflang.forEach(link => link.remove())
 
-  // Add hreflang tags
+  // Add hreflang tags (improved for better SEO)
   setLinkTag('alternate', baseUrl, 'en')
   setLinkTag('alternate', getLocaleUrl(baseUrl, 'pt-PT'), 'pt-PT')
-  setLinkTag('alternate', baseUrl, 'x-default')
+  setLinkTag('alternate', baseUrl, 'x-default') // Default to English
 }
 
 /**

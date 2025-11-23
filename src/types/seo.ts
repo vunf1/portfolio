@@ -45,8 +45,7 @@ export interface PersonSchema {
   }
   knowsAbout?: string[]
   worksFor: {
-    '@type': 'Organization'
-    name: string
+    '@id': string
   }
   inLanguage?: string
 }
@@ -56,6 +55,11 @@ export interface ProfessionalServiceSchema {
   '@type': 'ProfessionalService'
   name: string
   alternateName: string
+  address: {
+    '@type': 'PostalAddress'
+    addressCountry: string
+    addressCountryName: string
+  }
   provider: {
     '@type': 'Person'
     name: string
@@ -81,10 +85,37 @@ export interface WebSiteSchema {
   inLanguage: string[]
 }
 
+export interface OrganizationSchema {
+  '@context': 'https://schema.org'
+  '@type': 'Organization'
+  '@id': string
+  name: string
+  legalName: string
+  url: string
+  alternateName: string
+  address: {
+    '@type': 'PostalAddress'
+    addressCountry: string
+    addressCountryName: string
+  }
+  logo: {
+    '@type': 'ImageObject'
+    url: string
+  }
+  founder: {
+    '@type': 'Person'
+    name: string
+  }
+  foundingDate: string
+  description: string
+  sameAs: string[]
+}
+
 export interface StructuredData {
   person: PersonSchema
   professionalService: ProfessionalServiceSchema
   website: WebSiteSchema
+  organization: OrganizationSchema
 }
 
 
