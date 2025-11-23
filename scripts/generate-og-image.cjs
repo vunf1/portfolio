@@ -13,10 +13,11 @@ const config = {
 // Personal information
 const personal = {
   name: 'João Maia',
-  brand: 'JMSIT', // Uppercase
+  brand: 'Security | Intelligence | Technology', // Changed from JMSIT
   title: 'Full-Stack Engineer',
   subtitle: 'AI & Automation',
-  location: 'Porto, Portugal'
+  website: 'https://jmsit.cloud/',
+  phone: '+351 934 330 807'
 };
 
 // Logo path
@@ -38,15 +39,19 @@ function createOGImageSVG() {
   const name = escapeXML(personal.name);
   const title = escapeXML(personal.title);
   const subtitle = escapeXML(personal.subtitle);
-  const location = escapeXML(personal.location);
+  const website = escapeXML(personal.website);
+  const phone = escapeXML(personal.phone);
   
-  // Layout: Logo on left (centered), text on right
-  // Left side: 0-500px (logo area)
-  // Right side: 500-1200px (text area)
-  const leftSectionWidth = 500;
-  const rightSectionStart = 500;
-  const rightSectionPadding = 60;
+  // Layout: Logo + label on left, text on right
+  // Logo is 800px wide, so left section needs to accommodate it
+  // Left section: 0-600px (logo + label area, logo extends slightly)
+  // Right section: 600-1200px (text area)
+  // Text width: 800px (same as logo) but constrained to available space
+  const leftSectionWidth = 600; // Increased to accommodate 800px logo
+  const rightSectionStart = 600; // Start text after logo area
+  const rightSectionPadding = 50; // Padding between sections
   const textStartX = rightSectionStart + rightSectionPadding;
+  const textWidth = 550; // Available width for text (1200 - 650 = 550px)
   
   // Vertical center for alignment
   const verticalCenter = config.height / 2;
@@ -108,17 +113,25 @@ function createOGImageSVG() {
   <ellipse cx="0" cy="0" rx="300" ry="300" fill="url(#cornerGlow1)" filter="url(#glow)"/>
   <ellipse cx="${config.width}" cy="${config.height}" rx="350" ry="350" fill="url(#cornerGlow2)" filter="url(#glow)"/>
   
-  <!-- Tech accent lines (only in safe edge areas, away from content) -->
-  <g opacity="0.3">
-    <!-- Top edge line -->
-    <line x1="0" y1="30" x2="${config.width}" y2="30" stroke="#00d4ff" stroke-width="1" stroke-dasharray="8,4"/>
-    <!-- Bottom edge line -->
-    <line x1="0" y1="${config.height - 30}" x2="${config.width}" y2="${config.height - 30}" stroke="#0099cc" stroke-width="1" stroke-dasharray="8,4"/>
-    <!-- Left edge vertical accent -->
-    <line x1="30" y1="0" x2="30" y2="${config.height}" stroke="#00d4ff" stroke-width="1" opacity="0.2"/>
-    <!-- Right edge vertical accent -->
-    <line x1="${config.width - 30}" y1="0" x2="${config.width - 30}" y2="${config.height}" stroke="#0099cc" stroke-width="1" opacity="0.2"/>
-  </g>
+      <!-- Tech accent lines (only in safe edge areas, away from content) -->
+      <g opacity="0.3">
+        <!-- Top edge line -->
+        <line x1="0" y1="30" x2="${config.width}" y2="30" stroke="#00d4ff" stroke-width="1" stroke-dasharray="8,4"/>
+        <!-- Bottom edge line -->
+        <line x1="0" y1="${config.height - 30}" x2="${config.width}" y2="${config.height - 30}" stroke="#0099cc" stroke-width="1" stroke-dasharray="8,4"/>
+        <!-- Left edge vertical accent -->
+        <line x1="30" y1="0" x2="30" y2="${config.height}" stroke="#00d4ff" stroke-width="1" opacity="0.2"/>
+        <!-- Right edge vertical accent -->
+        <line x1="${config.width - 30}" y1="0" x2="${config.width - 30}" y2="${config.height}" stroke="#0099cc" stroke-width="1" opacity="0.2"/>
+      </g>
+      
+      <!-- WhatsApp gradient definition (moved to top level defs) -->
+      <defs>
+        <linearGradient id="whatsapp-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#61fd7d;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#2bb826;stop-opacity:1" />
+        </linearGradient>
+      </defs>
   
   <!-- Tech nodes in corners only (away from content) -->
   <g opacity="0.5" filter="url(#glow)">
@@ -136,25 +149,28 @@ function createOGImageSVG() {
     <polygon points="${config.width - 80},${config.height - 80} ${config.width - 100},${config.height - 70} ${config.width - 120},${config.height - 80} ${config.width - 120},${config.height - 100} ${config.width - 100},${config.height - 110} ${config.width - 80},${config.height - 100}" fill="#0099cc" filter="url(#glow)"/>
   </g>
   
-  <!-- Text content on right side -->
+  <!-- Text content on right side (width matches logo: 800px) -->
   <g transform="translate(${textStartX}, ${textStartY})">
-    <!-- Brand badge -->
-    <rect x="0" y="0" width="220" height="50" rx="25" fill="url(#accentGradient)" opacity="0.9"/>
-    <text x="110" y="35" font-family="Arial, sans-serif" font-size="26" font-weight="bold" fill="#ffffff" text-anchor="middle" filter="url(#textShadow)">${brand}</text>
+    <!-- Name (moved to top) -->
+    <text x="0" y="72" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="#ffffff" filter="url(#textShadow)">${name}</text>
     
-    <!-- Name -->
-    <text x="0" y="110" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="#ffffff" filter="url(#textShadow)">${name}</text>
+    <!-- Brand text (below name, left-aligned, smaller font to fit nicely) -->
+    <text x="0" y="110" font-family="Arial, sans-serif" font-size="28" font-weight="600" fill="#00d4ff" filter="url(#textShadow)">${brand}</text>
     
     <!-- Title -->
-    <text x="0" y="180" font-family="Arial, sans-serif" font-size="48" font-weight="600" fill="#00d4ff" filter="url(#textShadow)">${title}</text>
+    <text x="0" y="200" font-family="Arial, sans-serif" font-size="48" font-weight="600" fill="#00d4ff" filter="url(#textShadow)">${title}</text>
     
     <!-- Subtitle -->
-    <text x="0" y="240" font-family="Arial, sans-serif" font-size="36" font-weight="400" fill="#cccccc" filter="url(#textShadow)">${subtitle}</text>
+    <text x="0" y="260" font-family="Arial, sans-serif" font-size="36" font-weight="400" fill="#cccccc" filter="url(#textShadow)">${subtitle}</text>
     
-    <!-- Location -->
-    <g transform="translate(0, 300)">
-      <circle cx="12" cy="12" r="8" fill="#00d4ff" opacity="0.8"/>
-      <text x="30" y="18" font-family="Arial, sans-serif" font-size="28" font-weight="400" fill="#ffffff" opacity="0.9">${location}</text>
+    <!-- Website -->
+    <g transform="translate(0, 290)">
+      <text x="0" y="18" font-family="Arial, sans-serif" font-size="26" font-weight="400" fill="#ffffff" opacity="0.9">${website}</text>
+    </g>
+    
+    <!-- Phone number -->
+    <g transform="translate(0, 330)">
+      <text x="0" y="18" font-family="Arial, sans-serif" font-size="28" font-weight="400" fill="#ffffff" opacity="0.9">${phone}</text>
     </g>
   </g>
   
@@ -186,9 +202,13 @@ async function generateOGImage() {
     const svg = createOGImageSVG();
     const svgBuffer = Buffer.from(svg);
     
-    // Load and prepare logo (2x bigger: 800x800)
+    // Layout constants - must match SVG layout
+    const leftSectionWidth = 600; // Left section width (logo area)
+    
+    // Load and prepare logo (800x800 as previously)
+    const logoSize = 800; // Original logo size
     const logo = await sharp(logoPath)
-      .resize(800, 800, {
+      .resize(logoSize, logoSize, {
         fit: 'inside',
         background: { r: 0, g: 0, b: 0, alpha: 0 }
       })
@@ -201,59 +221,65 @@ async function generateOGImage() {
         background: { r: 26, g: 26, b: 46, alpha: 1 }
       });
     
-    // Composite logo on left side (centered vertically and horizontally in left section, aligned with text)
-    const logoSize = 800;
-    // Center logo in the left half of canvas (0-600px) to align with text on right
-    const leftSectionCenter = 300; // Center of left section
-    const logoX = leftSectionCenter - (logoSize / 2); // Center horizontally
+    // Calculate logo position: align it vertically with the text on the right
+    // Text positions in SVG (relative to textStartY):
+    // Name: y=72, Brand: y=110, Title: y=200, Subtitle: y=260, Location: y=320
+    // textStartY = (630/2 - 150) = 165
+    // Actual positions: Name at 165+72=237, Brand at 165+110=275, Title at 165+200=365, etc.
+    // Text block center: roughly between Title (365) and Subtitle (425) = ~395
+    const textStartY = (config.height / 2) - 150; // 165
+    const textTop = textStartY + 72; // Name actual position: 237
+    const textBottom = textStartY + 340; // Location area: ~505
+    const textCenterY = (textTop + textBottom) / 2; // Center of text block: ~371
     
-    // Calculate text content center position to align logo with text
-    // Text starts at textStartY (verticalCenter - 150) and extends down
-    // Logo should be centered to match the text block center, moved down more
-    const textStartY = (config.height / 2) - 150; // Same as in SVG
-    const textBlockHeight = 350; // Approximate height of text content
-    const textCenterY = textStartY + (textBlockHeight / 2);
-    // Move logo down by adding offset to better align with text
-    const verticalOffset = 120; // Additional offset to move logo down
-    const logoY = textCenterY - (logoSize / 2) + verticalOffset; // Center logo with text block, moved down
+    // Center logo vertically to match text center, then move it down a bit more
+    // Since logo is 800px and canvas is 630px, logo will extend beyond canvas
+    // Position so logo center aligns with text center, then offset down by 100px
+    const logoY = Math.round(textCenterY - (logoSize / 2) + 100);
     
+    // Position logo horizontally - start at left edge
+    const logoX = 0;
+    
+    // Composite logo on left side (no label)
     await baseImage
-      .composite([{
-        input: logo,
-        left: logoX,
-        top: logoY
-      }])
+      .composite([
+        {
+          input: logo,
+          left: logoX,
+          top: logoY
+        }
+      ])
       .jpeg({
         quality: config.quality,
         progressive: true,
         mozjpeg: true
       })
-      .toFile(config.outputPath);
+      .toFile(config.outputPath)
     
     // Get file size
-    const stats = fs.statSync(config.outputPath);
-    const fileSizeKB = (stats.size / 1024).toFixed(2);
+    const stats = fs.statSync(config.outputPath)
+    const fileSizeKB = (stats.size / 1024).toFixed(2)
     
-    console.log(`✅ OG image generated successfully!`);
-    console.log(`📁 Location: ${config.outputPath}`);
-    console.log(`📏 Dimensions: ${config.width}x${config.height}px`);
-    console.log(`💾 File size: ${fileSizeKB} KB`);
-    console.log(`\n🎉 Ready for use!`);
-    console.log(`\n📝 Next steps:`);
-    console.log(`   1. Review the image at: ${config.outputPath}`);
-    console.log(`   2. Test with Facebook Sharing Debugger`);
-    console.log(`   3. Deploy to production`);
+    console.log(`✅ OG image generated successfully!`)
+    console.log(`📁 Location: ${config.outputPath}`)
+    console.log(`📏 Dimensions: ${config.width}x${config.height}px`)
+    console.log(`💾 File size: ${fileSizeKB} KB`)
+    console.log(`\n🎉 Ready for use!`)
+    console.log(`\n📝 Next steps:`)
+    console.log(`   1. Review the image at: ${config.outputPath}`)
+    console.log(`   2. Test with Facebook Sharing Debugger`)
+    console.log(`   3. Deploy to production`)
     
   } catch (error) {
-    console.error('❌ Error generating OG image:', error);
-    process.exit(1);
+    console.error('❌ Error generating OG image:', error)
+    process.exit(1)
   }
 }
 
 // Run if called directly
 if (require.main === module) {
-  generateOGImage();
+  generateOGImage()
 }
 
-module.exports = { generateOGImage };
+module.exports = { generateOGImage }
 
