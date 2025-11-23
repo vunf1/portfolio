@@ -29,7 +29,7 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
         <div className={`hero-text ${isVisible ? 'hero-text-visible' : ''}`}>
           <div className="hero-badge">
             <span>
-              {currentLanguage === 'pt-PT' ? 'jmsit — Serviços de TI & Tecnologia' : 'jmsit — IT & Technology Services'}
+              {currentLanguage === 'pt-PT' ? 'JMSIT — Serviços de TI & Tecnologia' : 'JMSIT — IT & Technology Services'}
             </span>
           </div>
           
