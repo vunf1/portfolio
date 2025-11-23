@@ -7,6 +7,7 @@ import { SectionSkeleton } from './components/SectionSkeleton'
 import { FloatingActionButton } from './components/FloatingActionButton'
 import { LandingPage } from './components/landing/LandingPage'
 import { preloadPortfolioChunks } from './utils/preloadPortfolioChunks'
+import { initializeSEO, updateSEOOnLanguageChange } from './utils/seo'
 
 const logWarning = (message: string, detail: unknown) => {
   if (import.meta.env.DEV) {
@@ -41,6 +42,32 @@ export function App() {
   //   currentLanguage: currentLanguage,
   //   aboutTranslation: t('navigation.about'),
   // })
+
+  // Initialize SEO when portfolio data is available
+  useEffect(() => {
+    if (portfolioData && portfolioData.personal && portfolioData.meta && portfolioData.social) {
+      initializeSEO(
+        currentLanguage,
+        portfolioData.personal,
+        portfolioData.meta.seo,
+        portfolioData.social,
+        portfolioData
+      )
+    }
+  }, [portfolioData, currentLanguage])
+
+  // Update SEO when language changes
+  useEffect(() => {
+    if (portfolioData && portfolioData.personal && portfolioData.meta && portfolioData.social) {
+      updateSEOOnLanguageChange(
+        currentLanguage,
+        portfolioData.personal,
+        portfolioData.meta.seo,
+        portfolioData.social,
+        portfolioData
+      )
+    }
+  }, [currentLanguage, portfolioData])
 
   // Handle smooth language transitions
   useEffect(() => {

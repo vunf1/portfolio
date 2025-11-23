@@ -12,6 +12,9 @@ async function initializeApp() {
     const savedLang = localStorage.getItem('i18nextLng') as 'en' | 'pt-PT'
     const initialLang = savedLang || 'en'
     
+    // Set initial HTML lang attribute
+    document.documentElement.setAttribute('lang', initialLang === 'pt-PT' ? 'pt-PT' : 'en')
+    
     console.log('🔄 Preloading translations for language:', initialLang)
     
     // Preload translations before rendering
