@@ -2,16 +2,23 @@
   "author": "João Maia",
   "lastUpdated": "2025-09-01",
   "seo": {
-    "description": "Full-stack developer focused on back-end operations, Network, and OOP.",
+    "description": "jmsit is the professional brand of João Maia, a Full-Stack Developer specializing in back-end operations, Network, AI, and automation. Based in Porto, Portugal.",
     "keywords": [
+      "jmsit",
+      "jmsit.cloud",
+      "jmsit portfolio",
+      "jmsit developer",
+      "João Maia",
       "Full-Stack",
       "Network",
       "OOP",
+      "AI",
+      "Automation",
       "Portugal",
       "Porto"
     ],
-    "ogImage": "{{OG_IMAGE_PATH}}",
-    "title": "João Maia — Full-Stack Developer"
+    "ogImage": "https://jmsit.cloud/img/og-image.jpg",
+    "title": "João Maia  — Full-Stack Developer | AI & Automation Specialist"
   },
   "version": "1.0.0"
 }
