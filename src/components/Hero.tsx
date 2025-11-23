@@ -10,7 +10,7 @@ export function Hero({ personal }: HeroProps) {
         {/* Profile Avatar */}
         <img 
           src={personal.profileImage} 
-          alt={`${personal.name} Profile`}
+          alt={`${personal.name}  - Full-Stack Developer`}
           className="hero-avatar"
           loading="lazy"
           decoding="async"
@@ -18,7 +18,7 @@ export function Hero({ personal }: HeroProps) {
         
         {/* Hero Content */}
         <h1 className="hero-name text-gradient">
-          {personal.name}
+          {personal.name} <span className="brand-name"></span>
         </h1>
         
         <h2 className="hero-title">

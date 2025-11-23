@@ -29,12 +29,12 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
         <div className={`hero-text ${isVisible ? 'hero-text-visible' : ''}`}>
           <div className="hero-badge">
             <span>
-              {currentLanguage === 'pt-PT' ? 'Serviços de TI & Tecnologia' : 'IT & Technology Services'}
+              {currentLanguage === 'pt-PT' ? 'jmsit — Serviços de TI & Tecnologia' : 'jmsit — IT & Technology Services'}
             </span>
           </div>
           
           <h1 className="hero-title">
-            <span className="hero-title-main">{personal.name}</span>
+            <span className="hero-title-main">{personal.name} <span className="brand-name"></span></span>
             <span className="hero-title-subtitle">{personal.title}</span>
           </h1>
           
@@ -89,7 +89,7 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
             <div className="hero-logo-wrapper">
               <img 
                 src={logoUrl} 
-                alt={`${personal.name} - Portfolio Logo`}
+                alt={`${personal.name}  - Portfolio Logo`}
                 className="hero-logo-image"
               />
               <div className="hero-image-border"></div>
