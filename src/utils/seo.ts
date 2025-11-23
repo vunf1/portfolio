@@ -6,7 +6,6 @@
  */
 
 import type {
-  SEOConfig,
   PersonSchema,
   ProfessionalServiceSchema,
   WebSiteSchema,
@@ -65,16 +64,6 @@ function setMetaTag(name: string, content: string, property = false): void {
   meta.setAttribute('content', content)
 }
 
-/**
- * Remove a meta tag
- */
-function removeMetaTag(name: string, property = false): void {
-  const selector = property ? `meta[property="${name}"]` : `meta[name="${name}"]`
-  const meta = document.querySelector(selector)
-  if (meta) {
-    meta.remove()
-  }
-}
 
 /**
  * Update or create a link tag
@@ -97,23 +86,11 @@ function setLinkTag(rel: string, href: string, hreflang?: string): void {
   link.setAttribute('href', href)
 }
 
-/**
- * Remove a link tag
- */
-function removeLinkTag(rel: string, hreflang?: string): void {
-  const selector = hreflang
-    ? `link[rel="${rel}"][hreflang="${hreflang}"]`
-    : `link[rel="${rel}"]`
-  const link = document.querySelector(selector)
-  if (link) {
-    link.remove()
-  }
-}
 
 /**
  * Update document title
  */
-export function updateDocumentTitle(locale: SupportedLocale, personal: Personal, meta: { title: string }): void {
+export function updateDocumentTitle(_locale: SupportedLocale, personal: Personal, meta: { title: string }): void {
   document.title = meta.title || `${personal.name} (${BRAND_NAME}) - ${personal.title}`
 }
 
@@ -206,7 +183,7 @@ function createPersonSchema(
  * Create ProfessionalService schema
  */
 function createProfessionalServiceSchema(
-  locale: SupportedLocale,
+  _locale: SupportedLocale,
   personal: Personal
 ): ProfessionalServiceSchema {
   const baseUrl = getBaseUrl()
@@ -230,7 +207,7 @@ function createProfessionalServiceSchema(
     ],
     areaServed: 'Worldwide',
     url: baseUrl,
-    inLanguage: locale === 'pt-PT' ? 'pt-PT' : 'en'
+    inLanguage: _locale === 'pt-PT' ? 'pt-PT' : 'en'
   }
 }
 
@@ -238,7 +215,7 @@ function createProfessionalServiceSchema(
  * Create WebSite schema
  */
 function createWebSiteSchema(
-  locale: SupportedLocale,
+  _locale: SupportedLocale,
   personal: Personal
 ): WebSiteSchema {
   const baseUrl = getBaseUrl()
@@ -297,7 +274,10 @@ export function updateStructuredData(
   social: Social[],
   portfolioData?: Partial<PortfolioData>
 ): void {
-  const skills = portfolioData?.skills?.technical?.map(s => s.name) || undefined
+  // Extract skill names from all technical skill groups
+  const skills = portfolioData?.skills?.technical
+    ?.flatMap(group => group.skills.map(skill => skill.name))
+    || undefined
 
   const structuredData: StructuredData = {
     person: createPersonSchema(locale, personal, social, skills),
