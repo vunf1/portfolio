@@ -506,7 +506,24 @@ export function ContactModal({
                     </h5>
                   </div>
 
-          <form name="contact-form" onSubmit={handleSubmit}>
+          <form 
+            name="contact-form" 
+            onSubmit={handleSubmit}
+            data-form-type="contact"
+            autoComplete="off"
+            data-lpignore="true"
+            role="form"
+            aria-label={t('contact.title', 'Contact form')}
+          >
+            {/* Hidden honeypot password field to prevent password manager interference */}
+            <input
+              type="password"
+              name="password-honeypot"
+              autoComplete="new-password"
+              tabIndex={-1}
+              aria-hidden="true"
+              style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
+            />
             <div className="modal-body">
               {submitSuccess ? (
                 <div className="alert alert-success" role="alert">
@@ -533,6 +550,7 @@ export function ContactModal({
                         id="contact-name"
                         name="name"
                         autoComplete="name"
+                        data-form-type="contact"
                         className={`form-control ${errors.name ? 'is-invalid' : ''}`}
                         value={formData.name}
                         onChange={(e) => handleInputChange('name', (e.target as HTMLInputElement).value)}
@@ -558,7 +576,8 @@ export function ContactModal({
                         type="email"
                         id="contact-email"
                         name="email"
-                        autoComplete="email"
+                        autoComplete="off"
+                        data-form-type="contact"
                         className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                         value={formData.email}
                         onChange={(e) => handleInputChange('email', (e.target as HTMLInputElement).value)}
@@ -587,6 +606,7 @@ export function ContactModal({
                         id="contact-phone"
                         name="phone"
                         autoComplete="tel"
+                        data-form-type="contact"
                         className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
                         value={formData.phone}
                         onChange={(e) => handleInputChange('phone', (e.target as HTMLInputElement).value)}
