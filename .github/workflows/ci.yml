@@ -71,6 +71,9 @@ jobs:
         run: npm run build:gh-pages
         env:
           NODE_ENV: production
+          # GitHub Pages base path - repository name (e.g., '/portfolio/')
+          # This ensures assets are loaded from the correct path on GitHub Pages
+          VITE_BASE_PATH: /${{ github.event.repository.name }}/
           # n8n Webhook Integration - Required for contact form
           # These secrets must be configured in GitHub repository settings:
           # Settings > Secrets and variables > Actions > New repository secret

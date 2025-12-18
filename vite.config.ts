@@ -4,8 +4,27 @@ import { resolve } from 'path'
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  // Use VITE_APP_URL for base URL, fallback to '/' for local development
-  const base = env.VITE_APP_URL ? new URL(env.VITE_APP_URL).pathname : '/'
+  // Determine base path:
+  // - For GitHub Pages: use repository name from env or default to '/portfolio/'
+  // - For custom domain: use VITE_APP_URL pathname
+  // - For local dev: use '/'
+  let base = '/'
+  if (env.VITE_BASE_PATH) {
+    // Explicit base path (for GitHub Pages: '/portfolio/')
+    base = env.VITE_BASE_PATH
+  } else if (env.VITE_APP_URL) {
+    // Custom domain URL
+    try {
+      const url = new URL(env.VITE_APP_URL)
+      base = url.pathname || '/'
+    } catch {
+      base = '/'
+    }
+  }
+  // Ensure base path ends with '/' for proper asset resolution
+  if (base !== '/' && !base.endsWith('/')) {
+    base += '/'
+  }
   const isProductionLike = mode === 'production' || mode === 'staging'
   const pureConsoleFunctions = isProductionLike
     ? ['console.log', 'console.info', 'console.debug', 'console.warn']
