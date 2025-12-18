@@ -29,13 +29,10 @@ export function useTranslation() {
   const loadTranslations = useCallback(async (lang: 'en' | 'pt-PT') => {
     try {
       const uiFile = `ui.json`
-      // console.log('🔄 useTranslation: Loading translations for', lang, 'from', uiFile)
-      
       const response = await fetch(`./data/${lang}/${uiFile}`)
       
       if (response.ok) {
         const data = await response.json()
-        // console.log('✅ useTranslation: Successfully loaded UI translations for', lang)
         globalTranslations = data
         globalCurrentLanguage = lang
         translationsLoaded = true
@@ -45,11 +42,8 @@ export function useTranslation() {
         
         // Notify all listeners
         translationListeners.forEach(listener => listener())
-      } else {
-        // console.warn('❌ useTranslation: Failed to load translations, response not ok:', response.status)
       }
     } catch (error) {
-      // console.warn('❌ useTranslation: Failed to load translations:', error)
       globalTranslations = {}
     }
   }, [])
@@ -79,11 +73,8 @@ export function useTranslation() {
   }, [currentLanguage, loadTranslations])
 
   const changeLanguage = useCallback((lang: 'en' | 'pt-PT') => {
-    // console.log('🔄 useTranslation: Changing language from', globalCurrentLanguage, 'to', lang)
-    
     // Check if we have cached translations for this language
     if (allTranslationsCache.has(lang)) {
-      // console.log('✅ useTranslation: Using cached translations for instant switch')
       globalTranslations = allTranslationsCache.get(lang)!
       globalCurrentLanguage = lang
       translationsLoaded = true
@@ -92,7 +83,6 @@ export function useTranslation() {
       translationListeners.forEach(listener => listener())
     } else {
       // Fallback to loading if not cached
-      // console.log('⚠️ useTranslation: No cached translations, loading...')
       globalCurrentLanguage = lang
       loadTranslations(lang)
     }
@@ -135,26 +125,19 @@ export async function preloadTranslations(lang: 'en' | 'pt-PT' = 'en'): Promise<
   try {
     // Load both languages in parallel for instant switching
     const languages = ['en', 'pt-PT'] as const
-    // console.log('🔄 preloadTranslations: Loading all translations for instant switching')
     
     const loadPromises = languages.map(async (language) => {
       if (allTranslationsCache.has(language)) {
-        // console.log(`✅ preloadTranslations: Using cached translations for ${language}`)
         return { language, data: allTranslationsCache.get(language)! }
       }
       
       const uiFile = `ui.json`
-      // console.log(`📥 preloadTranslations: Loading ${language} from ${uiFile}`)
-      
       const response = await fetch(`./data/${language}/${uiFile}`)
       
       if (response.ok) {
         const data = await response.json()
-        // console.log(`✅ preloadTranslations: Successfully loaded ${language}`)
         allTranslationsCache.set(language, data)
         return { language, data }
-      } else {
-        // console.warn(`❌ preloadTranslations: Failed to load ${language}, response not ok:`, response.status)
       }
       return null
     })
@@ -169,13 +152,10 @@ export async function preloadTranslations(lang: 'en' | 'pt-PT' = 'en'): Promise<
       globalCurrentLanguage = lang
       translationsLoaded = true
       
-      // console.log('✅ preloadTranslations: All translations loaded, instant switching ready')
-      
       // Notify all listeners
       translationListeners.forEach(listener => listener())
     }
   } catch (error) {
-    // console.warn('❌ preloadTranslations: Failed to load translations:', error)
     globalTranslations = {}
   }
 }

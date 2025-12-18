@@ -71,7 +71,10 @@ export function ContactModal({
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data))
     } catch (error) {
       // Ignore storage errors (e.g., private browsing mode)
-      console.warn('Failed to save form data to sessionStorage:', error)
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.warn('Failed to save form data to sessionStorage:', error)
+      }
     }
   }
 
@@ -84,7 +87,10 @@ export function ContactModal({
       }
     } catch (error) {
       // Ignore storage errors
-      console.warn('Failed to load form data from sessionStorage:', error)
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.warn('Failed to load form data from sessionStorage:', error)
+      }
     }
     return null
   }
@@ -95,7 +101,10 @@ export function ContactModal({
       sessionStorage.removeItem(STORAGE_KEY)
     } catch (error) {
       // Ignore storage errors
-      console.warn('Failed to clear form data from sessionStorage:', error)
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.warn('Failed to clear form data from sessionStorage:', error)
+      }
     }
   }
 
@@ -460,7 +469,10 @@ export function ContactModal({
         onClose()
       }, 2000)
     } catch (error) {
-      console.error('Failed to submit contact form:', error)
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to submit contact form:', error)
+      }
       
       let errorMessage = t('contact.errors.submitFailed', 'Failed to send message. Please try again.')
       

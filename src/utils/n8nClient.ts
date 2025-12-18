@@ -7,7 +7,7 @@
  * @example
  * ```typescript
  * const client = new N8nClient({
- *   webhookUrl: 'https://n8n.jmsit.cloud/webhook-test/...'
+ *   webhookUrl: 'https://n8n.<your.domain>/webhook-test/...'
  * })
  * 
  * const result = await client.sendToWebhook({
@@ -46,7 +46,10 @@ function getWebhookUrl(): string {
         'Set it in .env.production or as a build environment variable.'
       )
     }
-    console.warn('⚠️ VITE_N8N_WEBHOOK_URL not set. Contact form will not work.')
+    if (import.meta.env.DEV) {
+      // eslint-disable-next-line no-console
+      console.warn('VITE_N8N_WEBHOOK_URL not set. Contact form will not work.')
+    }
     return ''
   }
   
@@ -72,7 +75,10 @@ function getAuthToken(): string {
         'Set it in .env.production or as a build environment variable.'
       )
     }
-    console.warn('⚠️ VITE_N8N_AUTH_TOKEN not set. Contact form authentication will fail.')
+    if (import.meta.env.DEV) {
+      // eslint-disable-next-line no-console
+      console.warn('VITE_N8N_AUTH_TOKEN not set. Contact form authentication will fail.')
+    }
     return ''
   }
   

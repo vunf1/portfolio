@@ -40,9 +40,11 @@ async function loadLanguageData(language: string): Promise<Map<string, Record<st
       const dataPath = getDataPath(language, section)
       const data = await loadJsonFile(dataPath)
       languageData.set(section, data as Record<string, unknown>)
-      console.log(`✅ Loaded ${section} for ${language}`)
     } catch (error) {
-      console.warn(`⚠️ Failed to load ${section} for ${language}:`, error)
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.warn(`Failed to load ${section} for ${language}:`, error)
+      }
       // Set empty data for failed sections
       if (section === 'projects' || section === 'certifications' || section === 'interests' || section === 'awards' || section === 'testimonials') {
         languageData.set(section, [] as unknown as Record<string, unknown>)
@@ -114,7 +116,6 @@ export function useModularPortfolioData(currentLanguage: 'en' | 'pt-PT' = 'en'):
       const languages = ['en', 'pt-PT']
       
       try {
-        console.log('🔄 Starting to load critical data...')
         setLoading(true)
         setError(null)
         
@@ -123,29 +124,33 @@ export function useModularPortfolioData(currentLanguage: 'en' | 'pt-PT' = 'en'):
           try {
             await loadLanguageData(lang)
           } catch (error) {
-            console.error(`❌ Failed to load ${lang} data:`, error)
+            if (import.meta.env.DEV) {
+              // eslint-disable-next-line no-console
+              console.error(`Failed to load ${lang} data:`, error)
+            }
             throw error
           }
         })
         
         await Promise.all(loadPromises)
-        console.log('✅ All language data loaded successfully')
         
         // Set initial data with only critical sections
         const languageData = dataCache.get(currentLanguage) || dataCache.get('en')
         if (languageData) {
           const criticalData = createCriticalData(languageData)
-          console.log('✅ Setting initial portfolio data for:', currentLanguage, criticalData)
           setPortfolioData(criticalData)
-        } else {
-          console.error('❌ No initial data available after loading')
+        } else if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
+          console.error('No initial data available after loading')
         }
         
       } catch (err) {
-        console.error('❌ Error loading portfolio data:', err)
+        if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
+          console.error('Error loading portfolio data:', err)
+        }
         setError(err instanceof Error ? err : new Error('Unknown error occurred'))
       } finally {
-        console.log('🏁 Finished loading attempt, setting loading to false')
         setLoading(false)
       }
     }
@@ -155,14 +160,10 @@ export function useModularPortfolioData(currentLanguage: 'en' | 'pt-PT' = 'en'):
 
   // Switch language instantly using cached data
   useEffect(() => {
-    console.log('🔄 Language changed to:', currentLanguage)
     if (dataCache.has(currentLanguage)) {
       const languageData = dataCache.get(currentLanguage)!
       const criticalData = createCriticalData(languageData)
-      console.log('✅ Switching to cached data for:', currentLanguage, criticalData)
       setPortfolioData(criticalData)
-    } else {
-      console.log('⚠️ No cached data found for language:', currentLanguage)
     }
   }, [currentLanguage]) // Switch instantly when language changes
 
@@ -192,7 +193,10 @@ export function useModularPortfolioData(currentLanguage: 'en' | 'pt-PT' = 'en'):
       setLoadedSections(prev => new Set([...prev, section]))
       
     } catch (error) {
-      console.warn(`Failed to load ${section} section:`, error)
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.warn(`Failed to load ${section} section:`, error)
+      }
     }
   }, [currentLanguage, loadedSections])
 
@@ -208,7 +212,10 @@ export function useModularPortfolioData(currentLanguage: 'en' | 'pt-PT' = 'en'):
       setPortfolioData(fullData)
       setLoadedSections(new Set([...CRITICAL_SECTIONS, ...NON_CRITICAL_SECTIONS]))
     } catch (error) {
-      console.warn('Failed to load all sections:', error)
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.warn('Failed to load all sections:', error)
+      }
     }
   }, [currentLanguage])
 

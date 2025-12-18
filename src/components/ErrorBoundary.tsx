@@ -13,7 +13,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   override componentDidCatch(error: Error, errorInfo: unknown) {
     // Log error to console in development
-    if (process.env['NODE_ENV'] === 'development') {
+    if (import.meta.env.DEV) {
       // eslint-disable-next-line no-console
       console.error('Error caught by boundary:', error, errorInfo)
     }

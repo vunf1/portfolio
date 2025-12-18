@@ -51,7 +51,10 @@ async function ensureSectionLoaded(
         const data = await loadJsonFile<Record<string, unknown>>(dataPath)
         languageData.set(section, data)
       } catch (error) {
-        console.warn(`⚠️ Failed to load ${section} for ${language}:`, error)
+        if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
+          console.warn(`Failed to load ${section} for ${language}:`, error)
+        }
         if (NON_CRITICAL_SECTIONS.includes(section)) {
           languageData.set(section, [] as unknown as Record<string, unknown>)
         } else {
@@ -90,7 +93,10 @@ function scheduleIdleLoad(language: SupportedLanguage, sections: string[]): Prom
       loadLanguageSections(language, sections)
         .then(() => resolve(true))
         .catch(error => {
-          console.warn(`⚠️ Prefetch failed for ${language}:`, error)
+          if (import.meta.env.DEV) {
+            // eslint-disable-next-line no-console
+            console.warn(`Prefetch failed for ${language}:`, error)
+          }
           resolve(false)
         })
     }
@@ -214,7 +220,10 @@ export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): Use
 
         const normalizedError = err instanceof Error ? err : new Error('Unknown error occurred')
         setError(normalizedError)
-        console.error('❌ Error loading portfolio data:', normalizedError)
+        if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
+          console.error('Error loading portfolio data:', normalizedError)
+        }
       } finally {
         if (!cancelled) {
           setLoading(false)
@@ -305,7 +314,10 @@ export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): Use
       updateSectionFromCache(language, section)
       markSectionsLoaded(language, [section])
     } catch (err) {
-      console.warn(`Failed to load ${section} section:`, err)
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.warn(`Failed to load ${section} section:`, err)
+      }
     }
   }, [currentLanguage, loadedSectionsByLanguage, markSectionsLoaded, updateSectionFromCache])
 
@@ -322,7 +334,10 @@ export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): Use
       criticalPrefetched[currentLanguage] = true
       nonCriticalPrefetched[currentLanguage] = true
     } catch (err) {
-      console.warn('Failed to load all sections:', err)
+      if (import.meta.env.DEV) {
+        // eslint-disable-next-line no-console
+        console.warn('Failed to load all sections:', err)
+      }
     }
   }, [currentLanguage, markSectionsLoaded])
 

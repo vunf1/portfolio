@@ -1,10 +1,7 @@
-/* eslint-disable no-console */
 import { render } from 'preact'
 import { App } from './App'
 import { preloadTranslations } from './contexts/TranslationContext'
 import './index.css'
-
-console.log('🚀 Main.tsx starting...')
 
 async function initializeApp() {
   try {
@@ -15,23 +12,21 @@ async function initializeApp() {
     // Set initial HTML lang attribute
     document.documentElement.setAttribute('lang', initialLang === 'pt-PT' ? 'pt-PT' : 'en')
     
-    console.log('🔄 Preloading translations for language:', initialLang)
-    
     // Preload translations before rendering
     await preloadTranslations(initialLang)
     
-    console.log('✅ Translations preloaded successfully')
-    
     const appElement = document.getElementById('app')
     if (appElement) {
-      console.log('✅ App element found, rendering...')
       render(<App />, appElement)
-      console.log('✅ App rendered successfully')
-    } else {
-      console.error('❌ App element not found!')
+    } else if (import.meta.env.DEV) {
+      // eslint-disable-next-line no-console
+      console.error('App element not found')
     }
   } catch (error) {
-    console.error('❌ Failed to initialize app:', error)
+    if (import.meta.env.DEV) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to initialize app:', error)
+    }
     
     // Fallback: render app anyway
     const appElement = document.getElementById('app')

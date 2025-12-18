@@ -9,18 +9,13 @@ export function useI18n() {
     const loadTranslations = async () => {
       try {
         const uiFile = `ui.json`
-        // console.log('🔄 useI18n: Loading translations for', currentLanguage, 'from', uiFile)
         const response = await fetch(`./data/${currentLanguage}/${uiFile}`)
         
         if (response.ok) {
           const data = await response.json()
-          // console.log('✅ useI18n: Successfully loaded UI translations for', currentLanguage)
           setTranslations(data)
-        } else {
-          // console.warn('❌ useI18n: Failed to load translations, response not ok:', response.status)
         }
       } catch (error) {
-        // console.warn('❌ useI18n: Failed to load translations:', error)
         // Fallback to empty translations
         setTranslations({})
       }
@@ -39,7 +34,6 @@ export function useI18n() {
 
 
   const changeLanguage = useCallback((lang: 'en' | 'pt-PT') => {
-    // console.log('🔄 useI18n: Changing language from', currentLanguage, 'to', lang)
     setCurrentLanguage(lang)
     localStorage.setItem('i18nextLng', lang)
   }, [currentLanguage])
