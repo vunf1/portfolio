@@ -1,21 +1,91 @@
 import { useEffect, useState } from 'preact/hooks'
 import { useTranslation } from '../../contexts/TranslationContext'
-import { ContactModal } from '../ui/ContactModal'
 import type { Personal } from '../../types/portfolio'
 import logoUrl from '@/img/logo.png'
 
 interface LandingHeroProps {
   personal: Personal
   className?: string
+  onContactClick?: () => void
 }
 
-export function LandingHero({ personal, className = '' }: LandingHeroProps) {
+export function LandingHero({ personal, className = '', onContactClick }: LandingHeroProps) {
   const [isVisible, setIsVisible] = useState(false)
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false)
   const { currentLanguage } = useTranslation()
 
   useEffect(() => {
     setIsVisible(true)
+    
+    // #region agent log
+    // Debug: Measure subtitle dimensions and container constraints
+    const measureSubtitle = () => {
+      const subtitle = document.querySelector('.hero-logo-subtitle') as HTMLElement
+      const container = document.querySelector('.hero-image-container') as HTMLElement
+      const visual = document.querySelector('.hero-visual') as HTMLElement
+      const content = document.querySelector('.hero-content') as HTMLElement
+      
+      if (subtitle && container && visual && content) {
+        const subStyle = window.getComputedStyle(subtitle)
+        const contStyle = window.getComputedStyle(container)
+        const visStyle = window.getComputedStyle(visual)
+        const contGridStyle = window.getComputedStyle(content)
+        
+        const data = {
+          viewportWidth: window.innerWidth,
+          subtitle: {
+            fontSize: subStyle.fontSize,
+            width: subStyle.width,
+            maxWidth: subStyle.maxWidth,
+            minWidth: subStyle.minWidth,
+            computedWidth: subtitle.offsetWidth,
+            scrollWidth: subtitle.scrollWidth,
+            clientWidth: subtitle.clientWidth,
+            isClipped: subtitle.scrollWidth > subtitle.clientWidth,
+            paddingLeft: subStyle.paddingLeft,
+            paddingRight: subStyle.paddingRight
+          },
+          container: {
+            width: contStyle.width,
+            maxWidth: contStyle.maxWidth,
+            computedWidth: container.offsetWidth,
+            overflowX: contStyle.overflowX
+          },
+          visual: {
+            width: visStyle.width,
+            maxWidth: visStyle.maxWidth,
+            computedWidth: visual.offsetWidth,
+            overflowX: visStyle.overflowX
+          },
+          content: {
+            width: contGridStyle.width,
+            maxWidth: contGridStyle.maxWidth,
+            computedWidth: content.offsetWidth,
+            gridColumns: contGridStyle.gridTemplateColumns,
+            overflowX: contGridStyle.overflowX
+          }
+        }
+        
+        fetch('http://127.0.0.1:7242/ingest/d49a13b0-00e3-4e4a-b9ad-aed46ce54a17', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            location: 'LandingHero.tsx:measureSubtitle',
+            message: 'Subtitle dimensions and container constraints',
+            data,
+            timestamp: Date.now(),
+            sessionId: 'debug-session',
+            runId: 'run1',
+            hypothesisId: 'A,B,C,D,E'
+          })
+        }).catch(() => {})
+      }
+    }
+    
+    // Measure after animation completes
+    setTimeout(measureSubtitle, 1000)
+    window.addEventListener('resize', measureSubtitle)
+    return () => window.removeEventListener('resize', measureSubtitle)
+    // #endregion
   }, [])
 
   return (
@@ -60,7 +130,12 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
           <div className="hero-actions">
             <button 
               className="btn-hero-primary"
-              onClick={() => setIsContactModalOpen(true)}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                onContactClick?.()
+              }}
             >
               <span>{currentLanguage === 'pt-PT' ? 'Contacto' : 'Contact'}</span>
               <i className="fa-solid fa-comment-dots"></i>
@@ -99,9 +174,12 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
                 ? 'Segurança | Inteligência | Tecnologia'
                 : 'Security | Intelligence | Technology')
                 .split(' | ')
-                .map((word, index) => (
-                  <span key={index} className="hero-logo-subtitle-word">
-                    {word}
+                .map((word, index, array) => (
+                  <span key={index}>
+                    <span className="hero-logo-subtitle-word">{word}</span>
+                    {index < array.length - 1 && (
+                      <span className="hero-logo-subtitle-separator"> | </span>
+                    )}
                   </span>
                 ))}
             </p>
@@ -113,10 +191,6 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
         <div className="scroll-line"></div>
         <span>{currentLanguage === 'pt-PT' ? 'Deslize para explorar' : 'Scroll to explore'}</span>
       </div>
-      <ContactModal
-        isOpen={isContactModalOpen}
-        onClose={() => setIsContactModalOpen(false)}
-      />
     </section>
   )
 }

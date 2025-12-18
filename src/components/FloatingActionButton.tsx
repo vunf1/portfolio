@@ -1,9 +1,8 @@
-import { useState } from 'preact/hooks'
 import { useTranslation } from '../contexts/TranslationContext'
-import { ContactModal } from './ui/ContactModal'
 
 interface FloatingActionButtonProps {
   className?: string
+  onContactClick?: () => void
 }
 
 interface FABItem {
@@ -13,23 +12,18 @@ interface FABItem {
   ariaLabel: string
 }
 
-export function FloatingActionButton({ className = '' }: FloatingActionButtonProps) {
+export function FloatingActionButton({ className = '', onContactClick }: FloatingActionButtonProps) {
   const { currentLanguage, changeLanguage, t } = useTranslation()
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false)
 
   // Get the flag class for the language that will be switched TO
   const targetLanguage = currentLanguage === 'en' ? 'pt-PT' : 'en'
   const flagClass = targetLanguage === 'pt-PT' ? 'fi fi-pt' : 'fi fi-gb'
 
-  const handleContactClick = () => {
-    setIsContactModalOpen(true)
-  }
-
   const fabItems: FABItem[] = [
     {
       id: 'contact',
       icon: 'fa-solid fa-comment-dots',
-      onClick: handleContactClick,
+      onClick: () => onContactClick?.(),
       ariaLabel: t('contact.title', 'Contact Me')
     },
     {
@@ -63,13 +57,7 @@ export function FloatingActionButton({ className = '' }: FloatingActionButtonPro
           </button>
         </div>
       ))}
-    </div>
-      <ContactModal
-        isOpen={isContactModalOpen}
-        onClose={() => {
-          setIsContactModalOpen(false)
-        }}
-      />
+      </div>
     </>
   )
 }

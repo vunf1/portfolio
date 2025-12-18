@@ -7,6 +7,7 @@ import { LandingAbout } from './LandingAbout'
 import { LandingFooter } from './LandingFooter'
 import { FloatingActionButton } from '../FloatingActionButton'
 import { SectionSkeleton } from '../SectionSkeleton'
+import { ContactModal } from '../ui/ContactModal'
 
 interface LandingPageProps {
   onNavigateToPortfolio: () => void
@@ -18,6 +19,11 @@ export function LandingPage({ onNavigateToPortfolio, onWarmPortfolio, className 
   const { currentLanguage } = useTranslation()
   const { portfolioData, loading } = usePortfolioData(currentLanguage)
   const [isPortfolioVisible, setIsPortfolioVisible] = useState(false)
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false)
+
+  const handleContactClick = () => {
+    setIsContactModalOpen(true)
+  }
 
   useEffect(() => {
     // Add classes to body and html to prevent double scrollbars
@@ -77,7 +83,7 @@ export function LandingPage({ onNavigateToPortfolio, onWarmPortfolio, className 
 
   return (
     <div className={`landing-page ${className}`}>
-      <LandingHero personal={portfolioData.personal} />
+      <LandingHero personal={portfolioData.personal} onContactClick={handleContactClick} />
       <LandingFeatures personal={portfolioData.personal} />
       <LandingAbout 
         personal={portfolioData.personal} 
@@ -86,7 +92,13 @@ export function LandingPage({ onNavigateToPortfolio, onWarmPortfolio, className 
         onWarmPortfolio={onWarmPortfolio}
       />
       <LandingFooter personal={portfolioData.personal} social={portfolioData.social} />
-      <FloatingActionButton />
+      <FloatingActionButton onContactClick={handleContactClick} />
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => {
+          setIsContactModalOpen(false)
+        }}
+      />
     </div>
   )
 }
