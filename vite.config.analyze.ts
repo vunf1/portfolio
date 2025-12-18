@@ -19,7 +19,7 @@ export default defineConfig({
       },
       inject: {
         data: {
-          title: 'João Maia - Software Developer Portfolio (Analysis)',
+          title: 'João Maia - Software Developer (Analysis)',
           description: 'Bundle analysis for enterprise optimization',
           author: 'João Maia'
         }
