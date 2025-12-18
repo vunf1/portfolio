@@ -30,7 +30,7 @@
   }
 }
 
-/* Modal Dialog - Centered positioning */
+/* Modal Dialog - Top positioning */
 .contact-modal-dialog {
   position: fixed !important;
   width: auto;
@@ -38,11 +38,11 @@
   margin: 0;
   pointer-events: none;
   left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%) !important;
+  top: 2rem !important;
+  transform: translateX(-50%) !important;
   animation: modalFadeIn 0.3s ease-out;
   display: flex !important;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   z-index: 10003 !important;
   visibility: visible !important;
@@ -53,11 +53,11 @@
 @keyframes modalFadeIn {
   from {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.96);
+    transform: translateX(-50%) scale(0.96) translateY(-10px);
   }
   to {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translateX(-50%) scale(1) translateY(0);
   }
 }
 
@@ -81,6 +81,7 @@
   max-height: calc(100vh - 4rem);
   min-height: auto !important;
   height: auto !important;
+  margin-top: 0;
   z-index: 10004 !important;
   visibility: visible !important;
   opacity: 1 !important;

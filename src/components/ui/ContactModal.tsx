@@ -277,13 +277,13 @@ export function ContactModal({
 
     if (isOpen) {
       document.addEventListener('keydown', handleEscape)
-      // Prevent body scroll when modal is open
-      document.body.style.overflow = 'hidden'
+      // Prevent body scroll when modal is open using CSS class
+      document.body.classList.add('modal-open')
     }
 
     return () => {
       document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = ''
+      document.body.classList.remove('modal-open')
     }
   }, [isOpen, onClose, isSubmitting])
 
