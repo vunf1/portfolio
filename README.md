@@ -753,6 +753,17 @@ npm run verify-dist
   3. Save and wait for the next deployment
 - **Verification**: Check GitHub Actions logs - should see `npm run build:gh-pages`, not `actions/jekyll-build-pages@v1`
 
+**Problem: Deployment fails with "Multiple artifacts named 'github-pages' found"**
+- **Cause**: Both custom workflow AND default Jekyll workflow are running simultaneously
+- **Error Message**: `Error: Multiple artifacts named "github-pages" were unexpectedly found for this workflow run. Artifact count is 2.`
+- **Solution**: 
+  1. Go to **Settings** > **Pages**
+  2. Change **Source** from "Deploy from a branch" to **"GitHub Actions"**
+  3. This will disable the default Jekyll workflow
+  4. Only our custom workflow (`ci.yml`) will run
+  5. Save and wait for the next deployment
+- **Why this happens**: When GitHub Pages is set to "Deploy from a branch", GitHub automatically runs a default Jekyll build workflow. Our custom workflow also runs, creating duplicate artifacts with the same name.
+
 **Problem: Assets not loading (404 errors)**
 - **Cause**: Base path not set correctly
 - **Solution**: 
