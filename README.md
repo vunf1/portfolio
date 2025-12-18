@@ -10,21 +10,18 @@
 [![Security](https://img.shields.io/badge/Security-GDPR%20Compliant-green)](https://gdpr.eu/)
 [![Accessibility](https://img.shields.io/badge/Accessibility-WCAG%202.2%20AA-blue)](https://www.w3.org/TR/WCAG22/)
 
-A modern, enterprise-grade portfolio website built with **Vite + Preact + TypeScript**, featuring privacy-gated content, GDPR compliance, and premium user experience optimized for Core Web Vitals and accessibility. The project implements a sophisticated single scroll container architecture, centralized state management, and comprehensive testing coverage.
+A modern, enterprise-grade portfolio website built with **Vite + Preact + TypeScript**, featuring GDPR-compliant contact forms, bilingual support, and premium user experience optimized for Core Web Vitals and accessibility. The project implements a sophisticated single scroll container architecture, centralized state management, and comprehensive testing coverage.
 
 ## 🚀 **Features**
 
 ### **Privacy & Security**
-- 🔒 **Privacy Gate** - Blur-to-reveal sensitive content with E.164 phone validation
 - 🛡️ **GDPR Compliance** - Full data protection with explicit consent mechanisms
-- 🔐 **Secure Data Handling** - Ephemeral session data with strict retention policies
-- 🚫 **Rate Limiting** - Built-in protection against abuse and spam
-- 🍯 **Honeypot Protection** - Advanced anti-bot measures
+- 🔐 **Secure Data Handling** - Secure form submission with validation
 - 🔗 **n8n Integration** - Automated contact form processing with webhook support
+- ✅ **Form Validation** - E.164 phone validation, email validation, and name validation
 
 ### **Enterprise UX/UI**
 - 🎨 **Premium Design System** - Enterprise-grade aesthetic with design tokens
-- 🌙 **Theme Management** - Dark/light mode with system preference detection
 - 🌍 **Bilingual Support** - English/Portuguese with smooth locale switching
 - 📱 **Responsive Design** - Mobile-first approach with fluid grids
 - ⚡ **Performance Optimized** - <60KB initial JS, lazy loading, code splitting
@@ -53,10 +50,10 @@ portfolio/
 │   │   │   ├── LandingHero.tsx     # Hero section
 │   │   │   ├── LandingFeatures.tsx  # Features section
 │   │   │   ├── LandingAbout.tsx     # About section
-│   │   │   └── LandingFooter.tsx     # Footer section
+│   │   │   ├── LandingFooter.tsx     # Footer section
+│   │   │   └── VideoBackground.tsx   # Video background component
 │   │   ├── __tests__/       # Component tests
 │   │   ├── About.tsx        # About section
-│   │   ├── Contact.tsx      # Contact section
 │   │   ├── FloatingActionButton.tsx  # FAB component
 │   │   └── ...              # Other sections
 │   ├── hooks/               # Custom React hooks
@@ -93,7 +90,10 @@ portfolio/
 │   │   │   ├── _responsive.css   # Responsive design rules
 │   │   │   └── _accessibility.css # Accessibility features
 │   │   └── components/      # Component-specific styles
-│   │       └── components.css   # Component styles
+│   │       ├── about.css    # About component styles
+│   │       ├── contact-modal-premium.css  # Contact modal styles
+│   │       ├── hero.css     # Hero component styles
+│   │       └── ...          # Other component-specific styles
 │   ├── utils/               # Utility functions
 │   │   ├── __tests__/       # Utility tests
 │   │   ├── validation.ts    # Form validation (E.164, email, name)
@@ -111,7 +111,6 @@ portfolio/
 │   │   ├── en/              # English content
 │   │   └── pt-PT/           # Portuguese content
 │   ├── img/                 # Images and assets
-│   ├── fonts/               # Custom fonts
 │   └── _headers             # Security headers
 ├── scripts/                 # Build and utility scripts
 │   ├── copy-data.cjs        # Data copying script
@@ -184,33 +183,8 @@ npm run preview
 ### **Environment Variables**
 Create `.env.local` for local development:
 ```bash
-# Development settings
-VITE_APP_TITLE="Your Name - Portfolio"
-VITE_APP_DESCRIPTION="Software Developer Portfolio"
+# Application URL (optional, defaults to current origin)
 VITE_APP_URL="http://localhost:3000"
-
-# Privacy Gate Settings
-VITE_PRIVACY_GATE_ENABLED=true
-VITE_UNLOCK_DURATION_DAYS=30
-VITE_RATE_LIMIT_ATTEMPTS=5
-
-# Security Settings
-VITE_SECURITY_HEADERS=true
-VITE_CSP_ENABLED=true
-VITE_HSTS_ENABLED=true
-
-# Performance Settings
-VITE_COMPRESSION_ENABLED=true
-VITE_CACHE_STRATEGY=aggressive
-VITE_PRELOAD_CRITICAL=true
-
-# Analytics (disabled by default)
-VITE_ANALYTICS_ENABLED=false
-VITE_ANALYTICS_ID=your-analytics-id-here
-
-# CDN Configuration (optional)
-VITE_CDN_URL=https://your-cdn-domain.com
-VITE_ASSET_OPTIMIZATION=true
 
 # n8n Webhook Integration
 # REQUIRED: These environment variables are mandatory for the contact form to work
@@ -220,6 +194,8 @@ VITE_N8N_WEBHOOK_URL=https://n8n.<your.domain>/webhook-test/your-webhook-id
 # Supports both VITE_N8N_AUTH_TOKEN (new) and VITE_N8N_JWT_TOKEN (legacy) for backward compatibility
 VITE_N8N_AUTH_TOKEN=your-auth-token-here
 ```
+
+**Note:** Only the n8n webhook variables are actually used in the codebase. Other environment variables mentioned in examples are placeholders for future features.
 
 > **⚠️ CRITICAL SECURITY WARNING**: 
 > - **NEVER commit `.env.local`, `.env.production`, or any `.env*` files with real values to version control**
@@ -334,10 +310,10 @@ This portfolio contains personal information that should be customized for your 
 **Files to Update with Your Information:**
 - `public/data/en/personal.json` - Personal details (name, email, etc.)
 - `public/data/pt-PT/personal.json` - Portuguese personal details
-- `public/data/en/contact.json` - Contact information
-- `public/data/pt-PT/contact.json` - Portuguese contact information
 - `public/data/en/social.json` - Social media links
 - `public/data/pt-PT/social.json` - Portuguese social media links
+- `public/data/en/meta.json` - SEO metadata and Open Graph tags
+- `public/data/pt-PT/meta.json` - Portuguese SEO metadata
 - `index.html` - Meta tags and page title
 - `vite.config.ts` - Application title
 
@@ -381,13 +357,11 @@ Customize design tokens in `src/css/tokens.css`:
 
 ### **For Visitors**
 1. **Landing Page**: Modern, premium landing experience with scroll animations
-2. **Privacy Gate**: Complete identity verification to access contact details
-3. **Language Switch**: Toggle between English/Portuguese seamlessly
-4. **Theme Toggle**: Switch between light/dark modes with system preference detection
-5. **Navigation**: Smooth scrolling between sections with keyboard support
-6. **Contact Modal**: Accessible contact form with n8n webhook integration
-7. **Accessibility**: Full keyboard navigation and screen reader support
-8. **Performance**: Fast loading with optimized bundle size and lazy loading
+2. **Language Switch**: Toggle between English/Portuguese seamlessly
+3. **Navigation**: Smooth scrolling between sections with keyboard support
+4. **Contact Modal**: Accessible contact form with n8n webhook integration
+5. **Accessibility**: Full keyboard navigation and screen reader support
+6. **Performance**: Fast loading with optimized bundle size and lazy loading
 
 ### **For Developers**
 
@@ -426,31 +400,30 @@ npm run verify-dist
 
 ## 🔒 **Privacy & Security Features**
 
-### **Privacy Gate System**
-- **Blur-to-Reveal**: Sensitive content protected by default
-- **E.164 Validation**: Strict phone number format validation
-- **Rate Limiting**: Protection against brute force attempts
-- **Honeypot Protection**: Advanced anti-bot measures
-- **Ephemeral Data**: 30-day auto-expiration of unlock data
+### **Form Validation & Security**
+- **E.164 Validation**: Strict phone number format validation (E.164 standard)
+- **Email Validation**: Comprehensive email format validation
+- **Name Validation**: Name format validation with length checks
+- **Client-Side Validation**: Real-time validation feedback
+- **Secure Submission**: All form data sent securely to n8n webhook
 
 ### **GDPR Compliance**
-- **Explicit Consent**: Required for all personal data processing
-- **Data Minimization**: Only collect necessary information
-- **Purpose Limitation**: Clear specification of data usage
-- **Right to Withdraw**: Easy consent withdrawal and data deletion
-- **Data Portability**: Export user data in standard format
+- **Data Minimization**: Only collect necessary information for contact form
+- **Purpose Limitation**: Clear specification of data usage (contact form submissions)
+- **Secure Transmission**: All data transmitted via HTTPS
+- **No Tracking**: Zero analytics or tracking cookies
 
 ### **Security Headers**
-- **CSP**: Content Security Policy for XSS protection
+- **CSP**: Content Security Policy for XSS protection (configured in `public/_headers`)
 - **HSTS**: HTTP Strict Transport Security
 - **X-Frame-Options**: Clickjacking protection
 - **X-Content-Type-Options**: MIME type sniffing protection
 
 ### **Data Protection**
-- **Local Storage Only**: No server-side data collection
-- **Encrypted Storage**: Sensitive data encrypted in localStorage
-- **Auto-Cleanup**: Automatic data expiration and cleanup
+- **No Server-Side Storage**: All data sent directly to n8n webhook
+- **No Local Storage**: Contact form data not stored locally
 - **No Tracking**: Zero analytics or tracking cookies
+- **Secure Headers**: Comprehensive security headers configured
 
 ## 🎨 **Customization**
 
@@ -468,7 +441,9 @@ Edit `src/css/tokens.css` for design tokens:
 ```
 
 ### **Component Styling**
-- **UI Components**: `src/css/components.css`
+- **Component Styles**: Individual CSS files in `src/css/components/`:
+  - `contact-modal-premium.css` - Contact modal styles
+  - `about.css`, `hero.css`, `skills.css`, etc. - Component-specific styles
 - **Premium Styles**: Refactored into modular CSS files:
   - `src/css/variables.css` - CSS variables
   - `src/css/base.css` - Base layout with scrollbar management
@@ -487,11 +462,12 @@ Edit `src/css/tokens.css` for design tokens:
 3. Update navigation in `src/components/Navigation.tsx`
 4. Add translations to `public/data/`
 
-### **Theme Customization**
-Theme management is handled through CSS variables and design tokens. Customize themes by modifying:
+### **Styling Customization**
+The design system uses CSS variables and design tokens. Customize styling by modifying:
 - `src/css/tokens.css` - Design tokens and color variables
-- `src/css/variables.css` - CSS custom properties
-- Component-specific CSS files for theme-aware styling
+- `src/css/variables.css` - CSS custom properties and gradients
+- `src/css/landing/_variables.css` - Landing page specific variables
+- Component-specific CSS files for component styling
 
 ## 📊 **Performance & Testing**
 
@@ -563,9 +539,9 @@ npm run performance:budget
 
 ### **Internationalization**
 - **Bilingual Support**: English and Portuguese (PT-PT)
-- **RTL Ready**: Right-to-left language support
-- **Locale Detection**: Automatic language detection
-- **SEO Friendly**: Proper hreflang implementation
+- **Locale Detection**: Automatic language detection from browser or localStorage
+- **SEO Friendly**: Proper hreflang implementation and locale-specific meta tags
+- **Smooth Switching**: Language changes without page reload
 
 ## 🚀 **Deployment & CI/CD**
 
@@ -716,10 +692,11 @@ npm run lint:fix
 npm run verify-dist
 ```
 
-#### **Privacy Gate Issues**
+#### **Contact Form Issues**
 - Check browser console for validation errors
-- Verify localStorage is enabled
-- Clear browser data and refresh
+- Verify n8n webhook URL and auth token are set in environment variables
+- Check network tab for webhook request failures
+- Verify form validation messages are displayed correctly
 
 #### **Scrollbar Issues**
 - Verify only one vertical scrollbar appears (on `html` element)
@@ -829,7 +806,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### **v3.0.0 - Enterprise Portfolio Release**
 - 🏗️ **Modern Architecture**: Complete migration to Vite + Preact + TypeScript
-- 🔒 **Enhanced Security**: Improved privacy gate with E.164 validation
+- 🔒 **Enhanced Security**: Form validation with E.164 phone validation
 - 🧪 **Testing Suite**: Comprehensive testing with Vitest and Testing Library
 - ⚡ **Performance**: <60KB initial JS bundle with code splitting
 - ♿ **Accessibility**: WCAG 2.2 AA compliance with keyboard navigation
@@ -841,12 +818,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### **v2.0.0 - Premium Portfolio Release**
 - ✨ Complete GDPR compliance implementation
 - 🎨 Premium UI/UX redesign
-- 🔒 Privacy gate functionality
-- 🍪 Advanced cookie management
 - 📱 Enhanced mobile experience
 - ⚡ Performance optimizations
 - 🌍 Improved multi-language support
-- 🌙 Dark/light theme toggle
 
 ### **v1.0.0 - Original Portfolio**
 - Basic Bootstrap template
