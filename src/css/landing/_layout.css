@@ -26,24 +26,35 @@ html.landing-page-active body .landing-page {
   box-sizing: border-box !important;
 }
 
-/* Use left-align for better readability, especially for Portuguese */
+/* Use justify for better readability, especially for Portuguese */
 .landing-page p,
 .landing-page .hero-summary {
-  text-align: center;
+  text-align: justify !important;
   word-spacing: normal;
   letter-spacing: normal;
+}
+
+/* Exceptions: Center align taglines */
+.landing-page .hero-tagline,
+.landing-page .about-profile-tagline {
+  text-align: center !important;
 }
 
 .landing-page .about-content p,
 .landing-page .about-subtitle,
 .landing-page .section-subtitle,
 .landing-page .feature-description,
-.landing-page .feature-title,
 .landing-page .about-description,
 .landing-page .approach-description,
 .landing-page .footer-subtitle,
 .landing-page .footer-description {
-  text-align: left;
+  text-align: justify !important;
+  word-spacing: normal;
+  letter-spacing: normal;
+}
+
+.landing-page .feature-title {
+  text-align: left !important;
   word-spacing: normal;
   letter-spacing: normal;
 }

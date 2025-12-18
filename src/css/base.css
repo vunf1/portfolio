@@ -27,7 +27,13 @@ p,
 .interest-description,
 .about-content p,
 .hero-summary {
-  text-align: center;
+  text-align: justify;
+}
+
+/* Exceptions: Center align taglines */
+.hero-tagline,
+.about-profile-tagline {
+  text-align: center !important;
 }
 
 /* Portfolio Container - Main Layout */

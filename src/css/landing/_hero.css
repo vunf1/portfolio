@@ -141,7 +141,7 @@
   color: var(--color-gray-700);
   margin-bottom: var(--space-4);
   line-height: var(--line-height-relaxed);
-  text-align: left;
+  text-align: center !important;
   word-spacing: normal;
   letter-spacing: normal;
 }
@@ -153,14 +153,32 @@
 }
 
 .hero-summary {
+  font-family: var(--font-family-serif);
   font-size: clamp(1rem, 1.5vw, 1.125rem);
-  line-height: var(--line-height-relaxed);
+  font-weight: 500;
+  line-height: 1.7;
   color: var(--color-gray-800);
   margin-bottom: var(--space-6);
-  max-width: 600px;
-  text-align: left;
+  max-width: 68ch;
+  text-align: justify !important;
+  text-justify: inter-word;
   word-spacing: normal;
-  letter-spacing: normal;
+  letter-spacing: 0.01em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.02);
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+}
+
+.hero-summary p {
+  margin-bottom: 1.5em;
+}
+
+.hero-summary p:last-child {
+  margin-bottom: 0;
 }
 
 .hero-meta {
