@@ -88,11 +88,12 @@ describe('Hero Component', () => {
   })
 
   it('renders profile image with correct attributes', () => {
-    render(<Hero {...defaultProps} />)
+    const { container } = render(<Hero {...defaultProps} />)
     
-    const profileImage = screen.getByAltText('João Maia Profile')
+    const profileImage = container.querySelector('img.hero-avatar') as HTMLImageElement
     expect(profileImage).toBeInTheDocument()
     expect(profileImage).toHaveAttribute('src', './img/profile.jpg')
+    expect(profileImage).toHaveAttribute('alt', 'João Maia  - Full-Stack Developer')
     expect(profileImage).toHaveAttribute('loading', 'lazy')
     expect(profileImage).toHaveAttribute('decoding', 'async')
   })

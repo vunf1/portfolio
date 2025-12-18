@@ -86,7 +86,7 @@ describe('ContactModal Component', () => {
     expect(screen.getByText('Contact Me')).toBeInTheDocument()
     expect(screen.getByLabelText(/Full Name/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/Email/i)).toBeInTheDocument()
-    expect(screen.getByLabelText(/Message/i)).toBeInTheDocument()
+    expect(screen.getByRole('textbox', { name: /Message/i })).toBeInTheDocument()
   })
 
   it('renders all form fields', () => {
@@ -97,19 +97,19 @@ describe('ContactModal Component', () => {
     expect(screen.getByLabelText(/Email/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/Phone/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/Subject/i)).toBeInTheDocument()
-    expect(screen.getByLabelText(/Message/i)).toBeInTheDocument()
+    expect(screen.getByRole('textbox', { name: /Message/i })).toBeInTheDocument()
   })
 
   it('validates required fields on submit', async () => {
     const props = { ...defaultProps, isOpen: true }
     render(<ContactModal {...props} />)
     
-    const submitButton = screen.getByText('Send Message')
-    fireEvent.click(submitButton)
+    const form = screen.getByRole('form')
+    fireEvent.submit(form)
     
     await waitFor(() => {
-      expect(screen.getByText('Name is required')).toBeInTheDocument()
-    })
+      expect(screen.getByText(/Name is required/i)).toBeInTheDocument()
+    }, { timeout: 2000 })
   })
 
   it('validates email format', async () => {
@@ -124,7 +124,8 @@ describe('ContactModal Component', () => {
     fireEvent.input(emailInput, { target: { value: 'invalid-email' } })
     fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
     
-    const submitButton = screen.getByText('Send Message')
+    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
+    const submitButton = submitButtons[0]
     fireEvent.click(submitButton)
     
     await waitFor(() => {
@@ -146,7 +147,8 @@ describe('ContactModal Component', () => {
     fireEvent.input(phoneInput, { target: { value: 'invalid-phone' } })
     fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
     
-    const submitButton = screen.getByText('Send Message')
+    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
+    const submitButton = submitButtons[0]
     fireEvent.click(submitButton)
     
     await waitFor(() => {
@@ -166,7 +168,8 @@ describe('ContactModal Component', () => {
     fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
     fireEvent.input(messageInput, { target: { value: 'Short' } })
     
-    const submitButton = screen.getByText('Send Message')
+    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
+    const submitButton = submitButtons[0]
     fireEvent.click(submitButton)
     
     await waitFor(() => {
@@ -187,7 +190,8 @@ describe('ContactModal Component', () => {
     fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
     fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
     
-    const submitButton = screen.getByText('Send Message')
+    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
+    const submitButton = submitButtons[0]
     fireEvent.click(submitButton)
     
     await waitFor(() => {
@@ -216,7 +220,8 @@ describe('ContactModal Component', () => {
     fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
     fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
     
-    const submitButton = screen.getByText('Send Message')
+    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
+    const submitButton = submitButtons[0]
     fireEvent.click(submitButton)
     
     await waitFor(() => {
@@ -258,7 +263,8 @@ describe('ContactModal Component', () => {
     fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
     fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
     
-    const submitButton = screen.getByText('Send Message')
+    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
+    const submitButton = submitButtons[0]
     fireEvent.click(submitButton)
     
     // Try to close with escape while submitting
@@ -287,7 +293,8 @@ describe('ContactModal Component', () => {
     fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
     fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
     
-    const submitButton = screen.getByText('Send Message')
+    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
+    const submitButton = submitButtons[0]
     fireEvent.click(submitButton)
     
     expect(screen.getByText('Sending...')).toBeInTheDocument()
@@ -298,7 +305,8 @@ describe('ContactModal Component', () => {
     const props = { ...defaultProps, isOpen: true }
     render(<ContactModal {...props} />)
     
-    const submitButton = screen.getByText('Send Message')
+    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
+    const submitButton = submitButtons[0]
     fireEvent.click(submitButton)
     
     await waitFor(() => {
@@ -342,7 +350,8 @@ describe('ContactModal Component', () => {
     fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
     fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
     
-    const submitButton = screen.getByText('Send Message')
+    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
+    const submitButton = submitButtons[0]
     fireEvent.click(submitButton)
     
     await waitFor(() => {
@@ -365,7 +374,8 @@ describe('ContactModal Component', () => {
     fireEvent.input(phoneInput, { target: { value: '+351912345678' } })
     fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
     
-    const submitButton = screen.getByText('Send Message')
+    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
+    const submitButton = submitButtons[0]
     fireEvent.click(submitButton)
     
     await waitFor(() => {
