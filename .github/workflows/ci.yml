@@ -208,50 +208,101 @@ jobs:
       pages: write
       id-token: write
     steps:
-      - name: Check for duplicate artifacts
+      - name: Clean up old artifacts from previous runs
         run: |
-          echo "🔍 Checking for 'github-pages' artifacts in current workflow run..."
-          echo "📊 Workflow Run ID: ${{ github.run_id }}"
-          echo "📊 Workflow Name: ${{ github.workflow }}"
+          echo "🧹 Cleaning up old 'github-pages' artifacts from previous workflow runs..."
+          echo "📊 Current Workflow Run ID: ${{ github.run_id }}"
           echo ""
           
-          # Get all artifacts from this specific workflow run
+          # Get current run's artifacts first
+          CURRENT_RUN_ARTIFACTS=$(gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts --jq '.artifacts[] | select(.name == "github-pages") | .id' 2>/dev/null || echo "")
+          CURRENT_ARTIFACT_IDS=$(echo "$CURRENT_RUN_ARTIFACTS" | tr '\n' ' ')
+          
+          echo "✅ Current run artifacts: $CURRENT_ARTIFACT_IDS"
+          echo ""
+          
+          # Get ALL 'github-pages' artifacts from repository
+          ALL_ARTIFACTS=$(gh api repos/${{ github.repository }}/actions/artifacts --jq '.artifacts[] | select(.name == "github-pages") | {id: .id, created_at: .created_at}' 2>/dev/null || echo "[]")
+          
+          if [ -z "$ALL_ARTIFACTS" ] || [ "$ALL_ARTIFACTS" = "[]" ]; then
+            echo "✅ No artifacts found in repository"
+          else
+            echo "📋 All 'github-pages' artifacts in repository:"
+            echo "$ALL_ARTIFACTS" | jq -r '.[] | "  - ID: \(.id), Created: \(.created_at)"' 2>/dev/null || echo "$ALL_ARTIFACTS"
+            echo ""
+            
+            # Delete artifacts that are NOT in the current run's artifact list
+            DELETED_COUNT=0
+            echo "$ALL_ARTIFACTS" | jq -r '.[] | .id' 2>/dev/null | while read -r artifact_id; do
+              if [ -n "$artifact_id" ]; then
+                # Check if this artifact is from current run
+                IS_CURRENT_RUN=false
+                for current_id in $CURRENT_ARTIFACT_IDS; do
+                  if [ "$artifact_id" = "$current_id" ]; then
+                    IS_CURRENT_RUN=true
+                    break
+                  fi
+                done
+                
+                if [ "$IS_CURRENT_RUN" = "false" ]; then
+                  echo "  🗑️  Deleting old artifact ID: $artifact_id"
+                  if gh api repos/${{ github.repository }}/actions/artifacts/$artifact_id -X DELETE 2>/dev/null; then
+                    DELETED_COUNT=$((DELETED_COUNT+1))
+                    echo "    ✅ Deleted successfully"
+                  else
+                    echo "    ⚠️  Could not delete (may already be deleted or expired)"
+                  fi
+                else
+                  echo "  ✅ Keeping current run artifact ID: $artifact_id"
+                fi
+              fi
+            done
+            
+            echo ""
+            if [ "$DELETED_COUNT" -gt "0" ]; then
+              echo "✅ Cleaned up $DELETED_COUNT old artifact(s) from previous runs"
+            else
+              echo "✅ No old artifacts to clean up"
+            fi
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+        continue-on-error: true
+          
+      - name: Verify current run artifact
+        run: |
+          echo "🔍 Verifying 'github-pages' artifact in current workflow run..."
+          echo "📊 Workflow Run ID: ${{ github.run_id }}"
+          echo ""
+          
+          # Get artifacts from THIS specific workflow run only
           ARTIFACTS_JSON=$(gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts 2>/dev/null || echo '{"artifacts":[]}')
           ARTIFACT_COUNT=$(echo "$ARTIFACTS_JSON" | jq '[.artifacts[] | select(.name == "github-pages")] | length' 2>/dev/null || echo "0")
           
-          echo "📦 Found $ARTIFACT_COUNT 'github-pages' artifact(s) in this run"
+          echo "📦 Found $ARTIFACT_COUNT 'github-pages' artifact(s) in current run"
           echo ""
           
           if [ "$ARTIFACT_COUNT" -eq "0" ]; then
-            echo "❌ ERROR: No 'github-pages' artifact found!"
+            echo "❌ ERROR: No 'github-pages' artifact found in current run!"
             echo "   This means the build job did not upload the artifact successfully."
             echo "   Check the 'build' job logs for errors."
             exit 1
           elif [ "$ARTIFACT_COUNT" -gt "1" ]; then
-            echo "❌ ERROR: Multiple artifacts named 'github-pages' found (count: $ARTIFACT_COUNT)"
+            echo "❌ ERROR: Multiple artifacts named 'github-pages' found in current run (count: $ARTIFACT_COUNT)"
             echo ""
             echo "📋 Artifact details:"
             echo "$ARTIFACTS_JSON" | jq -r '.artifacts[] | select(.name == "github-pages") | "  - ID: \(.id), Created: \(.created_at), Size: \(.size_in_bytes) bytes"' 2>/dev/null || echo "  (Could not parse artifact details)"
             echo ""
-            echo "⚠️  Possible causes:"
-            echo "   1. Multiple workflow runs triggered simultaneously"
-            echo "   2. Workflow was re-run while another run was in progress"
-            echo "   3. Artifact cleanup step failed"
-            echo ""
-            echo "🔧 SOLUTION:"
-            echo "   1. Wait for all workflow runs to complete"
-            echo "   2. Cancel any duplicate runs in GitHub Actions"
-            echo "   3. Re-run the workflow manually after all runs complete"
-            echo "   4. If issue persists, check GitHub Pages settings:"
-            echo "      https://github.com/${{ github.repository }}/settings/pages"
-            echo "      Ensure 'Source' is set to 'GitHub Actions' (not 'Deploy from a branch')"
-            echo ""
+            echo "⚠️  This should not happen - the cleanup step should have prevented this."
+            echo "   Please check the 'Clean up old artifacts' step logs above."
             exit 1
           else
             ARTIFACT_ID=$(echo "$ARTIFACTS_JSON" | jq -r '.artifacts[] | select(.name == "github-pages") | .id' 2>/dev/null || echo "")
             ARTIFACT_SIZE=$(echo "$ARTIFACTS_JSON" | jq -r '.artifacts[] | select(.name == "github-pages") | .size_in_bytes' 2>/dev/null || echo "unknown")
-            echo "✅ Found exactly one 'github-pages' artifact (ID: $ARTIFACT_ID, Size: $ARTIFACT_SIZE bytes)"
-            echo "✅ Proceeding with deployment..."
+            echo "✅ Found exactly one 'github-pages' artifact in current run"
+            echo "   - ID: $ARTIFACT_ID"
+            echo "   - Size: $ARTIFACT_SIZE bytes"
+            echo "✅ Ready for deployment"
           fi
         env:
           GH_TOKEN: ${{ github.token }}
