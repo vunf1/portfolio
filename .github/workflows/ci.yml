@@ -81,25 +81,43 @@ jobs:
           VITE_N8N_WEBHOOK_URL: ${{ secrets.VITE_N8N_WEBHOOK_URL }}
           VITE_N8N_AUTH_TOKEN: ${{ secrets.VITE_N8N_AUTH_TOKEN }}
           
+      - name: Verify base path in build
+        run: |
+          echo "🔍 Verifying base path in built index.html..."
+          if grep -q "/${{ github.event.repository.name }}/assets" dist/index.html; then
+            echo "✅ Base path correctly applied in index.html"
+          else
+            echo "❌ Base path NOT found in index.html!"
+            echo "📄 First 50 lines of index.html:"
+            head -50 dist/index.html
+            echo ""
+            echo "🔍 Searching for script tags:"
+            grep -i "script.*src" dist/index.html || echo "No script tags found!"
+            exit 1
+          fi
+          
       - name: Copy 404.html to dist
         run: cp 404.html dist/
         
       - name: Verify dist contents
         run: |
-          echo "?? Dist folder contents:"
+          echo "📁 Dist folder contents:"
           ls -la dist/
           echo ""
-          echo "?? Assets folder contents:"
+          echo "📦 Assets folder contents:"
           ls -la dist/assets/
           echo ""
-          echo "??? Images folder contents:"
+          echo "🖼️ Images folder contents:"
           ls -la dist/img/
           echo ""
-          echo "?? Data folder contents:"
+          echo "📊 Data folder contents:"
           ls -la dist/data/
           echo ""
-          echo "?? Root files:"
+          echo "📄 Root files:"
           ls -la dist/*.html dist/*.xml dist/*.txt dist/*.headers 2>/dev/null || true
+          echo ""
+          echo "🔍 Script tags in index.html:"
+          grep -i "script.*src" dist/index.html || echo "No script tags found!"
           
       - name: Setup Pages
         uses: actions/configure-pages@v4

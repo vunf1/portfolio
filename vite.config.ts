@@ -8,14 +8,19 @@ export default defineConfig(({ mode }) => {
   // - For GitHub Pages: use repository name from env or default to '/portfolio/'
   // - For custom domain: use VITE_APP_URL pathname
   // - For local dev: use '/'
+  // Note: process.env is used to access GitHub Actions environment variables
+  // loadEnv only loads from .env files, not from process.env
   let base = '/'
-  if (env.VITE_BASE_PATH) {
+  const viteBasePath = process.env.VITE_BASE_PATH || env.VITE_BASE_PATH
+  const viteAppUrl = process.env.VITE_APP_URL || env.VITE_APP_URL
+  
+  if (viteBasePath) {
     // Explicit base path (for GitHub Pages: '/portfolio/')
-    base = env.VITE_BASE_PATH
-  } else if (env.VITE_APP_URL) {
+    base = viteBasePath
+  } else if (viteAppUrl) {
     // Custom domain URL
     try {
-      const url = new URL(env.VITE_APP_URL)
+      const url = new URL(viteAppUrl)
       base = url.pathname || '/'
     } catch {
       base = '/'
@@ -26,15 +31,15 @@ export default defineConfig(({ mode }) => {
     base += '/'
   }
   
-  // Debug logging in development to verify base path
-  if (import.meta.env.DEV) {
-    // eslint-disable-next-line no-console
-    console.log('[Vite Config] Base path:', base)
-    // eslint-disable-next-line no-console
-    console.log('[Vite Config] VITE_BASE_PATH:', env.VITE_BASE_PATH)
-    // eslint-disable-next-line no-console
-    console.log('[Vite Config] VITE_APP_URL:', env.VITE_APP_URL)
-  }
+  // Debug logging to verify base path (works in both dev and build)
+  // eslint-disable-next-line no-console
+  console.log('[Vite Config] Base path:', base)
+  // eslint-disable-next-line no-console
+  console.log('[Vite Config] VITE_BASE_PATH (process.env):', process.env.VITE_BASE_PATH)
+  // eslint-disable-next-line no-console
+  console.log('[Vite Config] VITE_BASE_PATH (loadEnv):', env.VITE_BASE_PATH)
+  // eslint-disable-next-line no-console
+  console.log('[Vite Config] Mode:', mode)
   
   const isProductionLike = mode === 'production' || mode === 'staging'
   const pureConsoleFunctions = isProductionLike
