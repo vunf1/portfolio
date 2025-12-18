@@ -136,7 +136,7 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
                 onTouchStart={handleWarmIntent}
               >
                 <i className="fa-solid fa-arrow-right"></i>
-                <span>{currentLanguage === 'pt-PT' ? 'Ver Portfolio Completo' : 'View Full Portfolio'}</span>
+                <span>{currentLanguage === 'pt-PT' ? 'Ver Competências e Experiência' : 'View Skills & Experience'}</span>
               </button>
             </div>
           </div>
