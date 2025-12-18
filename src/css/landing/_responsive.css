@@ -19,9 +19,10 @@
   }
   
   .hero-logo-image {
-    max-width: 500px;
-    max-height: 500px;
-    transform: scale(1.25);
+    width: clamp(300px, 45vw, 900px);
+    max-width: 100%;
+    max-height: none;
+    transform: none;
   }
   
   .hero-profile-picture {
@@ -54,31 +55,55 @@
   }
 }
 
-/* Fix for 1026px-1090px range where text gets cut off */
-@media (min-width: 1026px) and (max-width: 1090px) {
+/* Desktop: Stack words vertically when viewport is narrow enough to cause wrapping */
+@media (min-width: 769px) {
   .hero-logo-subtitle {
-    font-size: calc(var(--font-size-base) * 1.1);
+    font-size: clamp(1rem, 2vw, 2rem);
     white-space: normal;
+    width: 100%;
+    max-width: 100%;
     padding: 0 var(--space-4);
-    width: 100%;
-    max-width: 100%;
-    overflow: visible;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    transform: scale(1.1);
-    letter-spacing: 0.08em;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-2);
   }
   
-  .hero-visual-visible .hero-logo-subtitle {
-    transform: translateY(0) scale(1.1);
+  .hero-logo-subtitle > span {
+    display: block;
+    width: 100%;
+    text-align: center;
   }
   
-  .hero-image-container {
-    width: 100%;
-    max-width: 100%;
-    padding: var(--space-4);
-    box-sizing: border-box;
-    overflow: visible;
+  .hero-logo-subtitle-word {
+    white-space: nowrap;
+  }
+  
+  /* Hide separators when words are stacked */
+  .hero-logo-subtitle-separator {
+    display: none;
+  }
+}
+
+/* Very large desktop: Keep horizontal layout if there's enough space */
+@media (min-width: 1600px) {
+  .hero-logo-subtitle {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0;
+  }
+  
+  .hero-logo-subtitle > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+  }
+  
+  .hero-logo-subtitle-separator {
+    display: inline-block;
   }
 }
 
@@ -88,18 +113,31 @@
   }
   
   .landing-hero {
-    height: auto;
-    min-height: 100vh;
-    max-height: none;
-    padding: var(--space-12) var(--space-4);
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    padding: var(--space-8) var(--space-4);
+    overflow: visible !important;
+    overflow-x: hidden !important; /* CRITICAL: Prevent horizontal scrollbar */
+    overflow-y: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
   }
   
   .hero-content {
     padding: 0;
     grid-template-columns: 1fr;
-    gap: var(--space-2);
+    gap: var(--space-4);
     display: flex;
     flex-direction: column;
+    align-items: center; /* Center align on mobile */
+    justify-content: center;
+    max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+    height: 100%;
+    max-height: 100%;
+    overflow: visible !important;
+    overflow-x: hidden !important; /* CRITICAL: Prevent horizontal scrollbar */
+    overflow-y: visible !important;
   }
   
   .hero-text {
@@ -107,12 +145,20 @@
     order: 2;
     width: 100%;
     margin-top: calc(var(--space-2) * -1);
+    /* Reset flex on mobile for natural flow */
+    display: block;
   }
   
   .hero-visual {
     order: 1;
     transform: translateY(30px);
     width: 100%;
+    /* CRITICAL: Prevent horizontal overflow */
+    overflow: visible !important;
+    overflow-x: hidden !important; /* CRITICAL: Prevent horizontal scrollbar */
+    overflow-y: visible !important;
+    min-width: 0;
+    max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
   }
   
   .hero-visual-visible {
@@ -121,7 +167,7 @@
   
   .hero-summary {
     max-width: 100%;
-    line-height: 1.7;
+    line-height: 1.75;
   }
 
   .approach-description,
@@ -162,34 +208,39 @@
   }
   
   .hero-logo-image {
-    max-width: 375px;
-    max-height: 375px;
-    transform: scale(1.25);
+    width: clamp(250px, 50vw, 375px);
+    max-width: 100%;
+    max-height: none;
+    transform: none;
   }
   
   .hero-logo-subtitle {
     font-size: calc(var(--font-size-base) * 1.25);
     margin-top: var(--space-4);
-    transform: scale(1);
     white-space: normal;
     padding: 0 var(--space-3);
     width: 100%;
     max-width: 100%;
-    overflow: visible;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-1);
+    justify-content: center;
+    gap: var(--space-2);
   }
 
   .hero-logo-subtitle-word {
     display: block;
+    width: 100%;
+    text-align: center;
+    line-height: inherit;
+  }
+
+  .hero-logo-subtitle-separator {
+    display: none;
   }
   
   .hero-visual-visible .hero-logo-subtitle {
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
   
   .hero-profile-picture {
@@ -329,10 +380,15 @@
 
 @media (max-width: 480px) {
   .landing-hero {
-    height: auto;
-    min-height: 100vh;
-    max-height: none;
-    padding: var(--space-8) var(--space-4);
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    padding: var(--space-6) var(--space-4);
+    overflow: visible !important;
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
   }
   
   .hero-title-main {
@@ -369,28 +425,31 @@
   .hero-logo-subtitle {
     font-size: calc(var(--font-size-base) * 1.5);
     letter-spacing: 0.05em;
-    transform: scale(1);
     white-space: normal;
     padding: 0 var(--space-2);
     width: 100%;
     max-width: 100%;
-    overflow: visible;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    line-height: 1.4;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-1);
+    justify-content: center;
+    gap: var(--space-2);
     margin-top: var(--space-1);
   }
 
   .hero-logo-subtitle-word {
     display: block;
+    width: 100%;
+    text-align: center;
+    line-height: inherit;
+  }
+
+  .hero-logo-subtitle-separator {
+    display: none;
   }
   
   .hero-visual-visible .hero-logo-subtitle {
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
   
   .features-title,
@@ -408,13 +467,18 @@
   }
   
   .hero-logo-image {
-    max-width: 312px;
-    max-height: 312px;
-    transform: scale(1.25);
+    width: clamp(200px, 80vw, 624px);
+    max-width: 100%;
+    max-height: none;
+    transform: none;
   }
 
   .hero-image-container {
     margin-bottom: 0;
+    max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+    overflow: visible !important;
+    overflow-x: hidden !important; /* CRITICAL: Prevent horizontal scrollbar */
+    overflow-y: visible !important;
   }
   
   .hero-profile-picture {

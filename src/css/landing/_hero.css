@@ -4,12 +4,13 @@
 .landing-hero {
   position: relative;
   min-height: 100vh;
-  height: auto;
+  height: 100vh;
+  max-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow-x: hidden !important;
-  overflow-y: visible !important;
+  overflow-y: hidden !important;
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f1f3f5 100%);
   padding: var(--space-6);
   box-sizing: border-box;
@@ -68,7 +69,8 @@
   gap: var(--space-12);
   align-items: center;
   overflow: visible;
-  height: auto;
+  height: 100%;
+  max-height: 100%;
   box-sizing: border-box;
 }
 
@@ -141,7 +143,7 @@
   color: var(--color-gray-700);
   margin-bottom: var(--space-4);
   line-height: var(--line-height-relaxed);
-  text-align: center !important;
+  text-align: left;
   word-spacing: normal;
   letter-spacing: normal;
 }
@@ -153,32 +155,14 @@
 }
 
 .hero-summary {
-  font-family: var(--font-family-serif);
   font-size: clamp(1rem, 1.5vw, 1.125rem);
-  font-weight: 500;
-  line-height: 1.7;
+  line-height: 1.75;
   color: var(--color-gray-800);
   margin-bottom: var(--space-6);
-  max-width: 68ch;
-  text-align: justify !important;
-  text-justify: inter-word;
+  max-width: 58ch;
+  text-align: left;
   word-spacing: normal;
-  letter-spacing: 0.01em;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.02);
-  hyphens: auto;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-}
-
-.hero-summary p {
-  margin-bottom: 1.5em;
-}
-
-.hero-summary p:last-child {
-  margin-bottom: 0;
+  letter-spacing: normal;
 }
 
 .hero-meta {
@@ -255,6 +239,11 @@
   opacity: 0;
   transform: translateX(30px);
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .hero-visual-visible {
@@ -273,7 +262,9 @@
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  overflow: visible;
+  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 .hero-logo-wrapper {
@@ -282,6 +273,10 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .hero-profile-picture {
@@ -303,14 +298,15 @@
 }
 
 .hero-logo-image {
-  width: 100%;
+  width: clamp(300px, 50vw, 1000px);
   height: auto;
-  max-width: 625px;
-  max-height: 625px;
+  max-width: 100%;
+  max-height: none;
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-  transform: scale(1.25);
+  transform: none;
+  box-sizing: border-box;
 }
 
 .hero-image-border {
@@ -320,12 +316,12 @@
 .hero-logo-subtitle {
   margin-top: var(--space-6);
   text-align: center;
-  font-size: calc(var(--font-size-lg) * 1.25);
+  font-size: clamp(1rem, 2vw, 2rem);
   font-weight: var(--font-weight-semibold);
   color: var(--color-primary);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  white-space: nowrap;
+  white-space: normal;
   width: 100%;
   max-width: 100%;
   margin-left: auto;
@@ -333,18 +329,50 @@
   padding: 0 var(--space-4);
   box-sizing: border-box;
   opacity: 0;
-  transform: translateY(10px) scale(1.25);
+  transform: translateY(10px);
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
   position: relative;
   z-index: 2;
   overflow: visible;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.hero-logo-subtitle > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.hero-logo-subtitle-word {
+  display: inline-block;
+  line-height: inherit;
+  white-space: nowrap;
+}
+
+.hero-logo-subtitle-separator {
+  display: inline-block;
+  vertical-align: baseline;
+  margin: 0 calc(var(--space-2) + 0.4em);
+  opacity: 0.6;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-normal);
+  font-size: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-transform: inherit;
 }
 
 .hero-visual-visible .hero-logo-subtitle {
   opacity: 1;
-  transform: translateY(0) scale(1.25);
+  transform: translateY(0);
 }
 
 .hero-highlights {
