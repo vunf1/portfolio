@@ -95,9 +95,15 @@ export function LandingHero({ personal, className = '' }: LandingHeroProps) {
               <div className="hero-image-border"></div>
             </div>
             <p className="hero-logo-subtitle">
-              {currentLanguage === 'pt-PT' 
+              {(currentLanguage === 'pt-PT' 
                 ? 'Segurança | Inteligência | Tecnologia'
-                : 'Security | Intelligence | Technology'}
+                : 'Security | Intelligence | Technology')
+                .split(' | ')
+                .map((word, index) => (
+                  <span key={index} className="hero-logo-subtitle-word">
+                    {word}
+                  </span>
+                ))}
             </p>
           </div>
         </div>
