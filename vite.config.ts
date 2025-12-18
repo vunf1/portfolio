@@ -25,6 +25,17 @@ export default defineConfig(({ mode }) => {
   if (base !== '/' && !base.endsWith('/')) {
     base += '/'
   }
+  
+  // Debug logging in development to verify base path
+  if (import.meta.env.DEV) {
+    // eslint-disable-next-line no-console
+    console.log('[Vite Config] Base path:', base)
+    // eslint-disable-next-line no-console
+    console.log('[Vite Config] VITE_BASE_PATH:', env.VITE_BASE_PATH)
+    // eslint-disable-next-line no-console
+    console.log('[Vite Config] VITE_APP_URL:', env.VITE_APP_URL)
+  }
+  
   const isProductionLike = mode === 'production' || mode === 'staging'
   const pureConsoleFunctions = isProductionLike
     ? ['console.log', 'console.info', 'console.debug', 'console.warn']
