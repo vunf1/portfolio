@@ -10,7 +10,7 @@
 [![Security](https://img.shields.io/badge/Security-GDPR%20Compliant-green)](https://gdpr.eu/)
 [![Accessibility](https://img.shields.io/badge/Accessibility-WCAG%202.2%20AA-blue)](https://www.w3.org/TR/WCAG22/)
 
-A modern, enterprise-grade portfolio website built with **Vite + Preact + TypeScript**, featuring privacy-gated content, GDPR compliance, and premium user experience optimized for Core Web Vitals and accessibility.
+A modern, enterprise-grade portfolio website built with **Vite + Preact + TypeScript**, featuring privacy-gated content, GDPR compliance, and premium user experience optimized for Core Web Vitals and accessibility. The project implements a sophisticated single scroll container architecture, centralized state management, and comprehensive testing coverage.
 
 ## 🚀 **Features**
 
@@ -20,6 +20,7 @@ A modern, enterprise-grade portfolio website built with **Vite + Preact + TypeSc
 - 🔐 **Secure Data Handling** - Ephemeral session data with strict retention policies
 - 🚫 **Rate Limiting** - Built-in protection against abuse and spam
 - 🍯 **Honeypot Protection** - Advanced anti-bot measures
+- 🔗 **n8n Integration** - Automated contact form processing with webhook support
 
 ### **Enterprise UX/UI**
 - 🎨 **Premium Design System** - Enterprise-grade aesthetic with design tokens
@@ -27,13 +28,18 @@ A modern, enterprise-grade portfolio website built with **Vite + Preact + TypeSc
 - 🌍 **Bilingual Support** - English/Portuguese with smooth locale switching
 - 📱 **Responsive Design** - Mobile-first approach with fluid grids
 - ⚡ **Performance Optimized** - <60KB initial JS, lazy loading, code splitting
+- 🎯 **Scrollbar Management** - Single scroll container architecture preventing double scrollbars
+- 🎭 **Smooth Animations** - Intersection Observer-based scroll animations with reduced motion support
+- 💬 **Centralized Modal State** - Efficient contact modal management with CSS-based scroll lock
 
 ### **Technical Excellence**
 - 🏗️ **Modern Architecture** - Vite + Preact + TypeScript with strict typing
-- 🧪 **Comprehensive Testing** - Vitest + Testing Library with 90%+ coverage
+- 🧪 **Comprehensive Testing** - Vitest + Testing Library with 90%+ coverage including scrollbar behavior tests
 - ♿ **Accessibility** - WCAG 2.2 AA compliant with keyboard navigation
 - 🔍 **SEO Optimized** - Structured data, meta tags, and semantic HTML
 - 🚀 **CI/CD Ready** - Automated testing, security audits, and deployment
+- 🎨 **Modular CSS Architecture** - Organized CSS with design tokens and component-specific styles
+- 🔧 **Type-Safe Components** - Full TypeScript coverage with strict type checking
 
 ## 📁 **Project Structure**
 
@@ -55,13 +61,15 @@ portfolio/
 │   │   └── ...              # Other sections
 │   ├── hooks/               # Custom React hooks
 │   │   ├── __tests__/       # Hook tests
-│   │   ├── useContactPrivacyGate.ts
 │   │   ├── useI18n.ts       # Internationalization
-│   │   └── useTheme.ts      # Theme management
+│   │   ├── usePortfolioData.ts  # Portfolio data fetching
+│   │   └── useModularPortfolioData.ts  # Modular data loading
 │   ├── types/               # TypeScript type definitions
 │   │   ├── portfolio.ts     # Portfolio data types
 │   │   ├── components.ts    # Component types
-│   │   └── hooks.ts         # Hook types
+│   │   ├── hooks.ts         # Hook types
+│   │   ├── n8n.ts           # n8n integration types
+│   │   └── seo.ts           # SEO and metadata types
 │   ├── contexts/            # React contexts
 │   │   └── TranslationContext.tsx
 │   ├── css/                 # Styling
@@ -88,7 +96,10 @@ portfolio/
 │   │       └── components.css   # Component styles
 │   ├── utils/               # Utility functions
 │   │   ├── __tests__/       # Utility tests
-│   │   └── validation.ts    # Form validation
+│   │   ├── validation.ts    # Form validation (E.164, email, name)
+│   │   ├── n8nClient.ts     # n8n webhook integration client
+│   │   ├── seo.ts           # SEO utilities and structured data
+│   │   └── preloadPortfolioChunks.ts  # Performance optimization
 │   ├── test/                # Test utilities
 │   │   ├── setup.ts         # Test setup
 │   │   └── test-utils.tsx   # Testing utilities
@@ -204,7 +215,7 @@ VITE_ASSET_OPTIMIZATION=true
 # n8n Webhook Integration
 # REQUIRED: These environment variables are mandatory for the contact form to work
 # Copy .env.example to .env.local and fill in your actual values
-VITE_N8N_WEBHOOK_URL=https://n8n.jmsit.cloud/webhook-test/your-webhook-id
+VITE_N8N_WEBHOOK_URL=https://n8n.<your.domain>/webhook-test/your-webhook-id
 # Authentication token for webhook (sent as custom header, default header name: 'X-API-Key')
 # Supports both VITE_N8N_AUTH_TOKEN (new) and VITE_N8N_JWT_TOKEN (legacy) for backward compatibility
 VITE_N8N_AUTH_TOKEN=your-auth-token-here
@@ -258,7 +269,7 @@ The `N8nClient` supports three authentication methods compatible with n8n webhoo
 1. **Header Auth** (default): Custom header with token value
    ```typescript
    const client = new N8nClient({
-     webhookUrl: 'https://n8n.jmsit.cloud/webhook-test/...',
+     webhookUrl: 'https://n8n.<your.domain>/webhook-test/...',
      authToken: 'your-token',
      authMethod: 'header',
      authHeaderName: 'X-API-Key' // Default: 'X-API-Key' (or 'Authorization', 'X-Auth-Token', etc.)
@@ -269,7 +280,7 @@ The `N8nClient` supports three authentication methods compatible with n8n webhoo
 2. **Bearer Auth**: Standard Bearer token authentication
    ```typescript
    const client = new N8nClient({
-     webhookUrl: 'https://n8n.jmsit.cloud/webhook-test/...',
+     webhookUrl: 'https://n8n.<your.domain>/webhook-test/...',
      authToken: 'your-token',
      authMethod: 'bearer'
    })
@@ -279,7 +290,7 @@ The `N8nClient` supports three authentication methods compatible with n8n webhoo
 3. **Custom Auth**: Multiple custom headers
    ```typescript
    const client = new N8nClient({
-     webhookUrl: 'https://n8n.jmsit.cloud/webhook-test/...',
+     webhookUrl: 'https://n8n.<your.domain>/webhook-test/...',
      authMethod: 'custom',
      headers: {
        'X-API-Key': 'api-key-value',
@@ -342,11 +353,13 @@ This portfolio contains personal information that should be customized for your 
 }
 ```
 
-### **Privacy Gate Configuration**
-Edit `src/hooks/useContactPrivacyGate.ts`:
-- Validation rules for form fields
-- Unlock duration and persistence
-- Rate limiting and security measures
+### **Scrollbar Management**
+The project implements a single scroll container architecture:
+- Only `html` element scrolls (vertical scrolling)
+- `body`, `#app`, and `.landing-page` have `overflow: hidden` to prevent double scrollbars
+- Horizontal overflow is prevented with `overflow-x: hidden` and `max-width: 100%` constraints
+- FAB and animated sections use `overflow: visible` to prevent scroll container creation
+- Comprehensive tests in `src/components/__tests__/ScrollbarBehavior.test.tsx`
 
 ### **Internationalization**
 Update language files in `public/data/`:
@@ -367,28 +380,34 @@ Customize design tokens in `src/css/tokens.css`:
 ## 📱 **Usage**
 
 ### **For Visitors**
-1. **Privacy Gate**: Complete identity verification to access contact details
-2. **Language Switch**: Toggle between English/Portuguese seamlessly
-3. **Theme Toggle**: Switch between light/dark modes with system preference detection
-4. **Navigation**: Smooth scrolling between sections with keyboard support
-5. **Accessibility**: Full keyboard navigation and screen reader support
+1. **Landing Page**: Modern, premium landing experience with scroll animations
+2. **Privacy Gate**: Complete identity verification to access contact details
+3. **Language Switch**: Toggle between English/Portuguese seamlessly
+4. **Theme Toggle**: Switch between light/dark modes with system preference detection
+5. **Navigation**: Smooth scrolling between sections with keyboard support
+6. **Contact Modal**: Accessible contact form with n8n webhook integration
+7. **Accessibility**: Full keyboard navigation and screen reader support
+8. **Performance**: Fast loading with optimized bundle size and lazy loading
 
 ### **For Developers**
 
 #### **Adding New Components**
 ```bash
-# Create new component with tests
-npm run generate:component ComponentName
+# Create component files manually following the existing structure
+# Component files should be in src/components/ with corresponding tests in __tests__/
 
 # Run component tests
-npm run test:component ComponentName
+npm run test -- ComponentName
+
+# Test scrollbar behavior
+npm run test -- ScrollbarBehavior
 ```
 
 #### **Content Management**
 - **Portfolio Data**: Update JSON files in `public/data/`
 - **Styling**: Modify CSS files in `src/css/`
 - **Components**: Edit TypeScript files in `src/components/`
-- **Privacy**: Update privacy gate logic in `src/hooks/`
+- **Validation**: Update form validation logic in `src/utils/validation.ts`
 
 #### **Development Workflow**
 ```bash
@@ -452,12 +471,15 @@ Edit `src/css/tokens.css` for design tokens:
 - **UI Components**: `src/css/components.css`
 - **Premium Styles**: Refactored into modular CSS files:
   - `src/css/variables.css` - CSS variables
-  - `src/css/base.css` - Base layout
+  - `src/css/base.css` - Base layout with scrollbar management
+  - `src/css/index.css` - Global styles and overrides
   - `src/css/modal.css` - Modal components
   - `src/css/navigation.css` - Navigation
   - `src/css/grid.css` - Grid system
+  - `src/css/fab.css` - Floating Action Button styles
   - `src/css/components/*.css` - Component-specific styles
-- **Contact Styles**: `src/css/contact.css`
+  - `src/css/landing/*.css` - Landing page modular styles
+- **Contact Styles**: `src/css/components/contact-modal-premium.css`
 
 ### **Adding New Sections**
 1. Create component in `src/components/`
@@ -466,13 +488,10 @@ Edit `src/css/tokens.css` for design tokens:
 4. Add translations to `public/data/`
 
 ### **Theme Customization**
-Modify theme logic in `src/hooks/useTheme.ts`:
-```typescript
-const themes = {
-  light: { /* light theme tokens */ },
-  dark: { /* dark theme tokens */ }
-}
-```
+Theme management is handled through CSS variables and design tokens. Customize themes by modifying:
+- `src/css/tokens.css` - Design tokens and color variables
+- `src/css/variables.css` - CSS custom properties
+- Component-specific CSS files for theme-aware styling
 
 ## 📊 **Performance & Testing**
 
@@ -483,6 +502,9 @@ const themes = {
 - ✅ **Image Optimization**: WebP format with fallbacks
 - ✅ **Lazy Loading**: Components and images loaded on demand
 - ✅ **Caching**: Aggressive caching strategies
+- ✅ **Scrollbar Optimization**: Single scroll container prevents layout shifts
+- ✅ **CSS Architecture**: Modular CSS with minimal redundancy
+- ✅ **Component Optimization**: Centralized state management reduces re-renders
 
 ### **Testing Suite**
 ```bash
@@ -504,6 +526,9 @@ npm run test:ui
 - **Integration Tests**: Component interaction testing
 - **Accessibility Tests**: WCAG 2.2 AA compliance
 - **Performance Tests**: Core Web Vitals monitoring
+- **Scrollbar Behavior Tests**: Comprehensive scrollbar architecture validation
+- **Modal Tests**: Contact modal state management and accessibility
+- **Form Validation Tests**: E.164 phone, email, and name validation
 
 ### **Quality Assurance**
 ```bash
@@ -587,7 +612,7 @@ The CI/CD pipeline requires environment variables for the n8n webhook integratio
 3. Click **New repository secret**
 4. Add the following secrets:
    - **Name**: `VITE_N8N_WEBHOOK_URL`
-     - **Value**: Your n8n webhook URL (e.g., `https://n8n.jmsit.cloud/webhook-test/your-webhook-id`)
+     - **Value**: Your n8n webhook URL (e.g., `https://n8n.<your.domain>/webhook-test/your-webhook-id`)
    - **Name**: `VITE_N8N_AUTH_TOKEN`
      - **Value**: Your n8n authentication token
 
@@ -696,6 +721,12 @@ npm run verify-dist
 - Verify localStorage is enabled
 - Clear browser data and refresh
 
+#### **Scrollbar Issues**
+- Verify only one vertical scrollbar appears (on `html` element)
+- Check that `body` and `#app` have `overflow: hidden`
+- Ensure landing page sections have proper `max-width: 100%` constraints
+- Test on various viewport sizes (320px to 1920px+)
+
 ### **Debug Mode**
 ```bash
 # Enable debug logging
@@ -721,6 +752,14 @@ npm run build -- --debug
 
 ## 🔄 **Maintenance & Updates**
 
+### **Recent Improvements**
+- ✅ **Scrollbar Architecture**: Implemented single scroll container preventing double scrollbars
+- ✅ **CSS Refactoring**: Modular CSS architecture with proper overflow management
+- ✅ **Modal State Management**: Centralized contact modal state in LandingPage component
+- ✅ **Test Coverage**: Added comprehensive scrollbar behavior and modal tests
+- ✅ **Responsive Fixes**: Resolved horizontal scrollbar issues across all breakpoints
+- ✅ **Performance**: Optimized FAB and animation components to prevent scroll container creation
+
 ### **Regular Maintenance**
 ```bash
 # Update dependencies
@@ -734,6 +773,9 @@ npm run performance:budget
 
 # Full test suite
 npm run test:coverage
+
+# Verify scrollbar behavior
+npm run test -- ScrollbarBehavior
 ```
 
 ### **Security Updates**
@@ -775,6 +817,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📝 **Changelog**
 
+### **v3.1.0 - Scrollbar & Architecture Improvements** (Latest)
+- 🎯 **Scrollbar Fixes**: Single scroll container architecture preventing double scrollbars
+- 🎨 **CSS Refactoring**: Modular CSS architecture with proper overflow management
+- 🔧 **Modal Refactoring**: Centralized contact modal state management in LandingPage
+- 🧪 **Test Enhancements**: Added comprehensive scrollbar behavior tests
+- 🎭 **Animation Improvements**: Optimized scroll animations with proper overflow handling
+- 📱 **Responsive Fixes**: Fixed horizontal scrollbar issues on mobile devices
+- 🎨 **FAB Optimization**: Prevented scrollbar creation in floating action buttons
+- 🧹 **Code Cleanup**: Removed inline scrollbar fixes in favor of CSS-based solutions
+
 ### **v3.0.0 - Enterprise Portfolio Release**
 - 🏗️ **Modern Architecture**: Complete migration to Vite + Preact + TypeScript
 - 🔒 **Enhanced Security**: Improved privacy gate with E.164 validation
@@ -784,6 +836,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 🚀 **CI/CD**: Automated testing, security audits, and deployment
 - 📊 **Monitoring**: Performance budgets and Core Web Vitals tracking
 - 🔐 **Security**: Environment variable templates and security best practices
+- 🔗 **n8n Integration**: Contact form webhook integration with authentication support
 
 ### **v2.0.0 - Premium Portfolio Release**
 - ✨ Complete GDPR compliance implementation
