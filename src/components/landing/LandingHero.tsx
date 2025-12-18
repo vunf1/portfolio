@@ -15,77 +15,6 @@ export function LandingHero({ personal, className = '', onContactClick }: Landin
 
   useEffect(() => {
     setIsVisible(true)
-    
-    // #region agent log
-    // Debug: Measure subtitle dimensions and container constraints
-    const measureSubtitle = () => {
-      const subtitle = document.querySelector('.hero-logo-subtitle') as HTMLElement
-      const container = document.querySelector('.hero-image-container') as HTMLElement
-      const visual = document.querySelector('.hero-visual') as HTMLElement
-      const content = document.querySelector('.hero-content') as HTMLElement
-      
-      if (subtitle && container && visual && content) {
-        const subStyle = window.getComputedStyle(subtitle)
-        const contStyle = window.getComputedStyle(container)
-        const visStyle = window.getComputedStyle(visual)
-        const contGridStyle = window.getComputedStyle(content)
-        
-        const data = {
-          viewportWidth: window.innerWidth,
-          subtitle: {
-            fontSize: subStyle.fontSize,
-            width: subStyle.width,
-            maxWidth: subStyle.maxWidth,
-            minWidth: subStyle.minWidth,
-            computedWidth: subtitle.offsetWidth,
-            scrollWidth: subtitle.scrollWidth,
-            clientWidth: subtitle.clientWidth,
-            isClipped: subtitle.scrollWidth > subtitle.clientWidth,
-            paddingLeft: subStyle.paddingLeft,
-            paddingRight: subStyle.paddingRight
-          },
-          container: {
-            width: contStyle.width,
-            maxWidth: contStyle.maxWidth,
-            computedWidth: container.offsetWidth,
-            overflowX: contStyle.overflowX
-          },
-          visual: {
-            width: visStyle.width,
-            maxWidth: visStyle.maxWidth,
-            computedWidth: visual.offsetWidth,
-            overflowX: visStyle.overflowX
-          },
-          content: {
-            width: contGridStyle.width,
-            maxWidth: contGridStyle.maxWidth,
-            computedWidth: content.offsetWidth,
-            gridColumns: contGridStyle.gridTemplateColumns,
-            overflowX: contGridStyle.overflowX
-          }
-        }
-        
-        fetch('http://127.0.0.1:7242/ingest/d49a13b0-00e3-4e4a-b9ad-aed46ce54a17', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            location: 'LandingHero.tsx:measureSubtitle',
-            message: 'Subtitle dimensions and container constraints',
-            data,
-            timestamp: Date.now(),
-            sessionId: 'debug-session',
-            runId: 'run1',
-            hypothesisId: 'A,B,C,D,E'
-          })
-        }).catch(() => {})
-      }
-    }
-    
-    // Measure after animation completes
-    setTimeout(measureSubtitle, 1000)
-    window.addEventListener('resize', measureSubtitle)
-    return () => window.removeEventListener('resize', measureSubtitle)
-    // #endregion
   }, [])
 
   return (
@@ -98,6 +27,7 @@ export function LandingHero({ personal, className = '', onContactClick }: Landin
       <div className="hero-content">
         <div className={`hero-text ${isVisible ? 'hero-text-visible' : ''}`}>
           <div className="hero-badge">
+            {/* TODO: Replace "JMSIT" with your brand name */}
             <span>
               {currentLanguage === 'pt-PT' ? 'JMSIT — Serviços de TI & Tecnologia' : 'JMSIT — IT & Technology Services'}
             </span>

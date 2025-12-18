@@ -117,6 +117,7 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
         
         <div className="footer-bottom">
           <div className="footer-copyright">
+            {/* TODO: Replace "JMSIT" with your brand name */}
             <p>&copy; {new Date().getFullYear()} JMSIT - {personal.name}. {currentLanguage === 'pt-PT' ? 'Todos os direitos reservados.' : 'All rights reserved.'}</p>
             <div className="footer-badges">
               <span className="footer-badge" title={currentLanguage === 'pt-PT' ? 'Conformidade WCAG 2.2 AA' : 'WCAG 2.2 AA Compliant'}>
