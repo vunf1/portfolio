@@ -551,10 +551,36 @@ The project uses GitHub Actions for automated deployment to GitHub Pages:
 
 - **Automatic**: Deploys automatically on push to `main` or `master` branch
 - **Method**: GitHub Pages Actions (`actions/deploy-pages@v4`)
-- **Build**: Uses `npm run build:gh-pages` to create production build
+- **Build**: Uses `npm run build:gh-pages` to create production build with correct base path
+- **Base Path**: Automatically set to `/portfolio/` (or your repository name) for GitHub Pages
 - **Artifact**: Uploads `./dist` folder as deployment artifact
 - **No gh-pages branch**: Uses GitHub Pages Actions workflow, not branch-based deployment
 - **404 Handling**: Includes `404.html` for SPA routing support
+- **Jekyll Disabled**: Automatically creates `.nojekyll` file in `dist` folder
+
+> **⚠️ CRITICAL CONFIGURATION REQUIRED**: 
+> 
+> **You MUST configure GitHub Pages to use "GitHub Actions" as the source:**
+> 
+> 1. Go to your repository: **Settings** > **Pages**
+> 2. Under **"Build and deployment"** section:
+>    - **Source**: Select **"GitHub Actions"** (NOT "Deploy from a branch")
+> 3. Save the settings
+> 
+> **Why this is critical:**
+> - If set to "Deploy from a branch", GitHub will use a default Jekyll build workflow
+> - This will build to `./_site` instead of `./dist` and upload source code instead of built files
+> - Your custom Vite workflow (`ci.yml`) will NOT be used
+> - The site will fail to load because it's trying to serve source files instead of built assets
+> 
+> **After changing to "GitHub Actions":**
+> - Our custom workflow (`ci.yml`) will be used automatically
+> - Vite will build to `./dist` folder correctly
+> - Base path will be set to `/portfolio/` automatically
+> - Only built files will be deployed
+> - The site will load correctly
+
+**Important**: The base path is automatically configured based on your repository name. If your repository is named differently, the base path will adjust accordingly. For custom domains, set `VITE_APP_URL` environment variable.
 
 **Manual Deployment:**
 ```bash
@@ -621,9 +647,22 @@ The project uses three GitHub Actions workflows for continuous integration and d
 - **Jobs**:
   - `test`: Type checking, linting, test execution with coverage, security audit
   - `build`: Production build for GitHub Pages (main/master only)
+    - Builds with Vite using `npm run build:gh-pages`
+    - Sets `VITE_BASE_PATH` to `/repository-name/` automatically
+    - Verifies `dist` folder exists and contains built files
+    - Verifies base path is correctly applied in `index.html`
+    - Copies `404.html` to `dist` folder
+    - Creates `.nojekyll` file to disable Jekyll processing
+    - Uploads `dist` folder as GitHub Pages artifact
   - `deploy`: Deploy to GitHub Pages using `actions/deploy-pages@v4` (main/master only)
+    - Deploys the artifact uploaded by the `build` job
+    - Shows detailed deployment status with URL and commit info
 - **Permissions**: `contents: read`, `pages: write`, `id-token: write`
 - **Concurrency**: Single deployment per branch (does not cancel in-progress)
+- **Base Path Configuration**: 
+  - Automatically sets `VITE_BASE_PATH=/repository-name/` during build
+  - Ensures all asset paths use the correct base path for GitHub Pages
+  - Works with any repository name without manual configuration
 
 #### **Quality Assurance** (`.github/workflows/quality.yml`)
 - **Triggers**: 
@@ -703,6 +742,30 @@ npm run verify-dist
 - Check that `body` and `#app` have `overflow: hidden`
 - Ensure landing page sections have proper `max-width: 100%` constraints
 - Test on various viewport sizes (320px to 1920px+)
+
+#### **GitHub Pages Deployment Issues**
+
+**Problem: Site shows blank page or tries to load `/src/main.tsx`**
+- **Cause**: GitHub Pages is using default Jekyll build instead of custom workflow
+- **Solution**: 
+  1. Go to **Settings** > **Pages**
+  2. Change **Source** from "Deploy from a branch" to **"GitHub Actions"**
+  3. Save and wait for the next deployment
+- **Verification**: Check GitHub Actions logs - should see `npm run build:gh-pages`, not `actions/jekyll-build-pages@v1`
+
+**Problem: Assets not loading (404 errors)**
+- **Cause**: Base path not set correctly
+- **Solution**: 
+  - Verify `VITE_BASE_PATH` is set in GitHub Actions workflow
+  - Check that built `index.html` contains `/portfolio/assets/` paths (not `/assets/`)
+  - Ensure repository name matches the base path
+
+**Problem: Build succeeds but wrong files deployed**
+- **Cause**: Wrong artifact path or Jekyll build being used
+- **Solution**:
+  - Verify workflow uploads from `dist` folder (not `./_site`)
+  - Check that `.nojekyll` file exists in `dist` folder
+  - Ensure GitHub Pages source is set to "GitHub Actions"
 
 ### **Debug Mode**
 ```bash
@@ -803,6 +866,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 📱 **Responsive Fixes**: Fixed horizontal scrollbar issues on mobile devices
 - 🎨 **FAB Optimization**: Prevented scrollbar creation in floating action buttons
 - 🧹 **Code Cleanup**: Removed inline scrollbar fixes in favor of CSS-based solutions
+- 🚀 **GitHub Pages Fixes**: 
+  - Fixed base path configuration for GitHub Pages deployment
+  - Added automatic base path detection from repository name
+  - Enhanced workflow with dist folder verification and .nojekyll creation
+  - Fixed environment variable reading from process.env for GitHub Actions
+  - Improved error handling and deployment verification
 
 ### **v3.0.0 - Enterprise Portfolio Release**
 - 🏗️ **Modern Architecture**: Complete migration to Vite + Preact + TypeScript
