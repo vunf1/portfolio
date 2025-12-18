@@ -39,6 +39,7 @@ export function ContactModal({
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [wordCount, setWordCount] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   
   const modalRef = useRef<HTMLDivElement>(null)
   const nameInputRef = useRef<HTMLInputElement>(null)
@@ -51,6 +52,17 @@ export function ContactModal({
     if (!n8nClientRef.current) {
       n8nClientRef.current = new N8nClient()
     }
+  }, [])
+
+  // Detect mobile view
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 1025)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
   // Save form data to sessionStorage
@@ -485,6 +497,40 @@ export function ContactModal({
     onClose()
   }
 
+  // Render action buttons (reusable for header and footer)
+  const renderActionButtons = () => (
+    <>
+      <button
+        type="button"
+        className="btn btn-outline-secondary"
+        onClick={handleCancel}
+        disabled={isSubmitting}
+        aria-label={t('contact.cancel', 'Cancel')}
+      >
+        <i className="fa-solid fa-times me-2"></i>
+        {t('contact.cancel', 'Cancel')}
+      </button>
+      <button
+        type="submit"
+        className="btn btn-primary"
+        disabled={isSubmitting}
+        aria-label={t('contact.submit', 'Send Message')}
+      >
+        {isSubmitting ? (
+          <>
+            <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            {t('contact.submitting', 'Sending...')}
+          </>
+        ) : (
+          <>
+            <i className="fa-solid fa-paper-plane me-2"></i>
+            {t('contact.submit', 'Send Message')}
+          </>
+        )}
+      </button>
+    </>
+  )
+
   if (!isOpen) {
     return null
   }
@@ -504,6 +550,11 @@ export function ContactModal({
                     <h5 className="modal-title" id="contact-modal-title">
                       {t('contact.title', 'Contact Me')}
                     </h5>
+                    {isMobile && !submitSuccess && (
+                      <div className="modal-header-actions">
+                        {renderActionButtons()}
+                      </div>
+                    )}
                   </div>
 
           <form 
@@ -737,34 +788,7 @@ export function ContactModal({
 
             {!submitSuccess && (
               <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-outline-secondary"
-                  onClick={handleCancel}
-                  disabled={isSubmitting}
-                  aria-label={t('contact.cancel', 'Cancel')}
-                >
-                  <i className="fa-solid fa-times me-2"></i>
-                  {t('contact.cancel', 'Cancel')}
-                </button>
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  disabled={isSubmitting}
-                  aria-label={t('contact.submit', 'Send Message')}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                      {t('contact.submitting', 'Sending...')}
-                    </>
-                  ) : (
-                    <>
-                      <i className="fa-solid fa-paper-plane me-2"></i>
-                      {t('contact.submit', 'Send Message')}
-                    </>
-                  )}
-                </button>
+                {renderActionButtons()}
               </div>
             )}
           </form>
