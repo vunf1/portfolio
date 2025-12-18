@@ -116,6 +116,16 @@ jobs:
           else
             echo "⚠️ 404.html not found, skipping..."
           fi
+          
+      - name: Ensure .nojekyll exists in dist
+        run: |
+          if [ ! -f "dist/.nojekyll" ]; then
+            echo "# This file tells GitHub Pages to not process files with Jekyll" > dist/.nojekyll
+            echo "# It's needed for SPAs and other non-Jekyll sites" >> dist/.nojekyll
+            echo "✅ Created .nojekyll in dist/"
+          else
+            echo "✅ .nojekyll already exists in dist/"
+          fi
         
       - name: Verify dist contents
         run: |
