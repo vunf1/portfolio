@@ -1,35 +1,285 @@
-/* Landing Page Layout - CRITICAL OVERRIDES */
+/* Landing Page Layout - Scroll Container Management */
 
-/* ===== LANDING PAGE LAYOUT ===== */
-/* CRITICAL: This must override ALL other rules including Bootstrap */
-.landing-page,
-html body .landing-page,
-body .landing-page,
-#app .landing-page,
-body.landing-page-active .landing-page,
-html.landing-page-active body .landing-page {
+/* ===== SINGLE SCROLL CONTAINER ARCHITECTURE ===== */
+/* Only html should scroll. All other containers use overflow: visible */
+
+/* Base scroll container - html is the only scrollable element */
+/* Use !important to override Bootstrap which may set html overflow */
+/* For landing page, html should not have height constraint to prevent nested scroll */
+html {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  height: auto !important;
+  min-height: 100% !important;
+  max-height: none !important;
+  width: 100% !important;
+  max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+}
+
+html.landing-page-active {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  height: auto !important;
+  min-height: 100% !important;
+  max-height: none !important;
+  width: 100% !important;
+  max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+}
+
+/* Body - no scroll, natural height */
+/* Use !important to override Bootstrap which may set body overflow */
+/* CRITICAL: Body must NEVER create a scrollbar - only html should scroll */
+body {
+  overflow: hidden !important; /* CRITICAL: Prevent body from creating scrollbar */
+  overflow-x: hidden !important;
+  overflow-y: hidden !important; /* CRITICAL: Body must not scroll */
+  min-height: 100%;
+  height: auto !important;
+  max-height: none !important;
+  position: relative;
+  width: 100% !important;
+  max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+}
+
+body.landing-page-active {
+  overflow: hidden !important; /* CRITICAL: Prevent body from creating scrollbar */
+  overflow-x: hidden !important;
+  overflow-y: hidden !important; /* CRITICAL: Body must not scroll */
+  min-height: 100%;
+  height: auto !important;
+  max-height: none !important;
+  position: relative;
+  width: 100% !important;
+  max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+}
+
+/* Modal scroll lock - prevent body scroll when modal is open */
+body.modal-open {
+  overflow: hidden !important;
+  overflow-y: hidden !important; /* CRITICAL: Body must never scroll */
+}
+
+/* #app container - no scroll, natural height */
+/* Use !important to override any conflicting rules */
+/* CRITICAL: #app must NEVER create a scrollbar - only html should scroll */
+#app {
+  overflow: hidden !important; /* CRITICAL: Prevent #app from creating scrollbar */
+  overflow-x: hidden !important;
+  overflow-y: hidden !important; /* CRITICAL: #app must not scroll */
+  height: auto !important;
+  min-height: 100%;
+  max-height: none !important;
+  position: relative;
+  width: 100% !important;
+  max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+}
+
+body.landing-page-active #app {
+  overflow: hidden !important; /* CRITICAL: Prevent #app from creating scrollbar */
+  overflow-x: hidden !important;
+  overflow-y: hidden !important; /* CRITICAL: #app must not scroll */
+  height: auto !important;
+  min-height: 100%;
+  max-height: none !important;
+  position: relative;
+  width: 100% !important;
+  max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+}
+
+/* Landing page container - no scroll, natural height */
+/* Use !important to override Bootstrap and any conflicting rules */
+/* CRITICAL: .landing-page must NEVER create a scrollbar - only html should scroll */
+.landing-page {
   min-height: 100vh;
   background: var(--color-background);
   color: var(--color-text);
-  /* CRITICAL: Force visible overflow to prevent scrollbar */
+  overflow: hidden !important; /* CRITICAL: Prevent .landing-page from creating scrollbar */
+  overflow-x: hidden !important;
+  overflow-y: hidden !important; /* CRITICAL: .landing-page must not scroll */
+  position: relative;
+  width: 100%;
+  height: auto !important;
+  max-height: none !important;
+  display: block;
+  box-sizing: border-box;
+  /* CRITICAL: Ensure landing-page itself doesn't create scroll container */
+  contain: none !important;
+}
+
+/* Landing sections - no scroll containers */
+/* CRITICAL: All section elements must have visible overflow to prevent scrollbars */
+.landing-section {
   overflow: visible !important;
   overflow-x: hidden !important;
   overflow-y: visible !important;
-  position: relative;
-  width: 100%;
-  /* CRITICAL: Remove all height constraints */
   height: auto !important;
   max-height: none !important;
-  min-height: 100vh !important;
-  display: block;
-  /* Ensure content can flow naturally */
-  box-sizing: border-box !important;
 }
 
+.landing-section.section-visible {
+  overflow: visible !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+.landing-hero {
+  overflow: visible !important;
+  overflow-x: hidden !important; /* CRITICAL: Prevent horizontal scrollbar */
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.landing-hero.landing-section {
+  overflow: visible !important;
+  overflow-x: hidden !important; /* CRITICAL: Prevent horizontal scrollbar */
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.landing-hero.landing-section.section-visible {
+  overflow: visible !important;
+  overflow-x: hidden !important; /* CRITICAL: Prevent horizontal scrollbar */
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Hero content - no scroll constraints */
+/* CRITICAL: Ensure all hero child elements don't create scrollbars */
+.landing-hero .hero-content,
+.landing-hero .hero-background-corporate,
+.landing-hero .hero-text,
+.landing-hero .hero-visual,
+.landing-hero .hero-image-container,
+.landing-hero .hero-logo-wrapper,
+.landing-hero .hero-logo-subtitle,
+.landing-hero .hero-meta,
+.landing-hero .hero-actions,
+.landing-hero .hero-scroll-indicator {
+  overflow: visible !important;
+  overflow-x: hidden !important; /* CRITICAL: Prevent horizontal scrollbar */
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
+  max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+}
+
+/* Direct children of landing-page - no scroll containers */
+.landing-page > * {
+  overflow: visible !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
+  max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+}
+
+/* CRITICAL: Target section elements specifically to prevent scrollbars */
+/* Use maximum specificity to override any conflicting rules */
+section.landing-hero,
+section.landing-hero.landing-section,
+section.landing-hero.landing-section.section-visible,
+section.landing-section,
+section.landing-section.section-visible,
+.landing-page section.landing-hero,
+.landing-page section.landing-hero.landing-section,
+.landing-page section.landing-hero.landing-section.section-visible,
+.landing-page section.landing-section,
+.landing-page section.landing-section.section-visible,
+#app section.landing-hero,
+#app section.landing-hero.landing-section,
+#app section.landing-hero.landing-section.section-visible,
+body section.landing-hero,
+body section.landing-hero.landing-section,
+body section.landing-hero.landing-section.section-visible,
+html body section.landing-hero,
+html body section.landing-hero.landing-section,
+html body section.landing-hero.landing-section.section-visible {
+  overflow: visible !important;
+  overflow-x: hidden !important; /* CRITICAL: Prevent horizontal scrollbar */
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  position: relative !important;
+  width: 100% !important;
+  max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+  /* Ensure no scroll container is created */
+  contain: none !important;
+  /* Prevent any height constraints that could create scroll */
+  box-sizing: border-box !important;
+  /* Hide scrollbars if they somehow appear */
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/* Hide scrollbars in webkit for section elements */
+section.landing-hero::-webkit-scrollbar,
+section.landing-hero.landing-section::-webkit-scrollbar,
+section.landing-hero.landing-section.section-visible::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* CRITICAL: Ensure ALL children of landing-hero cannot create scrollbars */
+/* Use universal selector with maximum specificity to override ANY conflicting rules */
+section.landing-hero *,
+section.landing-hero.landing-section *,
+section.landing-hero.landing-section.section-visible *,
+.landing-hero *,
+.landing-hero.landing-section *,
+.landing-hero.landing-section.section-visible *,
+.landing-page .landing-hero *,
+.landing-page .landing-hero.landing-section *,
+.landing-page .landing-hero.landing-section.section-visible *,
+.landing-page section.landing-hero *,
+.landing-page section.landing-hero.landing-section *,
+.landing-page section.landing-hero.landing-section.section-visible *,
+#app .landing-hero *,
+#app .landing-hero.landing-section *,
+#app .landing-hero.landing-section.section-visible *,
+body .landing-hero *,
+body .landing-hero.landing-section *,
+body .landing-hero.landing-section.section-visible * {
+  overflow: visible !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+  max-height: none !important;
+  height: auto !important;
+  max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+  /* Ensure no element can become a scroll container */
+  contain: none !important;
+  /* Hide scrollbars if they somehow appear */
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/* Hide scrollbars in webkit for all hero children */
+.landing-hero *::-webkit-scrollbar,
+.landing-hero.landing-section *::-webkit-scrollbar,
+.landing-hero.landing-section.section-visible *::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* ===== TEXT ALIGNMENT RULES ===== */
 /* Use justify for better readability, especially for Portuguese */
 .landing-page p,
 .landing-page .hero-summary {
-  text-align: justify !important;
+  text-align: justify;
+  text-justify: inter-word;
   word-spacing: normal;
   letter-spacing: normal;
 }
@@ -37,7 +287,7 @@ html.landing-page-active body .landing-page {
 /* Exceptions: Center align taglines */
 .landing-page .hero-tagline,
 .landing-page .about-profile-tagline {
-  text-align: center !important;
+  text-align: center;
 }
 
 .landing-page .about-content p,
@@ -48,119 +298,18 @@ html.landing-page-active body .landing-page {
 .landing-page .approach-description,
 .landing-page .footer-subtitle,
 .landing-page .footer-description {
-  text-align: justify !important;
+  text-align: justify;
   word-spacing: normal;
   letter-spacing: normal;
 }
 
 .landing-page .feature-title {
-  text-align: left !important;
+  text-align: left;
   word-spacing: normal;
   letter-spacing: normal;
 }
 
-/* Prevent double scrollbars - ensure only body scrolls */
+/* Box-sizing for all landing page elements */
 .landing-page * {
   box-sizing: border-box;
 }
-
-/* Ensure body has proper overflow when landing page is active */
-/* Only html should scroll, body should not create its own scrollbar */
-body.landing-page-active {
-  overflow-x: hidden !important;
-  overflow-y: visible !important;
-  height: auto !important;
-  min-height: 100% !important;
-  max-height: none !important;
-  position: relative !important;
-}
-
-html.landing-page-active {
-  overflow-x: hidden !important;
-  overflow-y: auto !important;
-  height: 100% !important;
-  max-height: none !important;
-}
-
-/* Remove any nested scroll containers */
-body.landing-page-active > *,
-html.landing-page-active > body {
-  overflow-y: visible !important;
-  overflow-x: hidden !important;
-}
-
-/* Ensure #app container doesn't constrain height or create scrollbars */
-body.landing-page-active #app,
-#app {
-  height: auto !important;
-  min-height: 100% !important;
-  overflow-y: visible !important;
-  overflow-x: hidden !important;
-  position: relative !important;
-}
-
-/* CRITICAL OVERRIDE: Ensure landing-page NEVER creates a scrollbar */
-/* This rule must have maximum specificity to override Bootstrap and any other CSS */
-html body.landing-page-active #app .landing-page,
-html body #app .landing-page,
-html body.landing-page-active .landing-page,
-html body .landing-page,
-body.landing-page-active #app .landing-page,
-body #app .landing-page,
-body.landing-page-active .landing-page,
-body .landing-page,
-#app .landing-page,
-.landing-page {
-  /* Force visible overflow - no scrollbar on this element */
-  overflow: visible !important;
-  overflow-y: visible !important;
-  overflow-x: hidden !important;
-  /* Remove all height constraints */
-  height: auto !important;
-  max-height: none !important;
-  min-height: 100vh !important;
-  position: relative !important;
-  display: block !important;
-  box-sizing: border-box !important;
-}
-
-/* Ensure direct children of landing-page don't create scroll containers */
-body.landing-page-active .landing-page > * {
-  overflow-y: visible !important;
-  overflow-x: hidden !important;
-}
-
-/* Ensure landing-hero and landing-section don't create scrollbars */
-body.landing-page-active .landing-hero {
-  overflow-x: hidden !important;
-  overflow-y: visible !important;
-}
-
-body.landing-page-active .landing-section {
-  overflow-x: hidden !important;
-  overflow-y: visible !important;
-}
-
-/* Specifically target landing-hero to prevent scrollbars */
-.landing-hero,
-.landing-hero.landing-section {
-  overflow-x: hidden !important;
-  overflow-y: visible !important;
-}
-
-/* Ensure hero-content doesn't cause overflow */
-.landing-hero .hero-content {
-  overflow: visible;
-  height: auto;
-  min-height: auto;
-}
-
-/* Only allow body to scroll */
-body.landing-page-active {
-  position: relative;
-}
-
-body.landing-page-active .landing-page {
-  position: static;
-}
-

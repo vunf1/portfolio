@@ -10,13 +10,33 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-  overflow-x: hidden !important;
-  overflow-y: auto !important;
-  height: 100%;
+  /* Scroll rules are handled in landing/_layout.css for landing page */
+  /* For portfolio page, html should scroll naturally */
+  overflow-x: hidden !important; /* CRITICAL: Prevent horizontal scrollbar */
+  overflow-y: auto !important; /* CRITICAL: Only html should scroll vertically */
+  /* CRITICAL: Don't set height: 100% by default - it causes scrollbar issues */
+  /* Let landing/_layout.css handle height for landing page */
+  /* For portfolio, height will be determined by content */
+  height: auto;
+  min-height: 100%;
+  width: 100% !important;
+  max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
 }
 
-/* Body overflow is handled in index.css to ensure single scrollbar */
-/* This ensures base.css doesn't conflict with index.css body rules */
+/* CRITICAL: Body must NEVER scroll - only html should scroll */
+body {
+  overflow: hidden !important; /* Prevent body from creating scrollbar */
+  overflow-y: hidden !important; /* Body must not scroll */
+}
+
+/* Override for landing page - ensure height is auto */
+html.landing-page-active {
+  height: auto !important;
+  min-height: 100% !important;
+}
+
+/* Body overflow is handled in landing/_layout.css for landing page */
+/* For portfolio page, body should not create scrollbars */
 
 
 /* Apply text justify to all paragraph and text content */
