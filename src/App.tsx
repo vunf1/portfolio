@@ -34,14 +34,6 @@ export function App() {
   const [showPortfolio, setShowPortfolio] = useState(false)
   const hasWarmedPortfolio = useRef(false)
 
-  // Debug: Add test message to see if component is rendering
-  // console.log('🎯 App component rendering:', { 
-  //   portfolioData: portfolioData ? 'Available' : 'Not Available',
-  //   loading, 
-  //   error: error?.message || 'None',
-  //   currentLanguage: currentLanguage,
-  //   aboutTranslation: t('navigation.about'),
-  // })
 
   // Initialize SEO when portfolio data is available
   useEffect(() => {
@@ -319,28 +311,25 @@ export function App() {
     )
   }
 
-  // Show debug info if no data
+  // Show error state if no data
   if (!portfolioData) {
-    // console.log('⚠️ Showing no data state')
     return (
       <div className="error">
         <div className="error-content">
           <i className="fa-solid fa-info-circle fa-3x mb-4"></i>
-          <h2>Portfolio Data Not Available</h2>
-          <p>Portfolio data is not available. Please check your data file.</p>
-          <div style={{ marginTop: '20px', padding: '20px', backgroundColor: '#f8f9fa', borderRadius: '8px' }}>
-            <h3>Debug Info:</h3>
-            <p>Loading: {loading.toString()}</p>
-            <p>Error: {error ? (error as Error).message : 'None'}</p>
-            <p>Portfolio Data: {portfolioData ? 'Available' : 'Not Available'}</p>
-            <p>Current Language: {currentLanguage}</p>
-          </div>
+          <h2>{t('common.error')}</h2>
+          <p>{t('common.somethingWentWrong')}</p>
+          <button 
+            className="btn-premium mt-4"
+            onClick={() => window.location.reload()}
+          >
+            <i className="fa-solid fa-refresh me-2"></i>
+            {t('common.refresh')}
+          </button>
         </div>
       </div>
     )
   }
-
-  // console.log('✅ Portfolio data available, rendering main content')
 
   return (
     <ErrorBoundary>
