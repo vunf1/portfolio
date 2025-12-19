@@ -38,18 +38,25 @@ export function App() {
   // Initialize SEO when portfolio data is available
   useEffect(() => {
     if (portfolioData && portfolioData.personal && portfolioData.meta && portfolioData.meta.seo && portfolioData.social) {
-      try {
-        initializeSEO(
-          currentLanguage,
-          portfolioData.personal,
-          portfolioData.meta.seo,
-          portfolioData.social,
-          portfolioData
-        )
-      } catch (error) {
-        if (import.meta.env.DEV) {
+      // Verify meta.seo has required properties
+      const seo = portfolioData.meta.seo
+      if (seo && typeof seo === 'object' && seo.title && seo.description && Array.isArray(seo.keywords)) {
+        try {
+          initializeSEO(
+            currentLanguage,
+            portfolioData.personal,
+            seo,
+            portfolioData.social,
+            portfolioData
+          )
+        } catch (error) {
+          // Always log errors for debugging (even in production)
           // eslint-disable-next-line no-console
           console.error('Failed to initialize SEO:', error)
+          if (error instanceof Error && error.stack) {
+            // eslint-disable-next-line no-console
+            console.error('Error stack:', error.stack)
+          }
         }
       }
     }
@@ -58,18 +65,25 @@ export function App() {
   // Update SEO when language changes
   useEffect(() => {
     if (portfolioData && portfolioData.personal && portfolioData.meta && portfolioData.meta.seo && portfolioData.social) {
-      try {
-        updateSEOOnLanguageChange(
-          currentLanguage,
-          portfolioData.personal,
-          portfolioData.meta.seo,
-          portfolioData.social,
-          portfolioData
-        )
-      } catch (error) {
-        if (import.meta.env.DEV) {
+      // Verify meta.seo has required properties
+      const seo = portfolioData.meta.seo
+      if (seo && typeof seo === 'object' && seo.title && seo.description && Array.isArray(seo.keywords)) {
+        try {
+          updateSEOOnLanguageChange(
+            currentLanguage,
+            portfolioData.personal,
+            seo,
+            portfolioData.social,
+            portfolioData
+          )
+        } catch (error) {
+          // Always log errors for debugging (even in production)
           // eslint-disable-next-line no-console
           console.error('Failed to update SEO on language change:', error)
+          if (error instanceof Error && error.stack) {
+            // eslint-disable-next-line no-console
+            console.error('Error stack:', error.stack)
+          }
         }
       }
     }

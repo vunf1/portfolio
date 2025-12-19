@@ -92,7 +92,7 @@ function setLinkTag(rel: string, href: string, hreflang?: string): void {
  * Update document title
  */
 export function updateDocumentTitle(_locale: SupportedLocale, personal: Personal, meta: { title: string }): void {
-  document.title = meta.title || `${personal.name} (${BRAND_NAME}) - ${personal.title}`
+  document.title = meta?.title || `${personal?.name || ''} (${BRAND_NAME}) - ${personal?.title || ''}`
 }
 
 /**
@@ -113,31 +113,31 @@ export function updateSEOMetaTags(
   meta: { title: string; description: string; keywords: string[]; ogImage: string }
 ): void {
   const baseUrl = getBaseUrl()
-  const ogImage = meta.ogImage.startsWith('http') ? meta.ogImage : `${baseUrl}${meta.ogImage.replace(/^\./, '')}`
+  const ogImage = meta?.ogImage?.startsWith('http') ? meta.ogImage : `${baseUrl}${(meta?.ogImage || '').replace(/^\./, '')}`
 
   // Basic meta tags
-  setMetaTag('description', meta.description)
-  setMetaTag('keywords', meta.keywords.join(', '))
-  setMetaTag('author', personal.name)
+  setMetaTag('description', meta?.description || '')
+  setMetaTag('keywords', (meta?.keywords || []).join(', '))
+  setMetaTag('author', personal?.name || '')
 
   // Open Graph tags
-  setMetaTag('og:title', meta.title, true)
-  setMetaTag('og:description', meta.description, true)
+  setMetaTag('og:title', meta?.title || '', true)
+  setMetaTag('og:description', meta?.description || '', true)
   setMetaTag('og:type', 'website', true)
   setMetaTag('og:url', baseUrl, true)
   setMetaTag('og:image', ogImage, true)
   setMetaTag('og:locale', LOCALE_MAP[locale], true)
-  setMetaTag('og:site_name', `${BRAND_NAME} - ${personal.name} Portfolio`, true)
+  setMetaTag('og:site_name', `${BRAND_NAME} - ${personal?.name || ''} Portfolio`, true)
   setMetaTag('og:image:width', '1200', true)
   setMetaTag('og:image:height', '630', true)
-  setMetaTag('og:image:alt', `${BRAND_NAME} - ${personal.name} Portfolio | Full-Stack Developer & Network Engineer`, true)
+  setMetaTag('og:image:alt', `${BRAND_NAME} - ${personal?.name || ''} Portfolio | Full-Stack Developer & Network Engineer`, true)
 
   // Twitter Card tags
   setMetaTag('twitter:card', 'summary_large_image')
-  setMetaTag('twitter:title', meta.title)
-  setMetaTag('twitter:description', meta.description)
+  setMetaTag('twitter:title', meta?.title || '')
+  setMetaTag('twitter:description', meta?.description || '')
   setMetaTag('twitter:image', ogImage)
-  setMetaTag('twitter:image:alt', `${BRAND_NAME} - ${personal.name} Portfolio | Full-Stack Developer & Network Engineer`)
+  setMetaTag('twitter:image:alt', `${BRAND_NAME} - ${personal?.name || ''} Portfolio | Full-Stack Developer & Network Engineer`)
 }
 
 /**
@@ -150,23 +150,23 @@ function createPersonSchema(
   skills?: string[]
 ): PersonSchema {
   const baseUrl = getBaseUrl()
-  const profileImage = personal.profileImage.startsWith('http')
-    ? personal.profileImage
-    : `${baseUrl}${personal.profileImage.replace(/^\./, '')}`
+  const profileImage = (personal?.profileImage || '').startsWith('http')
+    ? (personal?.profileImage || '')
+    : `${baseUrl}${(personal?.profileImage || '').replace(/^\./, '')}`
 
-  const [city, country] = personal.location.split(', ').map(s => s.trim())
-  const sameAs = social.map(s => s.url).filter(url => url && !url.includes('jmsit.cloud'))
+  const [city, country] = (personal?.location || '').split(', ').map(s => s.trim())
+  const sameAs = (social || []).map(s => s.url).filter(url => url && !url.includes('jmsit.cloud'))
 
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: personal.name,
+    name: personal?.name || '',
     alternateName: BRAND_NAME,
     brand: {
       '@type': 'Brand',
       name: BRAND_NAME
     },
-    jobTitle: personal.title,
+    jobTitle: personal?.title || '',
     url: baseUrl,
     sameAs,
     image: profileImage,
@@ -215,7 +215,7 @@ function createProfessionalServiceSchema(
     },
     provider: {
       '@type': 'Person',
-      name: personal.name,
+      name: personal?.name || '',
       alternateName: BRAND_NAME
     },
     serviceType: [
@@ -246,12 +246,12 @@ function createWebSiteSchema(
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: `${BRAND_NAME} - ${personal.name} Portfolio`,
+    name: `${BRAND_NAME} - ${personal?.name || ''} Portfolio`,
     alternateName: 'JMSIT.cloud',
     url: baseUrl,
     author: {
       '@type': 'Person',
-      name: personal.name,
+      name: personal?.name || '',
       alternateName: BRAND_NAME
     },
     inLanguage: ['en', 'pt-PT']
@@ -285,7 +285,7 @@ function createOrganizationSchema(
     },
     founder: {
       '@type': 'Person',
-      name: personal.name
+      name: personal?.name || ''
     },
     foundingDate: '2010',
     description: `${BRAND_NAME} provides professional technology services including full-stack software development, network engineering, AI solutions, automation, cybersecurity, DevOps, and cloud architecture. Expert IT consulting and solutions based in Porto, Portugal.`,
