@@ -14,6 +14,7 @@
  * Note: Tests will be skipped if environment variables are not set
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any, no-console */
 import { describe, it, expect, beforeAll, beforeEach, afterEach, vi } from 'vitest'
 import { N8nClient } from '../n8nClient'
 import type { ContactFormData } from '../../types/n8n'

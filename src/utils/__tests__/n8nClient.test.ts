@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { N8nClient } from '../n8nClient'
 import { N8nClientError, N8nNetworkError, N8nTimeoutError, type ContactFormData } from '../../types/n8n'

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import '@testing-library/jest-dom'
 import { vi } from 'vitest'
 
@@ -133,7 +134,7 @@ const mockTranslationData = {
 }
 
 // Mock fetch implementation
-;(global.fetch as any).mockImplementation((url: string) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+;(global.fetch as any).mockImplementation((url: string) => {
   if (url.includes('portfolio-en.json') || url.includes('portfolio-pt-PT.json')) {
     return Promise.resolve({
       ok: true,
