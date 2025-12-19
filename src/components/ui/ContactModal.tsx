@@ -110,7 +110,9 @@ export function ContactModal({
 
   // Count words in message
   const countWords = (text: string): number => {
-    if (!text.trim()) return 0
+    if (!text.trim()) {
+      return 0
+    }
     return text.trim().split(/\s+/).filter(word => word.length > 0).length
   }
 
@@ -136,10 +138,14 @@ export function ContactModal({
 
   // Detect autofill using best practices for password manager compatibility
   useEffect(() => {
-    if (!isOpen) return
+    if (!isOpen) {
+      return
+    }
 
     const form = document.querySelector('form[name="contact-form"]') as HTMLFormElement
-    if (!form) return
+    if (!form) {
+      return
+    }
 
     let syncTimeout: ReturnType<typeof setTimeout> | null = null
     let isSyncing = false
@@ -156,7 +162,9 @@ export function ContactModal({
       }
 
       syncTimeout = setTimeout(() => {
-        if (isSyncing) return
+        if (isSyncing) {
+          return
+        }
         isSyncing = true
 
         const formDataFromDOM: ContactFormData = {
@@ -349,7 +357,7 @@ export function ContactModal({
         }
         return null
       
-      case 'message':
+      case 'message': {
         if (!value.trim()) {
           return t('contact.errors.messageRequired', 'Message is required')
         }
@@ -361,6 +369,7 @@ export function ContactModal({
           return t('contact.errors.messageTooLong', `Message must not exceed ${MAX_WORDS} words. Current: ${words} words.`).replace('{{max}}', String(MAX_WORDS)).replace('{{current}}', String(words))
         }
         return null
+      }
       
       default:
         return null
@@ -401,19 +410,29 @@ export function ContactModal({
     const newErrors: Partial<Record<keyof ContactFormData, string>> = {}
     
     const nameError = validateField('name', formData.name)
-    if (nameError) newErrors.name = nameError
+    if (nameError) {
+      newErrors.name = nameError
+    }
     
     const emailError = validateField('email', formData.email)
-    if (emailError) newErrors.email = emailError
+    if (emailError) {
+      newErrors.email = emailError
+    }
     
     const phoneError = validateField('phone', formData.phone || '')
-    if (phoneError) newErrors.phone = phoneError
+    if (phoneError) {
+      newErrors.phone = phoneError
+    }
     
     const subjectError = validateField('subject', formData.subject || '')
-    if (subjectError) newErrors.subject = subjectError
+    if (subjectError) {
+      newErrors.subject = subjectError
+    }
     
     const messageError = validateField('message', formData.message)
-    if (messageError) newErrors.message = messageError
+    if (messageError) {
+      newErrors.message = messageError
+    }
     
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)

@@ -55,7 +55,6 @@ export async function loadTranslations(language: string) {
     }
   } catch (error) {
     if (import.meta.env.DEV) {
-      // eslint-disable-next-line no-console
       console.warn(`Failed to load ${language} translations:`, error)
     }
     // Silently handle translation loading errors

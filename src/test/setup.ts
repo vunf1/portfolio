@@ -84,7 +84,7 @@ Object.defineProperty(window, 'location', {
 // Mock fetch for translation data
 // Store original fetch before mocking (for integration tests)
 if (typeof globalThis.fetch === 'function' && !(globalThis as any).__originalFetch) {
-  ;(globalThis as any).__originalFetch = globalThis.fetch
+  (globalThis as any).__originalFetch = globalThis.fetch
 }
 global.fetch = vi.fn()
 

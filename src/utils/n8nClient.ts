@@ -18,13 +18,11 @@
  * ```
  */
 
-import type {
-  ContactFormData,
-  N8nWebhookResponse,
-  N8nClientConfig,
-  N8nAuthMethod
-} from '../types/n8n'
 import {
+  type ContactFormData,
+  type N8nWebhookResponse,
+  type N8nClientConfig,
+  type N8nAuthMethod,
   N8nClientError as N8nClientErrorClass,
   N8nNetworkError as N8nNetworkErrorClass,
   N8nTimeoutError as N8nTimeoutErrorClass

@@ -52,7 +52,6 @@ async function ensureSectionLoaded(
         languageData.set(section, data)
       } catch (error) {
         if (import.meta.env.DEV) {
-          // eslint-disable-next-line no-console
           console.warn(`Failed to load ${section} for ${language}:`, error)
         }
         if (NON_CRITICAL_SECTIONS.includes(section)) {
@@ -105,7 +104,6 @@ function scheduleIdleLoad(language: SupportedLanguage, sections: string[]): Prom
         .then(() => resolve(true))
         .catch(error => {
           if (import.meta.env.DEV) {
-            // eslint-disable-next-line no-console
             console.warn(`Prefetch failed for ${language}:`, error)
           }
           resolve(false)
@@ -236,7 +234,6 @@ export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): Use
         const normalizedError = err instanceof Error ? err : new Error('Unknown error occurred')
         setError(normalizedError)
         if (import.meta.env.DEV) {
-          // eslint-disable-next-line no-console
           console.error('Error loading portfolio data:', normalizedError)
         }
       } finally {
@@ -330,7 +327,6 @@ export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): Use
       markSectionsLoaded(language, [section])
     } catch (err) {
       if (import.meta.env.DEV) {
-        // eslint-disable-next-line no-console
         console.warn(`Failed to load ${section} section:`, err)
       }
     }
@@ -350,7 +346,6 @@ export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): Use
       nonCriticalPrefetched[currentLanguage] = true
     } catch (err) {
       if (import.meta.env.DEV) {
-        // eslint-disable-next-line no-console
         console.warn('Failed to load all sections:', err)
       }
     }

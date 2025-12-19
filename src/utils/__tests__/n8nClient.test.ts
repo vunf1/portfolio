@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { N8nClient } from '../n8nClient'
-import { N8nClientError, N8nNetworkError, N8nTimeoutError } from '../../types/n8n'
-import type { ContactFormData } from '../../types/n8n'
+import { N8nClientError, N8nNetworkError, N8nTimeoutError, type ContactFormData } from '../../types/n8n'
 
 // Mock fetch globally
 global.fetch = vi.fn()
@@ -201,7 +200,7 @@ describe('N8nClient', () => {
     })
 
     it('should throw N8nNetworkError on network failure', async () => {
-      ;(global.fetch as any).mockRejectedValue(new Error('Network error'))
+      (global.fetch as any).mockRejectedValue(new Error('Network error'))
 
       const client = new N8nClient({ webhookUrl: mockWebhookUrl })
 

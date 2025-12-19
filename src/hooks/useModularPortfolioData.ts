@@ -42,7 +42,6 @@ async function loadLanguageData(language: string): Promise<Map<string, Record<st
       languageData.set(section, data as Record<string, unknown>)
     } catch (error) {
       if (import.meta.env.DEV) {
-        // eslint-disable-next-line no-console
         console.warn(`Failed to load ${section} for ${language}:`, error)
       }
       // Set empty data for failed sections
@@ -125,7 +124,6 @@ export function useModularPortfolioData(currentLanguage: 'en' | 'pt-PT' = 'en'):
             await loadLanguageData(lang)
           } catch (error) {
             if (import.meta.env.DEV) {
-              // eslint-disable-next-line no-console
               console.error(`Failed to load ${lang} data:`, error)
             }
             throw error
@@ -140,13 +138,11 @@ export function useModularPortfolioData(currentLanguage: 'en' | 'pt-PT' = 'en'):
           const criticalData = createCriticalData(languageData)
           setPortfolioData(criticalData)
         } else if (import.meta.env.DEV) {
-          // eslint-disable-next-line no-console
           console.error('No initial data available after loading')
         }
         
       } catch (err) {
         if (import.meta.env.DEV) {
-          // eslint-disable-next-line no-console
           console.error('Error loading portfolio data:', err)
         }
         setError(err instanceof Error ? err : new Error('Unknown error occurred'))
@@ -194,7 +190,6 @@ export function useModularPortfolioData(currentLanguage: 'en' | 'pt-PT' = 'en'):
       
     } catch (error) {
       if (import.meta.env.DEV) {
-        // eslint-disable-next-line no-console
         console.warn(`Failed to load ${section} section:`, error)
       }
     }
@@ -213,7 +208,6 @@ export function useModularPortfolioData(currentLanguage: 'en' | 'pt-PT' = 'en'):
       setLoadedSections(new Set([...CRITICAL_SECTIONS, ...NON_CRITICAL_SECTIONS]))
     } catch (error) {
       if (import.meta.env.DEV) {
-        // eslint-disable-next-line no-console
         console.warn('Failed to load all sections:', error)
       }
     }
