@@ -81,17 +81,27 @@ export function LandingPage({ onNavigateToPortfolio, onWarmPortfolio, className 
     )
   }
 
+  // Additional safety check: ensure personal has required fields
+  const personal = portfolioData.personal
+  if (!personal || typeof personal !== 'object') {
+    return (
+      <div className={`landing-page ${className}`}>
+        <SectionSkeleton />
+      </div>
+    )
+  }
+
   return (
     <div className={`landing-page ${className}`}>
-      <LandingHero personal={portfolioData.personal} onContactClick={handleContactClick} />
-      <LandingFeatures personal={portfolioData.personal} />
+      <LandingHero personal={personal} onContactClick={handleContactClick} />
+      <LandingFeatures personal={personal} />
       <LandingAbout 
-        personal={portfolioData.personal} 
+        personal={personal} 
         social={portfolioData.social || []}
         onNavigateToPortfolio={handleNavigateToPortfolio}
         onWarmPortfolio={onWarmPortfolio}
       />
-      <LandingFooter personal={portfolioData.personal} social={portfolioData.social || []} />
+      <LandingFooter personal={personal} social={portfolioData.social || []} />
       <FloatingActionButton onContactClick={handleContactClick} />
       <ContactModal
         isOpen={isContactModalOpen}

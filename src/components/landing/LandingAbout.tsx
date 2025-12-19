@@ -80,15 +80,15 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
               <picture className="about-profile-picture">
                 <img 
                   src={profileUrl} 
-                  alt={`${personal.name} - ${personal.title}`}
+                  alt={`${personal?.name || 'Portfolio'} - ${personal?.title || ''}`}
                   className="about-profile-image"
                 />
               </picture>
               
               <div className="about-profile-info">
-                <h3 className="about-profile-name">{personal.name}</h3>
-                <p className="about-profile-title">{personal.title}</p>
-                <p className="about-profile-tagline">{personal.tagline}</p>
+                <h3 className="about-profile-name">{personal?.name || ''}</h3>
+                <p className="about-profile-title">{personal?.title || ''}</p>
+                <p className="about-profile-tagline">{personal?.tagline || ''}</p>
               </div>
             </div>
             
@@ -103,7 +103,7 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
                 <i className="fa-solid fa-map-marker-alt"></i>
                 <div>
                   <strong>{currentLanguage === 'pt-PT' ? 'Localização' : 'Location'}</strong>
-                  <p>{personal.location}</p>
+                  <p>{personal?.location || ''}</p>
                 </div>
               </div>
               
@@ -111,7 +111,7 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
                 <i className="fa-solid fa-clock"></i>
                 <div>
                   <strong>{currentLanguage === 'pt-PT' ? 'Disponibilidade' : 'Availability'}</strong>
-                  <p>{personal.availability}</p>
+                  <p>{personal?.availability || ''}</p>
                 </div>
               </div>
               

@@ -15,10 +15,10 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
       <div className="footer-container">
         <div className="footer-content">
           <div className="footer-brand">
-            <h3 className="footer-title">{personal.name}</h3>
-            <p className="footer-subtitle">{personal.title}</p>
+            <h3 className="footer-title">{personal?.name || ''}</h3>
+            <p className="footer-subtitle">{personal?.title || ''}</p>
             <p className="footer-description">
-              {personal.tagline}
+              {personal?.tagline || ''}
             </p>
             
             <div className="footer-contact">
@@ -118,7 +118,7 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
         <div className="footer-bottom">
           <div className="footer-copyright">
             {/* TODO: Replace "JMSIT" with your brand name */}
-            <p>&copy; {new Date().getFullYear()} JMSIT - {personal.name}. {currentLanguage === 'pt-PT' ? 'Todos os direitos reservados.' : 'All rights reserved.'}</p>
+            <p>&copy; {new Date().getFullYear()} JMSIT - {personal?.name || 'Portfolio'}. {currentLanguage === 'pt-PT' ? 'Todos os direitos reservados.' : 'All rights reserved.'}</p>
             <div className="footer-badges">
               <span className="footer-badge" title={currentLanguage === 'pt-PT' ? 'Conformidade WCAG 2.2 AA' : 'WCAG 2.2 AA Compliant'}>
                 <i className="fa-solid fa-universal-access"></i>

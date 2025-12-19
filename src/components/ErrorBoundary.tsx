@@ -12,10 +12,13 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   override componentDidCatch(error: Error, errorInfo: unknown) {
-    // Log error to console in development
-    if (import.meta.env.DEV) {
+    // Always log error to console for debugging (even in production)
+    // eslint-disable-next-line no-console
+    console.error('Error caught by boundary:', error, errorInfo)
+    // Log error details to help with debugging
+    if (error.stack) {
       // eslint-disable-next-line no-console
-      console.error('Error caught by boundary:', error, errorInfo)
+      console.error('Error stack:', error.stack)
     }
   }
 

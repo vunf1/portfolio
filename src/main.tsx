@@ -23,9 +23,12 @@ async function initializeApp() {
       console.error('App element not found')
     }
   } catch (error) {
-    if (import.meta.env.DEV) {
+    // Always log errors for debugging (even in production)
+    // eslint-disable-next-line no-console
+    console.error('Failed to initialize app:', error)
+    if (error instanceof Error && error.stack) {
       // eslint-disable-next-line no-console
-      console.error('Failed to initialize app:', error)
+      console.error('Error stack:', error.stack)
     }
     
     // Fallback: render app anyway

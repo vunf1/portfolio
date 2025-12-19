@@ -34,11 +34,11 @@ export function LandingHero({ personal, className = '', onContactClick }: Landin
           </div>
           
           <h1 className="hero-title">
-            <span className="hero-title-main">{personal.name} <span className="brand-name"></span></span>
-            <span className="hero-title-subtitle">{personal.title}</span>
+            <span className="hero-title-main">{personal?.name || 'Portfolio'} <span className="brand-name"></span></span>
+            <span className="hero-title-subtitle">{personal?.title || ''}</span>
           </h1>
           
-          <p className="hero-tagline">{personal.tagline}</p>
+          <p className="hero-tagline">{personal?.tagline || ''}</p>
           
           <p className="hero-summary">
             {currentLanguage === 'pt-PT'
@@ -47,14 +47,18 @@ export function LandingHero({ personal, className = '', onContactClick }: Landin
           </p>
           
           <div className="hero-meta">
-            <div className="hero-meta-item">
-              <i className="fa-solid fa-location-dot"></i>
-              <span>{personal.location}</span>
-            </div>
-            <div className="hero-meta-item">
-              <i className="fa-solid fa-user-tie"></i>
-              <span>{personal.availability}</span>
-            </div>
+            {personal?.location && (
+              <div className="hero-meta-item">
+                <i className="fa-solid fa-location-dot"></i>
+                <span>{personal.location}</span>
+              </div>
+            )}
+            {personal?.availability && (
+              <div className="hero-meta-item">
+                <i className="fa-solid fa-user-tie"></i>
+                <span>{personal.availability}</span>
+              </div>
+            )}
           </div>
           
           <div className="hero-actions">
@@ -94,7 +98,7 @@ export function LandingHero({ personal, className = '', onContactClick }: Landin
             <div className="hero-logo-wrapper">
               <img 
                 src={logoUrl} 
-                alt={`${personal.name}  - Portfolio Logo`}
+                alt={`${personal?.name || 'Portfolio'} - Portfolio Logo`}
                 className="hero-logo-image"
               />
               <div className="hero-image-border"></div>
