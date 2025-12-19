@@ -106,7 +106,7 @@ describe('Scrollbar Behavior Tests', () => {
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
-        app
+        { container: app }
       )
       
       // Wait for useEffect to run
@@ -137,7 +137,7 @@ describe('Scrollbar Behavior Tests', () => {
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
-        app
+        { container: app }
       )
       
       return new Promise<void>((resolve) => {
@@ -164,7 +164,7 @@ describe('Scrollbar Behavior Tests', () => {
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
-        app
+        { container: app }
       )
       
       return new Promise<void>((resolve) => {
@@ -192,7 +192,7 @@ describe('Scrollbar Behavior Tests', () => {
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
-        app
+        { container: app }
       )
       
       return new Promise<void>((resolve) => {
@@ -224,7 +224,7 @@ describe('Scrollbar Behavior Tests', () => {
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
-        app
+        { container: app }
       )
       
       return new Promise<void>((resolve) => {
@@ -262,7 +262,7 @@ describe('Scrollbar Behavior Tests', () => {
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
-        app
+        { container: app }
       )
       
       return new Promise<void>((resolve) => {
@@ -299,7 +299,7 @@ describe('Scrollbar Behavior Tests', () => {
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
-        app
+        { container: app }
       )
       
       return new Promise<void>((resolve) => {
@@ -343,7 +343,7 @@ describe('Scrollbar Behavior Tests', () => {
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
-        app
+        { container: app }
       )
       
       return new Promise<void>((resolve) => {
@@ -381,7 +381,7 @@ describe('Scrollbar Behavior Tests', () => {
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
-        app
+        { container: app }
       )
       
       return new Promise<void>((resolve) => {
@@ -422,7 +422,7 @@ describe('Scrollbar Behavior Tests', () => {
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
-        app
+        { container: app }
       )
       
       return new Promise<void>((resolve) => {
@@ -431,7 +431,6 @@ describe('Scrollbar Behavior Tests', () => {
           
           // Initial state
           const initialScrollHeight = html.scrollHeight
-          const initialClientHeight = html.clientHeight
           
           // Simulate sections becoming visible (IntersectionObserver callback)
           const sections = document.querySelectorAll('.landing-section')
@@ -444,7 +443,6 @@ describe('Scrollbar Behavior Tests', () => {
           
           setTimeout(() => {
             const afterScrollHeight = html.scrollHeight
-            const afterClientHeight = html.clientHeight
             
             // Height should not change significantly when sections become visible
             // (sections should already be in DOM, just with opacity/transform)
@@ -468,7 +466,7 @@ describe('Scrollbar Behavior Tests', () => {
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
-        app
+        { container: app }
       )
       
       return new Promise<void>((resolve) => {
@@ -493,5 +491,3 @@ describe('Scrollbar Behavior Tests', () => {
     })
   })
 })
-
-

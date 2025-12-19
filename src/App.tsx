@@ -196,12 +196,12 @@ export function App() {
     }
 
     // Throttled scroll listener
-    let scrollTimeout: ReturnType<typeof setTimeout> | undefined
+    let scrollTimeout: number | undefined
     const throttledScrollHandler = () => {
       if (scrollTimeout) {
         clearTimeout(scrollTimeout)
       }
-      scrollTimeout = window.setTimeout(handleScroll, 100)
+      scrollTimeout = window.setTimeout(handleScroll, 100) as unknown as number
     }
 
     window.addEventListener('scroll', throttledScrollHandler, { passive: true })

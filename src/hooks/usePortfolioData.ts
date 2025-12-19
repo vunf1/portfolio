@@ -87,6 +87,17 @@ async function loadLanguageSections(
   return languageData
 }
 
+interface IdleDeadline {
+  didTimeout: boolean
+  timeRemaining: () => number
+}
+
+type IdleRequestCallback = (deadline: IdleDeadline) => void
+
+interface IdleRequestOptions {
+  timeout?: number
+}
+
 function scheduleIdleLoad(language: SupportedLanguage, sections: string[]): Promise<boolean> {
   return new Promise((resolve) => {
     const execute = () => {
@@ -106,8 +117,12 @@ function scheduleIdleLoad(language: SupportedLanguage, sections: string[]): Prom
       return
     }
 
-    if ('requestIdleCallback' in window) {
-      window.requestIdleCallback(() => execute())
+    const idleWindow = window as typeof window & {
+      requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number
+    }
+    
+    if ('requestIdleCallback' in window && idleWindow.requestIdleCallback) {
+      idleWindow.requestIdleCallback(() => execute(), { timeout: 5000 })
     } else {
       window.setTimeout(() => execute(), 200)
     }
@@ -407,21 +422,4 @@ export function resetPortfolioDataCaches() {
   criticalPrefetched['pt-PT'] = false
   nonCriticalPrefetched.en = false
   nonCriticalPrefetched['pt-PT'] = false
-}
-
-declare global {
-  interface Window {
-    requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number
-  }
-}
-
-interface IdleDeadline {
-  didTimeout: boolean
-  timeRemaining: () => number
-}
-
-type IdleRequestCallback = (deadline: IdleDeadline) => void
-
-interface IdleRequestOptions {
-  timeout?: number
 }
