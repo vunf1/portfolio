@@ -73,7 +73,7 @@ export function LandingPage({ onNavigateToPortfolio, onWarmPortfolio, className 
     return null // Portfolio will be rendered by parent
   }
 
-  if (loading || !portfolioData) {
+  if (loading || !portfolioData || !portfolioData.personal) {
     return (
       <div className={`landing-page ${className}`}>
         <SectionSkeleton />
@@ -87,11 +87,11 @@ export function LandingPage({ onNavigateToPortfolio, onWarmPortfolio, className 
       <LandingFeatures personal={portfolioData.personal} />
       <LandingAbout 
         personal={portfolioData.personal} 
-        social={portfolioData.social}
+        social={portfolioData.social || []}
         onNavigateToPortfolio={handleNavigateToPortfolio}
         onWarmPortfolio={onWarmPortfolio}
       />
-      <LandingFooter personal={portfolioData.personal} social={portfolioData.social} />
+      <LandingFooter personal={portfolioData.personal} social={portfolioData.social || []} />
       <FloatingActionButton onContactClick={handleContactClick} />
       <ContactModal
         isOpen={isContactModalOpen}
