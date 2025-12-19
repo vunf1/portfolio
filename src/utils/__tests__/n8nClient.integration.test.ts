@@ -160,12 +160,8 @@ describe('N8nClient Integration Tests', () => {
         }
       }
       // Always call real fetch, even if it fails
-      try {
-        return await realFetch(url, init)
-      } catch (error) {
-        // Network errors are expected in CI, but we still captured headers
-        throw error
-      }
+      // Network errors are expected in CI, but we still captured headers
+      return realFetch(url, init)
     }
 
     global.fetch = fetchInterceptor as typeof fetch
