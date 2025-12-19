@@ -315,7 +315,6 @@ describe('Scrollbar Behavior Tests', () => {
           // Instead, we verify the classes are applied which ensure correct scroll behavior
           // The CSS ensures html can scroll while body and #app cannot
           
-          const body = document.body
           const appElement = document.getElementById('app')
           expect(appElement).not.toBeNull()
           
