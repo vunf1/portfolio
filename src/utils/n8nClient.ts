@@ -38,15 +38,15 @@ function getWebhookUrl(): string {
   const url = import.meta.env.VITE_N8N_WEBHOOK_URL
   
   if (!url || url.trim() === '') {
-    if (import.meta.env.PROD) {
-      throw new N8nClientErrorClass(
-        'VITE_N8N_WEBHOOK_URL environment variable is required in production. ' +
-        'Set it in .env.production or as a build environment variable.'
-      )
-    }
+    // Don't throw error - return empty string and let the client handle it gracefully
+    // The error will be thrown only when actually trying to send a request
     if (import.meta.env.DEV) {
       // eslint-disable-next-line no-console
       console.warn('VITE_N8N_WEBHOOK_URL not set. Contact form will not work.')
+    } else {
+      // In production, log a warning but don't throw (allows app to load)
+      // eslint-disable-next-line no-console
+      console.warn('VITE_N8N_WEBHOOK_URL not set. Contact form submissions will fail.')
     }
     return ''
   }
@@ -67,15 +67,15 @@ function getAuthToken(): string {
                 import.meta.env.VITE_N8N_JWT_TOKEN
   
   if (!token || token.trim() === '') {
-    if (import.meta.env.PROD) {
-      throw new N8nClientErrorClass(
-        'VITE_N8N_AUTH_TOKEN environment variable is required in production. ' +
-        'Set it in .env.production or as a build environment variable.'
-      )
-    }
+    // Don't throw error - return empty string and let the client handle it gracefully
+    // The error will be thrown only when actually trying to send a request
     if (import.meta.env.DEV) {
       // eslint-disable-next-line no-console
       console.warn('VITE_N8N_AUTH_TOKEN not set. Contact form authentication will fail.')
+    } else {
+      // In production, log a warning but don't throw (allows app to load)
+      // eslint-disable-next-line no-console
+      console.warn('VITE_N8N_AUTH_TOKEN not set. Contact form submissions will fail.')
     }
     return ''
   }
@@ -122,11 +122,14 @@ export class N8nClient {
       ? config.webhookUrl 
       : getWebhookUrl()
     
-    if (!webhookUrl || webhookUrl.trim() === '') {
+    // If webhookUrl is explicitly provided as empty string, throw (programming error)
+    // If it's missing from env, allow it (validation happens in sendToWebhook)
+    if (config?.webhookUrl !== undefined && (!webhookUrl || webhookUrl.trim() === '')) {
       throw new N8nClientErrorClass('Webhook URL is required')
     }
     
-    this.webhookUrl = webhookUrl
+    // Store webhook URL (may be empty if not configured, validation happens in sendToWebhook)
+    this.webhookUrl = webhookUrl || ''
     this.timeout = config?.timeout || DEFAULT_TIMEOUT
     
     // Get authentication configuration
@@ -200,6 +203,14 @@ export class N8nClient {
    * @throws {N8nClientError} If the request fails
    */
   async sendToWebhook(payload: ContactFormData): Promise<N8nWebhookResponse> {
+    // Validate webhook URL before attempting to send
+    if (!this.webhookUrl || this.webhookUrl.trim() === '') {
+      throw new N8nClientErrorClass(
+        'VITE_N8N_WEBHOOK_URL environment variable is required. ' +
+        'Set it in .env.production or as a build environment variable.'
+      )
+    }
+    
     // Add timestamp if not provided
     const dataWithTimestamp: ContactFormData = {
       ...payload,
