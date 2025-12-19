@@ -1,7 +1,29 @@
 import { defineConfig } from 'vitest/config'
+import { loadEnv } from 'vite'
 import { resolve } from 'path'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+  // For test mode, use test defaults unless explicitly set via process.env
+  // This ensures tests use predictable values by default
+  const isTestMode = mode === 'test' || process.env.NODE_ENV === 'test'
+  
+  // Get test environment variables, prioritizing test defaults for test mode
+  const testWebhookUrl = isTestMode 
+    ? (process.env.VITE_N8N_WEBHOOK_URL || 'https://test-n8n.example.com/webhook/test')
+    : (process.env.VITE_N8N_WEBHOOK_URL || loadEnv(mode, process.cwd(), '').VITE_N8N_WEBHOOK_URL || 'https://test-n8n.example.com/webhook/test')
+  
+  const testAuthToken = isTestMode
+    ? (process.env.VITE_N8N_AUTH_TOKEN || 'test-auth-token')
+    : (process.env.VITE_N8N_AUTH_TOKEN || loadEnv(mode, process.cwd(), '').VITE_N8N_AUTH_TOKEN || 'test-auth-token')
+  
+  return {
+    define: {
+      'import.meta.env.VITE_N8N_WEBHOOK_URL': JSON.stringify(testWebhookUrl),
+      'import.meta.env.VITE_N8N_AUTH_TOKEN': JSON.stringify(testAuthToken),
+      'import.meta.env.DEV': 'true',
+      'import.meta.env.PROD': 'false',
+      'import.meta.env.MODE': JSON.stringify('test')
+    },
   test: {
     globals: true,
     environment: 'jsdom',
@@ -29,9 +51,10 @@ export default defineConfig({
       },
     },
   },
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, 'src'),
+    resolve: {
+      alias: {
+        '@': resolve(__dirname, 'src'),
+      },
     },
-  },
+  }
 })

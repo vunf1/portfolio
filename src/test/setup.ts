@@ -2,6 +2,9 @@
 import '@testing-library/jest-dom'
 import { vi } from 'vitest'
 
+// Note: import.meta.env is configured via vitest.config.ts define option
+// This ensures environment variables are available during tests
+
 // Mock IntersectionObserver
 global.IntersectionObserver = class IntersectionObserver {
   root = null

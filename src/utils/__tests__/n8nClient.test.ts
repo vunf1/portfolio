@@ -32,9 +32,10 @@ describe('N8nClient', () => {
     })
 
     it('should use default webhook URL from environment variable', () => {
-      // Note: We can't easily mock import.meta.env in Vitest, so we test the fallback
+      // With environment variables set in vitest.config.ts, the client should work
       const client = new N8nClient()
       expect(client.getWebhookUrl()).toBeTruthy()
+      expect(client.getWebhookUrl()).toBe('https://test-n8n.example.com/webhook/test')
     })
 
     it('should throw error if webhook URL is empty', () => {
@@ -414,8 +415,9 @@ describe('N8nClient', () => {
       await client.sendToWebhook(mockPayload)
 
       const callArgs = (global.fetch as any).mock.calls[0]
+      // With environment variables set in vitest.config.ts, the auth token should be included
       expect(callArgs[1].headers).toHaveProperty('X-API-Key')
-      expect(callArgs[1].headers['X-API-Key']).toBeTruthy()
+      expect(callArgs[1].headers['X-API-Key']).toBe('test-auth-token')
     })
 
     it('should use Bearer auth method when specified (n8n Bearer Auth)', async () => {
