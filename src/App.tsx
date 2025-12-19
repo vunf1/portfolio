@@ -37,27 +37,41 @@ export function App() {
 
   // Initialize SEO when portfolio data is available
   useEffect(() => {
-    if (portfolioData && portfolioData.personal && portfolioData.meta && portfolioData.social) {
-      initializeSEO(
-        currentLanguage,
-        portfolioData.personal,
-        portfolioData.meta.seo,
-        portfolioData.social,
-        portfolioData
-      )
+    if (portfolioData && portfolioData.personal && portfolioData.meta && portfolioData.meta.seo && portfolioData.social) {
+      try {
+        initializeSEO(
+          currentLanguage,
+          portfolioData.personal,
+          portfolioData.meta.seo,
+          portfolioData.social,
+          portfolioData
+        )
+      } catch (error) {
+        if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
+          console.error('Failed to initialize SEO:', error)
+        }
+      }
     }
   }, [portfolioData, currentLanguage])
 
   // Update SEO when language changes
   useEffect(() => {
-    if (portfolioData && portfolioData.personal && portfolioData.meta && portfolioData.social) {
-      updateSEOOnLanguageChange(
-        currentLanguage,
-        portfolioData.personal,
-        portfolioData.meta.seo,
-        portfolioData.social,
-        portfolioData
-      )
+    if (portfolioData && portfolioData.personal && portfolioData.meta && portfolioData.meta.seo && portfolioData.social) {
+      try {
+        updateSEOOnLanguageChange(
+          currentLanguage,
+          portfolioData.personal,
+          portfolioData.meta.seo,
+          portfolioData.social,
+          portfolioData
+        )
+      } catch (error) {
+        if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
+          console.error('Failed to update SEO on language change:', error)
+        }
+      }
     }
   }, [currentLanguage, portfolioData])
 
