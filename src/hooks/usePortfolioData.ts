@@ -208,11 +208,19 @@ export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): Use
       const missingCritical = CRITICAL_SECTIONS.filter(section => !(cachedData?.has(section)))
 
       if (missingCritical.length === 0 && cachedData) {
-        setPortfolioData(createCriticalData(cachedData))
-        markSectionsLoaded(currentLanguage, CRITICAL_SECTIONS)
-        setLoading(false)
-        criticalPrefetched[currentLanguage] = true
-        return
+        const criticalData = createCriticalData(cachedData)
+        
+        // Validate critical data before setting it
+        if (!criticalData || !criticalData.personal || !criticalData.meta || !criticalData.social) {
+          // If cached data is invalid, reload it
+          setLoading(true)
+        } else {
+          setPortfolioData(criticalData)
+          markSectionsLoaded(currentLanguage, CRITICAL_SECTIONS)
+          setLoading(false)
+          criticalPrefetched[currentLanguage] = true
+          return
+        }
       }
 
       setLoading(true)
@@ -223,7 +231,31 @@ export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): Use
           return
         }
 
-        setPortfolioData(createCriticalData(languageData))
+        const criticalData = createCriticalData(languageData)
+        
+        // Validate critical data before setting it
+        if (!criticalData || !criticalData.personal || !criticalData.meta || !criticalData.social) {
+          const missingFields = []
+          if (!criticalData) {
+            missingFields.push('criticalData')
+          }
+          if (!criticalData?.personal) {
+            missingFields.push('personal')
+          }
+          if (!criticalData?.meta) {
+            missingFields.push('meta')
+          }
+          if (!criticalData?.social) {
+            missingFields.push('social')
+          }
+          
+          const errorMsg = `Missing critical portfolio data fields: ${missingFields.join(', ')}`
+          // Always log errors for debugging
+          console.error('Portfolio data validation failed:', errorMsg, criticalData)
+          throw new Error(errorMsg)
+        }
+        
+        setPortfolioData(criticalData)
         markSectionsLoaded(currentLanguage, CRITICAL_SECTIONS)
         criticalPrefetched[currentLanguage] = true
       } catch (err) {
@@ -233,8 +265,10 @@ export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): Use
 
         const normalizedError = err instanceof Error ? err : new Error('Unknown error occurred')
         setError(normalizedError)
-        if (import.meta.env.DEV) {
-          console.error('Error loading portfolio data:', normalizedError)
+        // Always log errors for debugging (even in production)
+        console.error('Error loading portfolio data:', normalizedError)
+        if (normalizedError.stack) {
+          console.error('Error stack:', normalizedError.stack)
         }
       } finally {
         if (!cancelled) {

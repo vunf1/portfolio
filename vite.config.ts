@@ -42,8 +42,9 @@ export default defineConfig(({ mode }) => {
   console.log('[Vite Config] Mode:', mode)
   
   const isProductionLike = mode === 'production' || mode === 'staging'
+  // Keep console.error and console.warn for troubleshooting, but remove verbose logs
   const pureConsoleFunctions = isProductionLike
-    ? ['console.log', 'console.info', 'console.debug', 'console.warn']
+    ? ['console.log', 'console.info', 'console.debug']
     : []
 
   return {
@@ -62,9 +63,10 @@ export default defineConfig(({ mode }) => {
       minify: 'terser',
       terserOptions: {
         compress: {
-          drop_console: isProductionLike,
+          // Keep console.error and console.warn for troubleshooting in production
+          drop_console: false, // Don't drop all console statements
           drop_debugger: true,
-          pure_funcs: pureConsoleFunctions,
+          pure_funcs: pureConsoleFunctions, // Only remove log/info/debug, keep error/warn
           passes: 1,
         },
       mangle: {
