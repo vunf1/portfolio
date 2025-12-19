@@ -162,6 +162,16 @@ jobs:
           echo "🔍 Script tags in index.html:"
           grep -i "script.*src" dist/index.html || echo "No script tags found!"
           echo ""
+          echo "⚠️  CRITICAL: Verifying index.html does NOT contain development script..."
+          if grep -q "src/main.tsx" dist/index.html; then
+            echo "❌ ERROR: dist/index.html contains development script tag (src/main.tsx)!"
+            echo "   This means the build process failed or the wrong file was used."
+            echo "   The built index.html should reference /assets/main-*.js, not src/main.tsx"
+            exit 1
+          else
+            echo "✅ Verified: index.html does NOT contain development script tag"
+          fi
+          echo ""
           echo "📊 Dist folder size:"
           du -sh dist/
           echo ""
