@@ -140,12 +140,32 @@ describe('N8nClient Integration Tests', () => {
     // This test verifies the header is sent by checking the request
     // We'll intercept fetch to verify headers
     let capturedHeaders: Record<string, string> | null = null
+    let capturedUrl: string | null = null
 
     const fetchInterceptor = async (url: RequestInfo | URL, init?: RequestInit) => {
-      if (typeof url === 'string' && url.includes('n8n.jmsit.cloud')) {
-        capturedHeaders = (init?.headers as Record<string, string>) || {}
+      const urlString = typeof url === 'string' ? url : url.toString()
+      // Capture headers for any n8n webhook URL
+      if (urlString.includes('n8n') || urlString.includes('webhook')) {
+        capturedUrl = urlString
+        // Headers can be Headers object or plain object
+        if (init?.headers) {
+          if (init.headers instanceof Headers) {
+            capturedHeaders = {}
+            init.headers.forEach((value, key) => {
+              capturedHeaders![key] = value
+            })
+          } else {
+            capturedHeaders = (init.headers as Record<string, string>) || {}
+          }
+        }
       }
-      return realFetch(url, init)
+      // Always call real fetch, even if it fails
+      try {
+        return await realFetch(url, init)
+      } catch (error) {
+        // Network errors are expected in CI, but we still captured headers
+        throw error
+      }
     }
 
     global.fetch = fetchInterceptor as typeof fetch
@@ -161,15 +181,17 @@ describe('N8nClient Integration Tests', () => {
     try {
       await client.sendToWebhook(testPayload)
     } catch (error) {
-      // We expect this might fail due to CORS or server config
-      // But we can still verify headers were sent
+      // We expect this might fail due to CORS, network, or server config
+      // But we can still verify headers were captured before the request
     }
 
     // Restore real fetch
     global.fetch = realFetch
 
-    // Verify X-API-Key header was included
+    // Verify headers were captured (even if request failed)
+    // The important thing is that headers were set before the request
     expect(capturedHeaders).not.toBeNull()
+    expect(capturedUrl).not.toBeNull()
     if (capturedHeaders) {
       expect(capturedHeaders['X-API-Key']).toBe(authToken)
       expect(capturedHeaders['Content-Type']).toBe('application/json')

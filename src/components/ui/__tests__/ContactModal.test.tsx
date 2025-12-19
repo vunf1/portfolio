@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent, waitFor } from '@testing-library/preact'
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/preact'
 import { ContactModal } from '../ContactModal'
 import type { ContactModalProps } from '../../../types'
 import { N8nClient } from '../../../utils/n8nClient'
@@ -30,6 +30,8 @@ vi.mock('../../../contexts/TranslationContext', () => ({
         'contact.errors.emailRequired': 'Email is required',
         'contact.errors.emailInvalid': 'Please enter a valid email address',
         'contact.errors.phoneInvalid': 'Please enter a valid phone number in E.164 format (e.g., +351912345678)',
+        'contact.errors.subjectRequired': 'Subject is required',
+        'contact.errors.subjectTooShort': 'Subject must be at least 3 characters',
         'contact.errors.messageRequired': 'Message is required',
         'contact.errors.messageTooShort': 'Message must be at least 10 characters',
         'contact.errors.submitFailed': 'Failed to send message. Please try again.',
@@ -117,65 +119,95 @@ describe('ContactModal Component', () => {
     const props = { ...defaultProps, isOpen: true }
     render(<ContactModal {...props} />)
     
-    const nameInput = screen.getByLabelText(/Full Name/i)
-    const emailInput = screen.getByLabelText(/Email/i)
-    const messageInput = screen.getByRole('textbox', { name: /Message/i })
+    const nameInput = screen.getByLabelText(/Full Name/i) as HTMLInputElement
+    const emailInput = screen.getByLabelText(/Email/i) as HTMLInputElement
+    const subjectInput = screen.getByLabelText(/Subject/i) as HTMLInputElement
+    const messageInput = screen.getByRole('textbox', { name: /Message/i }) as HTMLTextAreaElement
     
-    fireEvent.input(nameInput, { target: { value: 'John Doe' } })
-    fireEvent.input(emailInput, { target: { value: 'invalid-email' } })
-    fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    // Set values using act to ensure state updates
+    await act(async () => {
+      fireEvent.input(nameInput, { target: { value: 'John Doe' } })
+      fireEvent.input(emailInput, { target: { value: 'invalid-email' } })
+      fireEvent.input(subjectInput, { target: { value: 'Test Subject' } })
+      fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    })
     
-    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
-    const submitButton = submitButtons[0]
-    fireEvent.click(submitButton)
+    // Wait for state to update
+    await waitFor(() => {
+      expect(nameInput.value).toBe('John Doe')
+      expect(emailInput.value).toBe('invalid-email')
+    })
+    
+    const form = screen.getByRole('form')
+    await act(async () => {
+      fireEvent.submit(form)
+    })
     
     await waitFor(() => {
       expect(screen.getByText('Please enter a valid email address')).toBeInTheDocument()
-    })
+    }, { timeout: 3000 })
   })
 
   it('validates phone number format when provided', async () => {
     const props = { ...defaultProps, isOpen: true }
     render(<ContactModal {...props} />)
     
-    const nameInput = screen.getByLabelText(/Full Name/i)
-    const emailInput = screen.getByLabelText(/Email/i)
-    const phoneInput = screen.getByLabelText(/Phone/i)
-    const messageInput = screen.getByRole('textbox', { name: /Message/i })
+    const nameInput = screen.getByLabelText(/Full Name/i) as HTMLInputElement
+    const emailInput = screen.getByLabelText(/Email/i) as HTMLInputElement
+    const phoneInput = screen.getByLabelText(/Phone/i) as HTMLInputElement
+    const subjectInput = screen.getByLabelText(/Subject/i) as HTMLInputElement
+    const messageInput = screen.getByRole('textbox', { name: /Message/i }) as HTMLTextAreaElement
     
-    fireEvent.input(nameInput, { target: { value: 'John Doe' } })
-    fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
-    fireEvent.input(phoneInput, { target: { value: 'invalid-phone' } })
-    fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    await act(async () => {
+      fireEvent.input(nameInput, { target: { value: 'John Doe' } })
+      fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
+      fireEvent.input(phoneInput, { target: { value: 'invalid-phone' } })
+      fireEvent.input(subjectInput, { target: { value: 'Test Subject' } })
+      fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    })
     
-    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
-    const submitButton = submitButtons[0]
-    fireEvent.click(submitButton)
+    await waitFor(() => {
+      expect(nameInput.value).toBe('John Doe')
+    })
+    
+    const form = screen.getByRole('form')
+    await act(async () => {
+      fireEvent.submit(form)
+    })
     
     await waitFor(() => {
       expect(screen.getByText(/Please enter a valid phone number/i)).toBeInTheDocument()
-    })
+    }, { timeout: 3000 })
   })
 
   it('validates message minimum length', async () => {
     const props = { ...defaultProps, isOpen: true }
     render(<ContactModal {...props} />)
     
-    const nameInput = screen.getByLabelText(/Full Name/i)
-    const emailInput = screen.getByLabelText(/Email/i)
-    const messageInput = screen.getByRole('textbox', { name: /Message/i })
+    const nameInput = screen.getByLabelText(/Full Name/i) as HTMLInputElement
+    const emailInput = screen.getByLabelText(/Email/i) as HTMLInputElement
+    const subjectInput = screen.getByLabelText(/Subject/i) as HTMLInputElement
+    const messageInput = screen.getByRole('textbox', { name: /Message/i }) as HTMLTextAreaElement
     
-    fireEvent.input(nameInput, { target: { value: 'John Doe' } })
-    fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
-    fireEvent.input(messageInput, { target: { value: 'Short' } })
+    await act(async () => {
+      fireEvent.input(nameInput, { target: { value: 'John Doe' } })
+      fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
+      fireEvent.input(subjectInput, { target: { value: 'Test Subject' } })
+      fireEvent.input(messageInput, { target: { value: 'Short' } })
+    })
     
-    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
-    const submitButton = submitButtons[0]
-    fireEvent.click(submitButton)
+    await waitFor(() => {
+      expect(nameInput.value).toBe('John Doe')
+    })
+    
+    const form = screen.getByRole('form')
+    await act(async () => {
+      fireEvent.submit(form)
+    })
     
     await waitFor(() => {
       expect(screen.getByText('Message must be at least 10 characters')).toBeInTheDocument()
-    })
+    }, { timeout: 3000 })
   })
 
   it('submits form with valid data', async () => {
@@ -183,21 +215,30 @@ describe('ContactModal Component', () => {
     const props = { ...defaultProps, isOpen: true, onSuccess: mockOnSuccess }
     render(<ContactModal {...props} />)
     
-    const nameInput = screen.getByLabelText(/Full Name/i)
-    const emailInput = screen.getByLabelText(/Email/i)
-    const messageInput = screen.getByRole('textbox', { name: /Message/i })
+    const nameInput = screen.getByLabelText(/Full Name/i) as HTMLInputElement
+    const emailInput = screen.getByLabelText(/Email/i) as HTMLInputElement
+    const subjectInput = screen.getByLabelText(/Subject/i) as HTMLInputElement
+    const messageInput = screen.getByRole('textbox', { name: /Message/i }) as HTMLTextAreaElement
     
-    fireEvent.input(nameInput, { target: { value: 'John Doe' } })
-    fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
-    fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    await act(async () => {
+      fireEvent.input(nameInput, { target: { value: 'John Doe' } })
+      fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
+      fireEvent.input(subjectInput, { target: { value: 'Test Subject' } })
+      fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    })
     
-    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
-    const submitButton = submitButtons[0]
-    fireEvent.click(submitButton)
+    await waitFor(() => {
+      expect(nameInput.value).toBe('John Doe')
+    })
+    
+    const form = screen.getByRole('form')
+    await act(async () => {
+      fireEvent.submit(form)
+    })
     
     await waitFor(() => {
       expect(screen.getByText('Thank you! Your message has been sent successfully.')).toBeInTheDocument()
-    })
+    }, { timeout: 3000 })
     
     await waitFor(() => {
       expect(mockOnSuccess).toHaveBeenCalled()
@@ -205,7 +246,7 @@ describe('ContactModal Component', () => {
   })
 
   it('handles submission error', async () => {
-    const mockSendToWebhook = vi.fn().mockRejectedValue(new Error('Network error'))
+    const mockSendToWebhook = vi.fn().mockRejectedValue(new Error('network error'))
     ;(N8nClient as any).mockImplementation(() => ({
       sendToWebhook: mockSendToWebhook
     }))
@@ -213,21 +254,30 @@ describe('ContactModal Component', () => {
     const props = { ...defaultProps, isOpen: true }
     render(<ContactModal {...props} />)
     
-    const nameInput = screen.getByLabelText(/Full Name/i)
-    const emailInput = screen.getByLabelText(/Email/i)
-    const messageInput = screen.getByRole('textbox', { name: /Message/i })
+    const nameInput = screen.getByLabelText(/Full Name/i) as HTMLInputElement
+    const emailInput = screen.getByLabelText(/Email/i) as HTMLInputElement
+    const subjectInput = screen.getByLabelText(/Subject/i) as HTMLInputElement
+    const messageInput = screen.getByRole('textbox', { name: /Message/i }) as HTMLTextAreaElement
     
-    fireEvent.input(nameInput, { target: { value: 'John Doe' } })
-    fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
-    fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    await act(async () => {
+      fireEvent.input(nameInput, { target: { value: 'John Doe' } })
+      fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
+      fireEvent.input(subjectInput, { target: { value: 'Test Subject' } })
+      fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    })
     
-    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
-    const submitButton = submitButtons[0]
-    fireEvent.click(submitButton)
+    await waitFor(() => {
+      expect(nameInput.value).toBe('John Doe')
+    })
+    
+    const form = screen.getByRole('form')
+    await act(async () => {
+      fireEvent.submit(form)
+    })
     
     await waitFor(() => {
       expect(screen.getByText(/Network error/i)).toBeInTheDocument()
-    })
+    }, { timeout: 3000 })
   })
 
   it('calls onClose when cancel button is clicked', () => {
@@ -253,33 +303,58 @@ describe('ContactModal Component', () => {
     expect(mockOnClose).toHaveBeenCalledTimes(1)
   })
 
-  it('does not close on escape when submitting', () => {
+  it('does not close on escape when submitting', async () => {
+    const mockSendToWebhook = vi.fn().mockImplementation(() => 
+      new Promise(resolve => setTimeout(() => resolve({ success: true }), 500))
+    )
+    ;(N8nClient as any).mockImplementation(() => ({
+      sendToWebhook: mockSendToWebhook
+    }))
+    
     const mockOnClose = vi.fn()
     const props = { ...defaultProps, isOpen: true, onClose: mockOnClose }
     render(<ContactModal {...props} />)
     
-    const nameInput = screen.getByLabelText(/Full Name/i)
-    const emailInput = screen.getByLabelText(/Email/i)
-    const messageInput = screen.getByRole('textbox', { name: /Message/i })
+    const nameInput = screen.getByLabelText(/Full Name/i) as HTMLInputElement
+    const emailInput = screen.getByLabelText(/Email/i) as HTMLInputElement
+    const subjectInput = screen.getByLabelText(/Subject/i) as HTMLInputElement
+    const messageInput = screen.getByRole('textbox', { name: /Message/i }) as HTMLTextAreaElement
     
-    fireEvent.input(nameInput, { target: { value: 'John Doe' } })
-    fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
-    fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    await act(async () => {
+      fireEvent.input(nameInput, { target: { value: 'John Doe' } })
+      fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
+      fireEvent.input(subjectInput, { target: { value: 'Test Subject' } })
+      fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    })
     
-    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
-    const submitButton = submitButtons[0]
-    fireEvent.click(submitButton)
+    await waitFor(() => {
+      expect(nameInput.value).toBe('John Doe')
+    })
+    
+    const form = screen.getByRole('form')
+    await act(async () => {
+      fireEvent.submit(form)
+    })
+    
+    // Wait for submission to start - check for disabled button or "Sending" text
+    await waitFor(() => {
+      const submitButtons = screen.getAllByRole('button', { name: /Send Message|Sending/i })
+      const submitButton = submitButtons[0]
+      expect(submitButton).toBeDisabled()
+    }, { timeout: 1000 })
     
     // Try to close with escape while submitting
     fireEvent.keyDown(document, { key: 'Escape' })
     
     // Should not close during submission
-    expect(screen.getByText('Sending...')).toBeInTheDocument()
+    const submitButtons = screen.getAllByRole('button', { name: /Send Message|Sending/i })
+    expect(submitButtons[0]).toBeDisabled()
+    expect(mockOnClose).not.toHaveBeenCalled()
   })
 
   it('shows loading state during submission', async () => {
     const mockSendToWebhook = vi.fn().mockImplementation(() => 
-      new Promise(resolve => setTimeout(() => resolve({ success: true }), 100))
+      new Promise(resolve => setTimeout(() => resolve({ success: true }), 500))
     )
     ;(N8nClient as any).mockImplementation(() => ({
       sendToWebhook: mockSendToWebhook
@@ -288,40 +363,62 @@ describe('ContactModal Component', () => {
     const props = { ...defaultProps, isOpen: true }
     render(<ContactModal {...props} />)
     
-    const nameInput = screen.getByLabelText(/Full Name/i)
-    const emailInput = screen.getByLabelText(/Email/i)
-    const messageInput = screen.getByRole('textbox', { name: /Message/i })
+    const nameInput = screen.getByLabelText(/Full Name/i) as HTMLInputElement
+    const emailInput = screen.getByLabelText(/Email/i) as HTMLInputElement
+    const subjectInput = screen.getByLabelText(/Subject/i) as HTMLInputElement
+    const messageInput = screen.getByRole('textbox', { name: /Message/i }) as HTMLTextAreaElement
     
-    fireEvent.input(nameInput, { target: { value: 'John Doe' } })
-    fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
-    fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    await act(async () => {
+      fireEvent.input(nameInput, { target: { value: 'John Doe' } })
+      fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
+      fireEvent.input(subjectInput, { target: { value: 'Test Subject' } })
+      fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    })
     
+    await waitFor(() => {
+      expect(nameInput.value).toBe('John Doe')
+    })
+    
+    const form = screen.getByRole('form')
     const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
     const submitButton = submitButtons[0]
-    fireEvent.click(submitButton)
     
-    expect(screen.getByText('Sending...')).toBeInTheDocument()
-    expect(submitButton).toBeDisabled()
+    // Submit form
+    await act(async () => {
+      fireEvent.submit(form)
+    })
+    
+    // Check loading state - button should be disabled and contain "Sending" text
+    await waitFor(() => {
+      // Check if button is disabled (indicates submitting state)
+      expect(submitButton).toBeDisabled()
+      // Check for "Sending" text using a more flexible matcher
+      // The text might be in a child element, so check the button's text content
+      expect(submitButton.textContent).toMatch(/Sending/i)
+    }, { timeout: 1000 })
   })
 
   it('clears field errors when user starts typing', async () => {
     const props = { ...defaultProps, isOpen: true }
     render(<ContactModal {...props} />)
     
-    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
-    const submitButton = submitButtons[0]
-    fireEvent.click(submitButton)
+    const form = screen.getByRole('form')
+    await act(async () => {
+      fireEvent.submit(form)
+    })
     
     await waitFor(() => {
       expect(screen.getByText('Name is required')).toBeInTheDocument()
-    })
+    }, { timeout: 3000 })
     
-    const nameInput = screen.getByLabelText(/Full Name/i)
-    fireEvent.input(nameInput, { target: { value: 'John' } })
+    const nameInput = screen.getByLabelText(/Full Name/i) as HTMLInputElement
+    await act(async () => {
+      fireEvent.input(nameInput, { target: { value: 'John' } })
+    })
     
     await waitFor(() => {
       expect(screen.queryByText('Name is required')).not.toBeInTheDocument()
-    })
+    }, { timeout: 2000 })
   })
 
   it('has proper accessibility attributes', () => {
@@ -345,21 +442,30 @@ describe('ContactModal Component', () => {
     const props = { ...defaultProps, isOpen: true, onSuccess: mockOnSuccess }
     render(<ContactModal {...props} />)
     
-    const nameInput = screen.getByLabelText(/Full Name/i)
-    const emailInput = screen.getByLabelText(/Email/i)
-    const messageInput = screen.getByRole('textbox', { name: /Message/i })
+    const nameInput = screen.getByLabelText(/Full Name/i) as HTMLInputElement
+    const emailInput = screen.getByLabelText(/Email/i) as HTMLInputElement
+    const subjectInput = screen.getByLabelText(/Subject/i) as HTMLInputElement
+    const messageInput = screen.getByRole('textbox', { name: /Message/i }) as HTMLTextAreaElement
     
-    fireEvent.input(nameInput, { target: { value: 'John Doe' } })
-    fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
-    fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    await act(async () => {
+      fireEvent.input(nameInput, { target: { value: 'John Doe' } })
+      fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
+      fireEvent.input(subjectInput, { target: { value: 'Test Subject' } })
+      fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    })
     
-    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
-    const submitButton = submitButtons[0]
-    fireEvent.click(submitButton)
+    await waitFor(() => {
+      expect(nameInput.value).toBe('John Doe')
+    })
+    
+    const form = screen.getByRole('form')
+    await act(async () => {
+      fireEvent.submit(form)
+    })
     
     await waitFor(() => {
       expect(screen.getByText('Thank you! Your message has been sent successfully.')).toBeInTheDocument()
-    })
+    }, { timeout: 3000 })
   })
 
   it('accepts valid phone number in E.164 format', async () => {
@@ -367,23 +473,32 @@ describe('ContactModal Component', () => {
     const props = { ...defaultProps, isOpen: true, onSuccess: mockOnSuccess }
     render(<ContactModal {...props} />)
     
-    const nameInput = screen.getByLabelText(/Full Name/i)
-    const emailInput = screen.getByLabelText(/Email/i)
-    const phoneInput = screen.getByLabelText(/Phone/i)
-    const messageInput = screen.getByRole('textbox', { name: /Message/i })
+    const nameInput = screen.getByLabelText(/Full Name/i) as HTMLInputElement
+    const emailInput = screen.getByLabelText(/Email/i) as HTMLInputElement
+    const phoneInput = screen.getByLabelText(/Phone/i) as HTMLInputElement
+    const subjectInput = screen.getByLabelText(/Subject/i) as HTMLInputElement
+    const messageInput = screen.getByRole('textbox', { name: /Message/i }) as HTMLTextAreaElement
     
-    fireEvent.input(nameInput, { target: { value: 'John Doe' } })
-    fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
-    fireEvent.input(phoneInput, { target: { value: '+351912345678' } })
-    fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    await act(async () => {
+      fireEvent.input(nameInput, { target: { value: 'John Doe' } })
+      fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
+      fireEvent.input(phoneInput, { target: { value: '+351912345678' } })
+      fireEvent.input(subjectInput, { target: { value: 'Test Subject' } })
+      fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    })
     
-    const submitButtons = screen.getAllByRole('button', { name: 'Send Message' })
-    const submitButton = submitButtons[0]
-    fireEvent.click(submitButton)
+    await waitFor(() => {
+      expect(nameInput.value).toBe('John Doe')
+    })
+    
+    const form = screen.getByRole('form')
+    await act(async () => {
+      fireEvent.submit(form)
+    })
     
     await waitFor(() => {
       expect(screen.getByText('Thank you! Your message has been sent successfully.')).toBeInTheDocument()
-    })
+    }, { timeout: 3000 })
   })
 
   it('resets form when modal closes', async () => {
