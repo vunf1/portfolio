@@ -1,9 +1,9 @@
 # João Maia - Enterprise Professional Website
 
 <!-- Build Status -->
-[![CI/CD Pipeline](https://github.com/vunf1/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/vunf1/portfolio/actions/workflows/ci.yml)
-[![Quality Assurance](https://github.com/vunf1/portfolio/actions/workflows/quality.yml/badge.svg)](https://github.com/vunf1/portfolio/actions/workflows/quality.yml)
-[![Security Audit](https://github.com/vunf1/portfolio/actions/workflows/security.yml/badge.svg)](https://github.com/vunf1/portfolio/actions/workflows/security.yml)
+[![CI/CD Pipeline](https://img.shields.io/github/actions/workflow/status/vunf1/portfolio/ci.yml?branch=main&label=CI%2FCD%20Pipeline&logo=github-actions&logoColor=white)](https://github.com/vunf1/portfolio/actions/workflows/ci.yml)
+[![Quality Assurance](https://img.shields.io/github/actions/workflow/status/vunf1/portfolio/quality.yml?branch=main&label=Quality%20Assurance&logo=github-actions&logoColor=white)](https://github.com/vunf1/portfolio/actions/workflows/quality.yml)
+[![Security Audit](https://img.shields.io/github/actions/workflow/status/vunf1/portfolio/security.yml?branch=main&label=Security%20Audit&logo=github-actions&logoColor=white)](https://github.com/vunf1/portfolio/actions/workflows/security.yml)
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen?logo=github&logoColor=white)](https://vunf1.github.io/portfolio/)
 
 <!-- Tech Stack -->
