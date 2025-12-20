@@ -25,13 +25,17 @@ const LOCALE_MAP: Record<SupportedLocale, string> = {
 
 /**
  * Get base URL from environment or use default
+ * Normalizes to non-www version to ensure consistent canonical URLs
  */
 function getBaseUrl(): string {
   if (typeof window !== 'undefined') {
-    // In browser, use current origin
-    return window.location.origin
+    // Normalize to non-www (remove www if present)
+    const origin = window.location.origin
+    // Always use non-www version for consistency
+    const normalized = origin.replace(/^https?:\/\/(www\.)?/, 'https://')
+    return normalized
   }
-  // Fallback to default
+  // Fallback to default (non-www)
   return import.meta.env.VITE_APP_URL || DEFAULT_BASE_URL
 }
 
@@ -127,17 +131,17 @@ export function updateSEOMetaTags(
   setMetaTag('og:url', baseUrl, true)
   setMetaTag('og:image', ogImage, true)
   setMetaTag('og:locale', LOCALE_MAP[locale], true)
-  setMetaTag('og:site_name', `${BRAND_NAME} - ${personal?.name || ''} Portfolio`, true)
+  setMetaTag('og:site_name', meta?.title || BRAND_NAME, true)
   setMetaTag('og:image:width', '1200', true)
   setMetaTag('og:image:height', '630', true)
-  setMetaTag('og:image:alt', `${BRAND_NAME} - ${personal?.name || ''} Portfolio | Full-Stack Developer & Network Engineer`, true)
+  setMetaTag('og:image:alt', meta?.title || `${BRAND_NAME} - Full-Stack Engineer & IT Solutions Specialist`, true)
 
   // Twitter Card tags
   setMetaTag('twitter:card', 'summary_large_image')
   setMetaTag('twitter:title', meta?.title || '')
   setMetaTag('twitter:description', meta?.description || '')
   setMetaTag('twitter:image', ogImage)
-  setMetaTag('twitter:image:alt', `${BRAND_NAME} - ${personal?.name || ''} Portfolio | Full-Stack Developer & Network Engineer`)
+  setMetaTag('twitter:image:alt', meta?.title || `${BRAND_NAME} - Full-Stack Engineer & IT Solutions Specialist`)
 }
 
 /**
@@ -239,14 +243,15 @@ function createProfessionalServiceSchema(
  */
 function createWebSiteSchema(
   _locale: SupportedLocale,
-  personal: Personal
+  personal: Personal,
+  metaTitle?: string
 ): WebSiteSchema {
   const baseUrl = getBaseUrl()
 
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: `${BRAND_NAME} - ${personal?.name || ''} Portfolio`,
+    name: metaTitle || `${BRAND_NAME} - Full-Stack Engineer & IT Solutions Specialist`,
     alternateName: 'JMSIT.cloud',
     url: baseUrl,
     author: {
@@ -337,7 +342,8 @@ export function updateStructuredData(
   locale: SupportedLocale,
   personal: Personal,
   social: Social[],
-  portfolioData?: Partial<PortfolioData>
+  portfolioData?: Partial<PortfolioData>,
+  metaTitle?: string
 ): void {
   // Extract skill names from all technical skill groups
   const skills = portfolioData?.skills?.technical
@@ -347,7 +353,7 @@ export function updateStructuredData(
   const structuredData: StructuredData = {
     person: createPersonSchema(locale, personal, social, skills),
     professionalService: createProfessionalServiceSchema(locale, personal),
-    website: createWebSiteSchema(locale, personal),
+    website: createWebSiteSchema(locale, personal, metaTitle),
     organization: createOrganizationSchema(personal)
   }
 
@@ -370,9 +376,17 @@ export function updateHreflangTags(baseUrl: string): void {
 
 /**
  * Update canonical URL
+ * Always uses base URL (no query params) for all languages.
+ * hreflang tags handle language versions, not canonical.
  */
-export function updateCanonicalUrl(baseUrl: string, locale: SupportedLocale): void {
-  const canonicalUrl = locale === 'en' ? baseUrl : getLocaleUrl(baseUrl, locale)
+export function updateCanonicalUrl(baseUrl: string, _locale: SupportedLocale): void {
+  // Remove existing canonical tags first to avoid duplicates
+  const existingCanonical = document.querySelectorAll('link[rel="canonical"]')
+  existingCanonical.forEach(link => link.remove())
+  
+  // Always use base URL as canonical (no query params) for all languages
+  // hreflang tags handle language versions, not canonical
+  const canonicalUrl = baseUrl // Always base URL, regardless of locale
   setLinkTag('canonical', canonicalUrl)
 }
 
@@ -398,7 +412,7 @@ export function initializeSEO(
   updateSEOMetaTags(locale, personal, meta)
 
   // Update structured data
-  updateStructuredData(locale, personal, social, portfolioData)
+  updateStructuredData(locale, personal, social, portfolioData, meta.title)
 
   // Update hreflang tags
   updateHreflangTags(baseUrl)
@@ -429,7 +443,7 @@ export function updateSEOOnLanguageChange(
   updateSEOMetaTags(locale, personal, meta)
 
   // Update structured data with new locale
-  updateStructuredData(locale, personal, social, portfolioData)
+  updateStructuredData(locale, personal, social, portfolioData, meta.title)
 
   // Update hreflang tags (they remain the same, but ensure they're present)
   updateHreflangTags(baseUrl)
