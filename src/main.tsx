@@ -5,9 +5,20 @@ import './index.css'
 
 async function initializeApp() {
   try {
-    // Determine initial language - always default to English
+    // Parse language from URL parameter first, then localStorage, then default to English
+    const urlParams = new URLSearchParams(window.location.search)
+    const urlLang = urlParams.get('lang') as 'en' | 'pt-PT' | null
     const savedLang = localStorage.getItem('i18nextLng') as 'en' | 'pt-PT'
-    const initialLang = savedLang || 'en'
+    
+    // Priority: URL parameter > localStorage > default to English
+    const initialLang = (urlLang && (urlLang === 'en' || urlLang === 'pt-PT')) 
+      ? urlLang 
+      : (savedLang || 'en')
+    
+    // Save URL language to localStorage if it was provided
+    if (urlLang && (urlLang === 'en' || urlLang === 'pt-PT')) {
+      localStorage.setItem('i18nextLng', urlLang)
+    }
     
     // Set initial HTML lang attribute
     document.documentElement.setAttribute('lang', initialLang === 'pt-PT' ? 'pt-PT' : 'en')

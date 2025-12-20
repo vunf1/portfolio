@@ -48,11 +48,22 @@ export function useTranslation() {
     }
   }, [])
 
-  // Initialize language from localStorage with English as default
+  // Initialize language from URL parameter, then localStorage, then default to English
   useEffect(() => {
+    // Check URL parameter first
+    const urlParams = new URLSearchParams(window.location.search)
+    const urlLang = urlParams.get('lang') as 'en' | 'pt-PT' | null
     const savedLang = localStorage.getItem('i18nextLng') as 'en' | 'pt-PT'
-    // Always default to English, only use saved language if it exists
-    const initialLang = savedLang || 'en'
+    
+    // Priority: URL parameter > localStorage > default to English
+    const initialLang = (urlLang && (urlLang === 'en' || urlLang === 'pt-PT')) 
+      ? urlLang 
+      : (savedLang || 'en')
+    
+    // Save URL language to localStorage if it was provided
+    if (urlLang && (urlLang === 'en' || urlLang === 'pt-PT')) {
+      localStorage.setItem('i18nextLng', urlLang)
+    }
     
     if (initialLang !== globalCurrentLanguage) {
       globalCurrentLanguage = initialLang
