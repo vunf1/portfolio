@@ -1,4 +1,4 @@
-# João Maia - Enterprise Portfolio Website
+# João Maia - Enterprise Professional Website
 
 [![CI/CD](https://img.shields.io/badge/CI%2FCD-Ready-blue?logo=github-actions&logoColor=white)](https://github.com/vunf1/portfolio/actions)
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen)](https://vunf1.github.io/portfolio/)
@@ -10,7 +10,7 @@
 [![Security](https://img.shields.io/badge/Security-GDPR%20Compliant-green)](https://gdpr.eu/)
 [![Accessibility](https://img.shields.io/badge/Accessibility-WCAG%202.2%20AA-blue)](https://www.w3.org/TR/WCAG22/)
 
-A modern, enterprise-grade portfolio website built with **Vite + Preact + TypeScript**, featuring GDPR-compliant contact forms, bilingual support, and premium user experience optimized for Core Web Vitals and accessibility. The project implements a sophisticated single scroll container architecture, centralized state management, and comprehensive testing coverage.
+A modern, enterprise-grade professional website built with **Vite + Preact + TypeScript**, featuring GDPR-compliant contact forms, bilingual support, and premium user experience optimized for Core Web Vitals and accessibility. The project implements a sophisticated single scroll container architecture, centralized state management, and comprehensive testing coverage.
 
 ## 🚀 **Features**
 
@@ -206,7 +206,7 @@ VITE_N8N_AUTH_TOKEN=your-auth-token-here
 
 ### **n8n Webhook Integration**
 
-The portfolio includes a contact form that sends submissions to an n8n webhook for processing. The integration is handled by the `N8nClient` class located in `src/utils/n8nClient.ts`.
+The website includes a contact form that sends submissions to an n8n webhook for processing. The integration is handled by the `N8nClient` class located in `src/utils/n8nClient.ts`.
 
 **Configuration:**
 
@@ -305,7 +305,7 @@ npm test src/components/ui/__tests__/ContactModal.test.tsx
 - **Secrets Management**: Use proper secrets management for production deployments
 
 ### **Personal Data Handling**
-This portfolio contains personal information that should be customized for your own use:
+This website contains personal information that should be customized for your own use:
 
 **Files to Update with Your Information:**
 - `public/data/en/personal.json` - Personal details (name, email, etc.)
@@ -378,7 +378,7 @@ npm run test -- ScrollbarBehavior
 ```
 
 #### **Content Management**
-- **Portfolio Data**: Update JSON files in `public/data/`
+- **Website Data**: Update JSON files in `public/data/`
 - **Styling**: Modify CSS files in `src/css/`
 - **Components**: Edit TypeScript files in `src/components/`
 - **Validation**: Update form validation logic in `src/utils/validation.ts`
@@ -524,24 +524,74 @@ npm run performance:budget
 ## 🔍 **SEO & Accessibility**
 
 ### **SEO Optimization**
-- **Structured Data**: JSON-LD schema markup
-- **Meta Tags**: Comprehensive meta descriptions and Open Graph
-- **Semantic HTML**: Proper heading hierarchy and landmarks
-- **Performance**: Core Web Vitals optimization
+
+#### **Structured Data (JSON-LD)**
+The website implements comprehensive Schema.org structured data for optimal search engine understanding:
+
+- **Person Schema**: Complete person profile with brand information, job title, skills, social profiles, and location
+- **ProfessionalService Schema**: Service provider information with service types, area served, and provider details
+- **WebSite Schema**: Website metadata with author information and language support
+- **Organization Schema**: Organization details with legal name, founder, logo, and founding date
+
+All schemas are dynamically generated and updated based on the current language and website data, ensuring accurate representation in search results.
+
+#### **Dynamic Meta Tags**
+- **Title Tags**: Dynamically updated based on locale and meta configuration
+- **Meta Descriptions**: Comprehensive, keyword-rich descriptions for each language
+- **Keywords**: Extensive keyword lists covering technical skills, services, and expertise
+- **Open Graph Tags**: Complete OG implementation with title, description, image, locale, and site name
+- **Twitter Cards**: Summary large image cards with optimized titles and descriptions
+- **Author Tags**: Proper author attribution for content
+
+#### **Canonical URL Management**
+- **Consistent Canonicalization**: All pages (including language variants) canonicalize to the base URL (no query parameters)
+- **www/non-www Normalization**: Automatic normalization to non-www version for consistency
+- **Duplicate Prevention**: Removes existing canonical tags before creating new ones to prevent duplicates
+- **Language Handling**: hreflang tags handle language versions, not canonical URLs
+
+#### **Hreflang Implementation**
+- **Bilingual Support**: Proper hreflang tags for `en` and `pt-PT` locales
+- **x-default Tag**: Default language (English) specified for international SEO
+- **URL Structure**: Language variants use query parameters (`?lang=pt-PT`) while maintaining single canonical
+- **Dynamic Updates**: Hreflang tags updated automatically on language changes
+
+#### **URL Parameter Language Switching**
+- **Query Parameter Support**: `?lang=pt-PT` or `?lang=en` in URL switches language immediately
+- **Priority System**: URL parameter > localStorage > default to English
+- **Persistence**: Language preference saved to localStorage for future visits
+- **SEO Integration**: Works seamlessly with hreflang tags and canonical URLs
+
+#### **Sitemap & Robots.txt**
+- **Sitemap.xml**: Automatically updated with current date for search engine crawling
+- **Robots.txt**: Properly configured with sitemap location and crawl directives
+- **Search Engine Optimization**: Optimized for Google Search Console and other search engines
+
+#### **Dynamic SEO Updates**
+- **Language Change Detection**: SEO metadata updates automatically when language changes
+- **Real-time Updates**: Meta tags, structured data, and canonical URLs update without page reload
+- **Locale-Specific Content**: Each language has its own optimized meta tags and structured data
+
+#### **Performance & Technical SEO**
+- **Semantic HTML**: Proper heading hierarchy (H1, H2, H3) and semantic landmarks
+- **Core Web Vitals**: Optimized for LCP, FID, and CLS metrics
 - **Mobile-First**: Responsive design with mobile optimization
+- **Fast Loading**: <60KB initial JavaScript bundle with code splitting
 
 ### **Accessibility (WCAG 2.2 AA)**
-- **Keyboard Navigation**: Full keyboard accessibility
-- **Screen Readers**: ARIA labels and live regions
-- **Color Contrast**: WCAG AA compliant color ratios
-- **Focus Management**: Visible focus indicators
-- **Alternative Text**: Descriptive alt text for images
+- **Keyboard Navigation**: Full keyboard accessibility with visible focus indicators
+- **Screen Readers**: Comprehensive ARIA labels, live regions, and semantic HTML
+- **Color Contrast**: WCAG AA compliant color ratios for all text and UI elements
+- **Focus Management**: Proper focus trapping in modals and focus restoration
+- **Alternative Text**: Descriptive alt text for all images and icons
+- **Reduced Motion**: Respects `prefers-reduced-motion` for animations
 
 ### **Internationalization**
-- **Bilingual Support**: English and Portuguese (PT-PT)
-- **Locale Detection**: Automatic language detection from browser or localStorage
-- **SEO Friendly**: Proper hreflang implementation and locale-specific meta tags
-- **Smooth Switching**: Language changes without page reload
+- **Bilingual Support**: Full English and Portuguese (PT-PT) content
+- **Language Detection**: Priority order: URL parameter (`?lang=pt-PT`) > localStorage > default to English
+- **URL Parameter Support**: Direct language switching via `?lang=pt-PT` or `?lang=en` in URL
+- **SEO Friendly**: Proper hreflang implementation with locale-specific meta tags and structured data
+- **Smooth Switching**: Language changes without page reload, maintaining scroll position and state
+- **Dynamic Content**: All content (UI, website data, meta tags) updates based on selected language
 
 ## 🚀 **Deployment & CI/CD**
 
@@ -892,7 +942,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   - Fixed environment variable reading from process.env for GitHub Actions
   - Improved error handling and deployment verification
 
-### **v3.0.0 - Enterprise Portfolio Release**
+### **v3.0.0 - Enterprise Professional Website Release**
 - 🏗️ **Modern Architecture**: Complete migration to Vite + Preact + TypeScript
 - 🔒 **Enhanced Security**: Form validation with E.164 phone validation
 - 🧪 **Testing Suite**: Comprehensive testing with Vitest and Testing Library
@@ -903,14 +953,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 🔐 **Security**: Environment variable templates and security best practices
 - 🔗 **n8n Integration**: Contact form webhook integration with authentication support
 
-### **v2.0.0 - Premium Portfolio Release**
+### **v2.0.0 - Premium Professional Website Release**
 - ✨ Complete GDPR compliance implementation
 - 🎨 Premium UI/UX redesign
 - 📱 Enhanced mobile experience
 - ⚡ Performance optimizations
 - 🌍 Improved multi-language support
 
-### **v1.0.0 - Original Portfolio**
+### **v1.0.0 - Original Professional Website**
 - Basic Bootstrap template
 - Multi-language support
 - Simple navigation
