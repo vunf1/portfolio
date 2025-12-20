@@ -378,7 +378,11 @@ export function updateHreflangTags(baseUrl: string): void {
  * Update canonical URL
  * Always uses base URL (no query params) for all languages.
  * hreflang tags handle language versions, not canonical.
+ * 
+ * @param baseUrl - The base URL to use as canonical
+ * @param _locale - Locale parameter (unused, kept for API consistency)
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
 export function updateCanonicalUrl(baseUrl: string, _locale: SupportedLocale): void {
   // Remove existing canonical tags first to avoid duplicates
   const existingCanonical = document.querySelectorAll('link[rel="canonical"]')
