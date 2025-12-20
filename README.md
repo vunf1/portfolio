@@ -1,14 +1,21 @@
 # João Maia - Enterprise Professional Website
 
-[![CI/CD](https://img.shields.io/badge/CI%2FCD-Ready-blue?logo=github-actions&logoColor=white)](https://github.com/vunf1/portfolio/actions)
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen)](https://vunf1.github.io/portfolio/)
+<!-- Build Status -->
+[![CI/CD Pipeline](https://github.com/vunf1/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/vunf1/portfolio/actions/workflows/ci.yml)
+[![Quality Assurance](https://github.com/vunf1/portfolio/actions/workflows/quality.yml/badge.svg)](https://github.com/vunf1/portfolio/actions/workflows/quality.yml)
+[![Security Audit](https://github.com/vunf1/portfolio/actions/workflows/security.yml/badge.svg)](https://github.com/vunf1/portfolio/actions/workflows/security.yml)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen?logo=github&logoColor=white)](https://vunf1.github.io/portfolio/)
+
+<!-- Tech Stack -->
 [![Vite](https://img.shields.io/badge/Vite-5.1.4-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Preact](https://img.shields.io/badge/Preact-10.19.6-673AB8?logo=preact&logoColor=white)](https://preactjs.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4.3-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vitest](https://img.shields.io/badge/Vitest-1.3.1-6E9F18?logo=vitest&logoColor=white)](https://vitest.dev/)
+
+<!-- Compliance & Standards -->
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Security](https://img.shields.io/badge/Security-GDPR%20Compliant-green)](https://gdpr.eu/)
-[![Accessibility](https://img.shields.io/badge/Accessibility-WCAG%202.2%20AA-blue)](https://www.w3.org/TR/WCAG22/)
+[![GDPR Compliant](https://img.shields.io/badge/GDPR-Compliant-green?logo=shield&logoColor=white)](https://gdpr.eu/)
+[![WCAG 2.2 AA](https://img.shields.io/badge/Accessibility-WCAG%202.2%20AA-blue?logo=accessibility&logoColor=white)](https://www.w3.org/TR/WCAG22/)
 
 A modern, enterprise-grade professional website built with **Vite + Preact + TypeScript**, featuring GDPR-compliant contact forms, bilingual support, and premium user experience optimized for Core Web Vitals and accessibility. The project implements a sophisticated single scroll container architecture, centralized state management, and comprehensive testing coverage.
 
