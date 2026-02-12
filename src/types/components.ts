@@ -35,6 +35,7 @@ export interface ButtonProps extends BaseComponentProps {
   onFocus?: (event: FocusEvent) => void
   onTouchStart?: (event: TouchEvent) => void
   type?: 'button' | 'submit' | 'reset'
+  form?: string
   href?: string
   target?: string
   rel?: string
@@ -231,24 +232,7 @@ export interface ExperienceProps extends BaseComponentProps {
 
 // Skills Component Props
 export interface SkillsProps extends BaseComponentProps {
-  skills: {
-    proficiencyLevels: Record<string, string>
-    technical: Array<{
-      category: string
-      skills: Array<{
-        name: string
-        level: import('./portfolio').SkillLevel
-        experience: string
-        projects: number
-        description?: string
-      }>
-    }>
-    soft: Array<{
-      name: string
-      level: import('./portfolio').SkillLevel
-      description: string
-    }>
-  }
+  skills: import('./portfolio').Skills
 }
 
 // Projects Component Props

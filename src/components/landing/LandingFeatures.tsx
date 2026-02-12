@@ -16,7 +16,7 @@ interface LandingFeaturesProps {
   className?: string
 }
 
-export function LandingFeatures({ personal, className = '' }: LandingFeaturesProps) {
+export function LandingFeatures({ className = '' }: LandingFeaturesProps) {
   const { t } = useTranslation()
   const [activeService, setActiveService] = useState(0)
   const [isVisible, setIsVisible] = useState(false)

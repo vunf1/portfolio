@@ -53,6 +53,7 @@ export function Button({
   onFocus,
   onTouchStart,
   type = 'button',
+  form,
   href,
   target,
   rel,
@@ -96,6 +97,7 @@ export function Button({
     <button
       ref={ref}
       type={type}
+      form={form}
       className={classes}
       id={id}
       disabled={disabled || loading}
