@@ -5,6 +5,9 @@ interface ImportMetaEnv {
   readonly VITE_EMAILJS_SERVICE_ID?: string
   readonly VITE_EMAILJS_TEMPLATE_ID?: string
   readonly VITE_EMAILJS_TO_EMAIL?: string
+  readonly VITE_N8N_WEBHOOK_URL?: string
+  readonly VITE_N8N_AUTH_TOKEN?: string
+  readonly VITE_N8N_JWT_TOKEN?: string
 }
 
 declare module '*.png' {

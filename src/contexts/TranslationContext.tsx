@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'preact/hooks'
 import { getInitialLanguage } from '../lib/locale'
+import { getDataUrl } from '../utils/getDataUrl'
 
 // Global translation state
 let globalTranslations: Record<string, unknown> = {}
@@ -30,7 +31,7 @@ export function useTranslation() {
   const loadTranslations = useCallback(async (lang: 'en' | 'pt-PT') => {
     try {
       const uiFile = `ui.json`
-      const response = await fetch(`./data/${lang}/${uiFile}`)
+      const response = await fetch(getDataUrl(lang, uiFile))
       
       if (response.ok) {
         const data = await response.json()
@@ -144,7 +145,7 @@ export async function preloadTranslations(lang: 'en' | 'pt-PT' = 'en'): Promise<
       }
       
       const uiFile = `ui.json`
-      const response = await fetch(`./data/${language}/${uiFile}`)
+      const response = await fetch(getDataUrl(language, uiFile))
       
       if (response.ok) {
         const data = await response.json()

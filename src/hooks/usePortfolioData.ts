@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { useState, useEffect, useCallback } from 'preact/hooks'
 import type { PortfolioData, UsePortfolioDataReturn } from '../types'
+import { getDataUrl } from '../utils/getDataUrl'
 
 type SupportedLanguage = 'en' | 'pt-PT'
 type LoadedSectionsByLanguage = Record<SupportedLanguage, Set<string>>
@@ -18,15 +19,21 @@ const ALL_SECTIONS = [...CRITICAL_SECTIONS, ...NON_CRITICAL_SECTIONS]
 const criticalPrefetched: Record<SupportedLanguage, boolean> = { en: false, 'pt-PT': false }
 const nonCriticalPrefetched: Record<SupportedLanguage, boolean> = { en: false, 'pt-PT': false }
 
-function getDataPath(language: SupportedLanguage, section: string): string {
-  return `./data/${language}/${section}.json`
-}
-
-async function loadJsonFile<T>(path: string): Promise<T> {
-  const response = await fetch(path)
+async function loadJsonFile<T>(url: string): Promise<T> {
+  const response = await fetch(url)
 
   if (!response.ok) {
-    throw new Error(`Failed to load ${path}: ${response.status} ${response.statusText}`)
+    throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`)
+  }
+
+  const contentType = response.headers?.get?.('content-type') ?? ''
+  if (contentType && !contentType.includes('application/json')) {
+    const text = await response.text()
+    const preview = text.slice(0, 80)
+    throw new Error(
+      `Expected JSON but got ${contentType} from ${url}. ` +
+        `Response may be an error page (404/500). Preview: ${preview}...`
+    )
   }
 
   return await response.json()
@@ -47,8 +54,8 @@ async function ensureSectionLoaded(
   if (!fetchPromise) {
     fetchPromise = (async () => {
       try {
-        const dataPath = getDataPath(language, section)
-        const data = await loadJsonFile<Record<string, unknown>>(dataPath)
+        const dataUrl = getDataUrl(language, `${section}.json`)
+        const data = await loadJsonFile<Record<string, unknown>>(dataUrl)
         languageData.set(section, data)
       } catch (error) {
         if (import.meta.env.DEV) {
