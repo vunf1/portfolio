@@ -87,29 +87,29 @@ export function Skills({ skills }: SkillsProps) {
       return undefined
     }
     const name = skillName.toLowerCase()
-    if (name.includes('zero trust')) return undefined
-    if (name.includes('python')) return pythonIcon
-    if (name.includes('typescript')) return typescriptIcon
-    if (name.includes('javascript')) return javascriptIcon
-    if (name.includes('rust')) return rustIcon
-    if (name.includes('java')) return javaIcon
-    if (name.includes('c#')) return csharpIcon
-    if (name.includes('c++')) return cplusplusIcon
-    if (name === 'c') return cIcon
-    if (name.includes('visual basic') || name.includes('vb.net') || name.includes('vba')) return visualbasicIcon
-    if (name.includes('php')) return phpIcon
-    if (name.includes('lua')) return luaIcon
-    if (name.includes('powershell')) return powershellIcon
-    if (name.includes('bash') || name.includes('shell')) return bashIcon
-    if (name.includes('nosql')) return mongodbIcon
-    if (name.includes('sql')) return mysqlIcon
-    if (name.includes('linux')) return linuxIcon
-    if (name.includes('windows')) return windowsIcon
-    if (name.includes('docker')) return dockerIcon
-    if (name.includes('git')) return gitIcon
-    if (name.includes('ci/cd') || name.includes('devops')) return githubActionsIcon
-    if (name.includes('obs') || name.includes('streamstar') || name.includes('streaming')) return '/icons/obs-studio.svg'
-    if (name.includes('llm') || name.includes('rag') || name.includes('embedding') || name.includes('agent') || name.includes('prompt') || name.includes('tensorflow') || name.includes('keras') || name.includes('pytorch') || name.includes('machine learning')) return tensorflowIcon
+    if (name.includes('zero trust')) {return undefined}
+    if (name.includes('python')) {return pythonIcon}
+    if (name.includes('typescript')) {return typescriptIcon}
+    if (name.includes('javascript')) {return javascriptIcon}
+    if (name.includes('rust')) {return rustIcon}
+    if (name.includes('java')) {return javaIcon}
+    if (name.includes('c#')) {return csharpIcon}
+    if (name.includes('c++')) {return cplusplusIcon}
+    if (name === 'c') {return cIcon}
+    if (name.includes('visual basic') || name.includes('vb.net') || name.includes('vba')) {return visualbasicIcon}
+    if (name.includes('php')) {return phpIcon}
+    if (name.includes('lua')) {return luaIcon}
+    if (name.includes('powershell')) {return powershellIcon}
+    if (name.includes('bash') || name.includes('shell')) {return bashIcon}
+    if (name.includes('nosql')) {return mongodbIcon}
+    if (name.includes('sql')) {return mysqlIcon}
+    if (name.includes('linux')) {return linuxIcon}
+    if (name.includes('windows')) {return windowsIcon}
+    if (name.includes('docker')) {return dockerIcon}
+    if (name.includes('git')) {return gitIcon}
+    if (name.includes('ci/cd') || name.includes('devops')) {return githubActionsIcon}
+    if (name.includes('obs') || name.includes('streamstar') || name.includes('streaming')) {return '/icons/obs-studio.svg'}
+    if (name.includes('llm') || name.includes('rag') || name.includes('embedding') || name.includes('agent') || name.includes('prompt') || name.includes('tensorflow') || name.includes('keras') || name.includes('pytorch') || name.includes('machine learning')) {return tensorflowIcon}
     return undefined
   }
 
@@ -235,7 +235,7 @@ export function Skills({ skills }: SkillsProps) {
                         <span className="key-competency-tech-list">{skill.security!.join(', ')}</span>
                       </div>
                     )}
-                    {(skill.experience || (skill.projects != null && skill.projects > 0)) && (
+                    {(skill.experience || (typeof skill.projects === 'number' && skill.projects > 0)) && (
                       <div className="key-competency-meta">
                         {skill.experience && (
                           <span className="key-competency-meta-item">
@@ -243,7 +243,7 @@ export function Skills({ skills }: SkillsProps) {
                             {skill.experience}
                           </span>
                         )}
-                        {skill.projects != null && skill.projects > 0 && (
+                        {typeof skill.projects === 'number' && skill.projects > 0 && (
                           <span className="key-competency-meta-item">
                             <Icon name="folder" size={12} />
                             {skill.projects} {t(skill.projects === 1 ? 'skills.projectSingular' : 'skills.projectPlural')}

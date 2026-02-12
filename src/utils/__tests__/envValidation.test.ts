@@ -16,12 +16,12 @@ function parseEnvExample(content: string): Map<string, string> {
   const map = new Map<string, string>()
   for (const line of content.split('\n')) {
     const trimmed = line.trim()
-    if (trimmed.startsWith('#') || !trimmed) continue
+    if (trimmed.startsWith('#') || !trimmed) {continue}
     const eqIndex = trimmed.indexOf('=')
-    if (eqIndex === -1) continue
+    if (eqIndex === -1) {continue}
     const key = trimmed.slice(0, eqIndex).trim()
     const value = trimmed.slice(eqIndex + 1).trim()
-    if (key) map.set(key, value)
+    if (key) {map.set(key, value)}
   }
   return map
 }

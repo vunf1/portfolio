@@ -37,11 +37,11 @@ export function useRouteSync(options: UseRouteSyncOptions = {}): UseRouteSyncRes
   const syncFromLocation = useCallback(() => {
     const path = getPathFromLocation()
     setIs404(path === ROUTE_404)
-    if (path === ROUTE_404) return
+    if (path === ROUTE_404) {return}
     const onPortfolio = isPortfolioPath(path)
     setShowPortfolio((prev) => {
-      if (prev === onPortfolio || isTransitioning) return prev
-      if (onPortfolio) hasVisitedPortfolioRef.current = true
+      if (prev === onPortfolio || isTransitioning) {return prev}
+      if (onPortfolio) {hasVisitedPortfolioRef.current = true}
       return onPortfolio
     })
   }, [isTransitioning])

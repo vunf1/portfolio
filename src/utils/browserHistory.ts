@@ -47,7 +47,7 @@ function routeToPathname(route: string): string {
 
 /** Replace current URL with /404 path (no hash). */
 function replaceWith404(): void {
-  if (typeof window === 'undefined') return
+  if (typeof window === 'undefined') {return}
   const base = getBase()
   const path = base.replace(/\/+$/, '') || '/'
   const url = path === '/' ? '/404' : path + '/404'
@@ -55,10 +55,10 @@ function replaceWith404(): void {
 }
 
 export function getPathFromLocation(): string {
-  if (typeof window === 'undefined') return ROUTE_LANDING
+  if (typeof window === 'undefined') {return ROUTE_LANDING}
   const pathname = window.location.pathname || '/'
   const route = pathnameToRoute(pathname)
-  if (route === '/404') return ROUTE_404
+  if (route === '/404') {return ROUTE_404}
   if (!isValidRoute(route)) {
     replaceWith404()
     return ROUTE_404
@@ -89,7 +89,7 @@ export function createBrowserHistory(): CustomHistory {
     }
     return () => {
       const idx = listeners.indexOf(callback)
-      if (idx >= 0) listeners.splice(idx, 1)
+      if (idx >= 0) {listeners.splice(idx, 1)}
       if (typeof window !== 'undefined') {
         window.removeEventListener('popstate', notify)
       }
@@ -97,7 +97,7 @@ export function createBrowserHistory(): CustomHistory {
   }
 
   function push(path: string): void {
-    if (typeof window === 'undefined') return
+    if (typeof window === 'undefined') {return}
     if (path === ROUTE_404 || !isValidRoute(path)) {
       replaceWith404()
       notify()
@@ -109,7 +109,7 @@ export function createBrowserHistory(): CustomHistory {
   }
 
   function replace(path: string): void {
-    if (typeof window === 'undefined') return
+    if (typeof window === 'undefined') {return}
     if (path === ROUTE_404 || !isValidRoute(path)) {
       replaceWith404()
       notify()

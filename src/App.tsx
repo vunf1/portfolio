@@ -58,7 +58,7 @@ export function App() {
   })
 
   const handleNavigateToPortfolio = useCallback(() => {
-    if (isExitingLanding || showPortfolio) return
+    if (isExitingLanding || showPortfolio) {return}
     window.scrollTo(0, 0)
     setHideLanding(false)
     setIsExitingLanding(true)
@@ -74,7 +74,7 @@ export function App() {
   }, [])
 
   const handleBackToHome = useCallback(() => {
-    if (isExitingPortfolio || !showPortfolio) return
+    if (isExitingPortfolio || !showPortfolio) {return}
     window.scrollTo(0, 0)
     setHideLanding(false)
     setIsExitingPortfolio(true)
@@ -294,10 +294,10 @@ export function App() {
 
   /* Unmount landing when portfolio fade-in animation completes */
   useEffect(() => {
-    if (!showPortfolio) return
+    if (!showPortfolio) {return}
     const el = portfolioRef.current
     const onAnimationEnd = (e: AnimationEvent) => {
-      if (e.target !== el || e.animationName !== 'page-fade-in') return
+      if (e.target !== el || e.animationName !== 'page-fade-in') {return}
       el?.removeEventListener('animationend', onAnimationEnd)
       setHideLanding(true)
     }
@@ -313,7 +313,7 @@ export function App() {
 
   /* Back to Home: fade out portfolio, then show landing */
   useEffect(() => {
-    if (!isExitingPortfolio) return
+    if (!isExitingPortfolio) {return}
     const timer = setTimeout(() => {
       setIsExitingPortfolio(false)
       setShowPortfolio(false)

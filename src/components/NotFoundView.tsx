@@ -4,7 +4,7 @@ import { FloatingActionButton } from './FloatingActionButton'
 import { Icon } from './ui/Icon'
 
 function getHomeHref(): string {
-  if (typeof window === 'undefined') return '/'
+  if (typeof window === 'undefined') {return '/'}
   const path = window.location.pathname || '/'
   const segments = path.split('/').filter(Boolean)
   const base = segments.length > 1 ? '/' + segments.slice(0, -1).join('/') + '/' : '/'

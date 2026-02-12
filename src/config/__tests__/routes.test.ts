@@ -11,18 +11,18 @@ describe('routes', () => {
     const originalBaseUrl = import.meta.env.BASE_URL
 
     afterEach(() => {
-      ;(import.meta.env as { BASE_URL?: string }).BASE_URL = originalBaseUrl
+      (import.meta.env as { BASE_URL?: string }).BASE_URL = originalBaseUrl
     })
 
     it('accepts / with base /', () => {
-      ;(import.meta.env as { BASE_URL?: string }).BASE_URL = '/'
+      (import.meta.env as { BASE_URL?: string }).BASE_URL = '/'
       expect(isValidPathname('/')).toBe(true)
       expect(isValidPathname('')).toBe(true)
       expect(isValidPathname('/index.html')).toBe(true)
     })
 
     it('rejects /p/ with base /', () => {
-      ;(import.meta.env as { BASE_URL?: string }).BASE_URL = '/'
+      (import.meta.env as { BASE_URL?: string }).BASE_URL = '/'
       expect(isValidPathname('/p/')).toBe(false)
       expect(isValidPathname('/p')).toBe(false)
       expect(isValidPathname('/foo')).toBe(false)
@@ -30,21 +30,21 @@ describe('routes', () => {
     })
 
     it('accepts /portfolio and /portfolio/* with base /', () => {
-      ;(import.meta.env as { BASE_URL?: string }).BASE_URL = '/'
+      (import.meta.env as { BASE_URL?: string }).BASE_URL = '/'
       expect(isValidPathname('/portfolio')).toBe(true)
       expect(isValidPathname('/portfolio/')).toBe(true)
       expect(isValidPathname('/portfolio/experience')).toBe(true)
     })
 
     it('accepts /portfolio with base /portfolio/', () => {
-      ;(import.meta.env as { BASE_URL?: string }).BASE_URL = '/portfolio/'
+      (import.meta.env as { BASE_URL?: string }).BASE_URL = '/portfolio/'
       expect(isValidPathname('/portfolio')).toBe(true)
       expect(isValidPathname('/portfolio/')).toBe(true)
       expect(isValidPathname('/portfolio/index.html')).toBe(true)
     })
 
     it('rejects /portfolio/p/ with base /portfolio/', () => {
-      ;(import.meta.env as { BASE_URL?: string }).BASE_URL = '/portfolio/'
+      (import.meta.env as { BASE_URL?: string }).BASE_URL = '/portfolio/'
       expect(isValidPathname('/portfolio/p')).toBe(false)
       expect(isValidPathname('/portfolio/p/')).toBe(false)
       expect(isValidPathname('/portfolio/xyz')).toBe(false)
@@ -60,13 +60,13 @@ describe('routes', () => {
     })
 
     it('returns false when pathname is valid', () => {
-      ;(import.meta.env as { BASE_URL?: string }).BASE_URL = '/'
+      (import.meta.env as { BASE_URL?: string }).BASE_URL = '/'
       ;(window as { location?: { pathname: string } }).location!.pathname = '/'
       expect(isPathnameInvalid()).toBe(false)
     })
 
     it('returns true when pathname is invalid', () => {
-      ;(import.meta.env as { BASE_URL?: string }).BASE_URL = '/'
+      (import.meta.env as { BASE_URL?: string }).BASE_URL = '/'
       ;(window as { location?: { pathname: string } }).location!.pathname = '/p/'
       expect(isPathnameInvalid()).toBe(true)
     })

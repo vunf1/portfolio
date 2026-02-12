@@ -72,6 +72,7 @@ export async function sendContactEmail(data: ContactFormData): Promise<void> {
   }
 
   if (import.meta.env.DEV) {
+    // eslint-disable-next-line no-console -- dev-only debugging for EmailJS template setup
     console.debug(
       '[EmailJS] Sending to template',
       templateId,

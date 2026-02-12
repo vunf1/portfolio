@@ -29,9 +29,9 @@ const INVALID_SEGMENTS = new Set(['undefined', 'null', ''])
 /** Whether the hash segment (after #) represents a valid route */
 export function isValidHashSegment(segment: string): boolean {
   const trimmed = segment.trim()
-  if (!trimmed) return true
+  if (!trimmed) {return true}
   const parts = trimmed.split('/').map((p) => p.trim())
-  if (parts.some((p) => INVALID_SEGMENTS.has(p.toLowerCase()))) return false
+  if (parts.some((p) => INVALID_SEGMENTS.has(p.toLowerCase()))) {return false}
   const path = hashSegmentToPath(trimmed)
   return isValidRoute(path)
 }
@@ -39,8 +39,8 @@ export function isValidHashSegment(segment: string): boolean {
 /** Whether the path is valid (landing or portfolio[/section]) */
 export function isValidRoute(path: string): boolean {
   const normalized = normalizePath(path)
-  if (normalized === ROUTE_LANDING) return true
-  if (normalized === ROUTE_PORTFOLIO) return true
+  if (normalized === ROUTE_LANDING) {return true}
+  if (normalized === ROUTE_PORTFOLIO) {return true}
   return normalized.startsWith(ROUTE_PORTFOLIO_SECTION)
 }
 
@@ -52,30 +52,30 @@ export function isPortfolioPath(path: string): boolean {
 
 /** Normalize path: leading slash, collapse slashes */
 export function normalizePath(path: string): string {
-  if (path == null || typeof path !== 'string') return ROUTE_LANDING
+  if (path === null || path === undefined || typeof path !== 'string') {return ROUTE_LANDING}
   const trimmed = path.trim().replace(/\/+/g, '/').replace(/\/$/, '')
-  if (!trimmed || trimmed === '/') return ROUTE_LANDING
+  if (!trimmed || trimmed === '/') {return ROUTE_LANDING}
   return trimmed.startsWith('/') ? trimmed : `/${trimmed}`
 }
 
 /** Convert path to hash segment (no # or /) */
 export function pathToHashSegment(path: string): string {
   const normalized = normalizePath(path)
-  if (normalized === ROUTE_LANDING) return ''
+  if (normalized === ROUTE_LANDING) {return ''}
   return normalized.startsWith('/') ? normalized.slice(1) : normalized
 }
 
 /** Parse hash segment to normalized path */
 export function hashSegmentToPath(segment: string): string {
-  if (segment == null || typeof segment !== 'string') return ROUTE_LANDING
+  if (segment === null || segment === undefined || typeof segment !== 'string') {return ROUTE_LANDING}
   const trimmed = segment.trim()
-  if (!trimmed) return ROUTE_LANDING
+  if (!trimmed) {return ROUTE_LANDING}
   return normalizePath(trimmed)
 }
 
 /** Build portfolio route */
 export function toPortfolioRoute(section?: string): string {
-  if (!section || !section.trim()) return ROUTE_PORTFOLIO
+  if (!section || !section.trim()) {return ROUTE_PORTFOLIO}
   const seg = section.trim().replace(/^\/+|\/+$/g, '')
   return seg ? `${ROUTE_PORTFOLIO}/${seg}` : ROUTE_PORTFOLIO
 }
@@ -103,19 +103,19 @@ export function isValidPathname(pathname: string): boolean {
   const pathNorm = (pathname || '/').replace(/\/+/g, '/').replace(/\/$/, '') || '/'
 
   if (baseNorm === '' || baseNorm === '/') {
-    if (pathNorm === '' || pathNorm === '/' || pathNorm === '/index.html') return true
-    if (pathNorm === '/portfolio' || pathNorm.startsWith('/portfolio/')) return true
+    if (pathNorm === '' || pathNorm === '/' || pathNorm === '/index.html') {return true}
+    if (pathNorm === '/portfolio' || pathNorm.startsWith('/portfolio/')) {return true}
     return false
   }
   const basePrefix = '/' + baseNorm
-  if (pathNorm === basePrefix || pathNorm === basePrefix + '/' || pathNorm === basePrefix + '/index.html') return true
-  if (pathNorm === basePrefix + '/portfolio' || pathNorm.startsWith(basePrefix + '/portfolio/')) return true
+  if (pathNorm === basePrefix || pathNorm === basePrefix + '/' || pathNorm === basePrefix + '/index.html') {return true}
+  if (pathNorm === basePrefix + '/portfolio' || pathNorm.startsWith(basePrefix + '/portfolio/')) {return true}
   return false
 }
 
 /** Whether pathname is invalid (should show in-app 404, no redirect to .html). */
 export function isPathnameInvalid(pathname?: string): boolean {
-  if (typeof window === 'undefined') return false
+  if (typeof window === 'undefined') {return false}
   const p = pathname ?? window.location.pathname ?? '/'
   return !isValidPathname(p)
 }

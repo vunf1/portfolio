@@ -4,7 +4,7 @@ const STORAGE_KEY = 'portfolio-darkreader'
 const DEFAULT_THEME = { brightness: 100, contrast: 90, sepia: 10 }
 
 function getStored(): boolean {
-  if (typeof window === 'undefined') return false
+  if (typeof window === 'undefined') {return false}
   try {
     return sessionStorage.getItem(STORAGE_KEY) === 'true'
   } catch {
@@ -26,14 +26,14 @@ export function useDarkReader(): { isDark: boolean; toggleDarkMode: () => void }
   const [isDark, setIsDark] = useState(false)
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    if (typeof window === 'undefined') {return}
     if (getStored()) {
       loadAndEnable().then(() => setIsDark(true))
     }
   }, [])
 
   const toggleDarkMode = useCallback(() => {
-    if (typeof window === 'undefined') return
+    if (typeof window === 'undefined') {return}
     const nextDark = !isDark
     setIsDark(nextDark)
     if (nextDark) {

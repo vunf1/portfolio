@@ -21,7 +21,7 @@ async function initializeApp() {
     document.documentElement.setAttribute('lang', initialLang === 'pt-PT' ? 'pt-PT' : 'en')
     await preloadTranslations(initialLang)
     const appElement = document.getElementById('app')
-    if (appElement) render(<NotFoundView />, appElement)
+    if (appElement) {render(<NotFoundView />, appElement)}
     return
   }
 
