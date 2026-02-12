@@ -26,11 +26,14 @@ export interface CardProps extends BaseComponentProps {
 
 // Button Component Props
 export interface ButtonProps extends BaseComponentProps {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'link' | 'primaryElevated' | 'outlineElevated'
   size?: 'sm' | 'md' | 'lg'
   disabled?: boolean
   loading?: boolean
   onClick?: (event: MouseEvent) => void
+  onMouseEnter?: (event: MouseEvent) => void
+  onFocus?: (event: FocusEvent) => void
+  onTouchStart?: (event: TouchEvent) => void
   type?: 'button' | 'submit' | 'reset'
   href?: string
   target?: string
@@ -237,6 +240,7 @@ export interface SkillsProps extends BaseComponentProps {
         level: import('./portfolio').SkillLevel
         experience: string
         projects: number
+        description?: string
       }>
     }>
     soft: Array<{
