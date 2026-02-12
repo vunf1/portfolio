@@ -134,14 +134,14 @@ export function updateSEOMetaTags(
   setMetaTag('og:site_name', meta?.title || BRAND_NAME, true)
   setMetaTag('og:image:width', '1200', true)
   setMetaTag('og:image:height', '630', true)
-  setMetaTag('og:image:alt', meta?.title || `${BRAND_NAME} - Full-Stack Engineer & IT Solutions Specialist`, true)
+  setMetaTag('og:image:alt', meta?.title || (personal?.title ? `${BRAND_NAME} - ${personal.title}` : BRAND_NAME), true)
 
   // Twitter Card tags
   setMetaTag('twitter:card', 'summary_large_image')
   setMetaTag('twitter:title', meta?.title || '')
   setMetaTag('twitter:description', meta?.description || '')
   setMetaTag('twitter:image', ogImage)
-  setMetaTag('twitter:image:alt', meta?.title || `${BRAND_NAME} - Full-Stack Engineer & IT Solutions Specialist`)
+  setMetaTag('twitter:image:alt', meta?.title || (personal?.title ? `${BRAND_NAME} - ${personal.title}` : BRAND_NAME))
 }
 
 /**
@@ -251,7 +251,7 @@ function createWebSiteSchema(
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: metaTitle || `${BRAND_NAME} - Full-Stack Engineer & IT Solutions Specialist`,
+    name: metaTitle || (personal?.title ? `${BRAND_NAME} - ${personal.title}` : BRAND_NAME),
     alternateName: 'JMSIT.cloud',
     url: baseUrl,
     author: {

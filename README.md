@@ -24,7 +24,7 @@ A modern, enterprise-grade professional website built with **Vite + Preact + Typ
 ### **Privacy & Security**
 - 🛡️ **GDPR Compliance** - Full data protection with explicit consent mechanisms
 - 🔐 **Secure Data Handling** - Secure form submission with validation
-- 🔗 **n8n Integration** - Automated contact form processing with webhook support
+- 📧 **EmailJS Integration** - Contact form sends emails to joaomaia@jmsit.cloud (HTTPS/TLS)
 - ✅ **Form Validation** - E.164 phone validation, email validation, and name validation
 
 ### **Enterprise UX/UI**
@@ -193,116 +193,42 @@ Create `.env.local` for local development:
 # Application URL (optional, defaults to current origin)
 VITE_APP_URL="http://localhost:3000"
 
-# n8n Webhook Integration
-# REQUIRED: These environment variables are mandatory for the contact form to work
-# Copy .env.example to .env.local and fill in your actual values
-VITE_N8N_WEBHOOK_URL=https://n8n.<your.domain>/webhook-test/your-webhook-id
-# Authentication token for webhook (sent as custom header, default header name: 'X-API-Key')
-# Supports both VITE_N8N_AUTH_TOKEN (new) and VITE_N8N_JWT_TOKEN (legacy) for backward compatibility
-VITE_N8N_AUTH_TOKEN=your-auth-token-here
+# EmailJS - Contact Form (REQUIRED for form to work)
+# See docs/EMAILJS_SETUP.md for full setup
+VITE_EMAILJS_PUBLIC_KEY=your-public-key
+VITE_EMAILJS_SERVICE_ID=your-service-id
+VITE_EMAILJS_TEMPLATE_ID=your-template-id
 ```
 
-**Note:** Only the n8n webhook variables are actually used in the codebase. Other environment variables mentioned in examples are placeholders for future features.
-
-> **⚠️ CRITICAL SECURITY WARNING**: 
+> **⚠️ CRITICAL SECURITY WARNING**:
 > - **NEVER commit `.env.local`, `.env.production`, or any `.env*` files with real values to version control**
-> - The `.gitignore` file already excludes these files to prevent accidental commits
-> - **In production builds, these environment variables are REQUIRED** - the build will fail if they are missing
 > - For GitHub Actions CI/CD, configure these as GitHub Secrets (see CI/CD section below)
 > - Use `.env.example` as a template only - it contains placeholders, not real values
 
-### **n8n Webhook Integration**
+### **EmailJS Contact Form**
 
-The website includes a contact form that sends submissions to an n8n webhook for processing. The integration is handled by the `N8nClient` class located in `src/utils/n8nClient.ts`.
-
-**Configuration:**
+The contact form sends submissions to **joaomaia@jmsit.cloud** via [EmailJS](https://www.emailjs.com) over HTTPS. EmailJS and the connected provider handle TLS/encryption in transit.
 
 **REQUIRED Environment Variables:**
-- `VITE_N8N_WEBHOOK_URL`: Your n8n webhook URL (REQUIRED in production)
-- `VITE_N8N_AUTH_TOKEN`: Your n8n authentication token (REQUIRED in production)
+- `VITE_EMAILJS_PUBLIC_KEY`: Your EmailJS public key
+- `VITE_EMAILJS_SERVICE_ID`: Your EmailJS service ID
+- `VITE_EMAILJS_TEMPLATE_ID`: Your EmailJS template ID
 
-**Setup Instructions:**
-1. Copy `.env.example` to `.env.local`
-2. Fill in your actual n8n webhook URL and authentication token
-3. For production builds, create `.env.production` with production values
-4. For GitHub Actions, configure GitHub Secrets (see CI/CD section)
-
-**Important Notes:**
-- These environment variables are **REQUIRED** in production - builds will fail if missing
-- In development, the app will warn if variables are missing but may still run (for testing)
-- Never commit `.env.local` or `.env.production` files with real values
-- The webhook receives contact form data in JSON format with the following structure:
-  ```json
-  {
-    "name": "John Doe",
-    "email": "john@example.com",
-    "phone": "+351912345678",
-    "companyName": "Company Inc.",
-    "companyIdentifier": "PT123456789",
-    "subject": "Project Inquiry",
-    "message": "Hello, I'm interested in...",
-    "timestamp": "2024-01-01T00:00:00.000Z"
-  }
-  ```
-
-**Authentication Methods (n8n Compatible):**
-
-The `N8nClient` supports three authentication methods compatible with n8n webhook authentication:
-
-1. **Header Auth** (default): Custom header with token value
-   ```typescript
-   const client = new N8nClient({
-     webhookUrl: 'https://n8n.<your.domain>/webhook-test/...',
-     authToken: 'your-token',
-     authMethod: 'header',
-     authHeaderName: 'X-API-Key' // Default: 'X-API-Key' (or 'Authorization', 'X-Auth-Token', etc.)
-   })
-   ```
-   Sends: `X-API-Key: <token>` (default) or custom header name
-
-2. **Bearer Auth**: Standard Bearer token authentication
-   ```typescript
-   const client = new N8nClient({
-     webhookUrl: 'https://n8n.<your.domain>/webhook-test/...',
-     authToken: 'your-token',
-     authMethod: 'bearer'
-   })
-   ```
-   Sends: `Authorization: Bearer <token>`
-
-3. **Custom Auth**: Multiple custom headers
-   ```typescript
-   const client = new N8nClient({
-     webhookUrl: 'https://n8n.<your.domain>/webhook-test/...',
-     authMethod: 'custom',
-     headers: {
-       'X-API-Key': 'api-key-value',
-       'X-Auth-Token': 'auth-token-value',
-       'X-Custom-Header': 'custom-value'
-     }
-   })
-   ```
-   Sends: All custom headers specified
+**Setup:** See [docs/EMAILJS_SETUP.md](docs/EMAILJS_SETUP.md) for step-by-step configuration.
 
 **Features:**
-- Automatic timestamp generation
-- Request timeout handling (default: 10 seconds)
-- Optional retry logic with exponential backoff
-- Comprehensive error handling (network errors, HTTP errors, timeouts)
-- TypeScript type safety
-- Full n8n authentication compatibility (Bearer, Header, Custom Auth)
-
-**Usage:**
-The contact form modal can be triggered from:
-- Floating Action Button (FAB) - always visible
-- Landing Hero section - primary CTA button
+- Client-side sending via @emailjs/browser (no server required)
+- Public key only — no private credentials in the browser
+- Rate limiting (5s throttle) and headless blocking
+- Contact form modal: FAB + Hero CTA
 
 **Testing:**
-Run the test suite to verify the integration:
 ```bash
-npm test src/utils/__tests__/n8nClient.test.ts
+npm test src/utils/__tests__/emailSender.test.ts
 npm test src/components/ui/__tests__/ContactModal.test.tsx
 ```
+
+> **Note:** `N8nClient` remains in `src/utils/n8nClient.ts` for future webhook-based workflows.
 
 ### **Security Best Practices**
 - **Environment Variables**: Use `.env.local` for local development, never commit to repository
@@ -366,7 +292,7 @@ Customize design tokens in `src/css/tokens.css`:
 1. **Landing Page**: Modern, premium landing experience with scroll animations
 2. **Language Switch**: Toggle between English/Portuguese seamlessly
 3. **Navigation**: Smooth scrolling between sections with keyboard support
-4. **Contact Modal**: Accessible contact form with n8n webhook integration
+4. **Contact Modal**: Accessible contact form with EmailJS integration
 5. **Accessibility**: Full keyboard navigation and screen reader support
 6. **Performance**: Fast loading with optimized bundle size and lazy loading
 
@@ -412,7 +338,7 @@ npm run verify-dist
 - **Email Validation**: Comprehensive email format validation
 - **Name Validation**: Name format validation with length checks
 - **Client-Side Validation**: Real-time validation feedback
-- **Secure Submission**: All form data sent securely to n8n webhook
+- **Secure Submission**: All form data sent via EmailJS (HTTPS/TLS)
 
 ### **GDPR Compliance**
 - **Data Minimization**: Only collect necessary information for contact form
@@ -427,7 +353,7 @@ npm run verify-dist
 - **X-Content-Type-Options**: MIME type sniffing protection
 
 ### **Data Protection**
-- **No Server-Side Storage**: All data sent directly to n8n webhook
+- **No Server-Side Storage**: All data sent directly via EmailJS to joaomaia@jmsit.cloud
 - **No Local Storage**: Contact form data not stored locally
 - **No Tracking**: Zero analytics or tracking cookies
 - **Secure Headers**: Comprehensive security headers configured
@@ -664,16 +590,15 @@ npm run build:analyze
 
 **REQUIRED for Production Builds:**
 
-The CI/CD pipeline requires environment variables for the n8n webhook integration. Configure these as GitHub Secrets:
+The CI/CD pipeline requires EmailJS environment variables for the contact form. Configure these as GitHub Secrets:
 
 1. Go to your repository on GitHub
 2. Navigate to **Settings** > **Secrets and variables** > **Actions**
 3. Click **New repository secret**
 4. Add the following secrets:
-   - **Name**: `VITE_N8N_WEBHOOK_URL`
-     - **Value**: Your n8n webhook URL (e.g., `https://n8n.<your.domain>/webhook-test/your-webhook-id`)
-   - **Name**: `VITE_N8N_AUTH_TOKEN`
-     - **Value**: Your n8n authentication token
+   - **Name**: `VITE_EMAILJS_PUBLIC_KEY` — **Value**: Your EmailJS public key
+   - **Name**: `VITE_EMAILJS_SERVICE_ID` — **Value**: Your EmailJS service ID
+   - **Name**: `VITE_EMAILJS_TEMPLATE_ID` — **Value**: Your EmailJS template ID
 
 **Important:**
 - These secrets are used during the build process in GitHub Actions
@@ -790,7 +715,7 @@ npm run verify-dist
 
 #### **Contact Form Issues**
 - Check browser console for validation errors
-- Verify n8n webhook URL and auth token are set in environment variables
+- Verify EmailJS env vars (VITE_EMAILJS_*) are set for contact form
 - Check network tab for webhook request failures
 - Verify form validation messages are displayed correctly
 
@@ -958,7 +883,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 🚀 **CI/CD**: Automated testing, security audits, and deployment
 - 📊 **Monitoring**: Performance budgets and Core Web Vitals tracking
 - 🔐 **Security**: Environment variable templates and security best practices
-- 🔗 **n8n Integration**: Contact form webhook integration with authentication support
+- 📧 **EmailJS**: Contact form sends to joaomaia@jmsit.cloud (HTTPS/TLS)
 
 ### **v2.0.0 - Premium Professional Website Release**
 - ✨ Complete GDPR compliance implementation

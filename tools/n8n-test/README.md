@@ -105,6 +105,7 @@ The script accepts data in two formats:
   "companyIdentifier": "123456789",
   "subject": "Project Inquiry",
   "message": "Hello, I'm interested in...",
+  "recipientEmail": "joaomaia@jmsit.cloud",
   "timestamp": "2024-01-01T00:00:00.000Z"
 }
 ```
@@ -117,6 +118,7 @@ The script accepts data in two formats:
 - `CompanyID` → `companyIdentifier` (optional)
 - `Subject` → `subject` (required)
 - `Message` → `message` (required)
+- `recipientEmail` is set by the form to `joaomaia@jmsit.cloud` for n8n email routing
 - `timestamp` is auto-generated if not provided
 
 ## Command Line Arguments
@@ -174,6 +176,15 @@ The script will:
 - Validate that all required fields are present in the data
 - Show clear error messages for missing or invalid data
 - Continue processing remaining requests if one fails (when sending multiple)
+
+## n8n Workflow Email Setup
+
+To forward contact form submissions to **joaomaia@jmsit.cloud**, configure your n8n workflow:
+
+1. Add a **Webhook** node to receive the payload.
+2. Add an **Send Email** (or equivalent) node.
+3. Set the **To** field to `{{ $json.recipientEmail }}` — the form sends `recipientEmail: "joaomaia@jmsit.cloud"` in every submission.
+4. Use other payload fields for the email body, e.g. `{{ $json.name }}`, `{{ $json.email }}`, `{{ $json.message }}`, etc.
 
 ## Security Notes
 
