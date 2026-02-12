@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'preact/hooks'
 import { useTranslation } from '../../contexts/TranslationContext'
-import { getToasts, subscribe } from '../../lib/toast-store'
+import { getToasts, subscribe, type ToastItem } from '../../lib/toast-store'
 import { cn } from '../../lib/utils'
 import { Icon } from './Icon'
 
@@ -10,7 +10,7 @@ import { Icon } from './Icon'
  */
 export function Toaster() {
   const { t } = useTranslation()
-  const [items, setItems] = useState(getToasts)
+  const [items, setItems] = useState<ToastItem[]>(getToasts)
 
   useEffect(() => {
     const unsub = subscribe(() => setItems(getToasts()))
@@ -34,7 +34,7 @@ export function Toaster() {
   )
 }
 
-function ToastCard({ item }: { item: { id: string; title: string; description?: string; type: string } }) {
+function ToastCard({ item }: { item: ToastItem }) {
   const typeStyles = {
     default: 'border-gray-200 bg-white text-gray-900 shadow-lg',
     success: 'border-green-200 bg-green-50 text-green-900 shadow-lg',
