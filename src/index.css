@@ -1,5 +1,6 @@
 @import './css/tokens.css';
 @import './css/variables.css';
+@import './css/loading.css';
 @import './css/components.css';
 @import './css/base.css';
 @import './css/modal.css';
@@ -21,6 +22,11 @@
 @import './css/performance.css';
 @import './css/fab.css';
 @import './css/landing.css';
+@import './css/page-transition.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Base Styles */
 * {
@@ -57,13 +63,137 @@ body {
   outline-offset: 2px;
 }
 
+/* Hero outline buttons (services, about): flat underline style */
+.hero-actions button:not(.hero-cta-primary):not(.hero-cta-contact),
+.about-actions button:not(.about-cta-primary),
+.modal-footer button {
+  border: none !important;
+  outline: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: opacity 0.15s ease;
+}
 
-/* Smooth scrolling for reduced motion users */
+/* Hero primary CTA: keep elevated styling for visibility in light theme */
+.hero-cta-primary {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+  color: white !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 14px rgba(0, 123, 255, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+.hero-cta-contact {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+  color: white !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+
+.hero-cta-primary,
+.hero-cta-contact {
+  transition: box-shadow 0.2s ease !important;
+}
+
+.hero-cta-primary:hover {
+  transform: none !important;
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3) !important;
+}
+
+.hero-cta-contact:hover {
+  transform: none !important;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.25) !important;
+}
+
+/* Hero outline buttons (Services, About): same hover as Contact - shadow + brightness, no translate/scale */
+.hero-actions button:not(.hero-cta-primary):not(.hero-cta-contact) {
+  transition: box-shadow 0.2s ease, opacity 0.15s ease !important;
+}
+.hero-actions button:not(.hero-cta-primary):not(.hero-cta-contact):hover {
+  transform: none !important;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2) !important;
+}
+
+.hero-cta-primary:active,
+.hero-cta-contact:active {
+  transform: none !important;
+}
+
+/* About primary CTA: visible in light theme (same as hero-cta-primary) */
+.about-cta-primary {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+  color: white !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 14px rgba(0, 123, 255, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+.about-cta-primary:hover {
+  transform: none !important;
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3) !important;
+}
+
+/* Hover for outline/secondary buttons: subtle opacity only */
+/* Hero outline buttons (Services, About) share Contact's hover animation - no opacity override */
+.about-actions button:not(.about-cta-primary):hover,
+.modal-footer button:hover {
+  opacity: 0.85;
+}
+
+.hero-actions button:not(.hero-cta-contact):active,
+.about-actions button:not(.about-cta-primary):active,
+.modal-footer button:active {
+  opacity: 1;
+}
+
+.hero-actions button:focus,
+.about-actions button:focus,
+.modal-footer button:focus {
+  outline: none !important;
+}
+
+.hero-actions button svg,
+.about-actions button svg,
+.modal-footer button svg {
+  outline: none;
+}
+
+/* Flat style for outline/secondary only - exclude primary CTAs */
+/* Hero outline buttons (Services, About) keep full hover animation like Contact - no filter/box-shadow override */
+.about-actions button:not(.about-cta-primary):hover,
+.about-actions button:not(.about-cta-primary):active,
+.about-actions button:not(.about-cta-primary):focus,
+.about-actions button:not(.about-cta-primary):focus-visible,
+.modal-footer button:hover,
+.modal-footer button:active,
+.modal-footer button:focus,
+.modal-footer button:focus-visible {
+  filter: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+
+/* Smooth scrolling and disable hover motion for reduced motion users */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  
+
+  .hero-actions button:hover,
+  .about-actions button:not(.about-cta-primary):hover,
+  .modal-footer button:hover {
+    transform: none;
+  }
+
+  .hero-actions button:active,
+  .about-actions button:not(.about-cta-primary):active,
+  .modal-footer button:active {
+    transform: none;
+  }
+
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

@@ -3,10 +3,17 @@ import { usePortfolioData } from './hooks/usePortfolioData'
 import { useTranslation } from './contexts/TranslationContext'
 import { Navigation } from './components/Navigation'
 import { ErrorBoundary } from './components/ErrorBoundary'
-import { SectionSkeleton } from './components/SectionSkeleton'
+import { Icon } from './components/ui/Icon'
+import { Button } from './components/ui/Button'
+import { Toaster } from './components/ui/Toaster'
+import { PageLoader } from './components/ui/PageLoader'
+import { SectionPlaceholder } from './components/SectionPlaceholder'
 import { FloatingActionButton } from './components/FloatingActionButton'
 import { LandingPage } from './components/landing/LandingPage'
 import { preloadPortfolioChunks } from './utils/preloadPortfolioChunks'
+
+/** Min time landing stays visible while fading out (ms) */
+const LANDING_FADEOUT_MS = 250
 import { initializeSEO, updateSEOOnLanguageChange } from './utils/seo'
 
 const logWarning = (message: string, detail: unknown) => {
@@ -32,7 +39,23 @@ export function App() {
   const [activeSection, setActiveSection] = useState('experience')
   const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false)
   const [showPortfolio, setShowPortfolio] = useState(false)
+  const [isExitingLanding, setIsExitingLanding] = useState(false)
+  const [isExitingPortfolio, setIsExitingPortfolio] = useState(false)
+  const [hideLanding, setHideLanding] = useState(true)
   const hasWarmedPortfolio = useRef(false)
+  const hasVisitedPortfolio = useRef(false)
+
+  const handleNavigateToPortfolio = useCallback(() => {
+    if (isExitingLanding || showPortfolio) return
+    setHideLanding(false)
+    setIsExitingLanding(true)
+  }, [isExitingLanding, showPortfolio])
+
+  const handleBackToHome = useCallback(() => {
+    if (isExitingPortfolio || !showPortfolio) return
+    setHideLanding(false) /* keep landing mounted behind so it's visible when portfolio fades out */
+    setIsExitingPortfolio(true)
+  }, [isExitingPortfolio, showPortfolio])
 
 
   // Initialize SEO when portfolio data is available
@@ -245,22 +268,60 @@ export function App() {
     }
   }, [portfolioData])
 
+  /* After landing fades out: wait for portfolio chunks to load, then show portfolio so fade-in reveals full content */
+  useEffect(() => {
+    if (!isExitingLanding) return
+    let cancelled = false
+    let fallbackId: ReturnType<typeof setTimeout> | undefined
+    const showPortfolioNow = () => {
+      if (fallbackId) {
+        clearTimeout(fallbackId)
+        fallbackId = undefined
+      }
+      if (!cancelled) {
+        hasVisitedPortfolio.current = true
+        setIsExitingLanding(false)
+        setShowPortfolio(true)
+      }
+    }
+    const schedule = setTimeout(() => {
+      fallbackId = setTimeout(showPortfolioNow, 3000)
+      preloadPortfolioChunks().then(showPortfolioNow).catch(showPortfolioNow)
+    }, LANDING_FADEOUT_MS)
+    return () => {
+      cancelled = true
+      clearTimeout(schedule)
+      if (fallbackId) clearTimeout(fallbackId)
+    }
+  }, [isExitingLanding])
+
+  /* Unmount landing after portfolio fade-in completes (delay 0.1s + duration 0.4s ≈ 550ms) */
+  useEffect(() => {
+    if (!showPortfolio) return
+    const timer = setTimeout(() => setHideLanding(true), 550)
+    return () => clearTimeout(timer)
+  }, [showPortfolio])
+
+  /* Back to Home: fade out portfolio, then show landing */
+  useEffect(() => {
+    if (!isExitingPortfolio) return
+    const timer = setTimeout(() => {
+      setIsExitingPortfolio(false)
+      setShowPortfolio(false)
+      document.body.classList.add('landing-page-active')
+      document.documentElement.classList.add('landing-page-active')
+    }, LANDING_FADEOUT_MS)
+    return () => clearTimeout(timer)
+  }, [isExitingPortfolio])
+
   useEffect(() => {
     if (showPortfolio) {
+      /* Switch to portfolio layout: remove landing scroll/overflow rules immediately */
+      document.body.classList.remove('landing-page-active')
+      document.documentElement.classList.remove('landing-page-active')
+
       void loadAllSections()
-      // Scroll to top when portfolio page loads
-      // Use requestAnimationFrame to ensure DOM is ready
-      requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, behavior: 'instant' })
-        document.documentElement.scrollTop = 0
-        document.body.scrollTop = 0
-        // Double-check after a small delay to handle any async rendering
-        setTimeout(() => {
-          window.scrollTo({ top: 0, behavior: 'instant' })
-          document.documentElement.scrollTop = 0
-          document.body.scrollTop = 0
-        }, 0)
-      })
+      /* Scroll to top already done in handleNavigateToPortfolio before fade-out; no scroll here to avoid visible jump during transition */
     }
   }, [loadAllSections, showPortfolio])
 
@@ -295,73 +356,62 @@ export function App() {
     })
   }, [loadAllSections])
 
-  // Show loading state
+  // Show premium loading state
   if (loading) {
-    return (
-      <div className="loading">
-        <div className="loading-content">
-          <div className="loading-spinner"></div>
-          <p>{t('common.loading')}</p>
-        </div>
-      </div>
-    )
+    return <PageLoader />
   }
 
-  // Show landing page if portfolio is not requested
-  if (!showPortfolio) {
-    return (
-      <ErrorBoundary>
-        <LandingPage 
-          onNavigateToPortfolio={() => setShowPortfolio(true)} 
-          onWarmPortfolio={warmPortfolio}
-        />
-      </ErrorBoundary>
-    )
-  }
-
-  // Show error state
   if (error) {
     return (
       <div className="error">
         <div className="error-content">
-          <i className="fa-solid fa-exclamation-triangle fa-3x mb-4"></i>
+          <Icon name="exclamation-triangle" size={48} className="mb-4" />
           <h2>{t('common.error')}</h2>
           <p>{t('common.somethingWentWrong')}</p>
-          <button 
-            className="btn-premium mt-4"
-            onClick={() => window.location.reload()}
-          >
-            <i className="fa-solid fa-refresh me-2"></i>
+          <Button variant="primary" className="mt-4" onClick={() => window.location.reload()}>
+            <Icon name="refresh" size={18} className="mr-2" />
             {t('common.refresh')}
-          </button>
+          </Button>
         </div>
       </div>
     )
   }
 
-  // Show error state if no data
   if (!portfolioData) {
     return (
       <div className="error">
         <div className="error-content">
-          <i className="fa-solid fa-info-circle fa-3x mb-4"></i>
+          <Icon name="info-circle" size={48} className="mb-4" />
           <h2>{t('common.error')}</h2>
           <p>{t('common.somethingWentWrong')}</p>
-          <button 
-            className="btn-premium mt-4"
-            onClick={() => window.location.reload()}
-          >
-            <i className="fa-solid fa-refresh me-2"></i>
+          <Button variant="primary" className="mt-4" onClick={() => window.location.reload()}>
+            <Icon name="refresh" size={18} className="mr-2" />
             {t('common.refresh')}
-          </button>
+          </Button>
         </div>
       </div>
     )
   }
 
+  const showLanding = !showPortfolio || !hideLanding
+
   return (
     <ErrorBoundary>
-      <>
+      <div className="page-transition-wrapper">
+        {showLanding && (
+          <div
+            className={`page-transition page-transition-landing ${isExitingLanding ? 'page-fade-out' : ''} ${showPortfolio ? 'page-transition-behind' : ''} ${!showPortfolio && !isExitingLanding && !hasVisitedPortfolio.current ? 'page-fade-in' : ''}`}
+            aria-hidden={showPortfolio}
+          >
+            <LandingPage
+              portfolioData={portfolioData}
+              onNavigateToPortfolio={handleNavigateToPortfolio}
+              onWarmPortfolio={warmPortfolio}
+            />
+          </div>
+        )}
+        {showPortfolio && (
+          <div className={`page-transition page-transition-portfolio ${isExitingPortfolio ? 'page-fade-out' : 'page-fade-in'}`}>
         <Navigation 
           items={[
             { id: 'experience', label: String(t('navigation.experience')), icon: 'fa-solid fa-briefcase' },
@@ -376,56 +426,56 @@ export function App() {
           activeId={activeSection}
           onNavigate={setActiveSection}
           showBackButton={true}
-          onBackClick={() => setShowPortfolio(false)}
+          onBackClick={handleBackToHome}
         />
         
         <div className={`portfolio-container ${isLanguageTransitioning ? 'language-transitioning' : ''}`}>
           {/* Experience Section */}
-          <Suspense fallback={<SectionSkeleton />}>
+          <Suspense fallback={<SectionPlaceholder />}>
             <Experience experiences={portfolioData.experience} id="experience" />
           </Suspense>
           
           {/* Education Section */}
-          <Suspense fallback={<SectionSkeleton />}>
+          <Suspense fallback={<SectionPlaceholder />}>
             <Education education={portfolioData.education} />
           </Suspense>
           
           {/* Skills Section */}
-          <Suspense fallback={<SectionSkeleton />}>
+          <Suspense fallback={<SectionPlaceholder />}>
             <Skills skills={portfolioData.skills} />
           </Suspense>
           
           {/* Projects Section */}
           {portfolioData.projects && portfolioData.projects.length > 0 && (
-            <Suspense fallback={<SectionSkeleton />}>
+            <Suspense fallback={<SectionPlaceholder />}>
               <Projects projects={portfolioData.projects} />
             </Suspense>
           )}
           
           {/* Certifications Section */}
           {portfolioData.certifications && portfolioData.certifications.length > 0 && (
-            <Suspense fallback={<SectionSkeleton />}>
+            <Suspense fallback={<SectionPlaceholder />}>
               <Certifications certifications={portfolioData.certifications} />
             </Suspense>
           )}
           
           {/* Testimonials Section */}
           {portfolioData.testimonials && portfolioData.testimonials.length > 0 && (
-            <Suspense fallback={<SectionSkeleton />}>
+            <Suspense fallback={<SectionPlaceholder />}>
               <Testimonials testimonials={portfolioData.testimonials} />
             </Suspense>
           )}
           
           {/* Interests Section */}
           {portfolioData.interests && portfolioData.interests.length > 0 && (
-            <Suspense fallback={<SectionSkeleton />}>
+            <Suspense fallback={<SectionPlaceholder />}>
               <Interests interests={portfolioData.interests} />
             </Suspense>
           )}
           
           {/* Awards Section */}
           {portfolioData.awards && portfolioData.awards.length > 0 && (
-            <Suspense fallback={<SectionSkeleton />}>
+            <Suspense fallback={<SectionPlaceholder />}>
               <Awards awards={portfolioData.awards} />
             </Suspense>
           )}
@@ -433,7 +483,10 @@ export function App() {
 
 
         <FloatingActionButton />
-      </>
+          </div>
+        )}
+      </div>
+      <Toaster />
     </ErrorBoundary>
   )
 }
