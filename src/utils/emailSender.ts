@@ -14,20 +14,19 @@
  */
 
 import emailjs, { EmailJSResponseStatus } from '@emailjs/browser'
+import { getEmailJsConfig } from '../config/env'
 import type { ContactFormData } from '../types/n8n'
 
 const DEFAULT_RECIPIENT_EMAIL = 'joaomaia@jmsit.cloud'
 
 function getConfig() {
-  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
-  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
-  const toEmail = import.meta.env.VITE_EMAILJS_TO_EMAIL?.trim()
+  const { publicKey, serviceId, templateId, toEmail, logoUrl } = getEmailJsConfig()
   return {
     publicKey,
     serviceId,
     templateId,
-    toEmail: toEmail || DEFAULT_RECIPIENT_EMAIL
+    toEmail: toEmail || DEFAULT_RECIPIENT_EMAIL,
+    logoUrl
   }
 }
 
@@ -41,7 +40,7 @@ function isConfigured(): boolean {
  * @throws Error if not configured or send fails
  */
 export async function sendContactEmail(data: ContactFormData): Promise<void> {
-  const { publicKey, serviceId, templateId, toEmail } = getConfig()
+  const { publicKey, serviceId, templateId, toEmail, logoUrl: envLogoUrl } = getConfig()
 
   if (!publicKey?.trim() || !serviceId?.trim() || !templateId?.trim()) {
     throw new Error(
@@ -50,7 +49,13 @@ export async function sendContactEmail(data: ContactFormData): Promise<void> {
   }
 
   const websiteUrl = typeof window !== 'undefined' ? window.location.origin : ''
-  const logoUrl = websiteUrl ? `${websiteUrl}/img/logo.png` : ''
+  /** logo_url: page logo image URL for email header — use explicit env or derive from origin */
+  const logoImageUrl =
+    (envLogoUrl?.length ?? 0) > 0
+      ? envLogoUrl!
+      : websiteUrl
+        ? `${websiteUrl}/img/logo.png`
+        : ''
 
   const templateParams: Record<string, string> = {
     from_name: data.name,
@@ -59,7 +64,7 @@ export async function sendContactEmail(data: ContactFormData): Promise<void> {
     message: data.message,
     to_email: toEmail,
     website_url: websiteUrl,
-    logo_url: logoUrl,
+    logo_url: logoImageUrl,
     time: typeof window !== 'undefined' ? new Date().toLocaleString() : '',
     ...(data.phone && { phone: data.phone }),
     ...(data.companyName && { company_name: data.companyName }),

@@ -27,15 +27,14 @@ import {
   N8nNetworkError as N8nNetworkErrorClass,
   N8nTimeoutError as N8nTimeoutErrorClass
 } from '../types/n8n'
+import { getN8nConfig } from '../config/env'
 
 /**
- * Gets the webhook URL from environment variable
- * 
+ * Gets the webhook URL from environment variable (via centralized env config)
  * @returns The webhook URL from VITE_N8N_WEBHOOK_URL
- * @throws {N8nClientError} If URL is missing in production mode
  */
 function getWebhookUrl(): string {
-  const url = import.meta.env.VITE_N8N_WEBHOOK_URL
+  const { webhookUrl: url } = getN8nConfig()
   
   if (!url || url.trim() === '') {
     // Don't throw error - return empty string and let the client handle it gracefully
@@ -55,16 +54,12 @@ function getWebhookUrl(): string {
 }
 
 /**
- * Gets the authentication token from environment variable
- * 
- * Supports both VITE_N8N_AUTH_TOKEN (new) and VITE_N8N_JWT_TOKEN (legacy) for backward compatibility
- * 
+ * Gets the authentication token from environment variable (via centralized env config)
+ * Supports both VITE_N8N_AUTH_TOKEN (new) and VITE_N8N_JWT_TOKEN (legacy)
  * @returns The authentication token from environment variable
- * @throws {N8nClientError} If token is missing in production mode
  */
 function getAuthToken(): string {
-  const token = import.meta.env.VITE_N8N_AUTH_TOKEN || 
-                import.meta.env.VITE_N8N_JWT_TOKEN
+  const { authToken: token } = getN8nConfig()
   
   if (!token || token.trim() === '') {
     // Don't throw error - return empty string and let the client handle it gracefully

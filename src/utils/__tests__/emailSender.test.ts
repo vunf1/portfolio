@@ -74,6 +74,26 @@ describe('emailSender', () => {
     })).rejects.toThrow('EMAILJS_RECIPIENT_EMPTY')
   })
 
+  it('sendContactEmail passes logo_url (logo image) and website_url (origin) separately', async () => {
+    mockSend.mockResolvedValue({ status: 200, text: 'OK' } as never)
+
+    await sendContactEmail({
+      name: 'Jane',
+      email: 'jane@test.com',
+      subject: 'Hi',
+      message: 'Message'
+    })
+
+    const [, , templateParams] = mockSend.mock.calls[0]
+    expect(templateParams).toHaveProperty('website_url')
+    expect(templateParams).toHaveProperty('logo_url')
+    // logo_url must be the logo image URL, not the bare webpage URL
+    const logoUrl = templateParams.logo_url as string
+    const websiteUrl = templateParams.website_url as string
+    expect(logoUrl).toMatch(/\.(png|jpg|jpeg|svg|webp)/i)
+    expect(logoUrl).toContain('logo')
+  })
+
   it('sendContactEmail omits optional fields when empty', async () => {
     mockSend.mockResolvedValue({ status: 200, text: 'OK' } as never)
 
