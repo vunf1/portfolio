@@ -41,7 +41,6 @@ html.landing-page-active {
 
 /* Apply text justify to all paragraph and text content */
 p,
-.section-subtitle,
 .card-description,
 .project-description,
 .interest-description,
@@ -50,16 +49,27 @@ p,
   text-align: justify;
 }
 
+/* Subtitle elements – always center-aligned */
+.section-subtitle,
+.hero-subtitle,
+.about-subtitle,
+.features-subtitle,
+.footer-subtitle,
+.unlock-subtitle,
+.premium-card-subtitle {
+  text-align: center !important;
+}
+
 /* Exceptions: Center align taglines */
 .hero-tagline,
 .about-profile-tagline {
   text-align: center !important;
 }
 
-/* Portfolio Container - Main Layout */
+/* Portfolio Container - Main Layout (85% of viewport width) */
 .portfolio-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 85vw;
   margin: 0 auto;
   padding: var(--space-16) var(--space-6) 0;
   position: relative;
@@ -72,6 +82,7 @@ p,
 /* Portfolio Sections */
 .portfolio-section {
   width: 100%;
+  max-width: 100%;
   padding: var(--space-16) 0;
   position: relative;
   /* Use theme-aware background */
@@ -119,17 +130,17 @@ p,
   text-align: center;
 }
 
-/* Responsive Container Adjustments */
+/* Responsive Container Adjustments (keep 85vw) */
 @media (max-width: 1200px) {
   .portfolio-container {
-    max-width: 1000px;
+    max-width: 85vw;
     padding: var(--space-12) var(--space-5) 0;
   }
 }
 
 @media (max-width: 992px) {
   .portfolio-container {
-    max-width: 900px;
+    max-width: 85vw;
     padding: var(--space-10) var(--space-4) 0;
   }
   
@@ -144,7 +155,7 @@ p,
 
 @media (max-width: 768px) {
   .portfolio-container {
-    max-width: 100%;
+    max-width: 85vw;
     padding: var(--space-8) var(--space-4) 0;
   }
   

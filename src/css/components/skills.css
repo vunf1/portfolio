@@ -216,6 +216,223 @@
   line-height: 1.6;
 }
 
+/* ===== KEY COMPETENCIES – PREMIUM BLOCK ===== */
+
+.key-competencies-premium {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+}
+
+.key-competency-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  border: 1px solid var(--neutral-200);
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.key-competency-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  background: var(--primary-500);
+  opacity: 0.9;
+}
+
+.key-competency-card:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  border-color: var(--neutral-300);
+  transform: translateY(-2px);
+}
+
+.key-competency-card.skill-proficiency-foundational::before { background: #b45309; }
+.key-competency-card.skill-proficiency-proficient::before { background: #0369a1; }
+.key-competency-card.skill-proficiency-advanced::before { background: #15803d; }
+.key-competency-card.skill-proficiency-expert::before { background: #7c3aed; }
+
+.key-competency-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.key-competency-name-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+  min-width: 0;
+}
+
+.key-competency-name-wrap .skill-language-icon {
+  flex-shrink: 0;
+}
+.key-competency-name-wrap .skill-language-icon img,
+.key-competency-name-wrap img.skill-language-icon {
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  max-width: 1.25rem !important;
+  max-height: 1.25rem !important;
+  object-fit: contain !important;
+}
+
+/* Icon + badge layout (no name, badge below centered) – when icon is available */
+.key-competency-card--with-icon .key-competency-header {
+  display: block;
+  text-align: center;
+  margin-bottom: var(--space-3);
+}
+
+.key-competency-card--with-icon .key-competency-icon-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.key-competency-card--with-icon .key-competency-icon-block .skill-language-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.key-competency-card--with-icon .key-competency-icon-block .skill-language-icon img,
+.key-competency-card--with-icon .skill-language-icon img,
+.key-competency-card--with-icon .key-competency-icon-block img.skill-language-icon {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  max-width: 2.5rem !important;
+  max-height: 2.5rem !important;
+  object-fit: contain !important;
+}
+
+.key-competency-card--with-icon .key-competency-icon-block .key-competency-badge {
+  margin: 0 auto;
+}
+
+/* Denser grid for Programming Languages when cards have description/tech */
+.skills-category--programming-languages .key-competencies-premium {
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.key-competency-name {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--neutral-900);
+  line-height: 1.3;
+  margin: 0;
+  flex: 1;
+  letter-spacing: -0.02em;
+  min-width: 0;
+}
+
+.key-competency-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.key-competency-badge.skill-proficiency-foundational {
+  background: rgba(180, 83, 9, 0.12);
+  color: #b45309;
+}
+.key-competency-badge.skill-proficiency-proficient {
+  background: rgba(3, 105, 161, 0.12);
+  color: #0369a1;
+}
+.key-competency-badge.skill-proficiency-advanced {
+  background: rgba(21, 128, 61, 0.12);
+  color: #15803d;
+}
+.key-competency-badge.skill-proficiency-expert {
+  background: rgba(124, 58, 237, 0.12);
+  color: #7c3aed;
+}
+
+.key-competency-badge-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.key-competency-badge-icon svg {
+  color: inherit;
+}
+
+.key-competency-badge-label {
+  white-space: nowrap;
+}
+
+.key-competency-description {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700, #343a40);
+  line-height: 1.55;
+  margin: 0;
+  margin-top: var(--space-2);
+  margin-bottom: 0;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--neutral-200, #dee2e6);
+}
+
+.key-competency-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+  color: var(--neutral-600);
+  margin-top: var(--space-2);
+}
+
+.key-competency-tech-label {
+  font-weight: 600;
+  color: var(--neutral-700);
+  flex-shrink: 0;
+}
+
+.key-competency-tech-list {
+  line-height: 1.4;
+}
+
+.key-competency-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--neutral-100);
+}
+
+.key-competency-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+  color: var(--neutral-500);
+}
+
+.key-competency-meta-item svg {
+  flex-shrink: 0;
+  color: var(--primary-500);
+}
+
 /* ===== COMPACT SKILL CARDS ===== */
 
 .skills-compact-grid {
@@ -283,16 +500,18 @@
   justify-content: center;
 }
 
-.skill-language-icon img {
+.skill-language-icon img,
+img.skill-language-icon {
   width: 1rem !important; /* 16px - match the actual Devicon icon size */
   height: 1rem !important;
-  object-fit: contain !important;
-  flex-shrink: 0 !important;
   max-width: 1rem !important;
   max-height: 1rem !important;
+  object-fit: contain !important;
+  flex-shrink: 0 !important;
+  display: block;
 }
 
-/* More specific targeting for SVG images */
+/* More specific targeting for SVG images and direct img.skill-language-icon */
 .skill-compact-name img.skill-language-icon {
   width: 1.25rem !important;
   height: 1.25rem !important;
@@ -300,6 +519,7 @@
   max-height: 1.25rem !important;
   min-width: 1.25rem !important;
   min-height: 1.25rem !important;
+  object-fit: contain !important;
 }
 
 .skill-compact-level {
@@ -385,26 +605,41 @@
   }
 }
 
-/* Proficiency Icon Colors */
-.skill-proficiency .fa-seedling,
-.legend-icon .fa-seedling {
-  color: #90EE90 !important; /* Light green */
+/* Proficiency Level Icon Colors (legend + Key Competencies) – distinct per level */
+.skill-proficiency-icon.skill-proficiency-foundational,
+.legend-icon.skill-proficiency-foundational {
+  color: #b45309;
+}
+.skill-proficiency-icon.skill-proficiency-foundational svg,
+.legend-icon.skill-proficiency-foundational svg {
+  color: inherit;
 }
 
-.skill-proficiency .fa-leaf,
-.legend-icon .fa-leaf {
-  color: #228B22 !important; /* Dark green */
+.skill-proficiency-icon.skill-proficiency-proficient,
+.legend-icon.skill-proficiency-proficient {
+  color: #0369a1;
+}
+.skill-proficiency-icon.skill-proficiency-proficient svg,
+.legend-icon.skill-proficiency-proficient svg {
+  color: inherit;
 }
 
-.skill-proficiency .fa-tree,
-.legend-icon .fa-tree {
-  color: #006400 !important; /* Dark forest green */
+.skill-proficiency-icon.skill-proficiency-advanced,
+.legend-icon.skill-proficiency-advanced {
+  color: #15803d;
+}
+.skill-proficiency-icon.skill-proficiency-advanced svg,
+.legend-icon.skill-proficiency-advanced svg {
+  color: inherit;
 }
 
-.skill-proficiency .fa-crown,
-.legend-icon .fa-crown {
-  color: #FFD700 !important; /* Gold */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Black outline effect */
+.skill-proficiency-icon.skill-proficiency-expert,
+.legend-icon.skill-proficiency-expert {
+  color: #7c3aed;
+}
+.skill-proficiency-icon.skill-proficiency-expert svg,
+.legend-icon.skill-proficiency-expert svg {
+  color: inherit;
 }
 
 .skill-experience i,
@@ -431,6 +666,11 @@
   .skills-category-title {
     font-size: var(--font-size-xl);
     margin-bottom: var(--space-4);
+  }
+
+  .key-competencies-premium {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
   }
   
   .skills-grid {
@@ -516,4 +756,4 @@
 
 
 /* Dark Theme for Updated Skill Items */
-
+

@@ -89,9 +89,7 @@
   align-items: center;
   justify-content: center;
   font-size: 1.25rem;
-  box-shadow: 
-    0 4px 12px rgba(0, 0, 0, 0.15),
-    0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   position: relative !important;
   /* CRITICAL: Force visible overflow to prevent scrollbars on hover */
   overflow: visible !important;
@@ -100,7 +98,6 @@
   z-index: 10000 !important;
   transition: 
     transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -122,11 +119,9 @@
 
 /* Hover State - Smooth scale animation (only for default buttons without specific styles) */
 /* Best practice: Scale transform doesn't affect layout, prevents scrollbars */
-.fab-item-static:hover:not(.fab-item-contact):not(.fab-item-language):not(.fab-item-theme) {
+.fab-item-static:hover:not(.fab-item-contact):not(.fab-item-language):not(.fab-item-theme):not(.fab-item-scrolltop) {
   transform: translateY(-2px) scale(1.15);
-  box-shadow: 
-    0 6px 16px rgba(0, 0, 0, 0.2),
-    0 3px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
   /* Keep original width/height to prevent layout shift and scrollbars */
   width: 56px;
   height: 56px;
@@ -140,10 +135,11 @@
   transition: transform 0.1s ease;
 }
 
-/* Focus State */
-.fab-item-static:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
+/* No outline on focus or press (removes default blue focus ring) */
+.fab-item-static:focus,
+.fab-item-static:focus-visible,
+.fab-item-static:active {
+  outline: none;
 }
 
 /* Remove default button styles */
@@ -162,7 +158,7 @@
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 2px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -170,6 +166,16 @@
   width: 3rem;
   height: 2.25rem;
   border-radius: 2px;
+}
+
+/* Flag emoji (language FAB) - size to fit button */
+.fab-item-language .fab-flag-icon {
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 /* Icon Styling */
@@ -185,14 +191,10 @@
   background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
   color: var(--color-gray-900);
   border-color: rgba(255, 193, 7, 0.2);
-  /* Completely override base box-shadow */
-  box-shadow: 
-    0 4px 12px rgba(255, 193, 7, 0.25),
-    0 2px 4px rgba(255, 193, 7, 0.15);
+  box-shadow: none;
   /* Smooth transitions for hover scale */
   transition: 
     transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: center center;
   /* Prevent affecting other buttons */
@@ -201,10 +203,7 @@
 
 .fab-item-theme:hover {
   background: linear-gradient(135deg, #ffb300 0%, #ffa000 100%);
-  /* Override hover shadow */
-  box-shadow: 
-    0 6px 16px rgba(255, 193, 7, 0.3),
-    0 3px 6px rgba(255, 193, 7, 0.2);
+  box-shadow: none;
   transform: translateY(-2px) scale(1.15);
   /* Keep original width/height to prevent layout shift and scrollbars */
   width: 56px;
@@ -307,8 +306,29 @@
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ===== DARK MODE TOGGLE ===== */
+.fab-item-darkmode {
+  /* Uses base .fab-item-static styles; optional overrides here */
+}
 
+/* ===== SCROLL TO TOP ===== */
+.fab-item-scrolltop {
+  background: var(--color-white);
+  color: var(--color-gray-600);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
 
+.fab-item-scrolltop:hover {
+  color: var(--color-primary);
+  background: var(--color-white);
+  transform: translateY(-2px) scale(1.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.fab-item-scrolltop:active {
+  transform: translateY(0) scale(1.02);
+}
 
 /* ===== MOBILE RESPONSIVE ===== */
 @media (max-width: 767px) {

@@ -1,29 +1,47 @@
-/* ===== SECTION SKELETON LOADING ===== */
+/* Section skeleton – kept for backward compat if referenced elsewhere. Prefer SectionPlaceholder. */
+
+/* Section placeholder – minimal, no animation, reserves space while lazy chunks load */
+.section-placeholder {
+  padding: var(--space-8);
+  margin: var(--space-6) 0;
+  min-height: 120px;
+}
+
+.section-placeholder-block {
+  height: 1px;
+  visibility: hidden;
+}
+
 .section-skeleton {
   padding: var(--space-8);
   background: var(--neutral-50);
   border-radius: var(--radius-lg);
   border: 1px solid var(--neutral-200);
   margin: var(--space-6) 0;
-  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  overflow: hidden;
 }
 
 .skeleton-header {
   margin-bottom: var(--space-6);
 }
 
-.skeleton-title {
-  height: 2rem;
+.skeleton-title,
+.skeleton-subtitle,
+.skeleton-line {
+  position: relative;
   background: var(--neutral-200);
   border-radius: var(--radius-md);
+}
+
+.skeleton-title {
+  height: 2rem;
   margin-bottom: var(--space-3);
   width: 60%;
 }
 
 .skeleton-subtitle {
   height: 1.25rem;
-  background: var(--neutral-200);
-  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
   width: 80%;
 }
 
@@ -35,8 +53,6 @@
 
 .skeleton-line {
   height: 1rem;
-  background: var(--neutral-200);
-  border-radius: var(--radius-md);
   width: 100%;
 }
 
@@ -44,15 +60,28 @@
   width: 70%;
 }
 
+/* Premium shimmer – Tailwind animate-pulse equivalent with subtle sweep */
+.skeleton-title,
+.skeleton-subtitle,
+.skeleton-line {
+  animation: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 @keyframes skeleton-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
-    opacity: 0.7;
+    opacity: 0.5;
   }
 }
 
-/* Dark theme skeleton */
-
-
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-title,
+  .skeleton-subtitle,
+  .skeleton-line {
+    animation: none;
+    opacity: 0.9;
+  }
+}
