@@ -51,33 +51,34 @@
     {
       "category": "Key Competencies",
       "skills": [
-        { "name": "End-to-end Software Delivery (SDLC, Clean Architecture)", "level": "Expert" },
-        { "name": "DevOps & CI/CD (Containers, IaC)", "level": "Proficient" },
-        { "name": "Networking Engineering (L1/L2/L3, VLAN/VPN, QoS)", "level": "Proficient" },
-        { "name": "Security & Hardening (Firewalls/IDS, VPNs, Secrets)", "level": "Advanced" },
-        { "name": "Observability & Reliability (Logs/Metrics/Traces, SLOs)", "level": "Proficient" },
-        { "name": "Automation & Scripting (Python/Bash/PowerShell, AI-assisted)", "level": "Advanced" },
-        { "name": "Systems Design, Process Optimization & Runbooks", "level": "Expert" },
-        { "name": "Streaming Operations (OBS, RTMP/SRT, NDI, Overlays)", "level": "Advanced" }
+        { "name": "End-to-end Software Delivery (SDLC, Clean Architecture)", "level": "Expert", "description": "Full lifecycle delivery with clean architecture, testing, and maintainable code." },
+        { "name": "DevOps & CI/CD (Containers, IaC)", "level": "Proficient", "description": "Containers, pipelines, and infrastructure-as-code for reliable deployments." },
+        { "name": "Networking Engineering (L1/L2/L3, VLAN/VPN, QoS)", "level": "Proficient", "description": "Design and operate networks with VLANs, VPNs, and traffic prioritization." },
+        { "name": "Security & Hardening (Firewalls/IDS, VPNs, Secrets)", "level": "Advanced", "description": "Firewalls, intrusion detection, VPNs, and secrets management." },
+        { "name": "Observability & Reliability (Logs/Metrics/Traces, SLOs)", "level": "Proficient", "description": "Monitoring, alerting, and SLO-driven reliability practices." },
+        { "name": "Automation & Scripting (Python/Bash/PowerShell, AI-assisted)", "level": "Advanced", "description": "Scripting and automation with AI-assisted tooling where appropriate." },
+        { "name": "Systems Design, Process Optimization & Runbooks", "level": "Expert", "description": "Architecture, process improvement, and operational runbooks." },
+        { "name": "Streaming Operations (OBS, RTMP/SRT, NDI, Overlays)", "level": "Advanced", "description": "Live streaming stacks: OBS, protocols, and overlay pipelines." }
       ]
     },
     {
       "category": "Programming Languages",
       "skills": [
-        { "name": "Python", "level": "Advanced" },
-        { "name": "TypeScript", "level": "Advanced" },
-        { "name": "JavaScript (ES6+)", "level": "Advanced" },
-        { "name": "Java", "level": "Advanced" },
-        { "name": "C#", "level": "Advanced" },
-        { "name": "C", "level": "Advanced" },
-        { "name": "C++", "level": "Advanced" },
-        { "name": "VB.NET / VBA", "level": "Advanced" },
-        { "name": "PHP", "level": "Advanced" },
-        { "name": "Lua", "level": "Advanced" },
-        { "name": "Bash / Shell", "level": "Advanced" },
-        { "name": "PowerShell", "level": "Advanced" },
-        { "name": "SQL", "level": "Advanced" },
-        { "name": "NoSQL", "level": "Proficient" }
+        { "name": "Python", "level": "Advanced", "description": "Full-stack, automation, streaming tooling, GUIs.", "frontend": ["PySide6", "PyQt5", "CustomTkinter"], "backend": ["FastAPI", "Flask", "SQLAlchemy", "Celery", "pymongo"], "security": ["passlib", "bcrypt", "python-jose", "cryptography"] },
+        { "name": "TypeScript", "level": "Advanced", "description": "Type-safe JavaScript, strict mode, tooling (tsc, esbuild).", "frontend": ["React", "Preact", "Next.js", "Vite", "TanStack Query", "Tailwind", "Electron", "Tauri", "Vitest"], "backend": ["Node.js", "Deno", "tsx", "Express"], "security": ["JWT", "CORS", "CSRF handling", "input validation", "XSS sanitization"] },
+        { "name": "JavaScript (ES6+)", "level": "Advanced", "description": "Modern JS, async, modules", "frontend": ["React", "Vue", "Svelte", "Socket.io"], "backend": ["Node.js", "Express"] },
+        { "name": "Rust", "level": "Proficient", "description": "Systems, CLI, web backends", "frontend": ["Tauri"], "backend": ["Axum", "Tokio", "reqwest"], "security": ["argon2", "jsonwebtoken", "hmac", "sha2", "TOTP", "governor"] },
+        { "name": "Java", "level": "Advanced", "description": "JVM, enterprise apps", "frontend": [], "backend": ["Spring Boot", "Maven", "Gradle"] },
+        { "name": "C#", "level": "Advanced", "description": ".NET ecosystem", "frontend": ["Blazor"], "backend": ["ASP.NET", ".NET Core"] },
+        { "name": "C", "level": "Advanced", "description": "Systems, embedded", "frontend": [], "backend": [] },
+        { "name": "C++", "level": "Advanced", "description": "Performance-critical systems", "frontend": [], "backend": ["Qt", "CMake"] },
+        { "name": "VB.NET / VBA", "level": "Advanced", "description": "Windows, Office automation", "frontend": [], "backend": [] },
+        { "name": "PHP", "level": "Advanced", "description": "Web backend", "frontend": [], "backend": ["Laravel", "Composer", "MongoDB"], "security": ["Argon2id", "SHA-256 token", "CSRF", "CORS", "rate limiting", "HttpOnly/Secure/SameSite", "session binding", "HTTPS enforcement", "input validation", "path sanitization"] },
+        { "name": "Lua", "level": "Advanced", "description": "Scripting, OBS plugins", "frontend": [], "backend": [] },
+        { "name": "Bash / Shell", "level": "Advanced", "description": "CLI, DevOps, deployment, incident response", "frontend": ["TUI", "colored output"], "backend": ["podman", "docker", "pg_dump", "psql", "cron", ".env parsing"], "security": ["IR scripts", "threat hunting", "backup encryption"] },
+        { "name": "PowerShell", "level": "Advanced", "description": "Windows automation, system info, DevOps tooling", "frontend": ["WinForms", "TUI (Terminal UI)", "system tray"], "backend": ["WMI/CIM", "Chocolatey", "Winget", "pyenv", "Registry", "DISM", "powercfg", "PS2EXE"], "security": ["IR containment", "hardening", "playbooks", "self-elevation", "cert generation"] },
+        { "name": "SQL", "level": "Advanced", "description": "Structured queries, schema design, ACID", "frontend": [], "databases": ["PostgreSQL", "MySQL", "SQLite", "indexes", "transactions", "migrations", "prepared statements"] },
+        { "name": "NoSQL", "level": "Proficient", "description": "Document and key-value stores", "frontend": [], "databases": ["MongoDB", "Redis", "document model", "aggregation", "key-value", "pub/sub"] }
       ]
     },
     {
@@ -96,7 +97,8 @@
         { "name": "Firewall/IDS", "level": "Proficient" },
         { "name": "Encryption (AES, RSA, ECC, Hashing algorithms)", "level": "Advanced" },
         { "name": "Log Analysis & Threat Hunting", "level": "Advanced" },
-        { "name": "Zero Trust Concepts", "level": "Advanced" }
+        { "name": "Zero Trust Concepts", "level": "Advanced" },
+        { "name": "Web App Security (CSRF, XSS, session hardening)", "level": "Advanced" }
       ]
     },
     {

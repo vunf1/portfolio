@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'preact/hooks'
+import { useTranslation } from '../contexts/TranslationContext'
+import { Icon } from './ui/Icon'
 import type { TestimonialsProps } from '../types'
 
 export function Testimonials({ testimonials }: TestimonialsProps) {
+  const { t } = useTranslation()
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
@@ -47,7 +50,7 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
           <div className="testimonial-card premium-card">
             <div className="testimonial-content">
               <div className="quote-icon">
-                <i className="fa-solid fa-quote-left"></i>
+                <Icon name="quote-left" size={24} />
               </div>
               
               <blockquote className="testimonial-text">
@@ -69,7 +72,7 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
                 
                 <div className="testimonial-rating">
                   {[...Array(testimonials[currentTestimonial]?.rating || 0)].map((_, index) => (
-                    <i key={index} className="fa-solid fa-star text-warning"></i>
+                    <Icon key={index} name="star" size={16} className="text-warning" />
                   ))}
                 </div>
               </div>
@@ -82,9 +85,9 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
           <button 
             className="control-btn prev-btn"
             onClick={prevTestimonial}
-            aria-label="Previous testimonial"
+            aria-label={t('testimonials.prevAria')}
           >
-            <i className="fa-solid fa-chevron-left"></i>
+            <Icon name="chevron-left" size={20} />
           </button>
           
           <div className="testimonial-indicators">
@@ -93,7 +96,7 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
                 key={index}
                 className={`indicator ${index === currentTestimonial ? 'active' : ''}`}
                 onClick={() => goToTestimonial(index)}
-                aria-label={`Go to testimonial ${index + 1}`}
+                aria-label={t('testimonials.goToAria', undefined, { n: String(index + 1) })}
               />
             ))}
           </div>
@@ -101,17 +104,17 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
           <button 
             className="control-btn next-btn"
             onClick={nextTestimonial}
-            aria-label="Next testimonial"
+            aria-label={t('testimonials.nextAria')}
           >
-            <i className="fa-solid fa-chevron-right"></i>
+            <Icon name="chevron-right" size={20} />
           </button>
         </div>
         
         {/* Testimonial List */}
         <div className="testimonials-list">
           <div className="list-header">
-            <h3>What Clients Say</h3>
-            <p>Real feedback from real projects</p>
+            <h3>{t('testimonials.sectionTitle')}</h3>
+            <p>{t('testimonials.sectionSubtitle')}</p>
           </div>
           
           <div className="testimonial-items">
@@ -126,7 +129,7 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
                     <h4 className="item-name">{testimonial.name}</h4>
                     <div className="item-rating">
                       {[...Array(testimonial.rating)].map((_, starIndex) => (
-                        <i key={starIndex} className="fa-solid fa-star text-warning"></i>
+                        <Icon key={starIndex} name="star" size={16} className="text-warning" />
                       ))}
                     </div>
                   </div>

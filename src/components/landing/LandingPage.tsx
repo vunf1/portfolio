@@ -1,24 +1,20 @@
 import { useState, useEffect } from 'preact/hooks'
-import { useTranslation } from '../../contexts/TranslationContext'
-import { usePortfolioData } from '../../hooks/usePortfolioData'
 import { LandingHero } from './LandingHero'
 import { LandingFeatures } from './LandingFeatures'
 import { LandingAbout } from './LandingAbout'
 import { LandingFooter } from './LandingFooter'
 import { FloatingActionButton } from '../FloatingActionButton'
-import { SectionSkeleton } from '../SectionSkeleton'
 import { ContactModal } from '../ui/ContactModal'
+import type { PortfolioData } from '../../types/portfolio'
 
 interface LandingPageProps {
+  portfolioData: PortfolioData
   onNavigateToPortfolio: () => void
   onWarmPortfolio?: () => void
   className?: string
 }
 
-export function LandingPage({ onNavigateToPortfolio, onWarmPortfolio, className = '' }: LandingPageProps) {
-  const { currentLanguage } = useTranslation()
-  const { portfolioData, loading } = usePortfolioData(currentLanguage)
-  const [isPortfolioVisible, setIsPortfolioVisible] = useState(false)
+export function LandingPage({ portfolioData, onNavigateToPortfolio, onWarmPortfolio, className = '' }: LandingPageProps) {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false)
 
   const handleContactClick = () => {
@@ -65,30 +61,13 @@ export function LandingPage({ onNavigateToPortfolio, onWarmPortfolio, className 
 
   const handleNavigateToPortfolio = () => {
     onWarmPortfolio?.()
-    setIsPortfolioVisible(true)
     onNavigateToPortfolio()
   }
 
-  if (isPortfolioVisible) {
-    return null // Portfolio will be rendered by parent
-  }
-
-  if (loading || !portfolioData || !portfolioData.personal) {
-    return (
-      <div className={`landing-page ${className}`}>
-        <SectionSkeleton />
-      </div>
-    )
-  }
-
-  // Additional safety check: ensure personal has required fields
+  // Parent (App) ensures portfolioData.personal exists before rendering
   const personal = portfolioData.personal
   if (!personal || typeof personal !== 'object') {
-    return (
-      <div className={`landing-page ${className}`}>
-        <SectionSkeleton />
-      </div>
-    )
+    return null
   }
 
   return (

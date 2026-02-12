@@ -411,39 +411,6 @@ export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): Use
   }
 }
 
-export function useConsolidatedData(currentLanguage: SupportedLanguage = 'en') {
-  const [data, setData] = useState<{ portfolio: PortfolioData; ui: Record<string, unknown> } | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        setLoading(true)
-        setError(null)
-
-        const languageData = await loadLanguageSections(currentLanguage)
-        const portfolio = createPortfolioData(languageData)
-        const ui = languageData.get('ui')
-
-        if (!portfolio || !ui) {
-          throw new Error(`${currentLanguage} data is missing required sections`)
-        }
-
-        setData({ portfolio, ui })
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Unknown error occurred'))
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadData()
-  }, [currentLanguage])
-
-  return { data, loading, error }
-}
-
 export function resetPortfolioDataCaches() {
   dataCache.clear()
   sectionFetchPromises.clear()

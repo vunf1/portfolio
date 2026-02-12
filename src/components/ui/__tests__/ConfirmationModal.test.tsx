@@ -111,25 +111,25 @@ describe('ConfirmationModal Component', () => {
   it('renders with danger variant', () => {
     const props = { ...defaultProps, isOpen: true, variant: 'danger' as const }
     render(<ConfirmationModal {...props} />)
-    
-    const confirmButton = screen.getByText('Confirm')
-    expect(confirmButton).toHaveClass('btn-danger')
+    const confirmButton = screen.getByRole('button', { name: /confirm/i })
+    expect(confirmButton).toBeInTheDocument()
+    expect(confirmButton).toHaveClass('from-danger')
   })
 
   it('renders with warning variant', () => {
     const props = { ...defaultProps, isOpen: true, variant: 'warning' as const }
     render(<ConfirmationModal {...props} />)
-    
-    const confirmButton = screen.getByText('Confirm')
-    expect(confirmButton).toHaveClass('btn-warning')
+    const confirmButton = screen.getByRole('button', { name: /confirm/i })
+    expect(confirmButton).toBeInTheDocument()
+    expect(confirmButton).toHaveClass('from-primary')
   })
 
   it('renders with info variant', () => {
     const props = { ...defaultProps, isOpen: true, variant: 'info' as const }
     render(<ConfirmationModal {...props} />)
-    
-    const confirmButton = screen.getByText('Confirm')
-    expect(confirmButton).toHaveClass('btn-info')
+    const confirmButton = screen.getByRole('button', { name: /confirm/i })
+    expect(confirmButton).toBeInTheDocument()
+    expect(confirmButton).toHaveClass('from-primary')
   })
 
   it('renders with custom icon', () => {
@@ -139,9 +139,8 @@ describe('ConfirmationModal Component', () => {
       icon: 'fa-solid fa-custom-icon'
     }
     render(<ConfirmationModal {...props} />)
-    
-    const icon = screen.getByRole('dialog').querySelector('.fa-custom-icon')
-    expect(icon).toBeInTheDocument()
+    const dialog = screen.getByRole('dialog')
+    expect(dialog.querySelector('svg')).toBeInTheDocument()
   })
 
   it('has proper accessibility attributes', () => {

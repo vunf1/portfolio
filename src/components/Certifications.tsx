@@ -1,5 +1,5 @@
 import { useTranslation } from '../contexts/TranslationContext'
-import { Section, Card, Badge, Button } from './ui'
+import { Section, Card, Badge, Button, Icon } from './ui'
 import type { CertificationsProps } from '../types/components'
 
 export function Certifications({ certifications, className = '', id }: CertificationsProps) {
@@ -27,18 +27,18 @@ export function Certifications({ certifications, className = '', id }: Certifica
           >
             <div className="certification-details">
               <div className="certification-date">
-                <i className="fa-solid fa-calendar me-2"></i>
+                <Icon name="calendar" size={16} className="mr-2" />
                 {String(t('certifications.issued'))}: {cert.issueDate}
               </div>
               {cert.expiryDate && (
                 <div className="certification-expiry">
-                  <i className="fa-solid fa-clock me-2"></i>
+                  <Icon name="clock" size={16} className="mr-2" />
                   {String(t('certifications.expires'))}: {cert.expiryDate}
                 </div>
               )}
               {cert.credentialId && (
                 <div className="certification-id">
-                  <i className="fa-solid fa-id-card me-2"></i>
+                  <Icon name="id-card" size={16} className="mr-2" />
                   ID: {cert.credentialId}
                 </div>
               )}
@@ -69,7 +69,7 @@ export function Certifications({ certifications, className = '', id }: Certifica
                   size="sm" 
                   className="verify-btn"
                 >
-                  <i className="fa-solid fa-external-link me-2"></i>
+                  <Icon name="external-link" size={16} className="mr-2" />
                   {String(t('certifications.verify'))}
                 </Button>
               )}

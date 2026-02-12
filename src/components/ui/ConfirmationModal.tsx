@@ -1,5 +1,8 @@
 import { useEffect, useRef } from 'preact/hooks'
 import { useTranslation } from '../../contexts/TranslationContext'
+import { Button } from './Button'
+import { Icon } from './Icon'
+import { cn } from '../../lib/utils'
 import type { ConfirmationModalProps } from '../../types'
 
 export function ConfirmationModal({
@@ -11,34 +14,30 @@ export function ConfirmationModal({
   confirmText,
   cancelText,
   variant = 'danger',
-  icon
+  icon: iconClass
 }: ConfirmationModalProps) {
   const { t } = useTranslation()
   const modalRef = useRef<HTMLDivElement>(null)
   const confirmButtonRef = useRef<HTMLButtonElement>(null)
 
-  // Handle escape key
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isOpen) {
         onClose()
       }
     }
-
     if (isOpen) {
       document.addEventListener('keydown', handleEscape)
-      // Focus the confirm button when modal opens
       setTimeout(() => {
-        confirmButtonRef.current?.focus()
+        const el = confirmButtonRef.current
+        if (el && typeof (el as HTMLButtonElement).focus === 'function') {
+          (el as HTMLButtonElement).focus()
+        }
       }, 100)
     }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape)
-    }
+    return () => document.removeEventListener('keydown', handleEscape)
   }, [isOpen, onClose])
 
-  // Handle click outside modal
   const handleOverlayClick = (event: MouseEvent) => {
     if (event.target === modalRef.current) {
       onClose()
@@ -49,89 +48,57 @@ export function ConfirmationModal({
     return null
   }
 
-  const getVariantClasses = () => {
-    switch (variant) {
-      case 'danger':
-        return {
-          iconClass: 'text-danger',
-          buttonClass: 'btn-danger',
-          icon: icon || 'fa-solid fa-triangle-exclamation'
-        }
-      case 'warning':
-        return {
-          iconClass: 'text-warning',
-          buttonClass: 'btn-warning',
-          icon: icon || 'fa-solid fa-exclamation-triangle'
-        }
-      case 'info':
-        return {
-          iconClass: 'text-info',
-          buttonClass: 'btn-info',
-          icon: icon || 'fa-solid fa-info-circle'
-        }
-      default:
-        return {
-          iconClass: 'text-primary',
-          buttonClass: 'btn-primary',
-          icon: icon || 'fa-solid fa-question-circle'
-        }
-    }
+  const variantConfig = {
+    danger: { iconClass: 'text-danger', buttonVariant: 'destructive' as const, icon: iconClass || 'fa-solid fa-triangle-exclamation' },
+    warning: { iconClass: 'text-warning', buttonVariant: 'primary' as const, icon: iconClass || 'fa-solid fa-exclamation-triangle' },
+    info: { iconClass: 'text-info', buttonVariant: 'primary' as const, icon: iconClass || 'fa-solid fa-info-circle' },
+    primary: { iconClass: 'text-primary', buttonVariant: 'primary' as const, icon: iconClass || 'fa-solid fa-question-circle' }
   }
-
-  const variantClasses = getVariantClasses()
+  const config = variantConfig[variant] ?? variantConfig.primary
 
   return (
-    <div 
-      className="modal fade show d-block" 
-      style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+    <div
+      className="fixed inset-0 z-[1050] flex items-center justify-center bg-black/50"
       ref={modalRef}
       onClick={handleOverlayClick}
       role="dialog"
       aria-modal="true"
       aria-labelledby="confirmation-modal-title"
     >
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content premium-modal">
-          <div className="modal-header border-0 pb-0">
-            <div className="d-flex align-items-center w-100">
-              <div className={`confirmation-icon ${variantClasses.iconClass} me-3`}>
-                <i className={variantClasses.icon}></i>
-              </div>
-              <h5 className="modal-title" id="confirmation-modal-title">
-                {title || t('confirmation.title', 'Confirm Action')}
-              </h5>
-            </div>
+      <div className="mx-4 w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 shadow-xl" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center gap-3 pb-3">
+          <div className={cn('flex h-10 w-10 shrink-0 items-center justify-center rounded-full', config.iconClass)}>
+            <Icon name={config.icon} size={20} />
           </div>
-          
-          <div className="modal-body pt-3">
-            <p className="confirmation-message mb-0">
-              {message || t('confirmation.message', 'Are you sure you want to proceed?')}
-            </p>
-          </div>
-          
-          <div className="modal-footer border-0 pt-3">
-            <div className="d-flex gap-2 w-100">
-              <button
-                type="button"
-                className="btn btn-outline-secondary flex-fill"
-                onClick={onClose}
-                aria-label={cancelText || t('confirmation.cancel', 'Cancel')}
-              >
-                <i className="fa-solid fa-times me-2"></i>
-                {cancelText || t('confirmation.cancel', 'Cancel')}
-              </button>
-              <button
-                ref={confirmButtonRef}
-                type="button"
-                className={`btn ${variantClasses.buttonClass} flex-fill`}
-                onClick={onConfirm}
-                aria-label={confirmText || t('confirmation.confirm', 'Confirm')}
-              >
-                <i className="fa-solid fa-check me-2"></i>
-                {confirmText || t('confirmation.confirm', 'Confirm')}
-              </button>
-            </div>
-          </div>
+          <h5 className="text-lg font-semibold" id="confirmation-modal-title">
+            {title || t('confirmation.title', 'Confirm Action')}
+          </h5>
+        </div>
+        <p className="pb-4 text-gray-600">
+          {message || t('confirmation.message', 'Are you sure you want to proceed?')}
+        </p>
+        <div className="modal-footer flex flex-1 flex-wrap items-center justify-end gap-3 border-t border-gray-100 pt-4">
+          <Button
+            type="button"
+            variant="outlineElevated"
+            size="md"
+            className="min-w-[100px] rounded-lg"
+            onClick={onClose}
+            aria-label={cancelText || t('confirmation.cancel', 'Cancel')}
+          >
+            {cancelText || t('confirmation.cancel', 'Cancel')}
+          </Button>
+          <Button
+            ref={confirmButtonRef}
+            type="button"
+            variant={config.buttonVariant}
+            size="md"
+            className="min-w-[100px] rounded-lg shadow-md hover:shadow-lg"
+            onClick={onConfirm}
+            aria-label={confirmText || t('confirmation.confirm', 'Confirm')}
+          >
+            {confirmText || t('confirmation.confirm', 'Confirm')}
+          </Button>
         </div>
       </div>
     </div>

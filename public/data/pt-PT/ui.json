@@ -34,10 +34,13 @@
   "common": {
     "darkMode": "Modo escuro",
     "error": "Erro",
+    "errorBoundaryMessage": "Pedimos desculpa, mas ocorreu algo inesperado. Por favor, tente atualizar a página.",
     "language": "Língua",
     "lightMode": "Modo de luz",
     "loading": "Carregando...",
+    "notifications": "Notificações",
     "refresh": "Atualizar",
+    "refreshPage": "Atualizar Página",
     "somethingWentWrong": "Algo correu mal",
     "theme": "Tema",
     "tryRefreshing": "Tente atualizar a página."
@@ -47,6 +50,7 @@
     "closeMenu": "Fechar menu",
     "darkMode": "Modo escuro",
     "lightMode": "Modo claro",
+    "scrollToTop": "Ir ao topo",
     "switchToDark": "Mudar para modo escuro",
     "switchToLight": "Mudar para modo claro",
     "switchToEnglish": "Mudar para inglês",
@@ -66,10 +70,14 @@
   },
   "experience": {
     "achievements": "Principais realizações",
+    "carouselAria": "Carrossel de experiência",
     "duration": "Duração",
     "highlights": "Destaques",
     "impact": "Impacto",
     "location": "Localização",
+    "goToAria": "Ir para experiência {{n}}",
+    "nextAria": "Experiência seguinte",
+    "prevAria": "Experiência anterior",
     "subtitle": "O meu percurso em tecnologia e operações",
     "technologies": "Tecnologias",
     "title": "Experiência profissional"
@@ -80,7 +88,7 @@
     "scrollDown": "Deslocação para baixo",
     "subtitle": "Operações de back-end - Network - OOP",
     "tagline": "Sempre a aprender. Construir com objectivos.",
-    "title": "Programador Full-Stack"
+    "title": "Engenheiro Full-Stack"
   },
   "interests": {
     "lifestyle": "Estilo de vida e bem-estar",
@@ -92,6 +100,8 @@
   },
   "navigation": {
     "awards": "Prémios",
+    "backToHome": "Voltar ao Início",
+    "backToLanding": "Voltar à Página de Entrada",
     "brand": "Soluções Informáticas e Tecnológicas",
     "certifications": "Certificações",
     "education": "Educação",
@@ -99,7 +109,8 @@
     "interests": "Interesses",
     "projects": "Projectos",
     "skills": "Competências",
-    "testimonials": "Testemunhos"
+    "testimonials": "Testemunhos",
+    "toggleMenu": "Alternar menu de navegação"
   },
   "projects": {
     "challenges": "Desafios",
@@ -130,13 +141,24 @@
       "Proficient": "Proficiente", 
       "Advanced": "Avançado",
       "Expert": "Perito"
-    }
+    },
+    "projectSingular": "projeto",
+    "projectPlural": "projetos",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "databases": "Bases de dados",
+    "security": "Segurança"
   },
   "testimonials": {
     "company": "Empresa",
     "date": "Data",
+    "goToAria": "Ir para testemunho {{n}}",
+    "nextAria": "Testemunho seguinte",
     "position": "Posição",
+    "prevAria": "Testemunho anterior",
     "rating": "Classificação",
+    "sectionSubtitle": "Feedback real de projetos reais",
+    "sectionTitle": "O que os Clientes Dizem",
     "subtitle": "O que as pessoas dizem",
     "title": "Testemunhos"
   },
@@ -153,6 +175,7 @@
       "phone": "Telefone",
       "phoneHint": "Opcional, formato E.164",
       "phoneExample": "Exemplo: +351912345678",
+      "phonePlaceholder": "+351912345678",
       "companyName": "Nome da Empresa",
       "companyNamePlaceholder": "Nome da sua empresa",
       "companyIdentifier": "Identificador da Empresa",
@@ -177,7 +200,92 @@
       "subjectTooShort": "O assunto deve ter pelo menos 3 caracteres",
       "submitFailed": "Falha ao enviar mensagem. Por favor, tente novamente.",
       "timeout": "Tempo de espera esgotado. Por favor, verifique a sua ligação e tente novamente.",
-      "networkError": "Erro de rede. Por favor, verifique a sua ligação e tente novamente."
+      "networkError": "Erro de rede. Por favor, verifique a sua ligação e tente novamente.",
+      "emailjsRecipient": "Erro de configuração de email: defina o campo \"Para\" do modelo como {{to_email}} no painel EmailJS (dashboard.emailjs.com)."
     }
+  },
+  "landing": {
+    "hero": {
+      "badge": "JMSIT — Serviços de TI & Tecnologia",
+      "summary": "Especialista em desenvolvimento de software, automação e soluções tecnológicas. Ofereço serviços completos desde desenvolvimento full-stack e integração de IA até reparação de computadores, instalação de racks de servidores e consultoria em TI. Trabalho com empresas e particulares para criar soluções práticas que resolvem problemas reais e melhoram a eficiência operacional.",
+      "ctaContact": "Contacto",
+      "ctaServices": "Serviços",
+      "ctaAbout": "Sobre",
+      "logoSubtitle": "Segurança | Inteligência | Tecnologia"
+    },
+    "footer": {
+      "navigation": "Navegação",
+      "about": "Sobre",
+      "services": "Serviços",
+      "experience": "Experiência",
+      "projects": "Projetos",
+      "expertise": "Especialidades",
+      "contact": "Contacto",
+      "copyright": "Todos os direitos reservados.",
+      "wcagBadge": "Conformidade WCAG 2.2 AA",
+      "gdprBadge": "Conformidade GDPR",
+      "perfBadge": "Otimizado para Core Web Vitals",
+      "builtWith": "Desenvolvido com:",
+      "mitLicense": "Licença MIT",
+      "sourceCode": "Código Fonte",
+      "techPreact": "Preact - Alternativa de 3kB ao React",
+      "techTailwind": "Tailwind CSS - CSS utilitário",
+      "techTypescript": "TypeScript - JavaScript tipado",
+      "techVite": "Vite - Ferramentas frontend de próxima geração",
+      "viewSourceOnGitHub": "Ver código fonte no GitHub"
+    },
+    "about": {
+      "title": "Sobre Mim",
+      "subtitle": "Especialista em tecnologia com mais de uma década de experiência em desenvolvimento de software, automação, infraestrutura de TI e soluções técnicas",
+      "description": "Apaixonei-me por computadores desde criança e cresci a observar a evolução tecnológica diante dos meus olhos, o que foi e continua a ser prodigioso. Comecei a estudar conceitos básicos de informática aos 10 anos, apenas pelo prazer de aprender, vendo a minha capacidade de lógica e resolução de problemas a entrar em ação na área de hardware. A programação começou aos 14 anos e desenvolvi um lema que gosto de transmitir: \"Pensar e Executar\". Desenvolvi uma relação muito forte com a aprendizagem, não em termos de dependência, mas na necessidade saudável de aprender cada vez mais para poder executar as tarefas. Tudo o que sei aprendi em frente a um computador, pesquisando e aprendendo, nunca tentando copiar o conhecimento de outros, mas sim aprender a realizar a tarefa. Compreendo que vivemos em dois mundos: o real e o digital. Comecei a compreender o mundo digital desde tenra idade e sempre fui uma pessoa que se adapta facilmente ao ambiente que a rodeia. Para além do desenvolvimento de software, ofereço serviços de reparação de computadores, instalação e manutenção de racks de servidores, consultoria em TI e configuração de sistemas de transmissão em direto.",
+      "location": "Localização",
+      "availability": "Disponibilidade",
+      "remoteWork": "Trabalho Remoto",
+      "ctaSkills": "Ver Competências e Experiência",
+      "coreValues": "Valores Fundamentais",
+      "connectWithMe": "Conecte-se Comigo"
+    },
+    "features": {
+      "servicesAnd": "Serviços e",
+      "expertise": "Especialidades",
+      "brandName": "JMSIT",
+      "subtitle": "Soluções profissionais lideradas por {{brand}}, com foco em qualidade, eficiência e inovação",
+      "howIWork": "Como Trabalho",
+      "approachDescription": "Acredito que a melhor tecnologia é aquela que resolve problemas reais e torna a vida das pessoas mais fácil. Trabalho de perto com os meus clientes para entender as suas necessidades, desafios e objetivos. Não se trata apenas de escrever código - é sobre criar soluções que realmente fazem a diferença no dia a dia, que poupam tempo, reduzem custos e melhoram a forma como trabalham. Desde a primeira conversa até à entrega final, mantenho uma comunicação aberta e transparente, garantindo que está sempre a par do progresso e que o resultado final corresponde exatamente ao que precisa.",
+      "approachHighlight1": "Foco nas suas necessidades - Entendo o seu negócio antes de propor soluções",
+      "approachHighlight2": "Comunicação clara e transparente - Atualizações regulares e explicações simples",
+      "approachHighlight3": "Soluções práticas e eficientes - Tecnologia que funciona no mundo real",
+      "approachHighlight4": "Suporte contínuo - Estou aqui mesmo depois do projeto estar concluído",
+      "partnership": "Parceria",
+      "partnershipDesc": "Trabalhamos juntos como uma equipa, não apenas como cliente e fornecedor",
+      "realisticTimelines": "Prazos Realistas",
+      "realisticTimelinesDesc": "Estabelecemos prazos alcançáveis e cumprimos o que prometemos",
+      "dedicatedSupport": "Suporte Dedicado",
+      "dedicatedSupportDesc": "Ajuda disponível quando precisar, mesmo após a conclusão do projeto",
+      "expertiseItems": {
+        "fullStackEng": "Engenharia de Software Full-Stack",
+        "fullStackEngDesc": "Desenvolvimento completo de aplicações desde a interface do utilizador até aos servidores, incluindo bases de dados e integração de sistemas para soluções empresariais completas.",
+        "aiAutomation": "Integração de IA e Automação",
+        "aiAutomationDesc": "Implementação de inteligência artificial e automação de processos de negócio para reduzir custos operacionais e melhorar a produtividade da sua equipa.",
+        "enterpriseWeb": "Aplicações Web Empresariais",
+        "enterpriseWebDesc": "Criação de aplicações web modernas e responsivas que funcionam perfeitamente em todos os dispositivos, otimizadas para velocidade e facilidade de utilização.",
+        "cloudInfra": "Infraestrutura Cloud",
+        "cloudInfraDesc": "Configuração e gestão de soluções em nuvem escaláveis e seguras que crescem com o seu negócio, garantindo disponibilidade e proteção dos seus dados.",
+        "liveStreaming": "Transmissão em Direto e Overlays",
+        "liveStreamingDesc": "Configuração de sistemas de transmissão em direto profissionais com gráficos personalizados, overlays e integração de múltiplas fontes de vídeo para eventos e apresentações.",
+        "computerRepair": "Reparação e Manutenção de Computadores",
+        "computerRepairDesc": "Serviços de diagnóstico, reparação e manutenção preventiva de computadores e equipamentos informáticos para manter os seus sistemas a funcionar de forma eficiente.",
+        "itConsulting": "Consultoria em TI",
+        "itConsultingDesc": "Aconselhamento estratégico em tecnologia da informação para ajudar a sua empresa a tomar decisões informadas sobre infraestrutura, software e processos digitais.",
+        "serverRack": "Instalação e Manutenção de Racks de Servidores",
+        "serverRackDesc": "Instalação profissional de racks de servidores, organização de cablagem, gestão de energia e manutenção preventiva para garantir máxima fiabilidade do seu centro de dados."
+      }
+    }
+  },
+  "confirmation": {
+    "title": "Confirmar Ação",
+    "message": "Tem certeza de que deseja continuar?",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar"
   }
 }

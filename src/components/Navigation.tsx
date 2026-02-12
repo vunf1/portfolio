@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'preact/hooks'
 import { useTranslation } from '../contexts/TranslationContext'
+import { Icon } from './ui/Icon'
 import type { NavigationProps } from '../types/components'
 
 export function Navigation({ 
@@ -166,10 +167,10 @@ export function Navigation({
               <button
                 className="nav-back-button"
                 onClick={onBackClick}
-                title="Back to Landing Page"
+                title={t('navigation.backToLanding')}
               >
-                <i className="fa-solid fa-arrow-left"></i>
-                <span className="nav-text">Back to Home</span>
+                <Icon name="arrow-left" size={18} />
+                <span className="nav-text">{t('navigation.backToHome')}</span>
               </button>
             </div>
           )}
@@ -217,7 +218,7 @@ export function Navigation({
                     }, 100)
                   }}
                 >
-                  {item.icon && <i className={item.icon}></i>}
+                  {item.icon && <Icon name={item.icon} size={18} className="nav-link-icon" />}
                   <span className="nav-text">{item.label}</span>
                 </a>
               </li>
@@ -228,10 +229,10 @@ export function Navigation({
                 <button
                   className="nav-link nav-back-button"
                   onClick={onBackClick}
-                  title="Back to Landing Page"
+                  title={t('navigation.backToLanding')}
                 >
-                  <i className="fa-solid fa-arrow-left"></i>
-                  <span className="nav-text">Back to Home</span>
+                  <Icon name="arrow-left" size={18} />
+                  <span className="nav-text">{t('navigation.backToHome')}</span>
                 </button>
               </li>
             )}
@@ -242,7 +243,7 @@ export function Navigation({
         <button
           className="nav-toggle"
           onClick={toggleNav}
-          aria-label="Toggle navigation menu"
+          aria-label={t('navigation.toggleMenu')}
           aria-expanded={!isNavCollapsed}
         >
           <span className="hamburger-line"></span>

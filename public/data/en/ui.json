@@ -34,10 +34,13 @@
   "common": {
     "darkMode": "Dark Mode",
     "error": "Error",
+    "errorBoundaryMessage": "We're sorry, but something unexpected happened. Please try refreshing the page.",
     "language": "Language",
     "lightMode": "Light Mode",
     "loading": "Loading...",
+    "notifications": "Notifications",
     "refresh": "Refresh",
+    "refreshPage": "Refresh Page",
     "somethingWentWrong": "Something went wrong",
     "theme": "Theme",
     "tryRefreshing": "Please try refreshing the page."
@@ -47,6 +50,7 @@
     "closeMenu": "Close menu",
     "darkMode": "Dark Mode",
     "lightMode": "Light Mode",
+    "scrollToTop": "Scroll to top",
     "switchToDark": "Switch to dark mode",
     "switchToLight": "Switch to light mode",
     "switchToEnglish": "Switch to English",
@@ -66,10 +70,14 @@
   },
   "experience": {
     "achievements": "Key Achievements",
+    "carouselAria": "Experience carousel",
     "duration": "Duration",
     "highlights": "Highlights",
     "impact": "Impact",
     "location": "Location",
+    "goToAria": "Go to experience {{n}}",
+    "nextAria": "Next experience",
+    "prevAria": "Previous experience",
     "subtitle": "My journey in technology and operations",
     "technologies": "Technologies",
     "title": "Professional Experience"
@@ -80,7 +88,7 @@
     "scrollDown": "Scroll Down",
     "subtitle": "Back-end Ops • Network • OOP",
     "tagline": "Always learning. Building with purpose.",
-    "title": "Full-Stack Developer"
+    "title": "Full-Stack Engineer"
   },
   "interests": {
     "lifestyle": "Lifestyle & Wellness",
@@ -92,6 +100,8 @@
   },
   "navigation": {
     "awards": "Awards",
+    "backToHome": "Back to Home",
+    "backToLanding": "Back to Landing Page",
     "brand": "IT and Technology Solutions",
     "certifications": "Certifications",
     "education": "Education",
@@ -99,7 +109,8 @@
     "interests": "Interests",
     "projects": "Projects",
     "skills": "Skills",
-    "testimonials": "Testimonials"
+    "testimonials": "Testimonials",
+    "toggleMenu": "Toggle navigation menu"
   },
   "projects": {
     "challenges": "Challenges",
@@ -128,15 +139,26 @@
     "levelNames": {
       "Foundational": "Foundational",
       "Proficient": "Proficient",
-      "Advanced": "Advanced", 
+      "Advanced": "Advanced",
       "Expert": "Expert"
-    }
+    },
+    "projectSingular": "project",
+    "projectPlural": "projects",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "databases": "Databases",
+    "security": "Security"
   },
   "testimonials": {
     "company": "Company",
     "date": "Date",
+    "goToAria": "Go to testimonial {{n}}",
+    "nextAria": "Next testimonial",
     "position": "Position",
+    "prevAria": "Previous testimonial",
     "rating": "Rating",
+    "sectionSubtitle": "Real feedback from real projects",
+    "sectionTitle": "What Clients Say",
     "subtitle": "What people say",
     "title": "Testimonials"
   },
@@ -153,6 +175,7 @@
       "phone": "Phone",
       "phoneHint": "Optional, E.164 format",
       "phoneExample": "Example: +351912345678",
+      "phonePlaceholder": "+351912345678",
       "companyName": "Company Name",
       "companyNamePlaceholder": "Your company name",
       "companyIdentifier": "Company Identifier",
@@ -177,7 +200,92 @@
       "subjectTooShort": "Subject must be at least 3 characters",
       "submitFailed": "Failed to send message. Please try again.",
       "timeout": "Request timed out. Please check your connection and try again.",
-      "networkError": "Network error. Please check your connection and try again."
+      "networkError": "Network error. Please check your connection and try again.",
+      "emailjsRecipient": "Email configuration error: set the template \"To Email\" to {{to_email}} in the EmailJS dashboard (dashboard.emailjs.com)."
     }
+  },
+  "landing": {
+    "hero": {
+      "badge": "JMSIT — IT & Technology Services",
+      "summary": "Specialist in software development, automation, and technology solutions. I offer comprehensive services from full-stack development and AI integration to computer repair, server rack installation, and IT consulting. I work with businesses and individuals to create practical solutions that solve real problems and improve operational efficiency.",
+      "ctaContact": "Contact",
+      "ctaServices": "Services",
+      "ctaAbout": "About",
+      "logoSubtitle": "Security | Intelligence | Technology"
+    },
+    "footer": {
+      "navigation": "Navigation",
+      "about": "About",
+      "services": "Services",
+      "experience": "Experience",
+      "projects": "Projects",
+      "expertise": "Expertise",
+      "contact": "Contact",
+      "copyright": "All rights reserved.",
+      "wcagBadge": "WCAG 2.2 AA Compliant",
+      "gdprBadge": "GDPR Compliant",
+      "perfBadge": "Core Web Vitals Optimized",
+      "builtWith": "Built with:",
+      "mitLicense": "MIT License",
+      "sourceCode": "Source Code",
+      "techPreact": "Preact - Fast 3kB alternative to React",
+      "techTailwind": "Tailwind CSS - Utility-first CSS",
+      "techTypescript": "TypeScript - Typed JavaScript",
+      "techVite": "Vite - Next generation frontend tooling",
+      "viewSourceOnGitHub": "View source code on GitHub"
+    },
+    "about": {
+      "title": "About Me",
+      "subtitle": "Technology specialist with over a decade of experience in software development, automation, IT infrastructure, and technical solutions",
+      "description": "I have loved computers since I was a child and grew up watching technological evolution unfold before my eyes, which was and still is prodigious. I began self-studying basic computer concepts at the age of 10, simply for the pleasure of learning, watching my logic and problem-solving abilities come into action in the hardware area. Programming started at the age of 14, and I developed a motto I like to share: \"Think & Execute\". I developed a very strong relationship with learning, not in terms of addiction, but in the healthy need to learn more and more to be able to execute tasks. Everything I know I learned in front of a computer, searching and learning, never trying to copy others' knowledge, but rather learning how to accomplish the task. I understand that we live in two worlds: the real and the digital. I started understanding the digital world from an early age and have always been a person who can easily adapt to the environment around me. Beyond software development, I offer computer repair services, server rack installation and maintenance, IT consulting, and live streaming system setup.",
+      "location": "Location",
+      "availability": "Availability",
+      "remoteWork": "Remote Work",
+      "ctaSkills": "View Skills & Experience",
+      "coreValues": "Core Values",
+      "connectWithMe": "Connect with Me"
+    },
+    "features": {
+      "servicesAnd": "Services &",
+      "expertise": "Expertise",
+      "brandName": "JMSIT",
+      "subtitle": "Professional solutions led by {{brand}}, focused on quality, efficiency, and innovation",
+      "howIWork": "How I Work",
+      "approachDescription": "I believe the best technology solves real problems and makes people's lives easier. I work closely with my clients to understand their needs, challenges, and goals. It's not just about writing code - it's about creating solutions that truly make a difference in daily operations, that save time, reduce costs, and improve how people work. From our first conversation to final delivery, I maintain open and transparent communication, ensuring you're always aware of progress and that the final result matches exactly what you need.",
+      "approachHighlight1": "Focused on your needs - I understand your business before proposing solutions",
+      "approachHighlight2": "Clear and transparent communication - Regular updates and simple explanations",
+      "approachHighlight3": "Practical and efficient solutions - Technology that works in the real world",
+      "approachHighlight4": "Ongoing support - I'm here even after the project is complete",
+      "partnership": "Partnership",
+      "partnershipDesc": "We work together as a team, not just as client and vendor",
+      "realisticTimelines": "Realistic Timelines",
+      "realisticTimelinesDesc": "We set achievable deadlines and deliver on our promises",
+      "dedicatedSupport": "Dedicated Support",
+      "dedicatedSupportDesc": "Help available when you need it, even after project completion",
+      "expertiseItems": {
+        "fullStackEng": "Full-Stack Software Engineering",
+        "fullStackEngDesc": "Complete application development from user interface to server infrastructure, including databases and system integration for end-to-end business solutions.",
+        "aiAutomation": "AI Integration & Process Automation",
+        "aiAutomationDesc": "Implementation of artificial intelligence and business process automation to reduce operational costs and improve your team's productivity.",
+        "enterpriseWeb": "Enterprise Web Applications",
+        "enterpriseWebDesc": "Building modern, responsive web applications that work seamlessly across all devices, optimized for speed and ease of use.",
+        "cloudInfra": "Cloud Infrastructure & Solutions",
+        "cloudInfraDesc": "Setup and management of scalable, secure cloud solutions that grow with your business, ensuring data availability and protection.",
+        "liveStreaming": "Live Streaming & Overlays",
+        "liveStreamingDesc": "Professional live streaming setup with custom graphics, overlays, and multi-source video integration for events and presentations.",
+        "computerRepair": "Computer Repair & Maintenance",
+        "computerRepairDesc": "Diagnostic, repair, and preventive maintenance services for computers and IT equipment to keep your systems running efficiently.",
+        "itConsulting": "IT Consulting",
+        "itConsultingDesc": "Strategic information technology consulting to help your business make informed decisions about infrastructure, software, and digital processes.",
+        "serverRack": "Server Rack Installation & Maintenance",
+        "serverRackDesc": "Professional server rack installation, cable management, power distribution, and preventive maintenance to ensure maximum reliability of your data center."
+      }
+    }
+  },
+  "confirmation": {
+    "title": "Confirm Action",
+    "message": "Are you sure you want to proceed?",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   }
 }

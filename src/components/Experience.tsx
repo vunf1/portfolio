@@ -1,7 +1,7 @@
 import { useState, useRef } from 'preact/hooks'
 import type { JSX } from 'preact'
 import { useTranslation } from '../contexts/TranslationContext'
-import { Section } from './ui'
+import { Section, Icon } from './ui'
 import type { ExperienceProps } from '../types'
 
 export function Experience({ experiences, className = '', id }: ExperienceProps) {
@@ -130,14 +130,14 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
       <div className="card-highlights">
         <div className="highlights-header">
           <div className="highlights-icon-wrapper">
-            <i className="fa-solid fa-star"></i>
+            <Icon name="star" size={18} />
           </div>
           <strong className="highlight-title">Key Highlights:</strong>
         </div>
         <div className="highlights-list">
           {highlights.map((highlight, highlightIndex) => (
             <div key={highlightIndex} className="highlight-item">
-              <i className="fa-solid fa-arrow-right highlight-arrow"></i>
+              <Icon name="arrow-right" size={14} className="highlight-arrow" />
               <div className="highlight-text-container">
                 <span className="highlight-text">{highlight}</span>
               </div>
@@ -171,7 +171,7 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
                     <div className="card-impact">
                       <div className="impact-header">
                         <div className="impact-icon-wrapper">
-                          <i className="fa-solid fa-chart-line"></i>
+                          <Icon name="chart-line" size={18} />
                         </div>
                         <strong className="impact-title">Impact:</strong>
                       </div>
@@ -185,7 +185,7 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
                     <div className="card-achievements">
                       <div className="achievements-header">
                         <div className="achievements-icon-wrapper">
-                          <i className="fa-solid fa-trophy"></i>
+                          <Icon name="trophy" size={18} />
                         </div>
                         <strong className="achievements-title">Key Achievements:</strong>
                       </div>
@@ -193,7 +193,7 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
                         {exp.achievements.map((achievement, achievementIndex) => (
                           <div key={achievementIndex} className="achievement-item">
                             <div className="achievement-icon">
-                              <i className="fa-solid fa-check"></i>
+                              <Icon name="check" size={14} />
                             </div>
                             <span className="achievement-text">{achievement}</span>
                           </div>
@@ -223,7 +223,7 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
           onTouchEnd={onTouchEnd}
           tabIndex={0}
           role="region"
-          aria-label="Experience carousel"
+          aria-label={t('experience.carouselAria')}
         >
           <div 
             className={`experience-carousel-track ${isDragging ? 'no-transition' : ''}`}
@@ -244,18 +244,18 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
               <button
                 className="experience-carousel-nav experience-carousel-prev"
                 onClick={prevSlide}
-                aria-label="Previous experience"
+                aria-label={t('experience.prevAria')}
                 type="button"
               >
-                <i className="fa-solid fa-chevron-left"></i>
+                <Icon name="chevron-left" size={20} />
               </button>
               <button
                 className="experience-carousel-nav experience-carousel-next"
                 onClick={nextSlide}
-                aria-label="Next experience"
+                aria-label={t('experience.nextAria')}
                 type="button"
               >
-                <i className="fa-solid fa-chevron-right"></i>
+                <Icon name="chevron-right" size={20} />
               </button>
             </>
           )}
@@ -269,7 +269,7 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
                 key={index}
                 className={`experience-carousel-dot ${index === currentIndex ? 'active' : ''}`}
                 onClick={() => goToSlide(index)}
-                aria-label={`Go to experience ${index + 1}`}
+                aria-label={t('experience.goToAria', undefined, { n: String(index + 1) })}
                 type="button"
               />
             ))}

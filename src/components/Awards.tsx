@@ -1,5 +1,5 @@
 import { useTranslation } from '../contexts/TranslationContext'
-import { Section } from './ui'
+import { Section, Icon, Button } from './ui'
 import type { AwardsProps } from '../types'
 
 export function Awards({ awards }: AwardsProps) {
@@ -18,7 +18,7 @@ export function Awards({ awards }: AwardsProps) {
               <div className="award-content">
                 <div className="award-header">
                   <div className="award-icon">
-                    <i className="fa-solid fa-trophy"></i>
+                    <Icon name="trophy" size={20} />
                   </div>
                   <h3 className="award-title">{award.title}</h3>
                 </div>
@@ -50,15 +50,16 @@ export function Awards({ awards }: AwardsProps) {
                 
                 {award.certificateUrl && (
                   <div className="award-actions">
-                    <a 
-                      href={award.certificateUrl} 
-                      target="_blank" 
+                    <Button
+                      href={award.certificateUrl}
+                      target="_blank"
                       rel="noopener noreferrer"
-                      className="btn btn-outline-warning btn-sm"
+                      variant="outline"
+                      size="sm"
                     >
-                      <i className="fa-solid fa-certificate me-1"></i>
+                      <Icon name="certificate" size={14} className="mr-1" />
                       View Certificate
-                    </a>
+                    </Button>
                   </div>
                 )}
               </div>

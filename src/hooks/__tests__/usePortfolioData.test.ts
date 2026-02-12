@@ -1,16 +1,21 @@
 /* eslint-disable no-console */
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { renderHook, act } from '@testing-library/preact'
-import { usePortfolioData, useConsolidatedData, resetPortfolioDataCaches } from '../usePortfolioData'
+import { usePortfolioData, resetPortfolioDataCaches } from '../usePortfolioData'
 
 // Mock fetch
 const mockFetch = vi.fn()
 global.fetch = mockFetch
 
-// Mock useI18n hook
-vi.mock('../useI18n', () => ({
-  useI18n: () => ({
-    currentLanguage: 'en'
+// Mock useTranslation so components that use both usePortfolioData and useTranslation work in tests
+vi.mock('../../contexts/TranslationContext', () => ({
+  useTranslation: () => ({
+    currentLanguage: 'en' as const,
+    t: (key: string) => key,
+    changeLanguage: () => {},
+    isEnglish: true,
+    isPortuguese: false,
+    supportedLanguages: ['en', 'pt-PT'] as const
   })
 }))
 
@@ -22,7 +27,7 @@ const originalConsoleWarn = console.warn
 // Mock data for testing
 const mockPersonalData = {
   name: "João Maia",
-  title: "Full-Stack Developer",
+  title: "Full-Stack Engineer",
   tagline: "Lifelong learner, shipping with creativity",
   subtitle: "Back-end operations, Network, and OOP-focused problem solver",
   email: "joaomaia.trabalho@gmail.com",
@@ -53,7 +58,7 @@ const mockSocialData = [
 
 const mockExperienceData = [
   {
-    title: "Full-Stack Developer",
+    title: "Full-Stack Engineer",
     company: "Test Company",
     location: "Porto, Portugal",
     period: "2020 - Present",
@@ -192,7 +197,7 @@ const mockUIData = {
     testimonials: "Testimonials",
   },
   hero: {
-    title: "Full-Stack Developer",
+    title: "Full-Stack Engineer",
     subtitle: "Back-end Ops • Network • OOP",
     tagline: "Always learning. Building with purpose.",
     cta: "View Portfolio",
@@ -427,95 +432,5 @@ describe('usePortfolioData Hook', () => {
     // Non-critical sections should be marked as 'pending'
     expect(result.current.getSectionLoadingStatus('projects')).toBe('pending')
     expect(result.current.getSectionLoadingStatus('certifications')).toBe('pending')
-  })
-})
-
-describe('useConsolidatedData Hook', () => {
-  beforeEach(() => {
-    vi.clearAllMocks()
-    mockFetch.mockReset()
-    mockFetch.mockImplementation(() => Promise.resolve(buildResponse({})))
-    console.log = vi.fn()
-    console.error = vi.fn()
-    console.warn = vi.fn()
-    resetPortfolioDataCaches()
-  })
-
-  afterEach(() => {
-    console.log = originalConsoleLog
-    console.error = originalConsoleError
-    console.warn = originalConsoleWarn
-    resetPortfolioDataCaches()
-    vi.restoreAllMocks()
-  })
-
-  it('initializes with loading state', () => {
-    const { result } = renderHook(() => useConsolidatedData())
-    
-    expect(result.current.loading).toBe(true)
-    expect(result.current.data).toBe(null)
-    expect(result.current.error).toBe(null)
-  })
-
-  it('loads consolidated data successfully', async () => {
-    setupSuccessfulFetches()
-
-    const { result } = renderHook(() => useConsolidatedData())
-
-    await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 100))
-    })
-
-    expect(result.current.loading).toBe(false)
-    expect(result.current.error).toBe(null)
-    expect(result.current.data).toBeDefined()
-    expect(result.current.data?.portfolio.personal).toEqual(mockPersonalData)
-    
-    expect(result.current.data?.ui).toEqual(mockUIData)
-  })
-
-  it('handles fetch errors in consolidated data', async () => {
-    // Mock fetch to reject on all calls
-    mockFetch.mockRejectedValue(new Error('Network error'))
-
-    const { result } = renderHook(() => useConsolidatedData())
-
-    await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 100))
-    })
-
-    expect(result.current.loading).toBe(false)
-    // The error should be caught and handled, resulting in null data
-    expect(result.current.data).toBe(null)
-    // Error state should be set
-    expect(result.current.error).toBeDefined()
-  })
-
-  it('handles invalid response data in consolidated data', async () => {
-    // Mock responses that return invalid data
-    mockFetch
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // personal
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // social
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // experience
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // education
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // skills
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // meta
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // ui
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // projects
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // certifications
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // interests
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // awards
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // testimonials
-
-    const { result } = renderHook(() => useConsolidatedData())
-
-    await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 100))
-    })
-
-    expect(result.current.loading).toBe(false)
-    if (result.current.error) {
-      expect(result.current.error).toBeInstanceOf(Error)
-    }
   })
 })

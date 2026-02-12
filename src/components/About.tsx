@@ -1,9 +1,9 @@
 import { useTranslation } from '../contexts/TranslationContext'
-import { Section } from './ui'
+import { Section, Icon } from './ui'
 import type { AboutProps } from '../types/components'
 
 export function About({ personal, social, className = '', id }: AboutProps) {
-  const { t, currentLanguage } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <Section
@@ -31,7 +31,7 @@ export function About({ personal, social, className = '', id }: AboutProps) {
         </div>
         <div className="social-links-container">
           <h3 className="social-title">
-            {currentLanguage === 'pt-PT' ? 'Conecte-se Comigo' : 'Connect with Me'}
+            {t('landing.about.connectWithMe')}
           </h3>
           <div className="social-links-grid">
             {social.map((socialItem) => (
@@ -42,7 +42,7 @@ export function About({ personal, social, className = '', id }: AboutProps) {
                 rel="noopener noreferrer"
                 className="social-link-item"
               >
-                <i className={socialItem.icon} aria-hidden="true"></i>
+                <Icon name={socialItem.icon} aria-hidden />
                 <span className="social-name">{socialItem.name}</span>
               </a>
             ))}

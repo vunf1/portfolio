@@ -1,5 +1,5 @@
 import { useTranslation } from '../contexts/TranslationContext'
-import { Section } from './ui'
+import { Section, Icon, Button } from './ui'
 import type { ProjectsProps } from '../types'
 
 export function Projects({ projects }: ProjectsProps) {
@@ -59,25 +59,27 @@ export function Projects({ projects }: ProjectsProps) {
                   <div className="project-links">
                     <strong>Links:</strong>
                     <div className="link-buttons">
-                      <a 
-                        href={project.url} 
-                        target="_blank" 
+                      <Button
+                        href={project.url}
+                        target="_blank"
                         rel="noopener noreferrer"
-                        className="btn btn-outline-primary btn-sm"
+                        variant="outline"
+                        size="sm"
                       >
-                        <i className="fa fa-code me-1"></i>
+                        <Icon name="code" size={14} className="mr-1" />
                         Code
-                      </a>
+                      </Button>
                       {project.demo && (
-                        <a 
-                          href={project.demo} 
-                          target="_blank" 
+                        <Button
+                          href={project.demo}
+                          target="_blank"
                           rel="noopener noreferrer"
-                          className="btn btn-outline-success btn-sm"
+                          variant="outline"
+                          size="sm"
                         >
-                          <i className="fa fa-external-link-alt me-1"></i>
+                          <Icon name="external-link" size={14} className="mr-1" />
                           Demo
-                        </a>
+                        </Button>
                       )}
                     </div>
                   </div>

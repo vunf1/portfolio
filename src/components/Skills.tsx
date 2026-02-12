@@ -1,5 +1,5 @@
 import { useTranslation } from '../contexts/TranslationContext'
-import { Section } from './ui'
+import { Section, Icon } from './ui'
 import type { SkillsProps } from '../types/components'
 import type { SkillLevel } from '../types/portfolio'
 import pythonIcon from 'devicon/icons/python/python-original.svg'
@@ -21,7 +21,9 @@ import windowsIcon from 'devicon/icons/windows8/windows8-original.svg'
 import dockerIcon from 'devicon/icons/docker/docker-original.svg'
 import gitIcon from 'devicon/icons/git/git-original.svg'
 import vueIcon from 'devicon/icons/vuejs/vuejs-original.svg'
-
+import rustIcon from 'devicon/icons/rust/rust-original.svg'
+import githubActionsIcon from 'devicon/icons/githubactions/githubactions-original.svg'
+import tensorflowIcon from 'devicon/icons/tensorflow/tensorflow-original.svg'
 export function Skills({ skills }: SkillsProps) {
   const { t } = useTranslation()
   
@@ -43,56 +45,72 @@ export function Skills({ skills }: SkillsProps) {
 
   const getProficiencyIcon = (level: SkillLevel): string => {
     switch (level) {
-      // English level names
       case 'Foundational':
-        return 'fa-solid fa-seedling'
-      case 'Proficient':
-        return 'fa-solid fa-leaf'
-      case 'Advanced':
-        return 'fa-solid fa-tree'
-      case 'Expert':
-        return 'fa-solid fa-crown'
-      // Portuguese level names
       case 'Fundacional':
-        return 'fa-solid fa-seedling'
+        return 'seedling'
+      case 'Proficient':
       case 'Proficiente':
-        return 'fa-solid fa-leaf'
+        return 'leaf'
+      case 'Advanced':
       case 'Avançado':
-        return 'fa-solid fa-tree'
+        return 'tree'
+      case 'Expert':
       case 'Perito':
-        return 'fa-solid fa-crown'
+        return 'crown'
       default:
-        return 'fa-solid fa-circle'
+        return 'circle'
     }
   }
 
-  const getLanguageIcon = (languageName: string, categoryName?: string): string | undefined => {
-    const language = languageName.toLowerCase()
-    
-    if (categoryName === 'Key Competencies' || categoryName === 'Tooling & Platforms') {
+  /** Canonical class for proficiency level (used for distinct icon colors) */
+  const getProficiencyLevelClass = (level: SkillLevel): string => {
+    switch (level) {
+      case 'Foundational':
+      case 'Fundacional':
+        return 'foundational'
+      case 'Proficient':
+      case 'Proficiente':
+        return 'proficient'
+      case 'Advanced':
+      case 'Avançado':
+        return 'advanced'
+      case 'Expert':
+      case 'Perito':
+        return 'expert'
+      default:
+        return 'foundational'
+    }
+  }
+
+  const getSkillIcon = (skillName: string, categoryName?: string): string | undefined => {
+    const noIconCategories = ['Key Competencies', 'Competências-chave', 'AI & Machine Learning', 'IA e aprendizagem automática']
+    if (categoryName && noIconCategories.includes(categoryName)) {
       return undefined
     }
-
-    if (language.includes('python')) {return pythonIcon}
-    if (language.includes('typescript')) {return typescriptIcon}
-    if (language.includes('javascript')) {return javascriptIcon}
-    if (language.includes('java')) {return javaIcon}
-    if (language.includes('c#')) {return csharpIcon}
-    if (language.includes('c++')) {return cplusplusIcon}
-    if (language === 'c') {return cIcon}
-    if (language.includes('visual basic') || language.includes('vb.net') || language.includes('vba')) {return visualbasicIcon}
-    if (language.includes('php')) {return phpIcon}
-    if (language.includes('lua')) {return luaIcon}
-    if (language.includes('powershell')) {return powershellIcon}
-    if (language.includes('bash') || language.includes('shell')) {return bashIcon}
-    if (language.includes('nosql')) {return mongodbIcon}
-    if (language.includes('sql')) {return mysqlIcon}
-    if (language.includes('linux')) {return linuxIcon}
-    if (language.includes('windows')) {return windowsIcon}
-    if (language.includes('docker')) {return dockerIcon}
-    if (language.includes('ci/cd') || language.includes('git')) {return gitIcon}
-    if (language.includes('obs') || language.includes('streaming')) {return vueIcon}
-
+    const name = skillName.toLowerCase()
+    if (name.includes('zero trust')) return undefined
+    if (name.includes('python')) return pythonIcon
+    if (name.includes('typescript')) return typescriptIcon
+    if (name.includes('javascript')) return javascriptIcon
+    if (name.includes('rust')) return rustIcon
+    if (name.includes('java')) return javaIcon
+    if (name.includes('c#')) return csharpIcon
+    if (name.includes('c++')) return cplusplusIcon
+    if (name === 'c') return cIcon
+    if (name.includes('visual basic') || name.includes('vb.net') || name.includes('vba')) return visualbasicIcon
+    if (name.includes('php')) return phpIcon
+    if (name.includes('lua')) return luaIcon
+    if (name.includes('powershell')) return powershellIcon
+    if (name.includes('bash') || name.includes('shell')) return bashIcon
+    if (name.includes('nosql')) return mongodbIcon
+    if (name.includes('sql')) return mysqlIcon
+    if (name.includes('linux')) return linuxIcon
+    if (name.includes('windows')) return windowsIcon
+    if (name.includes('docker')) return dockerIcon
+    if (name.includes('git')) return gitIcon
+    if (name.includes('ci/cd') || name.includes('devops')) return githubActionsIcon
+    if (name.includes('obs') || name.includes('streamstar') || name.includes('streaming')) return '/icons/obs-studio.svg'
+    if (name.includes('llm') || name.includes('rag') || name.includes('embedding') || name.includes('agent') || name.includes('prompt') || name.includes('tensorflow') || name.includes('keras') || name.includes('pytorch') || name.includes('machine learning')) return tensorflowIcon
     return undefined
   }
 
@@ -105,6 +123,7 @@ export function Skills({ skills }: SkillsProps) {
       <img
         src={iconSrc}
         alt={`${altLabel ?? 'Skill'} icon`}
+        title={altLabel ?? 'Skill'}
         className="skill-language-icon"
         loading="lazy"
         decoding="async"
@@ -141,8 +160,8 @@ export function Skills({ skills }: SkillsProps) {
           <div className="legend-grid">
             {(['Foundational', 'Proficient', 'Advanced', 'Expert'] as SkillLevel[]).map((level) => (
               <div key={level} className="legend-item">
-                <div className="legend-icon">
-                  <i className={getProficiencyIcon(level)}></i>
+                <div className={`legend-icon skill-proficiency-icon skill-proficiency-${getProficiencyLevelClass(level)}`}>
+                  <Icon name={getProficiencyIcon(level)} size={16} />
                 </div>
                 <div className="legend-content">
                   <div className="legend-level">{getTranslatedLevelName(level)}</div>
@@ -154,67 +173,120 @@ export function Skills({ skills }: SkillsProps) {
         </div>
 
         <div id="skills-content">
-          {/* Technical Skills */}
+          {/* Technical Skills – premium card layout for all categories */}
           {technical.map((skillGroup, index) => (
-            <div key={index} className="skills-category">
+            <div
+              key={index}
+              className={`skills-category ${skillGroup.category === 'Programming Languages' || skillGroup.category === 'Linguagens de Programação' || skillGroup.category === 'Linguagens de programação' ? 'skills-category--programming-languages' : ''}`}
+            >
               <h3 className="skills-category-title">{skillGroup.category}</h3>
-              <div className="skills-compact-grid">
-                {skillGroup.skills.map((skill, skillIndex) => (
-                  <div key={skillIndex} className="skill-compact-card">
-                    <div className="skill-compact-header">
-                    <div className="skill-compact-name">
-                      {renderSkillIcon(getLanguageIcon(skill.name, skillGroup.category), skill.name)}
-                        <span>{skill.name}</span>
-                      </div>
-                      <div className="skill-compact-level skill-proficiency">
-                        <i className={getProficiencyIcon(skill.level)}></i>
-                        <span>{getTranslatedLevelName(skill.level)}</span>
-                      </div>
-                    </div>
-                    <div className="skill-compact-details">
-                      {skill.experience && (
-                        <div className="skill-compact-experience">
-                          <i className="fa-solid fa-clock"></i>
-                          <span>{skill.experience}</span>
+              <div className="key-competencies-premium">
+                {skillGroup.skills.map((skill, skillIndex) => {
+                  const iconSrc = getSkillIcon(skill.name, skillGroup.category)
+                  const hasIcon = !!iconSrc
+                  const badge = (
+                    <span className={`key-competency-badge skill-proficiency-${getProficiencyLevelClass(skill.level)}`}>
+                      <span className="key-competency-badge-icon">
+                        <Icon name={getProficiencyIcon(skill.level)} size={14} />
+                      </span>
+                      <span className="key-competency-badge-label">{getTranslatedLevelName(skill.level)}</span>
+                    </span>
+                  )
+                  return (
+                  <article key={skillIndex} className={`key-competency-card skill-proficiency-${getProficiencyLevelClass(skill.level)} ${hasIcon ? 'key-competency-card--with-icon' : ''}`} title={skill.name}>
+                    <div className="key-competency-header">
+                      {hasIcon ? (
+                        <div className="key-competency-icon-block">
+                          {renderSkillIcon(iconSrc, skill.name)}
+                          {badge}
                         </div>
-                      )}
-                      {skill.projects && (
-                        <div className="skill-compact-projects">
-                          <i className="fa-solid fa-folder"></i>
-                          <span>{skill.projects} projects</span>
-                        </div>
+                      ) : (
+                        <>
+                          <div className="key-competency-name-wrap">
+                            <h4 className="key-competency-name">{skill.name}</h4>
+                          </div>
+                          {badge}
+                        </>
                       )}
                     </div>
-                  </div>
-                ))}
+                    {skill.description && (
+                      <p className="key-competency-description">{skill.description}</p>
+                    )}
+                    {(skill.frontend?.length ?? 0) > 0 && (
+                      <div className="key-competency-tech">
+                        <span className="key-competency-tech-label">{t('skills.frontend')}:</span>
+                        <span className="key-competency-tech-list">{skill.frontend!.join(', ')}</span>
+                      </div>
+                    )}
+                    {(skill.backend?.length ?? 0) > 0 && (
+                      <div className="key-competency-tech">
+                        <span className="key-competency-tech-label">{t('skills.backend')}:</span>
+                        <span className="key-competency-tech-list">{skill.backend!.join(', ')}</span>
+                      </div>
+                    )}
+                    {(skill.databases?.length ?? 0) > 0 && (
+                      <div className="key-competency-tech">
+                        <span className="key-competency-tech-label">{t('skills.databases')}:</span>
+                        <span className="key-competency-tech-list">{skill.databases!.join(', ')}</span>
+                      </div>
+                    )}
+                    {(skill.security?.length ?? 0) > 0 && (
+                      <div className="key-competency-tech">
+                        <span className="key-competency-tech-label">{t('skills.security')}:</span>
+                        <span className="key-competency-tech-list">{skill.security!.join(', ')}</span>
+                      </div>
+                    )}
+                    {(skill.experience || (skill.projects != null && skill.projects > 0)) && (
+                      <div className="key-competency-meta">
+                        {skill.experience && (
+                          <span className="key-competency-meta-item">
+                            <Icon name="clock" size={12} />
+                            {skill.experience}
+                          </span>
+                        )}
+                        {skill.projects != null && skill.projects > 0 && (
+                          <span className="key-competency-meta-item">
+                            <Icon name="folder" size={12} />
+                            {skill.projects} {t(skill.projects === 1 ? 'skills.projectSingular' : 'skills.projectPlural')}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </article>
+                  )
+                })}
               </div>
             </div>
           ))}
 
-          {/* Soft Skills */}
+          {/* Soft Skills – same design as technical skills */}
           {soft.length > 0 && (
             <div className="skills-category">
               <h3 className="skills-category-title">{t('skills.soft')}</h3>
-              <div className="skills-compact-grid">
-                {soft.map((skill, skillIndex) => (
-                  <div key={skillIndex} className="skill-compact-card">
-                    <div className="skill-compact-header">
-                      <div className="skill-compact-name">
-                        {renderSkillIcon(getLanguageIcon(skill.name, 'Soft Skills'), skill.name)}
-                        <span>{skill.name}</span>
+              <div className="key-competencies-premium">
+                {soft.map((skill, skillIndex) => {
+                  const badge = (
+                    <span className={`key-competency-badge skill-proficiency-${getProficiencyLevelClass(skill.level)}`}>
+                      <span className="key-competency-badge-icon">
+                        <Icon name={getProficiencyIcon(skill.level)} size={14} />
+                      </span>
+                      <span className="key-competency-badge-label">{getTranslatedLevelName(skill.level)}</span>
+                    </span>
+                  )
+                  return (
+                    <article key={skillIndex} className={`key-competency-card skill-proficiency-${getProficiencyLevelClass(skill.level)}`} title={skill.name}>
+                      <div className="key-competency-header">
+                        <div className="key-competency-name-wrap">
+                          <h4 className="key-competency-name">{skill.name}</h4>
+                        </div>
+                        {badge}
                       </div>
-                      <div className="skill-compact-level skill-proficiency">
-                        <i className={getProficiencyIcon(skill.level)}></i>
-                        <span>{getTranslatedLevelName(skill.level)}</span>
-                      </div>
-                    </div>
-                    {skill.description && (
-                      <div className="skill-compact-description">
-                        {skill.description}
-                      </div>
-                    )}
-                  </div>
-                ))}
+                      {skill.description && (
+                        <p className="key-competency-description">{skill.description}</p>
+                      )}
+                    </article>
+                  )
+                })}
               </div>
             </div>
           )}

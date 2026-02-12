@@ -10,7 +10,7 @@ export function Hero({ personal }: HeroProps) {
         {/* Profile Avatar */}
         <img 
           src={personal.profileImage} 
-          alt={`${personal.name}  - Full-Stack Developer`}
+          alt={personal.title ? `${personal.name} - ${personal.title}` : personal.name}
           className="hero-avatar"
           loading="lazy"
           decoding="async"

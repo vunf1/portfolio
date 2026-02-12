@@ -1,5 +1,25 @@
 import { Component } from 'preact'
+import { useTranslation } from '../contexts/TranslationContext'
+import { Icon } from './ui/Icon'
+import { Button } from './ui/Button'
 import type { ErrorBoundaryProps, ErrorBoundaryState } from '../types'
+
+function ErrorBoundaryContent() {
+  const { t } = useTranslation()
+  return (
+    <div className="error-boundary">
+      <div className="error-content">
+        <Icon name="exclamation-triangle" size={48} className="mb-4" />
+        <h2>{t('common.somethingWentWrong')}</h2>
+        <p>{t('common.errorBoundaryMessage')}</p>
+        <Button variant="primary" className="mt-4" onClick={() => window.location.reload()}>
+          <Icon name="refresh" size={18} className="mr-2" />
+          {t('common.refreshPage')}
+        </Button>
+      </div>
+    </div>
+  )
+}
 
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
@@ -12,10 +32,8 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   override componentDidCatch(error: Error, errorInfo: unknown) {
-    // Always log error to console for debugging (even in production)
     // eslint-disable-next-line no-console
     console.error('Error caught by boundary:', error, errorInfo)
-    // Log error details to help with debugging
     if (error.stack) {
       // eslint-disable-next-line no-console
       console.error('Error stack:', error.stack)
@@ -24,24 +42,8 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   override render() {
     if (this.state.hasError) {
-      return (
-        <div className="error-boundary">
-          <div className="error-content">
-            <i className="fa-solid fa-exclamation-triangle fa-3x mb-4"></i>
-            <h2>Something went wrong</h2>
-            <p>We're sorry, but something unexpected happened. Please try refreshing the page.</p>
-            <button 
-              className="btn-premium mt-4"
-              onClick={() => window.location.reload()}
-            >
-              <i className="fa-solid fa-refresh me-2"></i>
-              Refresh Page
-            </button>
-          </div>
-        </div>
-      )
+      return <ErrorBoundaryContent />
     }
-
     return this.props.children
   }
 }

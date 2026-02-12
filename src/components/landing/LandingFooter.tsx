@@ -1,4 +1,5 @@
 import { useTranslation } from '../../contexts/TranslationContext'
+import { Icon } from '../ui/Icon'
 import type { Personal, Social } from '../../types/portfolio'
 
 interface LandingFooterProps {
@@ -8,7 +9,7 @@ interface LandingFooterProps {
 }
 
 export function LandingFooter({ personal, social, className = '' }: LandingFooterProps) {
-  const { currentLanguage } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <footer className={`landing-footer landing-section ${className}`}>
@@ -24,13 +25,13 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
             <div className="footer-contact">
               {personal.location && (
                 <div className="footer-contact-item">
-                  <i className="fa-solid fa-map-marker-alt"></i>
+                  <Icon name="map-marker-alt" size={18} />
                   <span>{personal.location}</span>
                 </div>
               )}
               {personal.availability && (
                 <div className="footer-contact-item">
-                  <i className="fa-solid fa-clock"></i>
+                  <Icon name="clock" size={18} />
                   <span>{personal.availability}</span>
                 </div>
               )}
@@ -39,16 +40,14 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
           
           <div className="footer-links">
             <div className="footer-section">
-              <h4 className="footer-section-title">
-                {currentLanguage === 'pt-PT' ? 'Navegação' : 'Navigation'}
-              </h4>
+              <h4 className="footer-section-title">{t('landing.footer.navigation')}</h4>
               <ul className="footer-list">
                 <li>
                   <a href="#about" onClick={(e) => { 
                     e.preventDefault(); 
                     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); 
                   }}>
-                    {currentLanguage === 'pt-PT' ? 'Sobre' : 'About'}
+                    {t('landing.footer.about')}
                   </a>
                 </li>
                 <li>
@@ -56,7 +55,7 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
                     e.preventDefault(); 
                     document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); 
                   }}>
-                    {currentLanguage === 'pt-PT' ? 'Serviços' : 'Services'}
+                    {t('landing.footer.services')}
                   </a>
                 </li>
                 <li>
@@ -64,7 +63,7 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
                     e.preventDefault(); 
                     window.dispatchEvent(new CustomEvent('navigateToPortfolio')); 
                   }}>
-                    {currentLanguage === 'pt-PT' ? 'Experiência' : 'Experience'}
+                    {t('landing.footer.experience')}
                   </a>
                 </li>
                 <li>
@@ -72,7 +71,7 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
                     e.preventDefault(); 
                     window.dispatchEvent(new CustomEvent('navigateToPortfolio')); 
                   }}>
-                    {currentLanguage === 'pt-PT' ? 'Projetos' : 'Projects'}
+                    {t('landing.footer.projects')}
                   </a>
                 </li>
               </ul>
@@ -80,23 +79,23 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
             
             <div className="footer-section">
               <h4 className="footer-section-title">
-                {currentLanguage === 'pt-PT' ? 'Especialidades' : 'Expertise'}
+                {t('landing.footer.expertise')}
               </h4>
               <ul className="footer-list">
-                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Engenharia de Software Full-Stack' : 'Full-Stack Software Engineering'}</a></li>
-                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Integração de IA e Automação' : 'AI Integration & Process Automation'}</a></li>
-                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Aplicações Web Empresariais' : 'Enterprise Web Applications'}</a></li>
-                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Infraestrutura Cloud' : 'Cloud Infrastructure & Solutions'}</a></li>
-                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Transmissão em Direto e Overlays' : 'Live Streaming & Overlays'}</a></li>
-                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Reparação e Manutenção de Computadores' : 'Computer Repair & Maintenance'}</a></li>
-                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Consultoria em TI' : 'IT Consulting'}</a></li>
-                <li><a href="#features">{currentLanguage === 'pt-PT' ? 'Instalação e Manutenção de Racks de Servidores' : 'Server Rack Installation & Maintenance'}</a></li>
+                <li><a href="#features">{t('landing.features.expertiseItems.fullStackEng')}</a></li>
+                <li><a href="#features">{t('landing.features.expertiseItems.aiAutomation')}</a></li>
+                <li><a href="#features">{t('landing.features.expertiseItems.enterpriseWeb')}</a></li>
+                <li><a href="#features">{t('landing.features.expertiseItems.cloudInfra')}</a></li>
+                <li><a href="#features">{t('landing.features.expertiseItems.liveStreaming')}</a></li>
+                <li><a href="#features">{t('landing.features.expertiseItems.computerRepair')}</a></li>
+                <li><a href="#features">{t('landing.features.expertiseItems.itConsulting')}</a></li>
+                <li><a href="#features">{t('landing.features.expertiseItems.serverRack')}</a></li>
               </ul>
             </div>
             
             <div className="footer-section">
               <h4 className="footer-section-title">
-                {currentLanguage === 'pt-PT' ? 'Contacto' : 'Contact'}
+                {t('landing.footer.contact')}
               </h4>
               <ul className="footer-list">
                 {social.map((socialItem) => (
@@ -118,18 +117,18 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
         <div className="footer-bottom">
           <div className="footer-copyright">
             {/* TODO: Replace "JMSIT" with your brand name */}
-            <p>&copy; {new Date().getFullYear()} JMSIT - {personal?.name || 'Portfolio'}. {currentLanguage === 'pt-PT' ? 'Todos os direitos reservados.' : 'All rights reserved.'}</p>
+            <p>&copy; {new Date().getFullYear()} JMSIT - {personal?.name || 'Portfolio'}. {t('landing.footer.copyright')}</p>
             <div className="footer-badges">
-              <span className="footer-badge" title={currentLanguage === 'pt-PT' ? 'Conformidade WCAG 2.2 AA' : 'WCAG 2.2 AA Compliant'}>
-                <i className="fa-solid fa-universal-access"></i>
+              <span className="footer-badge" title={t('landing.footer.wcagBadge')}>
+                <Icon name="universal-access" size={20} />
                 <span>WCAG 2.2 AA</span>
               </span>
-              <span className="footer-badge" title={currentLanguage === 'pt-PT' ? 'Conformidade GDPR' : 'GDPR Compliant'}>
-                <i className="fa-solid fa-shield-halved"></i>
+              <span className="footer-badge" title={t('landing.footer.gdprBadge')}>
+                <Icon name="shield-halved" size={20} />
                 <span>GDPR</span>
               </span>
-              <span className="footer-badge" title={currentLanguage === 'pt-PT' ? 'Otimizado para Core Web Vitals' : 'Core Web Vitals Optimized'}>
-                <i className="fa-solid fa-gauge-high"></i>
+              <span className="footer-badge" title={t('landing.footer.perfBadge')}>
+                <Icon name="gauge-high" size={20} />
                 <span>Performance</span>
               </span>
             </div>
@@ -137,14 +136,12 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
           
           <div className="footer-tech-section">
           <div className="footer-tech">
-            <span className="tech-label">{currentLanguage === 'pt-PT' ? 'Desenvolvido com:' : 'Built with:'}</span>
+            <span className="tech-label">{t('landing.footer.builtWith')}</span>
             <div className="tech-stack">
-                <span className="tech-item" title="Preact - Fast 3kB alternative to React">Preact</span>
-                <span className="tech-item" title="TypeScript - Typed JavaScript">TypeScript</span>
-                <span className="tech-item" title="Vite - Next generation frontend tooling">Vite</span>
-                <span className="tech-item" title="Vitest - Fast unit test framework">Vitest</span>
-                <span className="tech-item" title="ESLint - Code quality tool">ESLint</span>
-                <span className="tech-item" title="PostCSS - CSS processing tool">PostCSS</span>
+                <span className="tech-item" title={t('landing.footer.techPreact')}>Preact</span>
+                <span className="tech-item" title={t('landing.footer.techTypescript')}>TypeScript</span>
+                <span className="tech-item" title={t('landing.footer.techVite')}>Vite</span>
+                <span className="tech-item" title={t('landing.footer.techTailwind')}>Tailwind</span>
               </div>
             </div>
             <div className="footer-project-info">
@@ -153,14 +150,14 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="footer-github-link"
-                title={currentLanguage === 'pt-PT' ? 'Ver código fonte no GitHub' : 'View source code on GitHub'}
+                title={t('landing.footer.viewSourceOnGitHub')}
               >
-                <i className="fa-brands fa-github"></i>
-                <span>{currentLanguage === 'pt-PT' ? 'Código Fonte' : 'Source Code'}</span>
+                <Icon name="github" size={20} />
+                <span>{t('landing.footer.sourceCode')}</span>
               </a>
               <span className="footer-license">
-                <i className="fa-solid fa-scale-balanced"></i>
-                <span>MIT License</span>
+                <Icon name="scale-balanced" size={20} />
+                <span>{t('landing.footer.mitLicense')}</span>
               </span>
             </div>
           </div>

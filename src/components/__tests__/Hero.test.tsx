@@ -8,7 +8,7 @@ vi.mock('../../contexts/TranslationContext', () => ({
   useTranslation: () => ({
     t: (key: string) => {
       const translations: Record<string, string> = {
-        'hero.title': 'Full-Stack Developer',
+        'hero.title': 'Full-Stack Engineer',
         'hero.subtitle': 'Back-end Ops • Network • OOP',
         'hero.cta': 'Get In Touch',
         'navigation.projects': 'View Projects'
@@ -47,7 +47,7 @@ Object.defineProperty(navigator, 'hardwareConcurrency', {
 
 const mockPersonal = {
   name: 'João Maia',
-  title: 'Full-Stack Developer',
+  title: 'Full-Stack Engineer',
   tagline: 'Back-end Ops • Network • OOP',
   summary: 'Full-stack developer with passion for modern web technologies',
   longSummary: 'Experienced full-stack developer specializing in React, Node.js, and cloud technologies',
@@ -83,7 +83,7 @@ describe('Hero Component', () => {
     render(<Hero {...defaultProps} />)
     
     expect(screen.getByText('João Maia')).toBeInTheDocument()
-    expect(screen.getByText('Full-Stack Developer')).toBeInTheDocument()
+    expect(screen.getByText('Full-Stack Engineer')).toBeInTheDocument()
     expect(screen.getByText(mockPersonal.longSummary)).toBeInTheDocument()
   })
 
@@ -93,7 +93,7 @@ describe('Hero Component', () => {
     const profileImage = container.querySelector('img.hero-avatar') as HTMLImageElement
     expect(profileImage).toBeInTheDocument()
     expect(profileImage).toHaveAttribute('src', './img/profile.jpg')
-    expect(profileImage).toHaveAttribute('alt', 'João Maia  - Full-Stack Developer')
+    expect(profileImage).toHaveAttribute('alt', 'João Maia - Full-Stack Engineer')
     expect(profileImage).toHaveAttribute('loading', 'lazy')
     expect(profileImage).toHaveAttribute('decoding', 'async')
   })

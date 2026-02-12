@@ -97,7 +97,7 @@ const mockTranslationData = {
   portfolio: {
     personal: {
       name: 'João Maia',
-      title: 'Full-Stack Developer',
+      title: 'Full-Stack Engineer',
       subtitle: 'Back-end Ops • Network • OOP',
       summary: 'Experienced full-stack developer specializing in React, Node.js, and cloud technologies',
       coreValues: ['Innovation', 'Quality', 'Collaboration'],
@@ -120,7 +120,7 @@ const mockTranslationData = {
   },
   ui: {
     hero: {
-      title: 'Full-Stack Developer',
+      title: 'Full-Stack Engineer',
       subtitle: 'Back-end Ops • Network • OOP',
       cta: 'Get In Touch',
       tagline: 'Always learning. Building with purpose.'

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'preact/hooks'
+import { getInitialLanguage } from '../lib/locale'
 
 // Global translation state
 let globalTranslations: Record<string, unknown> = {}
@@ -48,30 +49,14 @@ export function useTranslation() {
     }
   }, [])
 
-  // Initialize language from URL parameter, then localStorage, then default to English
+  // When preload has not run (e.g. tests), sync initial language from getInitialLanguage() and load
   useEffect(() => {
-    // Check URL parameter first
-    const urlParams = new URLSearchParams(window.location.search)
-    const urlLang = urlParams.get('lang') as 'en' | 'pt-PT' | null
-    const savedLang = localStorage.getItem('i18nextLng') as 'en' | 'pt-PT'
-    
-    // Priority: URL parameter > localStorage > default to English
-    const initialLang = (urlLang && (urlLang === 'en' || urlLang === 'pt-PT')) 
-      ? urlLang 
-      : (savedLang || 'en')
-    
-    // Save URL language to localStorage if it was provided
-    if (urlLang && (urlLang === 'en' || urlLang === 'pt-PT')) {
-      localStorage.setItem('i18nextLng', urlLang)
-    }
-    
-    if (initialLang !== globalCurrentLanguage) {
-      globalCurrentLanguage = initialLang
-      translationListeners.forEach(listener => listener())
-    }
-    
-    // Load translations immediately if not already loaded
     if (!translationsLoaded) {
+      const initialLang = getInitialLanguage()
+      if (globalCurrentLanguage !== initialLang) {
+        globalCurrentLanguage = initialLang
+        translationListeners.forEach(listener => listener())
+      }
       loadTranslations(globalCurrentLanguage)
     }
   }, [])
@@ -101,20 +86,36 @@ export function useTranslation() {
     localStorage.setItem('i18nextLng', lang)
   }, [loadTranslations])
 
-  // Translation function - not using useCallback to ensure it's recreated on every render
-  const t = (key: string, defaultValue?: string) => {
-    const keys = key.split('.')
+  // Translation function - supports dot-notation, fallback, and {{var}} interpolation
+  const t = (
+    key: string,
+    defaultValue?: string,
+    vars?: Record<string, string | undefined>
+  ): string => {
+    const keyParts = key.split('.')
     let value: unknown = globalTranslations
-    
-    for (const k of keys) {
+
+    for (const k of keyParts) {
       if (value && typeof value === 'object' && k in value) {
         value = (value as Record<string, unknown>)[k]
       } else {
-        return defaultValue || key
+        value = defaultValue || key
+        break
       }
     }
-    
-    return (value as string) || defaultValue || key
+
+    let result = (typeof value === 'string' ? value : defaultValue) || key
+
+    if (vars && Object.keys(vars).length > 0) {
+      for (const [varKey, varValue] of Object.entries(vars)) {
+        result = result.replace(
+          new RegExp(`\\{\\{${varKey}\\}\\}`, 'g'),
+          String(varValue ?? '')
+        )
+      }
+    }
+
+    return result
   }
 
   return {

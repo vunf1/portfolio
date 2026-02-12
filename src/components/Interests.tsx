@@ -1,5 +1,5 @@
 import { useTranslation } from '../contexts/TranslationContext'
-import { Section } from './ui'
+import { Section, Icon } from './ui'
 import type { InterestsProps } from '../types'
 
 export function Interests({ interests }: InterestsProps) {
@@ -18,7 +18,7 @@ export function Interests({ interests }: InterestsProps) {
               <div className="interest-content">
                 <div className="interest-header">
                   <div className="interest-icon">
-                    <i className="fa-solid fa-heart"></i>
+                    <Icon name="heart" size={18} />
                   </div>
                   <h3 className="interest-title">{interest.category}</h3>
                 </div>

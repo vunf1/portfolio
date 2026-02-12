@@ -1,5 +1,8 @@
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks'
 import { useTranslation } from '../../contexts/TranslationContext'
+import { Button } from '../ui/Button'
+import { Card } from '../ui/Card'
+import { Icon } from '../ui/Icon'
 import type { Personal, Social } from '../../types/portfolio'
 import profileUrl from '@/img/profile.jpg'
 
@@ -12,7 +15,7 @@ interface LandingAboutProps {
 }
 
 export function LandingAbout({ personal, social, className = '', onNavigateToPortfolio, onWarmPortfolio }: LandingAboutProps) {
-  const { currentLanguage } = useTranslation()
+  const { t } = useTranslation()
   const [isVisible, setIsVisible] = useState(false)
   const ctaRef = useRef<HTMLButtonElement | null>(null)
 
@@ -34,8 +37,13 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
     return () => sectionObserver.disconnect()
   }, [])
 
-  useEffect(() => {
-    if (!onWarmPortfolio || typeof IntersectionObserver === 'undefined' || !ctaRef.current) {
+  useLayoutEffect(() => {
+    if (!onWarmPortfolio || typeof IntersectionObserver === 'undefined') {
+      return
+    }
+
+    const el = ctaRef.current
+    if (!el || !(el instanceof Element)) {
       return
     }
 
@@ -51,7 +59,7 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
       { threshold: 0.5 }
     )
 
-    observer.observe(ctaRef.current)
+    observer.observe(el)
 
     return () => observer.disconnect()
   }, [onWarmPortfolio])
@@ -65,13 +73,9 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
       <div className="about-container">
         <div className={`about-header ${isVisible ? 'about-header-visible' : ''}`}>
           <h2 className="about-title">
-            <span className="about-title-main">{currentLanguage === 'pt-PT' ? 'Sobre Mim' : 'About Me'}</span>
+            <span className="about-title-main">{t('landing.about.title')}</span>
           </h2>
-          <p className="about-subtitle">
-            {currentLanguage === 'pt-PT'
-              ? 'Especialista em tecnologia com mais de uma década de experiência em desenvolvimento de software, automação, infraestrutura de TI e soluções técnicas'
-              : 'Technology specialist with over a decade of experience in software development, automation, IT infrastructure, and technical solutions'}
-          </p>
+          <p className="about-subtitle">{t('landing.about.subtitle')}</p>
         </div>
         
         <div className={`about-content ${isVisible ? 'about-content-visible' : ''}`}>
@@ -92,74 +96,77 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
               </div>
             </div>
             
-            <p className="about-description">
-              {currentLanguage === 'pt-PT'
-                ? 'Apaixonei-me por computadores desde criança e cresci a observar a evolução tecnológica diante dos meus olhos, o que foi e continua a ser prodigioso. Comecei a estudar conceitos básicos de informática aos 10 anos, apenas pelo prazer de aprender, vendo a minha capacidade de lógica e resolução de problemas a entrar em ação na área de hardware. A programação começou aos 14 anos e desenvolvi um lema que gosto de transmitir: "Pensar e Executar". Desenvolvi uma relação muito forte com a aprendizagem, não em termos de dependência, mas na necessidade saudável de aprender cada vez mais para poder executar as tarefas. Tudo o que sei aprendi em frente a um computador, pesquisando e aprendendo, nunca tentando copiar o conhecimento de outros, mas sim aprender a realizar a tarefa. Compreendo que vivemos em dois mundos: o real e o digital. Comecei a compreender o mundo digital desde tenra idade e sempre fui uma pessoa que se adapta facilmente ao ambiente que a rodeia. Para além do desenvolvimento de software, ofereço serviços de reparação de computadores, instalação e manutenção de racks de servidores, consultoria em TI e configuração de sistemas de transmissão em direto.'
-                : 'I have loved computers since I was a child and grew up watching technological evolution unfold before my eyes, which was and still is prodigious. I began self-studying basic computer concepts at the age of 10, simply for the pleasure of learning, watching my logic and problem-solving abilities come into action in the hardware area. Programming started at the age of 14, and I developed a motto I like to share: "Think & Execute". I developed a very strong relationship with learning, not in terms of addiction, but in the healthy need to learn more and more to be able to execute tasks. Everything I know I learned in front of a computer, searching and learning, never trying to copy others\' knowledge, but rather learning how to accomplish the task. I understand that we live in two worlds: the real and the digital. I started understanding the digital world from an early age and have always been a person who can easily adapt to the environment around me. Beyond software development, I offer computer repair services, server rack installation and maintenance, IT consulting, and live streaming system setup.'}
-            </p>
+            <p className="about-description">{t('landing.about.description')}</p>
             
-            <div className="about-details">
-              <div className="about-detail-item">
-                <i className="fa-solid fa-map-marker-alt"></i>
-                <div>
-                  <strong>{currentLanguage === 'pt-PT' ? 'Localização' : 'Location'}</strong>
-                  <p>{personal?.location || ''}</p>
-                </div>
-              </div>
-              
-              <div className="about-detail-item">
-                <i className="fa-solid fa-clock"></i>
-                <div>
-                  <strong>{currentLanguage === 'pt-PT' ? 'Disponibilidade' : 'Availability'}</strong>
-                  <p>{personal?.availability || ''}</p>
-                </div>
-              </div>
-              
-              {personal.remote && (
+            <Card variant="default" hover={false} className="about-details-card">
+              <div className="about-details">
                 <div className="about-detail-item">
-                  <i className="fa-solid fa-laptop"></i>
+                  <Icon name="map-marker-alt" size={18} />
                   <div>
-                    <strong>{currentLanguage === 'pt-PT' ? 'Trabalho Remoto' : 'Remote Work'}</strong>
-                    <p>{personal.remote}</p>
+                    <strong>{t('landing.about.location')}</strong>
+                    <p>{personal?.location || ''}</p>
                   </div>
                 </div>
-              )}
-            </div>
+                
+                <div className="about-detail-item">
+                  <Icon name="clock" size={18} />
+                  <div>
+                    <strong>{t('landing.about.availability')}</strong>
+                    <p>{personal?.availability || ''}</p>
+                  </div>
+                </div>
+                
+                {personal.remote && (
+                  <div className="about-detail-item">
+                    <Icon name="laptop" size={18} />
+                    <div>
+                      <strong>{t('landing.about.remoteWork')}</strong>
+                      <p>{personal.remote}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </Card>
             
             <div className="about-actions">
-              <button
-                className="btn-about-primary"
+              <Button
                 ref={ctaRef}
+                variant="primaryElevated"
+                size="lg"
+                className="about-cta-primary"
                 onClick={onNavigateToPortfolio}
                 onMouseEnter={handleWarmIntent}
                 onFocus={handleWarmIntent}
                 onTouchStart={handleWarmIntent}
               >
-                <i className="fa-solid fa-arrow-right"></i>
-                <span>{currentLanguage === 'pt-PT' ? 'Ver Competências e Experiência' : 'View Skills & Experience'}</span>
-              </button>
+                {t('landing.about.ctaSkills')}
+              </Button>
             </div>
           </div>
           
           <div className="about-sidebar">
-            <div className="about-core-values">
-              <h3 className="core-values-title">
-                {currentLanguage === 'pt-PT' ? 'Valores Fundamentais' : 'Core Values'}
-              </h3>
+            <Card 
+              variant="default" 
+              title={t('landing.about.coreValues')} 
+              hover={false}
+              className="about-core-values-card"
+            >
               <ul className="core-values-list">
                 {personal.coreValues.map((value, index) => (
                   <li key={index} className="core-value-item">
-                    <i className="fa-solid fa-check-circle"></i>
+                    <Icon name="check-circle" size={18} />
                     <span>{value}</span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </Card>
             
-            <div className="about-social">
-              <h3 className="social-title">
-                {currentLanguage === 'pt-PT' ? 'Conecte-se Comigo' : 'Connect with Me'}
-              </h3>
+            <Card 
+              variant="default" 
+              title={t('landing.about.connectWithMe')} 
+              hover={false}
+              className="about-social-card"
+            >
               <div className="social-links-grid">
                 {social
                   .filter((socialItem) => socialItem.name !== 'Portfolio' && socialItem.name !== 'Carteira')
@@ -173,12 +180,12 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
                       style={{ '--social-color': socialItem.color || '#3b82f6' }}
                       title={socialItem.description}
                     >
-                      <i className={socialItem.icon} aria-hidden="true"></i>
+                      <Icon name={socialItem.icon} size={16} aria-hidden />
                       <span className="social-name">{socialItem.name}</span>
                     </a>
                   ))}
               </div>
-            </div>
+            </Card>
           </div>
         </div>
       </div>

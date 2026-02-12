@@ -53,97 +53,64 @@
       "skills": [
         {
           "name": "Entrega de software de ponta a ponta (SDLC, arquitetura limpa)",
-          "level": "Perito"
+          "level": "Perito",
+          "description": "Ciclo de vida completo com arquitetura limpa, testes e código mantível."
         },
         {
           "name": "DevOps e CI/CD (contentores, IaC)",
-          "level": "Proficiente"
+          "level": "Proficiente",
+          "description": "Contentores, pipelines e infraestrutura como código para implementações fiáveis."
         },
         {
           "name": "Engenharia de redes (L1/L2/L3, VLAN/VPN, QoS)",
-          "level": "Proficiente"
+          "level": "Proficiente",
+          "description": "Conceção e operação de redes com VLANs, VPNs e priorização de tráfego."
         },
         {
           "name": "Segurança e proteção (Firewalls/IDS, VPNs, segredos)",
-          "level": "Avançado"
+          "level": "Avançado",
+          "description": "Firewalls, deteção de intrusão, VPNs e gestão de segredos."
         },
         {
           "name": "Observabilidade e fiabilidade (registos/métricas/rastreios, SLO)",
-          "level": "Proficiente"
+          "level": "Proficiente",
+          "description": "Monitorização, alertas e práticas de fiabilidade orientadas a SLO."
         },
         {
           "name": "Automatização e criação de scripts (Python/Bash/PowerShell, assistido por IA)",
-          "level": "Avançado"
+          "level": "Avançado",
+          "description": "Scripting e automação com ferramentas assistidas por IA quando adequado."
         },
         {
           "name": "Conceção de sistemas, otimização de processos e livros de execução",
-          "level": "Perito"
+          "level": "Perito",
+          "description": "Arquitetura, melhoria de processos e manuais operacionais."
         },
         {
           "name": "Operações de transmissão em fluxo contínuo (OBS, RTMP/SRT, NDI, sobreposições)",
-          "level": "Avançado"
+          "level": "Avançado",
+          "description": "Stacks de transmissão em direto: OBS, protocolos e pipelines de sobreposição."
         }
       ]
     },
     {
       "category": "Linguagens de programação",
       "skills": [
-        {
-          "name": "Python",
-          "level": "Avançado"
-        },
-        {
-          "name": "TypeScript",
-          "level": "Avançado"
-        },
-        {
-          "name": "JavaScript (ES6+)",
-          "level": "Avançado"
-        },
-        {
-          "name": "Java",
-          "level": "Avançado"
-        },
-        {
-          "name": "C#",
-          "level": "Avançado"
-        },
-        {
-          "name": "C",
-          "level": "Avançado"
-        },
-        {
-          "name": "C++",
-          "level": "Avançado"
-        },
-        {
-          "name": "VB.NET / VBA",
-          "level": "Avançado"
-        },
-        {
-          "name": "PHP",
-          "level": "Avançado"
-        },
-        {
-          "name": "Lua",
-          "level": "Avançado"
-        },
-        {
-          "name": "Bash / Shell",
-          "level": "Avançado"
-        },
-        {
-          "name": "PowerShell",
-          "level": "Avançado"
-        },
-        {
-          "name": "SQL",
-          "level": "Avançado"
-        },
-        {
-          "name": "NoSQL",
-          "level": "Proficiente"
-        }
+        { "name": "Python", "level": "Avançado", "description": "Full-stack, automação, streaming, GUIs.", "frontend": ["PySide6", "PyQt5", "CustomTkinter"], "backend": ["FastAPI", "Flask", "SQLAlchemy", "Celery", "pymongo"], "security": ["passlib", "bcrypt", "python-jose", "cryptography"] },
+        { "name": "TypeScript", "level": "Avançado", "description": "JavaScript tipado, modo estrito, tooling (tsc, esbuild).", "frontend": ["React", "Preact", "Next.js", "Vite", "TanStack Query", "Tailwind", "Electron", "Tauri", "Vitest"], "backend": ["Node.js", "Deno", "tsx", "Express"], "security": ["JWT", "CORS", "CSRF", "validação de input", "sanitização XSS"] },
+        { "name": "JavaScript (ES6+)", "level": "Avançado", "description": "JS moderno, async, módulos", "frontend": ["React", "Vue", "Svelte", "Socket.io"], "backend": ["Node.js", "Express"] },
+        { "name": "Rust", "level": "Proficiente", "description": "Sistemas, CLI, backends web", "frontend": ["Tauri"], "backend": ["Axum", "Tokio", "reqwest"], "security": ["argon2", "jsonwebtoken", "hmac", "sha2", "TOTP", "governor"] },
+        { "name": "Java", "level": "Avançado", "description": "JVM, aplicações enterprise", "frontend": [], "backend": ["Spring Boot", "Maven", "Gradle"] },
+        { "name": "C#", "level": "Avançado", "description": "Ecossistema .NET", "frontend": ["Blazor"], "backend": ["ASP.NET", ".NET Core"] },
+        { "name": "C", "level": "Avançado", "description": "Sistemas, embebidos", "frontend": [], "backend": [] },
+        { "name": "C++", "level": "Avançado", "description": "Sistemas críticos de performance", "frontend": [], "backend": ["Qt", "CMake"] },
+        { "name": "VB.NET / VBA", "level": "Avançado", "description": "Windows, automação Office", "frontend": [], "backend": [] },
+        { "name": "PHP", "level": "Avançado", "description": "Backend web", "frontend": [], "backend": ["Laravel", "Composer", "MongoDB"], "security": ["Argon2id", "token SHA-256", "CSRF", "CORS", "rate limiting", "HttpOnly/Secure/SameSite", "vinculação de sessão", "HTTPS", "validação de input", "sanitização de paths"] },
+        { "name": "Lua", "level": "Avançado", "description": "Scripting, plugins OBS", "frontend": [], "backend": [] },
+        { "name": "Bash / Shell", "level": "Avançado", "description": "CLI, DevOps, deployment, IR", "frontend": ["TUI", "output colorido"], "backend": ["podman", "docker", "pg_dump", "psql", "cron", "parsing .env"], "security": ["scripts IR", "threat hunting", "encriptação de backups"] },
+        { "name": "PowerShell", "level": "Avançado", "description": "Automação Windows, info de sistema, ferramentas DevOps", "frontend": ["WinForms", "TUI (Terminal UI)", "system tray"], "backend": ["WMI/CIM", "Chocolatey", "Winget", "pyenv", "Registry", "DISM", "powercfg", "PS2EXE"], "security": ["contenção IR", "hardening", "playbooks", "auto-elevação", "geração de cert"] },
+        { "name": "SQL", "level": "Avançado", "description": "Consultas estruturadas, schema, ACID", "frontend": [], "databases": ["PostgreSQL", "MySQL", "SQLite", "índices", "transações", "migrações", "prepared statements"] },
+        { "name": "NoSQL", "level": "Proficiente", "description": "Stores documentais e key-value", "frontend": [], "databases": ["MongoDB", "Redis", "modelo documental", "agregação", "key-value", "pub/sub"] }
       ]
     },
     {
@@ -188,6 +155,10 @@
         },
         {
           "name": "Conceitos de confiança zero",
+          "level": "Avançado"
+        },
+        {
+          "name": "Segurança de aplicações web (CSRF, XSS, sessões)",
           "level": "Avançado"
         }
       ]

@@ -9,12 +9,15 @@ vi.mock('../../contexts/TranslationContext', () => ({
     t: (key: string) => {
       const translations: Record<string, string> = {
         'navigation.brand': 'João Maia',
-        'hero.title': 'Full-Stack Developer',
+        'hero.title': 'Full-Stack Engineer',
         'navigation.about': 'About',
         'navigation.experience': 'Experience',
         'navigation.education': 'Education',
         'navigation.skills': 'Skills',
         'navigation.projects': 'Projects',
+        'navigation.toggleMenu': 'Toggle navigation menu',
+        'navigation.backToHome': 'Back to Home',
+        'navigation.backToLanding': 'Back to Landing Page',
       }
       return translations[key] || key
     },
@@ -66,7 +69,7 @@ describe('Navigation Component', () => {
     render(<Navigation {...defaultProps} />)
     
     expect(screen.getByText('João Maia')).toBeInTheDocument()
-    expect(screen.getByText('Full-Stack Developer')).toBeInTheDocument()
+    expect(screen.getByText('Full-Stack Engineer')).toBeInTheDocument()
   })
 
   it('renders navigation items', () => {
@@ -194,12 +197,10 @@ describe('Navigation Component', () => {
 
   it('renders icons for navigation items', () => {
     render(<Navigation {...defaultProps} />)
-    
-    const aboutIcon = document.querySelector('.fa-user')
-    const experienceIcon = document.querySelector('.fa-briefcase')
-    
-    expect(aboutIcon).toBeInTheDocument()
-    expect(experienceIcon).toBeInTheDocument()
+    const nav = document.querySelector('nav')
+    expect(nav).toBeInTheDocument()
+    const icons = nav?.querySelectorAll('svg')
+    expect(icons?.length).toBeGreaterThan(0)
   })
 
   it('handles navigation with no items', () => {

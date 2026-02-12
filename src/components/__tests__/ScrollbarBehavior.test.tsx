@@ -2,12 +2,39 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { render } from '@testing-library/preact'
 import { LandingPage } from '../landing/LandingPage'
-import { usePortfolioData } from '../../hooks/usePortfolioData'
-import { useTranslation } from '../../contexts/TranslationContext'
 
-// Mock hooks
-vi.mock('../../hooks/usePortfolioData')
-vi.mock('../../contexts/TranslationContext')
+// Mock portfolio data for LandingPage (no longer uses usePortfolioData - data passed from App)
+const mockPortfolioData = {
+  personal: {
+    name: 'João Maia',
+    title: 'Full-Stack Engineer',
+    tagline: 'Test tagline',
+    subtitle: 'Test subtitle',
+    email: 'test@example.com',
+    phone: '+351912345678',
+    phoneSecondary: '+351912345679',
+    location: 'Porto, Portugal',
+    website: 'https://example.com',
+    profileImage: './img/profile.jpg',
+    summary: 'Test summary',
+    longSummary: 'Test long summary',
+    availability: 'Available',
+    relocation: 'Open to relocation',
+    remote: 'Remote available',
+    languages: ['English', 'Portuguese'],
+    coreValues: ['Innovation', 'Quality', 'Collaboration']
+  },
+  social: [] as any,
+  experience: [] as any,
+  education: [] as any,
+  skills: {} as any,
+  projects: [] as any,
+  certifications: [] as any,
+  interests: [] as any,
+  awards: [] as any,
+  testimonials: [] as any,
+  meta: {} as any
+}
 
 // Mock IntersectionObserver with more realistic behavior
 class MockIntersectionObserver {
@@ -54,39 +81,6 @@ describe('Scrollbar Behavior Tests', () => {
     // Reset styles
     document.documentElement.style.cssText = ''
     document.body.style.cssText = ''
-    
-    // Mock usePortfolioData with complete Personal interface
-    ;(usePortfolioData as any).mockReturnValue({
-      portfolioData: {
-        personal: {
-          name: 'João Maia',
-          title: 'Full-Stack Developer',
-          tagline: 'Test tagline',
-          subtitle: 'Test subtitle',
-          email: 'test@example.com',
-          phone: '+351912345678',
-          phoneSecondary: '+351912345679',
-          location: 'Porto, Portugal',
-          website: 'https://example.com',
-          profileImage: './img/profile.jpg',
-          summary: 'Test summary',
-          longSummary: 'Test long summary',
-          availability: 'Available',
-          relocation: 'Open to relocation',
-          remote: 'Remote available',
-          languages: ['English', 'Portuguese'],
-          coreValues: ['Innovation', 'Quality', 'Collaboration']
-        },
-        social: []
-      },
-      loading: false
-    })
-    
-    // Mock useTranslation
-    ;(useTranslation as any).mockReturnValue({
-      currentLanguage: 'en',
-      t: (key: string) => key
-    })
   })
   
   afterEach(() => {
@@ -103,7 +97,8 @@ describe('Scrollbar Behavior Tests', () => {
       document.body.appendChild(app)
       
       render(
-        <LandingPage 
+        <LandingPage
+          portfolioData={mockPortfolioData}
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
@@ -132,7 +127,8 @@ describe('Scrollbar Behavior Tests', () => {
       document.body.appendChild(app)
       
       render(
-        <LandingPage 
+        <LandingPage
+          portfolioData={mockPortfolioData}
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
@@ -160,7 +156,8 @@ describe('Scrollbar Behavior Tests', () => {
       document.body.appendChild(app)
       
       render(
-        <LandingPage 
+        <LandingPage
+          portfolioData={mockPortfolioData}
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
@@ -188,7 +185,8 @@ describe('Scrollbar Behavior Tests', () => {
       document.body.appendChild(app)
       
       render(
-        <LandingPage 
+        <LandingPage
+          portfolioData={mockPortfolioData}
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
@@ -221,7 +219,8 @@ describe('Scrollbar Behavior Tests', () => {
       document.body.appendChild(app)
       
       render(
-        <LandingPage 
+        <LandingPage
+          portfolioData={mockPortfolioData}
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
@@ -259,7 +258,8 @@ describe('Scrollbar Behavior Tests', () => {
       document.body.appendChild(app)
       
       render(
-        <LandingPage 
+        <LandingPage
+          portfolioData={mockPortfolioData}
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
@@ -296,7 +296,8 @@ describe('Scrollbar Behavior Tests', () => {
       app.appendChild(tallContent)
       
       render(
-        <LandingPage 
+        <LandingPage
+          portfolioData={mockPortfolioData}
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
@@ -334,7 +335,8 @@ describe('Scrollbar Behavior Tests', () => {
       app.appendChild(tallContent)
       
       render(
-        <LandingPage 
+        <LandingPage
+          portfolioData={mockPortfolioData}
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
@@ -373,7 +375,8 @@ describe('Scrollbar Behavior Tests', () => {
       app.appendChild(tallContent)
       
       render(
-        <LandingPage 
+        <LandingPage
+          portfolioData={mockPortfolioData}
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
@@ -414,7 +417,8 @@ describe('Scrollbar Behavior Tests', () => {
       document.body.appendChild(app)
       
       render(
-        <LandingPage 
+        <LandingPage
+          portfolioData={mockPortfolioData}
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,
@@ -458,7 +462,8 @@ describe('Scrollbar Behavior Tests', () => {
       document.body.appendChild(app)
       
       const { unmount } = render(
-        <LandingPage 
+        <LandingPage
+          portfolioData={mockPortfolioData}
           onNavigateToPortfolio={() => {}}
           onWarmPortfolio={() => {}}
         />,

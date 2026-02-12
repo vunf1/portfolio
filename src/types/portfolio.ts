@@ -53,8 +53,18 @@ export type SkillLevel = 'Foundational' | 'Proficient' | 'Advanced' | 'Expert' |
 export interface Skill {
   name: string
   level: SkillLevel
-  experience: string
-  projects: number
+  experience?: string
+  projects?: number
+  /** Optional brief description */
+  description?: string
+  /** Frontend packages/frameworks (e.g. React, Vue, Angular) */
+  frontend?: string[]
+  /** Backend packages/frameworks (e.g. Express, Django, FastAPI) */
+  backend?: string[]
+  /** Security approaches/tools (e.g. Argon2, JWT, CSRF, rate limiting) */
+  security?: string[]
+  /** Database engines and techniques (for SQL/NoSQL; replaces backend label) */
+  databases?: string[]
 }
 
 export interface SkillGroup {
