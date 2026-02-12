@@ -2,20 +2,21 @@ import { render, screen, fireEvent } from '@testing-library/preact'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { FloatingActionButton } from '../FloatingActionButton'
 import { useTranslation } from '../../contexts/TranslationContext'
+import { useDarkReader } from '../../hooks/useDarkReader'
 
-// Mock the hooks
 vi.mock('../../contexts/TranslationContext')
+vi.mock('../../hooks/useDarkReader')
 
 const mockUseTranslation = vi.mocked(useTranslation)
+const mockUseDarkReader = vi.mocked(useDarkReader)
 
 describe('FloatingActionButton', () => {
   const mockChangeLanguage = vi.fn()
 
+  const mockToggleDarkMode = vi.fn()
+
   beforeEach(() => {
-    // Reset all mocks
     vi.clearAllMocks()
-    
-    // Setup default mock implementations
     mockUseTranslation.mockReturnValue({
       t: (key: string, defaultValue?: string) => defaultValue || key,
       currentLanguage: 'en' as const,
@@ -23,6 +24,10 @@ describe('FloatingActionButton', () => {
       isEnglish: true,
       isPortuguese: false,
       supportedLanguages: ['en', 'pt-PT'] as const
+    })
+    mockUseDarkReader.mockReturnValue({
+      isDark: false,
+      toggleDarkMode: mockToggleDarkMode
     })
 
     // Mock localStorage
@@ -106,5 +111,35 @@ describe('FloatingActionButton', () => {
     
     const languageButton = screen.getByRole('button', { name: /language/i })
     expect(languageButton).toHaveAttribute('aria-label')
+  })
+
+  it('renders dark mode toggle button with correct class', () => {
+    render(<FloatingActionButton />)
+    const darkToggle = screen.getByRole('button', {
+      name: 'fab.switchToDark'
+    })
+    expect(darkToggle).toBeInTheDocument()
+    expect(darkToggle).toHaveClass('fab-item-darkmode')
+  })
+
+  it('calls toggleDarkMode when dark mode button is clicked', () => {
+    render(<FloatingActionButton />)
+    const darkToggle = screen.getByRole('button', {
+      name: 'fab.switchToDark'
+    })
+    fireEvent.click(darkToggle)
+    expect(mockToggleDarkMode).toHaveBeenCalledTimes(1)
+  })
+
+  it('shows switch to light label when isDark is true', () => {
+    mockUseDarkReader.mockReturnValue({
+      isDark: true,
+      toggleDarkMode: mockToggleDarkMode
+    })
+    render(<FloatingActionButton />)
+    const lightToggle = screen.getByRole('button', {
+      name: 'fab.switchToLight'
+    })
+    expect(lightToggle).toBeInTheDocument()
   })
 })
