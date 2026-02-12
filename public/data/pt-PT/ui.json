@@ -31,6 +31,34 @@
     "title": "Certificações",
     "verificationUrl": "URL de verificação"
   },
+  "errorPages": {
+    "404": {
+      "title": "Página não encontrada",
+      "description": "Esta página não existe ou está protegida. O seu pedido foi registado. Tente outra rota ou volte atrás.",
+      "goBack": "Voltar",
+      "goHome": "Ir ao início"
+    },
+    "502": {
+      "title": "Gateway inválido",
+      "description": "Um servidor intermédio devolveu uma resposta inválida. O serviço pode estar temporariamente indisponível. Tente novamente em breve.",
+      "goBack": "Voltar",
+      "goHome": "Ir ao início"
+    },
+    "503": {
+      "title": "Serviço indisponível",
+      "description": "O sistema está em manutenção breve ou a processar tráfego elevado. O acesso está limitado para estabilidade. Volte em breve.",
+      "goBack": "Voltar",
+      "goHome": "Ir ao início"
+    },
+    "504": {
+      "title": "Tempo limite esgotado",
+      "description": "O servidor intermédio demorou demasiado a responder. Foi acionado um limite por segurança. Tente novamente em breve.",
+      "goBack": "Voltar",
+      "goHome": "Ir ao início"
+    },
+    "copyright": "© {{year}}",
+    "portfolioLink": "Portefólio"
+  },
   "common": {
     "darkMode": "Modo escuro",
     "error": "Erro",

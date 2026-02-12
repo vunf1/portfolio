@@ -31,6 +31,34 @@
     "title": "Certifications",
     "verificationUrl": "Verification URL"
   },
+  "errorPages": {
+    "404": {
+      "title": "Page Not Found",
+      "description": "This page is either off the grid or behind a security policy. Your request was logged. Try a different route or head back.",
+      "goBack": "Go Back",
+      "goHome": "Go Home"
+    },
+    "502": {
+      "title": "Bad Gateway",
+      "description": "An upstream server returned an invalid response. The service may be temporarily unavailable. Please try again shortly.",
+      "goBack": "Go Back",
+      "goHome": "Go Home"
+    },
+    "503": {
+      "title": "Service Unavailable",
+      "description": "The system is taking a brief maintenance window or handling heavy traffic. Access is rate-limited for stability. Check back shortly.",
+      "goBack": "Go Back",
+      "goHome": "Go Home"
+    },
+    "504": {
+      "title": "Gateway Timeout",
+      "description": "The upstream took too long to respond. A timeout was triggered to keep things safe. Please try again in a moment.",
+      "goBack": "Go Back",
+      "goHome": "Go Home"
+    },
+    "copyright": "© {{year}}",
+    "portfolioLink": "Portfolio"
+  },
   "common": {
     "darkMode": "Dark Mode",
     "error": "Error",

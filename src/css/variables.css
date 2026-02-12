@@ -76,6 +76,11 @@
   --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
   
+  /* Page transition – single source of truth (values match src/config/pageTransitions.ts) */
+  --page-fadeout-duration: 0.35s;
+  --page-fadein-duration: 0.45s;
+  --page-transition-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
+
   /* Advanced Transitions */
   --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-colors: color 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);

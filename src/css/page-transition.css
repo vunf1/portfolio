@@ -1,15 +1,22 @@
-/* Page transition: fade-out landing → fade-in portfolio */
+/* Premium page transition: landing fades out fully, then portfolio fades in. */
 
 .page-transition-wrapper {
   position: relative;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 .page-transition {
-  transition: opacity 0.25s ease-out;
+  transition: opacity var(--page-fadeout-duration) var(--page-transition-easing);
 }
 
-/* When portfolio is showing, land landing behind it (no layout, no interaction) */
+/* Exiting page: fades to transparent, no interaction */
+.page-fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* When portfolio is showing, keep landing behind (no layout, no interaction) */
 .page-transition-behind {
   position: absolute;
   inset: 0;
@@ -17,28 +24,27 @@
   z-index: 0;
 }
 
-.page-fade-out {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Portfolio: hidden until fade-in completes; no content visible before animation */
+/* Incoming page: fades in smoothly when mounted (delay handled in JS) */
 .page-fade-in {
   position: relative;
   z-index: 1;
   opacity: 0;
-  visibility: hidden;
-  animation: page-fade-in 0.4s ease-out 0.1s both;
+  animation: page-fade-in var(--page-fadein-duration) var(--page-transition-easing) forwards;
+}
+
+/* Direct load to portfolio: show immediately, no animation */
+.page-visible {
+  position: relative;
+  z-index: 1;
+  opacity: 1;
 }
 
 @keyframes page-fade-in {
   from {
     opacity: 0;
-    visibility: hidden;
   }
   to {
     opacity: 1;
-    visibility: visible;
   }
 }
 
@@ -47,9 +53,9 @@
   .page-fade-out {
     transition: none;
   }
-  .page-fade-in {
+  .page-fade-in,
+  .page-visible {
     animation: none;
-    animation-delay: 0s;
     opacity: 1;
   }
 }

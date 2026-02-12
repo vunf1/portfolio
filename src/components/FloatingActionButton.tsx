@@ -6,6 +6,8 @@ import { Icon } from './ui/Icon'
 interface FloatingActionButtonProps {
   className?: string
   onContactClick?: () => void
+  /** Hide contact button (e.g. on error pages) */
+  hideContact?: boolean
 }
 
 interface FABItem {
@@ -18,7 +20,7 @@ interface FABItem {
 
 const SCROLL_THRESHOLD = 300
 
-export function FloatingActionButton({ className = '', onContactClick }: FloatingActionButtonProps) {
+export function FloatingActionButton({ className = '', onContactClick, hideContact = false }: FloatingActionButtonProps) {
   const { currentLanguage, changeLanguage, t } = useTranslation()
   const { isDark, toggleDarkMode } = useDarkReader()
   const [showScrollTop, setShowScrollTop] = useState(false)
@@ -39,12 +41,16 @@ export function FloatingActionButton({ className = '', onContactClick }: Floatin
   const languageFlag = currentLanguage === 'pt-PT' ? '🇵🇹' : '🇬🇧'
 
   const fabItems: FABItem[] = [
-    {
-      id: 'contact',
-      icon: 'message-circle',
-      onClick: () => onContactClick?.(),
-      ariaLabel: t('contact.title', 'Contact Me')
-    },
+    ...(!hideContact
+      ? [
+          {
+            id: 'contact',
+            icon: 'message-circle',
+            onClick: () => onContactClick?.(),
+            ariaLabel: t('contact.title', 'Contact Me')
+          }
+        ]
+      : []),
     {
       id: 'language',
       icon: 'globe',

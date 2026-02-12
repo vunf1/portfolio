@@ -1,6 +1,15 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'preact/compat'
+import { route } from 'preact-router'
 import { usePortfolioData } from './hooks/usePortfolioData'
+import { useRouteSync } from './hooks/useRouteSync'
 import { useTranslation } from './contexts/TranslationContext'
+import { isPortfolioPath, toLandingRoute, toPortfolioRoute } from './config/routes'
+import {
+  LANGUAGE_TRANSITION_MS,
+  PAGE_FADEOUT_MS,
+  PAGE_FADEIN_DURATION_MS
+} from './config/pageTransitions'
+import { NotFoundView } from './components/NotFoundView'
 import { Navigation } from './components/Navigation'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { Icon } from './components/ui/Icon'
@@ -9,11 +18,9 @@ import { Toaster } from './components/ui/Toaster'
 import { PageLoader } from './components/ui/PageLoader'
 import { SectionPlaceholder } from './components/SectionPlaceholder'
 import { FloatingActionButton } from './components/FloatingActionButton'
+import { ContactModal } from './components/ui/ContactModal'
 import { LandingPage } from './components/landing/LandingPage'
 import { preloadPortfolioChunks } from './utils/preloadPortfolioChunks'
-
-/** Min time landing stays visible while fading out (ms) */
-const LANDING_FADEOUT_MS = 250
 import { initializeSEO, updateSEOOnLanguageChange } from './utils/seo'
 
 const logWarning = (message: string, detail: unknown) => {
@@ -37,24 +44,41 @@ export function App() {
   const { t, currentLanguage } = useTranslation()
   const { portfolioData, loading, error, loadAllSections } = usePortfolioData(currentLanguage)
   const [activeSection, setActiveSection] = useState('experience')
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false)
   const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false)
-  const [showPortfolio, setShowPortfolio] = useState(false)
   const [isExitingLanding, setIsExitingLanding] = useState(false)
   const [isExitingPortfolio, setIsExitingPortfolio] = useState(false)
   const [hideLanding, setHideLanding] = useState(true)
   const hasWarmedPortfolio = useRef(false)
-  const hasVisitedPortfolio = useRef(false)
+  const landingRef = useRef<HTMLDivElement>(null)
+  const portfolioRef = useRef<HTMLDivElement>(null)
+
+  const { showPortfolio, setShowPortfolio, hasVisitedPortfolioRef, initialPath, is404 } = useRouteSync({
+    isTransitioning: isExitingLanding || isExitingPortfolio
+  })
 
   const handleNavigateToPortfolio = useCallback(() => {
     if (isExitingLanding || showPortfolio) return
+    window.scrollTo(0, 0)
     setHideLanding(false)
     setIsExitingLanding(true)
-  }, [isExitingLanding, showPortfolio])
+    hasVisitedPortfolioRef.current = true
+    setShowPortfolio(true)
+    setIsExitingLanding(false)
+    route(toPortfolioRoute(), false)
+    void preloadPortfolioChunks()
+  }, [isExitingLanding, showPortfolio, setShowPortfolio])
+
+  const handleContactClick = useCallback(() => {
+    setIsContactModalOpen(true)
+  }, [])
 
   const handleBackToHome = useCallback(() => {
     if (isExitingPortfolio || !showPortfolio) return
-    setHideLanding(false) /* keep landing mounted behind so it's visible when portfolio fades out */
+    window.scrollTo(0, 0)
+    setHideLanding(false)
     setIsExitingPortfolio(true)
+    route(toLandingRoute(), false)
   }, [isExitingPortfolio, showPortfolio])
 
 
@@ -118,7 +142,7 @@ export function App() {
       setIsLanguageTransitioning(true)
       setTimeout(() => {
         setIsLanguageTransitioning(false)
-      }, 300) // Match CSS transition duration
+      }, LANGUAGE_TRANSITION_MS)
     }
 
     // Listen for language changes
@@ -268,38 +292,23 @@ export function App() {
     }
   }, [portfolioData])
 
-  /* After landing fades out: wait for portfolio chunks to load, then show portfolio so fade-in reveals full content */
-  useEffect(() => {
-    if (!isExitingLanding) return
-    let cancelled = false
-    let fallbackId: ReturnType<typeof setTimeout> | undefined
-    const showPortfolioNow = () => {
-      if (fallbackId) {
-        clearTimeout(fallbackId)
-        fallbackId = undefined
-      }
-      if (!cancelled) {
-        hasVisitedPortfolio.current = true
-        setIsExitingLanding(false)
-        setShowPortfolio(true)
-      }
-    }
-    const schedule = setTimeout(() => {
-      fallbackId = setTimeout(showPortfolioNow, 3000)
-      preloadPortfolioChunks().then(showPortfolioNow).catch(showPortfolioNow)
-    }, LANDING_FADEOUT_MS)
-    return () => {
-      cancelled = true
-      clearTimeout(schedule)
-      if (fallbackId) clearTimeout(fallbackId)
-    }
-  }, [isExitingLanding])
-
-  /* Unmount landing after portfolio fade-in completes (delay 0.1s + duration 0.4s ≈ 550ms) */
+  /* Unmount landing when portfolio fade-in animation completes */
   useEffect(() => {
     if (!showPortfolio) return
-    const timer = setTimeout(() => setHideLanding(true), 550)
-    return () => clearTimeout(timer)
+    const el = portfolioRef.current
+    const onAnimationEnd = (e: AnimationEvent) => {
+      if (e.target !== el || e.animationName !== 'page-fade-in') return
+      el?.removeEventListener('animationend', onAnimationEnd)
+      setHideLanding(true)
+    }
+    const fallback = setTimeout(() => setHideLanding(true), PAGE_FADEIN_DURATION_MS + 100)
+    if (el) {
+      el.addEventListener('animationend', onAnimationEnd)
+    }
+    return () => {
+      el?.removeEventListener('animationend', onAnimationEnd)
+      clearTimeout(fallback)
+    }
   }, [showPortfolio])
 
   /* Back to Home: fade out portfolio, then show landing */
@@ -310,7 +319,7 @@ export function App() {
       setShowPortfolio(false)
       document.body.classList.add('landing-page-active')
       document.documentElement.classList.add('landing-page-active')
-    }, LANDING_FADEOUT_MS)
+    }, PAGE_FADEOUT_MS)
     return () => clearTimeout(timer)
   }, [isExitingPortfolio])
 
@@ -356,6 +365,11 @@ export function App() {
     })
   }, [loadAllSections])
 
+  // Show in-app 404 when hash route is invalid (#404)
+  if (is404) {
+    return <NotFoundView />
+  }
+
   // Show premium loading state
   if (loading) {
     return <PageLoader />
@@ -363,46 +377,60 @@ export function App() {
 
   if (error) {
     return (
-      <div className="error">
-        <div className="error-content">
-          <Icon name="exclamation-triangle" size={48} className="mb-4" />
-          <h2>{t('common.error')}</h2>
-          <p>{t('common.somethingWentWrong')}</p>
-          <Button variant="primary" className="mt-4" onClick={() => window.location.reload()}>
-            <Icon name="refresh" size={18} className="mr-2" />
-            {t('common.refresh')}
-          </Button>
+      <>
+        <div className="error">
+          <div className="error-content">
+            <Icon name="exclamation-triangle" size={48} className="mb-4" />
+            <h2>{t('common.error')}</h2>
+            <p>{t('common.somethingWentWrong')}</p>
+            <Button variant="primary" className="mt-4" onClick={() => window.location.reload()}>
+              <Icon name="refresh" size={18} className="mr-2" />
+              {t('common.refresh')}
+            </Button>
+          </div>
         </div>
-      </div>
+        <FloatingActionButton hideContact />
+      </>
     )
   }
 
   if (!portfolioData) {
     return (
-      <div className="error">
-        <div className="error-content">
-          <Icon name="info-circle" size={48} className="mb-4" />
-          <h2>{t('common.error')}</h2>
-          <p>{t('common.somethingWentWrong')}</p>
-          <Button variant="primary" className="mt-4" onClick={() => window.location.reload()}>
-            <Icon name="refresh" size={18} className="mr-2" />
-            {t('common.refresh')}
-          </Button>
+      <>
+        <div className="error">
+          <div className="error-content">
+            <Icon name="info-circle" size={48} className="mb-4" />
+            <h2>{t('common.error')}</h2>
+            <p>{t('common.somethingWentWrong')}</p>
+            <Button variant="primary" className="mt-4" onClick={() => window.location.reload()}>
+              <Icon name="refresh" size={18} className="mr-2" />
+              {t('common.refresh')}
+            </Button>
+          </div>
         </div>
-      </div>
+        <FloatingActionButton hideContact />
+      </>
     )
   }
 
   const showLanding = !showPortfolio || !hideLanding
+  /* Keep landing faded (opacity 0) while exiting OR while portfolio is visible but not yet unmounted */
+  const landingShouldBeFaded = isExitingLanding || (showPortfolio && !hideLanding)
+  const landingClasses = [
+    'page-transition',
+    'page-transition-landing',
+    landingShouldBeFaded && 'page-fade-out',
+    showPortfolio && 'page-transition-behind',
+    !showPortfolio && !isExitingLanding && !hasVisitedPortfolioRef.current && 'page-fade-in'
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   return (
     <ErrorBoundary>
       <div className="page-transition-wrapper">
         {showLanding && (
-          <div
-            className={`page-transition page-transition-landing ${isExitingLanding ? 'page-fade-out' : ''} ${showPortfolio ? 'page-transition-behind' : ''} ${!showPortfolio && !isExitingLanding && !hasVisitedPortfolio.current ? 'page-fade-in' : ''}`}
-            aria-hidden={showPortfolio}
-          >
+          <div ref={landingRef} className={landingClasses} aria-hidden={showPortfolio}>
             <LandingPage
               portfolioData={portfolioData}
               onNavigateToPortfolio={handleNavigateToPortfolio}
@@ -411,7 +439,10 @@ export function App() {
           </div>
         )}
         {showPortfolio && (
-          <div className={`page-transition page-transition-portfolio ${isExitingPortfolio ? 'page-fade-out' : 'page-fade-in'}`}>
+          <div
+            ref={portfolioRef}
+            className={`page-transition page-transition-portfolio ${isExitingPortfolio ? 'page-fade-out' : isPortfolioPath(initialPath) ? 'page-visible' : 'page-fade-in'}`}
+          >
         <Navigation 
           items={[
             { id: 'experience', label: String(t('navigation.experience')), icon: 'fa-solid fa-briefcase' },
@@ -482,10 +513,16 @@ export function App() {
         </div>
 
 
-        <FloatingActionButton />
+        <FloatingActionButton onContactClick={handleContactClick} />
           </div>
         )}
       </div>
+      {showPortfolio && (
+        <ContactModal
+          isOpen={isContactModalOpen}
+          onClose={() => setIsContactModalOpen(false)}
+        />
+      )}
       <Toaster />
     </ErrorBoundary>
   )

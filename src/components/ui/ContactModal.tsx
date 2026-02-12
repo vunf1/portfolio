@@ -515,6 +515,7 @@ export function ContactModal({
   const renderActionButtons = () => (
     <Button
       type="submit"
+      form="contact-form"
       variant="ghost"
       size="md"
       className="min-w-[120px] no-underline bg-transparent border-0 shadow-none text-white hover:opacity-80 hover:scale-100"
@@ -553,6 +554,7 @@ export function ContactModal({
           </div>
 
           <form 
+            id="contact-form"
             name="contact-form" 
             onSubmit={handleSubmit}
             data-form-type="contact"

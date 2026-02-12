@@ -48,6 +48,7 @@ import {
   TreePine,
   Moon,
   Sun,
+  Home,
   type LucideIcon
 } from 'lucide-preact'
 import { cn } from '../../lib/utils'
@@ -125,7 +126,8 @@ const iconMap: Record<string, LucideIcon> = {
   'lightbulb': Award,
   'server': Shield,
   'moon': Moon,
-  'sun': Sun
+  'sun': Sun,
+  'home': Home
 }
 
 export type IconName = keyof typeof iconMap

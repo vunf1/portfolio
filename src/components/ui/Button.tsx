@@ -56,7 +56,8 @@ export function Button({
   href,
   target,
   rel,
-  ref
+  ref,
+  ...rest
 }: ButtonProps) {
   const handleClick = (event: MouseEvent) => {
     if (disabled || loading) {
@@ -83,6 +84,7 @@ export function Button({
         onMouseEnter={onMouseEnter}
         onFocus={onFocus}
         onTouchStart={onTouchStart}
+        {...rest}
       >
         {loading && <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />}
         {children}
@@ -101,6 +103,7 @@ export function Button({
       onMouseEnter={onMouseEnter}
       onFocus={onFocus}
       onTouchStart={onTouchStart}
+      {...rest}
     >
       {loading && <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />}
       {children}

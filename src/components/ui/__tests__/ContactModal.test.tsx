@@ -209,6 +209,36 @@ describe('ContactModal Component', () => {
     }, { timeout: 3000 })
   })
 
+  it('submits form when submit button (in header) is clicked', async () => {
+    const mockOnSuccess = vi.fn()
+    const props = { ...defaultProps, isOpen: true, onSuccess: mockOnSuccess }
+    render(<ContactModal {...props} />)
+
+    const nameInput = screen.getByLabelText(/Full Name/i) as HTMLInputElement
+    const emailInput = screen.getByLabelText(/Email/i) as HTMLInputElement
+    const subjectInput = screen.getByLabelText(/Subject/i) as HTMLInputElement
+    const messageInput = screen.getByRole('textbox', { name: /Message/i }) as HTMLTextAreaElement
+
+    await act(async () => {
+      fireEvent.input(nameInput, { target: { value: 'John Doe' } })
+      fireEvent.input(emailInput, { target: { value: 'john@example.com' } })
+      fireEvent.input(subjectInput, { target: { value: 'Test Subject' } })
+      fireEvent.input(messageInput, { target: { value: 'This is a test message with enough characters' } })
+    })
+
+    const submitButton = screen.getByRole('button', { name: /Send Message/i })
+    await act(async () => {
+      fireEvent.click(submitButton)
+    })
+
+    await waitFor(() => {
+      expect(screen.getByText('Thank you! Your message has been sent successfully.')).toBeInTheDocument()
+    }, { timeout: 3000 })
+
+    expect(mockSendContactEmail).toHaveBeenCalled()
+    expect(mockOnSuccess).toHaveBeenCalled()
+  })
+
   it('submits form with valid data', async () => {
     const mockOnSuccess = vi.fn()
     const props = { ...defaultProps, isOpen: true, onSuccess: mockOnSuccess }

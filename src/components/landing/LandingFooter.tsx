@@ -1,4 +1,5 @@
 import { useTranslation } from '../../contexts/TranslationContext'
+import { toFullPath } from '../../config/routes'
 import { Icon } from '../ui/Icon'
 import type { Personal, Social } from '../../types/portfolio'
 
@@ -59,7 +60,7 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
                   </a>
                 </li>
                 <li>
-                  <a href="#" onClick={(e) => { 
+                  <a href={toFullPath('/portfolio')} onClick={(e) => { 
                     e.preventDefault(); 
                     window.dispatchEvent(new CustomEvent('navigateToPortfolio')); 
                   }}>
@@ -67,7 +68,7 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
                   </a>
                 </li>
                 <li>
-                  <a href="#" onClick={(e) => { 
+                  <a href={toFullPath('/portfolio')} onClick={(e) => { 
                     e.preventDefault(); 
                     window.dispatchEvent(new CustomEvent('navigateToPortfolio')); 
                   }}>
