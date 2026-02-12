@@ -3,143 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>503 - Service Unavailable</title>
+    <title>503 - Service Unavailable | João Maia</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #feca57;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #333;
-        }
-
-        .container {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 3rem 2rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            max-width: 600px;
-            width: 90%;
-        }
-
-        .error-code {
-            font-size: 8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #feca57, #ff9ff3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .error-title {
-            font-size: 2rem;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 1rem;
-        }
-
-        .error-description {
-            font-size: 1.1rem;
-            color: #718096;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: inline-block;
-            margin-bottom: 2rem;
-        }
-
-        .btn-back {
-            background: #feca57;
-            color: white;
-        }
-
-        .btn-back:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(254, 202, 87, 0.4);
-        }
-
-        .footer {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .copyright {
-            font-size: 0.9rem;
-            color: #a0aec0;
-        }
-
-        .copyright a {
-            color: #feca57;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .copyright a:hover {
-            text-decoration: underline;
-        }
-
-        .icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            opacity: 0.8;
-        }
-
-        @media (max-width: 768px) {
-            .error-code {
-                font-size: 6rem;
-            }
-            
-            .error-title {
-                font-size: 1.5rem;
-            }
-            
-            .btn {
-                width: 100%;
-                max-width: 200px;
-            }
-        }
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#f8fafc;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;color:#1e293b;line-height:1.6}
+        .card{background:#fff;border:1px solid #e2e8f0;border-radius:0.75rem;box-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -1px rgba(0,0,0,.06),0 0 0 1px rgba(0,0,0,.02);max-width:28rem;width:100%;padding:2rem;text-align:center}
+        .code{font-size:5rem;font-weight:700;background:linear-gradient(135deg,#ffc107,#e0a800);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:1rem}
+        .title{font-size:1.5rem;font-weight:600;color:#0f172a;margin-bottom:0.75rem}
+        .desc{font-size:0.9375rem;color:#64748b;margin-bottom:1.5rem}
+        .actions{display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;margin-bottom:1.5rem}
+        .btn{display:inline-flex;align-items:center;justify-content:center;padding:0.5rem 1rem;font-size:0.875rem;font-weight:500;border-radius:0.5rem;text-decoration:none;cursor:pointer;transition:all .15s ease;border:none;min-height:2.25rem}
+        .btn-primary{background:#007bff;color:#fff}
+        .btn-primary:hover{background:#0056b3;box-shadow:0 4px 14px 0 rgba(0,123,255,.25)}
+        .btn-outline{background:transparent;color:#475569;border:1px solid #e2e8f0}
+        .btn-outline:hover{background:#f1f5f9;border-color:#cbd5e1}
+        .footer{margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #f1f5f9}
+        .copyright{font-size:0.8125rem;color:#94a3b8}
+        .copyright a{color:#007bff;text-decoration:none;font-weight:500}
+        .copyright a:hover{text-decoration:underline}
+        @media(max-width:480px){.code{font-size:4rem}.title{font-size:1.25rem}.btn{width:100%;max-width:12rem}}
+        @media(prefers-reduced-motion:reduce){.btn{transition:none}}
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="icon">⚠️</div>
-        <div class="error-code">503</div>
-        <h1 class="error-title">Service Unavailable</h1>
-        <p class="error-description">
-            System is taking a scheduled security power‑nap (or handling heavy traffic). 
-            Access is rate‑limited for stability—check back shortly for a clean connection.
-        </p>
-        
-        <a href="javascript:history.back()" class="btn btn-back">Go Back</a>
-        
-        <div class="footer">
-            <p class="copyright">
-                © 2024 <a href="https://vunf1.github.io/portfolio/" target="_blank">Portfolio</a>
-            </p>
+    <div class="card">
+        <div class="code" aria-hidden="true">503</div>
+        <h1 class="title" data-en="Service Unavailable" data-pt-PT="Serviço indisponível">Service Unavailable</h1>
+        <p class="desc" data-en="The system is taking a brief maintenance window or handling heavy traffic. Access is rate-limited for stability. Check back shortly." data-pt-PT="O sistema está em manutenção breve ou a processar tráfego elevado. O acesso está limitado para estabilidade. Volte em breve.">The system is taking a brief maintenance window or handling heavy traffic. Access is rate-limited for stability. Check back shortly.</p>
+        <div class="actions">
+            <a href="javascript:history.back()" class="btn btn-outline" data-en="Go Back" data-pt-PT="Voltar">Go Back</a>
+            <a href="./" id="home-link" class="btn btn-primary" data-en="Go Home" data-pt-PT="Ir ao início">Go Home</a>
         </div>
+        <footer class="footer">
+            <p class="copyright">
+                <span id="copyright-text">© 2025</span>
+                <a href="./" id="copyright-link">Portfolio</a>
+            </p>
+        </footer>
     </div>
+    <script>
+(function(){
+  var lang='en';var q=new URLSearchParams(window.location.search);var urlLang=q.get('lang');
+  if(urlLang==='en'||urlLang==='pt-PT')lang=urlLang;
+  else{try{var s=localStorage.getItem('i18nextLng');if(s==='en'||s==='pt-PT')lang=s}catch(e){};if(lang==='en'&&navigator.language&&navigator.language.startsWith('pt'))lang='pt-PT'}
+  document.documentElement.lang=lang;
+  var key=lang==='pt-PT'?'data-pt-PT':'data-en';
+  document.querySelectorAll('['+key+']').forEach(function(el){var v=el.getAttribute(key);if(v)el.textContent=v});
+  var path=window.location.pathname;var base=path.substring(0,path.lastIndexOf('/')+1)||'/';
+  var homeUrl=window.location.origin+base;
+  document.getElementById('home-link').href=homeUrl;
+  document.getElementById('copyright-link').href=homeUrl;
+  document.getElementById('copyright-link').textContent=lang==='pt-PT'?'Portefólio':'Portfolio';
+  document.getElementById('copyright-text').textContent='© '+new Date().getFullYear()+' ';
+})();
+    </script>
 </body>
 </html>
