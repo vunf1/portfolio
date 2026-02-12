@@ -330,7 +330,7 @@ describe('ContactModal Component', () => {
 
   it('does not close on escape when submitting', async () => {
     mockSendContactEmail.mockImplementationOnce(() =>
-      new Promise(resolve => setTimeout(() => resolve(), 500))
+      new Promise<void>(resolve => setTimeout(() => resolve(), 500))
     )
     
     const mockOnClose = vi.fn()
@@ -376,7 +376,7 @@ describe('ContactModal Component', () => {
 
   it('shows loading state during submission', async () => {
     mockSendContactEmail.mockImplementationOnce(() =>
-      new Promise(resolve => setTimeout(() => resolve(), 500))
+      new Promise<void>(resolve => setTimeout(() => resolve(), 500))
     )
     
     const props = { ...defaultProps, isOpen: true }

@@ -85,11 +85,11 @@ describe('emailSender', () => {
     })
 
     const [, , templateParams] = mockSend.mock.calls[0]
+    expect(templateParams).toBeDefined()
     expect(templateParams).toHaveProperty('website_url')
     expect(templateParams).toHaveProperty('logo_url')
     // logo_url must be the logo image URL, not the bare webpage URL
-    const logoUrl = templateParams.logo_url as string
-    const websiteUrl = templateParams.website_url as string
+    const logoUrl = templateParams!.logo_url as string
     expect(logoUrl).toMatch(/\.(png|jpg|jpeg|svg|webp)/i)
     expect(logoUrl).toContain('logo')
   })
@@ -105,7 +105,8 @@ describe('emailSender', () => {
     })
 
     const [, , templateParams] = mockSend.mock.calls[0]
-    expect(templateParams).toEqual(
+    expect(templateParams).toBeDefined()
+    expect(templateParams!).toEqual(
       expect.objectContaining({
         from_name: 'Jane',
         from_email: 'jane@test.com',
@@ -114,8 +115,8 @@ describe('emailSender', () => {
         to_email: 'joaomaia@jmsit.cloud'
       })
     )
-    expect(templateParams).not.toHaveProperty('phone')
-    expect(templateParams).not.toHaveProperty('company_name')
-    expect(templateParams).not.toHaveProperty('company_id')
+    expect(templateParams!).not.toHaveProperty('phone')
+    expect(templateParams!).not.toHaveProperty('company_name')
+    expect(templateParams!).not.toHaveProperty('company_id')
   })
 })
