@@ -7,5 +7,16 @@
 :root {
   --color-text: var(--color-gray-900);
   --color-background: var(--color-white);
+  /* Landing page background – matches hero section for consistent page color */
+  --landing-background: #f6f7f8;
+}
+
+/* Shadcn-inspired design tokens for premium feel */
+:root {
+  --card-bg: #ffffff;
+  --card-border: hsl(214 32% 91%);
+  --card-radius: 0.75rem;
+  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+  --card-shadow-hover: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
 }
 

@@ -3,7 +3,7 @@
 /* ===== FEATURES SECTION ===== */
 .landing-features {
   padding: var(--space-20) 0;
-  background: white;
+  background: #f6f7f8;
   position: relative;
   display: block;
   width: 100%;
@@ -66,7 +66,7 @@
 }
 
 .feature-card {
-  background: white;
+  background: #f6f7f8;
   border: 2px solid var(--color-gray-200);
   border-radius: var(--radius-xl);
   padding: var(--space-6);
@@ -186,7 +186,7 @@
 }
 
 .features-approach {
-  background: var(--color-gray-50);
+  background: #f6f7f8;
   border-radius: var(--radius-2xl);
   padding: var(--space-12);
   margin-top: var(--space-16);
@@ -267,7 +267,7 @@
 }
 
 .approach-card {
-  background: white;
+  background: #f6f7f8;
   border: 2px solid var(--color-gray-200);
   border-radius: var(--radius-xl);
   padding: var(--space-6);

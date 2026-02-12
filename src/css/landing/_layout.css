@@ -4,8 +4,6 @@
 /* Only html should scroll. All other containers use overflow: visible */
 
 /* Base scroll container - html is the only scrollable element */
-/* Use !important to override Bootstrap which may set html overflow */
-/* For landing page, html should not have height constraint to prevent nested scroll */
 html {
   overflow-x: hidden !important;
   overflow-y: auto !important;
@@ -24,11 +22,10 @@ html.landing-page-active {
   max-height: none !important;
   width: 100% !important;
   max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+  background: #f6f7f8; /* Match landing background for entire page */
 }
 
 /* Body - no scroll, natural height */
-/* Use !important to override Bootstrap which may set body overflow */
-/* CRITICAL: Body must NEVER create a scrollbar - only html should scroll */
 body {
   overflow: hidden !important; /* CRITICAL: Prevent body from creating scrollbar */
   overflow-x: hidden !important;
@@ -51,6 +48,7 @@ body.landing-page-active {
   position: relative;
   width: 100% !important;
   max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+  background: #f6f7f8 !important; /* Override index.css; entire page matches landing */
 }
 
 /* Modal scroll lock - prevent body scroll when modal is open */
@@ -60,8 +58,6 @@ body.modal-open {
 }
 
 /* #app container - no scroll, natural height */
-/* Use !important to override any conflicting rules */
-/* CRITICAL: #app must NEVER create a scrollbar - only html should scroll */
 #app {
   overflow: hidden !important; /* CRITICAL: Prevent #app from creating scrollbar */
   overflow-x: hidden !important;
@@ -91,7 +87,7 @@ body.landing-page-active #app {
 /* CRITICAL: .landing-page must NEVER create a scrollbar - only html should scroll */
 .landing-page {
   min-height: 100vh;
-  background: var(--color-background);
+  background: #f6f7f8;
   color: var(--color-text);
   overflow: hidden !important; /* CRITICAL: Prevent .landing-page from creating scrollbar */
   overflow-x: hidden !important;
@@ -157,15 +153,13 @@ body.landing-page-active #app {
 /* Hero content - no scroll constraints */
 /* CRITICAL: Ensure all hero child elements don't create scrollbars */
 .landing-hero .hero-content,
-.landing-hero .hero-background-corporate,
 .landing-hero .hero-text,
 .landing-hero .hero-visual,
 .landing-hero .hero-image-container,
 .landing-hero .hero-logo-wrapper,
 .landing-hero .hero-logo-subtitle,
 .landing-hero .hero-meta,
-.landing-hero .hero-actions,
-.landing-hero .hero-scroll-indicator {
+.landing-hero .hero-actions {
   overflow: visible !important;
   overflow-x: hidden !important; /* CRITICAL: Prevent horizontal scrollbar */
   overflow-y: visible !important;
@@ -221,6 +215,26 @@ html body section.landing-hero.landing-section.section-visible {
   /* Hide scrollbars if they somehow appear */
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
+}
+
+/* CRITICAL: landing-hero must keep min-height: 100vh (override min-height: 0 from section rule above) */
+section.landing-hero,
+section.landing-hero.landing-section,
+section.landing-hero.landing-section.section-visible {
+  min-height: 100vh !important;
+}
+
+/* CRITICAL: all landing sections use standard background (hero, features, about) */
+section.landing-hero,
+section.landing-hero.landing-section,
+section.landing-hero.landing-section.section-visible,
+section.landing-features,
+section.landing-features.landing-section,
+section.landing-features.landing-section.section-visible,
+section.landing-about,
+section.landing-about.landing-section,
+section.landing-about.landing-section.section-visible {
+  background: #f6f7f8 !important;
 }
 
 /* Hide scrollbars in webkit for section elements */
@@ -291,16 +305,21 @@ body .landing-hero.landing-section.section-visible * {
 }
 
 .landing-page .about-content p,
-.landing-page .about-subtitle,
-.landing-page .section-subtitle,
 .landing-page .feature-description,
 .landing-page .about-description,
 .landing-page .approach-description,
-.landing-page .footer-subtitle,
 .landing-page .footer-description {
   text-align: justify;
   word-spacing: normal;
   letter-spacing: normal;
+}
+
+/* Land page subtitles – center-aligned */
+.landing-page .about-subtitle,
+.landing-page .section-subtitle,
+.landing-page .footer-subtitle,
+.landing-page .features-subtitle {
+  text-align: center !important;
 }
 
 .landing-page .feature-title {

@@ -27,10 +27,5 @@
   .about-social {
     border: 2px solid var(--color-text);
   }
-  
-  .btn-hero-primary,
-  .btn-about-primary {
-    border: 2px solid white;
-  }
 }
 
