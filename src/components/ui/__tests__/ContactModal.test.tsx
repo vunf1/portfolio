@@ -3,7 +3,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/preact'
 import { ContactModal } from '../ContactModal'
 import type { ContactModalProps } from '../../../types'
-import { N8nClient } from '../../../utils/n8nClient'
 
 // Mock the TranslationContext
 vi.mock('../../../contexts/TranslationContext', () => ({
@@ -36,7 +35,8 @@ vi.mock('../../../contexts/TranslationContext', () => ({
         'contact.errors.messageTooShort': 'Message must be at least 10 characters',
         'contact.errors.submitFailed': 'Failed to send message. Please try again.',
         'contact.errors.timeout': 'Request timed out. Please check your connection and try again.',
-        'contact.errors.networkError': 'Network error. Please check your connection and try again.'
+        'contact.errors.networkError': 'Network error. Please check your connection and try again.',
+        'contact.errors.emailjsRecipient': 'Email config: set template "To Email" to {{to_email}} in EmailJS dashboard.'
       }
       return translations[key] || defaultValue || key
     },
@@ -49,11 +49,10 @@ vi.mock('../../../contexts/TranslationContext', () => ({
   preloadTranslations: vi.fn().mockResolvedValue(undefined)
 }))
 
-// Mock N8nClient
-vi.mock('../../../utils/n8nClient', () => ({
-  N8nClient: vi.fn().mockImplementation(() => ({
-    sendToWebhook: vi.fn().mockResolvedValue({ success: true, data: {} })
-  }))
+// Mock email sender (EmailJS)
+const mockSendContactEmail = vi.fn().mockResolvedValue(undefined)
+vi.mock('../../../utils/emailSender', () => ({
+  sendContactEmail: (...args: unknown[]) => mockSendContactEmail(...args)
 }))
 
 // Mock validation utilities
@@ -71,7 +70,7 @@ const defaultProps: ContactModalProps = {
 describe('ContactModal Component', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    // Reset document.body.overflow
+    mockSendContactEmail.mockResolvedValue(undefined)
     document.body.style.overflow = ''
   })
 
@@ -246,10 +245,7 @@ describe('ContactModal Component', () => {
   })
 
   it('handles submission error', async () => {
-    const mockSendToWebhook = vi.fn().mockRejectedValue(new Error('network error'))
-    ;(N8nClient as any).mockImplementation(() => ({
-      sendToWebhook: mockSendToWebhook
-    }))
+    mockSendContactEmail.mockRejectedValueOnce(new Error('network error'))
     
     const props = { ...defaultProps, isOpen: true }
     render(<ContactModal {...props} />)
@@ -280,15 +276,14 @@ describe('ContactModal Component', () => {
     }, { timeout: 3000 })
   })
 
-  it('calls onClose when cancel button is clicked', () => {
+  it('calls onClose when overlay is clicked', () => {
     const mockOnClose = vi.fn()
     const props = { ...defaultProps, isOpen: true, onClose: mockOnClose }
-    render(<ContactModal {...props} />)
+    const { container } = render(<ContactModal {...props} />)
     
-    // There are multiple Cancel buttons (header and footer), use getAllByText and click the first one
-    const cancelButtons = screen.getAllByText('Cancel')
-    expect(cancelButtons.length).toBeGreaterThan(0)
-    fireEvent.click(cancelButtons[0])
+    const overlay = container.querySelector('.contact-modal-premium')
+    expect(overlay).toBeInTheDocument()
+    fireEvent.click(overlay!)
     
     expect(mockOnClose).toHaveBeenCalledTimes(1)
   })
@@ -304,12 +299,9 @@ describe('ContactModal Component', () => {
   })
 
   it('does not close on escape when submitting', async () => {
-    const mockSendToWebhook = vi.fn().mockImplementation(() => 
-      new Promise(resolve => setTimeout(() => resolve({ success: true }), 500))
+    mockSendContactEmail.mockImplementationOnce(() =>
+      new Promise(resolve => setTimeout(() => resolve(), 500))
     )
-    ;(N8nClient as any).mockImplementation(() => ({
-      sendToWebhook: mockSendToWebhook
-    }))
     
     const mockOnClose = vi.fn()
     const props = { ...defaultProps, isOpen: true, onClose: mockOnClose }
@@ -353,12 +345,9 @@ describe('ContactModal Component', () => {
   })
 
   it('shows loading state during submission', async () => {
-    const mockSendToWebhook = vi.fn().mockImplementation(() => 
-      new Promise(resolve => setTimeout(() => resolve({ success: true }), 500))
+    mockSendContactEmail.mockImplementationOnce(() =>
+      new Promise(resolve => setTimeout(() => resolve(), 500))
     )
-    ;(N8nClient as any).mockImplementation(() => ({
-      sendToWebhook: mockSendToWebhook
-    }))
     
     const props = { ...defaultProps, isOpen: true }
     render(<ContactModal {...props} />)

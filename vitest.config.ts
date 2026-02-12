@@ -16,10 +16,17 @@ export default defineConfig(({ mode }) => {
     ? (process.env.VITE_N8N_AUTH_TOKEN || 'test-auth-token')
     : (process.env.VITE_N8N_AUTH_TOKEN || loadEnv(mode, process.cwd(), '').VITE_N8N_AUTH_TOKEN || 'test-auth-token')
   
+  const testEmailJsKey = process.env.VITE_EMAILJS_PUBLIC_KEY || 'test-public-key'
+  const testEmailJsService = process.env.VITE_EMAILJS_SERVICE_ID || 'test-service-id'
+  const testEmailJsTemplate = process.env.VITE_EMAILJS_TEMPLATE_ID || 'test-template-id'
+
   return {
     define: {
       'import.meta.env.VITE_N8N_WEBHOOK_URL': JSON.stringify(testWebhookUrl),
       'import.meta.env.VITE_N8N_AUTH_TOKEN': JSON.stringify(testAuthToken),
+      'import.meta.env.VITE_EMAILJS_PUBLIC_KEY': JSON.stringify(testEmailJsKey),
+      'import.meta.env.VITE_EMAILJS_SERVICE_ID': JSON.stringify(testEmailJsService),
+      'import.meta.env.VITE_EMAILJS_TEMPLATE_ID': JSON.stringify(testEmailJsTemplate),
       'import.meta.env.DEV': 'true',
       'import.meta.env.PROD': 'false',
       'import.meta.env.MODE': JSON.stringify('test')

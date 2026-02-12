@@ -22,6 +22,8 @@ export interface ContactFormData {
   message: string
   /** ISO 8601 timestamp when the form was submitted (auto-generated) */
   timestamp?: string
+  /** Recipient email for n8n workflow to send notifications (e.g. joaomaia@jmsit.cloud) */
+  recipientEmail?: string
 }
 
 /**

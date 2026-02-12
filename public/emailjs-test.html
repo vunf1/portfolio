@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EmailJS 422 Diagnostic</title>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body style="font-family: system-ui; max-width: 520px; margin: 24px auto; padding: 20px">
+  <h1>EmailJS 422 diagnostic</h1>
+  <p>Use this page to confirm your EmailJS template and &quot;To Email&quot; setting. Fill values from <code>.env.local</code> and send.</p>
+  <form id="emailjs-form" style="display: grid; gap: 12px">
+    <label>Public Key <input type="text" name="publicKey" required placeholder="from VITE_EMAILJS_PUBLIC_KEY" style="width: 100%"></label>
+    <label>Service ID <input type="text" name="serviceId" required placeholder="from VITE_EMAILJS_SERVICE_ID" style="width: 100%"></label>
+    <label>Template ID <input type="text" name="templateId" required placeholder="from VITE_EMAILJS_TEMPLATE_ID" style="width: 100%"></label>
+    <label>To Email (recipient) <input type="email" name="toEmail" required value="joaomaia@jmsit.cloud" style="width: 100%"></label>
+    <hr>
+    <label>From Name <input type="text" name="fromName" value="Test User" style="width: 100%"></label>
+    <label>From Email <input type="email" name="fromEmail" value="test@example.com" style="width: 100%"></label>
+    <label>Subject <input type="text" name="subject" value="EmailJS diagnostic test" style="width: 100%"></label>
+    <label>Message <textarea name="message" rows="3" style="width: 100%">Diagnostic test from emailjs-test.html</textarea></label>
+    <button type="submit">Send test email</button>
+  </form>
+  <pre id="result" style="margin-top: 16px; padding: 12px; background: #f5f5f5; overflow: auto; font-size: 13px"></pre>
+  <p style="margin-top: 16px; font-size: 13px; color: #616161">
+    <strong>If you get 422 &quot;recipients address is empty&quot;</strong>: Edit your template at 
+    <a href="https://dashboard.emailjs.com/admin/templates" target="_blank" rel="noopener">dashboard.emailjs.com/admin/templates</a>, 
+    open the template matching the Template ID above, set <strong>To Email</strong> to <code>{{to_email}}</code>, and save.
+  </p>
+  <script>
+    document.getElementById('emailjs-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const publicKey = form.publicKey.value.trim();
+      const serviceId = form.serviceId.value.trim();
+      const templateId = form.templateId.value.trim();
+      const resultEl = document.getElementById('result');
+      resultEl.textContent = 'Sending...';
+
+      const templateParams = {
+        from_name: form.fromName.value,
+        from_email: form.fromEmail.value,
+        subject: form.subject.value,
+        message: form.message.value,
+        to_email: form.toEmail.value
+      };
+
+      try {
+        const res = await emailjs.send(serviceId, templateId, templateParams, { publicKey });
+        resultEl.textContent = 'SUCCESS: ' + res.status + ' ' + res.text;
+        resultEl.style.background = '#e8f5e9';
+      } catch (err) {
+        resultEl.textContent = 'FAILED: ' + (err.status || '') + ' ' + (err.text || err.message || err);
+        resultEl.style.background = '#ffebee';
+      }
+    });
+  </script>
+</body>
+</html>

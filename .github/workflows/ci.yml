@@ -76,10 +76,8 @@ jobs:
           # GitHub Pages base path - repository name (e.g., '/portfolio/')
           # This ensures assets are loaded from the correct path on GitHub Pages
           VITE_BASE_PATH: /${{ github.event.repository.name }}/
-          # n8n Webhook Integration - Required for contact form
-          # These environment variables are automatically available from the 'pages-deployment' environment
-          # (configured at: Settings > Environments > pages-deployment > Environment variables)
-          # They are automatically injected into the job's environment when the environment is specified
+          # EmailJS - Required for contact form (VITE_EMAILJS_PUBLIC_KEY, VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID)
+          # Configure at: Settings > Secrets and variables > Actions (or pages-deployment environment)
           
       - name: Verify dist folder exists
         run: |

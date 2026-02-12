@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  EmailJS template CONTENT only. Paste this entire file into the template's Content/Body field.
+  IMPORTANT: The recipient is NOT set by this HTML. In the EmailJS template editor (sidebar/settings),
+  you must set "To Email" to {{to_email}} or joaomaia@jmsit.cloud — otherwise you get 422 error.
+  Inline styles only. No animations (poor email client support).
+-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Contact Form Submission</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f5f5f5">
+  <div style="font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 14px; color: #212121; line-height: 1.5">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff">
+      <!-- Header -->
+      <div style="text-align: center; background-color: #007bff; padding: 32px 16px; border-radius: 32px 32px 0 0">
+        {{#logo_url}}
+        {{#website_url}}
+        <a style="text-decoration: none; outline: none" href="{{website_url}}" target="_blank" rel="noopener">
+          <img src="{{logo_url}}" alt="Logo" width="32" height="32" style="height: 32px; width: 32px; vertical-align: middle; display: inline-block; border: 0" />
+        </a>
+        {{/website_url}}
+        {{^website_url}}
+        <img src="{{logo_url}}" alt="Logo" width="32" height="32" style="height: 32px; width: 32px; vertical-align: middle; display: inline-block; border: 0" />
+        {{/website_url}}
+        {{/logo_url}}
+      </div>
+      <!-- Content -->
+      <div style="padding: 24px 20px">
+        <h1 style="font-size: 22px; margin: 0 0 20px 0; color: #212121; font-weight: 600">
+          New contact form submission
+        </h1>
+        <p style="margin: 0 0 20px 0; color: #424242">
+          You have received a new message from your portfolio contact form.
+        </p>
+        {{#time}}
+        <p style="margin: 0 0 16px 0; font-size: 12px; color: #757575">
+          Submitted: {{time}}
+        </p>
+        {{/time}}
+        <!-- Sender info table - table layout for email client compatibility -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: collapse; margin-bottom: 20px">
+          <tr>
+            <td style="padding: 12px; background-color: #fafafa; border: 1px solid #eeeeee; font-weight: 600; width: 140px; color: #616161">
+              Name
+            </td>
+            <td style="padding: 12px; border: 1px solid #eeeeee; border-left: none">
+              {{from_name}}
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; background-color: #fafafa; border: 1px solid #eeeeee; border-top: none; font-weight: 600; color: #616161">
+              Email
+            </td>
+            <td style="padding: 12px; border: 1px solid #eeeeee; border-left: none; border-top: none">
+              <a href="mailto:{{from_email}}" style="color: #007bff; text-decoration: none">{{from_email}}</a>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; background-color: #fafafa; border: 1px solid #eeeeee; border-top: none; font-weight: 600; color: #616161">
+              Subject
+            </td>
+            <td style="padding: 12px; border: 1px solid #eeeeee; border-left: none; border-top: none">
+              {{subject}}
+            </td>
+          </tr>
+          {{#phone}}
+          <tr>
+            <td style="padding: 12px; background-color: #fafafa; border: 1px solid #eeeeee; border-top: none; font-weight: 600; color: #616161">
+              Phone
+            </td>
+            <td style="padding: 12px; border: 1px solid #eeeeee; border-left: none; border-top: none">
+              <a href="tel:{{phone}}" style="color: #007bff; text-decoration: none">{{phone}}</a>
+            </td>
+          </tr>
+          {{/phone}}
+          {{#company_name}}
+          <tr>
+            <td style="padding: 12px; background-color: #fafafa; border: 1px solid #eeeeee; border-top: none; font-weight: 600; color: #616161">
+              Company
+            </td>
+            <td style="padding: 12px; border: 1px solid #eeeeee; border-left: none; border-top: none">
+              {{company_name}}{{#company_id}} ({{company_id}}){{/company_id}}
+            </td>
+          </tr>
+          {{/company_name}}
+        </table>
+        <!-- Message body - {{message}} is escaped by default for safety -->
+        <div style="margin-bottom: 20px">
+          <p style="margin: 0 0 8px 0; font-weight: 600; color: #616161">Message</p>
+          <div style="padding: 16px; background-color: #fafafa; border: 1px solid #eeeeee; border-radius: 8px; white-space: pre-wrap; word-wrap: break-word">{{message}}</div>
+        </div>
+        <!-- Reply CTA -->
+        <p style="margin: 0; color: #616161">
+          Reply directly to
+          <a href="mailto:{{from_email}}?subject=Re:%20{{subject}}" style="color: #007bff; text-decoration: none; font-weight: 600">{{from_email}}</a>
+        </p>
+      </div>
+      <!-- Footer -->
+      <div style="text-align: center; background-color: #007bff; padding: 20px 16px; border-radius: 0 0 32px 32px">
+        <p style="margin: 0 0 8px 0; font-size: 13px; color: #212121">
+          Portfolio contact form · JMSIT
+        </p>
+        {{#to_email}}
+        <p style="margin: 0; font-size: 12px; color: #424242">
+          <a href="mailto:{{to_email}}" style="text-decoration: none; color: #212121; font-weight: 600">{{to_email}}</a>
+        </p>
+        {{/to_email}}
+      </div>
+    </div>
+  </div>
+</body>
+</html>
