@@ -6,10 +6,11 @@ import type { Personal, Social } from '../../types/portfolio'
 interface LandingFooterProps {
   personal: Personal
   social: Social[]
+  onWarmPortfolio?: () => void
   className?: string
 }
 
-export function LandingFooter({ personal, social, className = '' }: LandingFooterProps) {
+export function LandingFooter({ personal, social, onWarmPortfolio, className = '' }: LandingFooterProps) {
   const { t } = useTranslation()
 
   return (
@@ -60,18 +61,28 @@ export function LandingFooter({ personal, social, className = '' }: LandingFoote
                   </a>
                 </li>
                 <li>
-                  <a href={toFullPath('/portfolio')} onClick={(e) => { 
-                    e.preventDefault(); 
-                    window.dispatchEvent(new CustomEvent('navigateToPortfolio')); 
-                  }}>
+                  <a
+                    href={toFullPath('/portfolio')}
+                    onMouseEnter={onWarmPortfolio}
+                    onFocus={onWarmPortfolio}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      window.dispatchEvent(new CustomEvent('navigateToPortfolio'))
+                    }}
+                  >
                     {t('landing.footer.experience')}
                   </a>
                 </li>
                 <li>
-                  <a href={toFullPath('/portfolio')} onClick={(e) => { 
-                    e.preventDefault(); 
-                    window.dispatchEvent(new CustomEvent('navigateToPortfolio')); 
-                  }}>
+                  <a
+                    href={toFullPath('/portfolio')}
+                    onMouseEnter={onWarmPortfolio}
+                    onFocus={onWarmPortfolio}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      window.dispatchEvent(new CustomEvent('navigateToPortfolio'))
+                    }}
+                  >
                     {t('landing.footer.projects')}
                   </a>
                 </li>

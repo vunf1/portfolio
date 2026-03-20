@@ -80,7 +80,7 @@ export function LandingPage({ portfolioData, onNavigateToPortfolio, onWarmPortfo
         onNavigateToPortfolio={handleNavigateToPortfolio}
         onWarmPortfolio={onWarmPortfolio}
       />
-      <LandingFooter personal={personal} social={portfolioData.social || []} />
+      <LandingFooter personal={personal} social={portfolioData.social || []} onWarmPortfolio={onWarmPortfolio} />
       <FloatingActionButton onContactClick={handleContactClick} />
       <ContactModal
         isOpen={isContactModalOpen}

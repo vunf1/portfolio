@@ -80,7 +80,7 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
         
         <div className={`about-content ${isVisible ? 'about-content-visible' : ''}`}>
           <div className="about-text">
-            <div className="about-profile-section">
+            <div className="about-text-identity about-profile-section">
               <picture className="about-profile-picture">
                 <img 
                   src={profileUrl} 
@@ -95,40 +95,44 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
                 <p className="about-profile-tagline">{personal?.tagline || ''}</p>
               </div>
             </div>
-            
-            <p className="about-description">{t('landing.about.description')}</p>
-            
-            <Card variant="default" hover={false} className="about-details-card">
-              <div className="about-details">
-                <div className="about-detail-item">
-                  <Icon name="map-marker-alt" size={18} />
-                  <div>
-                    <strong>{t('landing.about.location')}</strong>
-                    <p>{personal?.location || ''}</p>
-                  </div>
-                </div>
-                
-                <div className="about-detail-item">
-                  <Icon name="clock" size={18} />
-                  <div>
-                    <strong>{t('landing.about.availability')}</strong>
-                    <p>{personal?.availability || ''}</p>
-                  </div>
-                </div>
-                
-                {personal.remote && (
+
+            <div className="about-text-narrative">
+              <p className="about-description">{t('landing.about.description')}</p>
+            </div>
+
+            <div className="about-text-details">
+              <Card variant="default" hover={false} className="about-details-card">
+                <div className="about-details">
                   <div className="about-detail-item">
-                    <Icon name="laptop" size={18} />
+                    <Icon name="map-marker-alt" size={18} />
                     <div>
-                      <strong>{t('landing.about.remoteWork')}</strong>
-                      <p>{personal.remote}</p>
+                      <strong>{t('landing.about.location')}</strong>
+                      <p>{personal?.location || ''}</p>
                     </div>
                   </div>
-                )}
-              </div>
-            </Card>
-            
-            <div className="about-actions">
+                  
+                  <div className="about-detail-item">
+                    <Icon name="clock" size={18} />
+                    <div>
+                      <strong>{t('landing.about.availability')}</strong>
+                      <p>{personal?.availability || ''}</p>
+                    </div>
+                  </div>
+                  
+                  {personal.remote && (
+                    <div className="about-detail-item">
+                      <Icon name="laptop" size={18} />
+                      <div>
+                        <strong>{t('landing.about.remoteWork')}</strong>
+                        <p>{personal.remote}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </Card>
+            </div>
+
+            <div className="about-text-actions about-actions">
               <Button
                 ref={ctaRef}
                 variant="primaryElevated"
