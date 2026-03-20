@@ -57,16 +57,18 @@ export function App() {
     isTransitioning: isExitingLanding || isExitingPortfolio
   })
 
-  const handleNavigateToPortfolio = useCallback(() => {
+  const handleNavigateToPortfolio = useCallback(async () => {
     if (isExitingLanding || showPortfolio) {return}
     window.scrollTo(0, 0)
     setHideLanding(false)
     setIsExitingLanding(true)
     hasVisitedPortfolioRef.current = true
+    await preloadPortfolioChunks().catch((err) => {
+      logWarning('Preload portfolio chunks failed', err)
+    })
     setShowPortfolio(true)
     setIsExitingLanding(false)
     route(toPortfolioRoute(), false)
-    void preloadPortfolioChunks()
   }, [isExitingLanding, showPortfolio, setShowPortfolio])
 
   const handleContactClick = useCallback(() => {
@@ -443,7 +445,7 @@ export function App() {
             ref={portfolioRef}
             className={`page-transition page-transition-portfolio ${isExitingPortfolio ? 'page-fade-out' : isPortfolioPath(initialPath) ? 'page-visible' : 'page-fade-in'}`}
           >
-        <Navigation 
+        <Navigation
           items={[
             { id: 'experience', label: String(t('navigation.experience')), icon: 'fa-solid fa-briefcase' },
             { id: 'education', label: String(t('navigation.education')), icon: 'fa-solid fa-graduation-cap' },

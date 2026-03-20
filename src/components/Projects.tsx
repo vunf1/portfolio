@@ -1,97 +1,88 @@
+import { useState, useMemo } from 'preact/hooks'
 import { useTranslation } from '../contexts/TranslationContext'
-import { Section, Icon, Button } from './ui'
+import { Section, Icon } from './ui'
+import { ProjectCaseStudyModal } from './ProjectCaseStudyModal'
+import { cn } from '../lib/utils'
 import type { ProjectsProps } from '../types'
+import type { Project } from '../types/portfolio'
+
+function projectInitials(name: string): string {
+  const parts = name.replace(/[—–-].*$/, '').trim().split(/\s+/).filter(Boolean)
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[1][0]).toUpperCase()
+  }
+  return name.slice(0, 2).toUpperCase()
+}
 
 export function Projects({ projects }: ProjectsProps) {
   const { t } = useTranslation()
-  
+  const [openId, setOpenId] = useState<string | null>(null)
+
+  const selected = useMemo(
+    () => (openId ? projects.find((p) => p.id === openId) ?? null : null),
+    [openId, projects]
+  )
+
+  const openCaseStudy = (p: Project) => {
+    setOpenId(p.id)
+  }
+
   return (
-    <Section 
-      id="projects" 
+    <Section
+      id="projects"
       data-section="projects"
-      title={String(t('projects.title'))} 
+      title={String(t('projects.title'))}
       subtitle={String(t('projects.subtitle'))}
     >
-      <div id="projects-content" className="projects-grid">
-          {projects.map((project, index) => (
-            <div key={index} className="project-item">
-              <div className="project-content">
-                <div className="project-header">
-                  <h3 className="project-title">{project.name}</h3>
-                  <div className="project-meta">
-                    <span className="project-period">{project.period}</span>
-                    {project.role && (
-                      <span className="project-role">• {project.role}</span>
-                    )}
-                  </div>
-                </div>
-                
-                <p className="project-description">{project.description}</p>
-                
-                {project.technologies && project.technologies.length > 0 && (
-                  <div className="project-technologies">
-                    <strong>Technologies Used:</strong>
-                    <div className="tech-tags">
-                      {project.technologies.map((tech, techIndex) => (
-                        <span 
-                          key={techIndex} 
-                          className="tech-tag"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+      <div id="projects-content" className="projects-showcase-grid">
+        {projects.map((project, index) => (
+          <button
+            key={project.id || index}
+            type="button"
+            className={cn('project-showcase-card', 'group text-left')}
+            onClick={() => openCaseStudy(project)}
+            aria-haspopup="dialog"
+            aria-expanded={openId === project.id}
+          >
+            <span className="project-showcase-card__inner">
+              <span className="project-showcase-card__accent" aria-hidden />
+
+              <span className="project-showcase-mark">
+                {project.image ? (
+                  <img src={project.image} alt="" className="project-showcase-mark__img" loading="lazy" />
+                ) : (
+                  <span className="project-showcase-mark__initials" aria-hidden>
+                    {projectInitials(project.name)}
+                  </span>
                 )}
-                
-                {project.features && project.features.length > 0 && (
-                  <div className="project-features">
-                    <strong>Key Features:</strong>
-                    <ul className="features-list">
-                      {project.features.map((feature, featureIndex) => (
-                        <li key={featureIndex}>{feature}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                
-                {project.url && (
-                  <div className="project-links">
-                    <strong>Links:</strong>
-                    <div className="link-buttons">
-                      <Button
-                        href={project.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        variant="outline"
-                        size="sm"
-                      >
-                        <Icon name="code" size={14} className="mr-1" />
-                        Code
-                      </Button>
-                      {project.demo && (
-                        <Button
-                          href={project.demo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          variant="outline"
-                          size="sm"
-                        >
-                          <Icon name="external-link" size={14} className="mr-1" />
-                          Demo
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+              </span>
+
+              <span className="project-showcase-body">
+                <span className="project-showcase-title">{project.name}</span>
+                <span className="project-showcase-desc">{project.description}</span>
+                <span className="project-showcase-meta">
+                  <span className="project-showcase-period">{project.period}</span>
+                  {project.role ? <span className="project-showcase-role"> · {project.role}</span> : null}
+                </span>
+              </span>
+
+              <span className="project-showcase-cta" aria-hidden>
+                <Icon name="arrow-right" size={18} className="project-showcase-cta__icon" />
+              </span>
+
+              <span className="project-showcase-indicator" aria-hidden>
+                <span className="project-showcase-indicator__line" />
+              </span>
+            </span>
+          </button>
+        ))}
+      </div>
+
+      <ProjectCaseStudyModal
+        project={selected}
+        isOpen={Boolean(openId && selected)}
+        onClose={() => setOpenId(null)}
+      />
     </Section>
   )
 }
-
-
-
-
