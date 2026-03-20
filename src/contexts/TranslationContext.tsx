@@ -97,15 +97,16 @@ export function useTranslation() {
     let value: unknown = globalTranslations
 
     for (const k of keyParts) {
-      if (value && typeof value === 'object' && k in value) {
+      if (value && typeof value === 'object' && !Array.isArray(value) && k in value) {
         value = (value as Record<string, unknown>)[k]
       } else {
-        value = defaultValue || key
+        value = undefined
         break
       }
     }
 
-    let result = (typeof value === 'string' ? value : defaultValue) || key
+    let result =
+      typeof value === 'string' && value.length > 0 ? value : (defaultValue ?? key)
 
     if (vars && Object.keys(vars).length > 0) {
       for (const [varKey, varValue] of Object.entries(vars)) {

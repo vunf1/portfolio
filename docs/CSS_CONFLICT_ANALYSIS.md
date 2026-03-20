@@ -1,5 +1,7 @@
 # Hero-Text Scroll Rules – Conflict Analysis
 
+> **Update:** The landing hero was refactored to use shadcn-style UI (`Card`, `Badge`, `Separator`, `Button`) and a `.landing-hero__copy` column. The old `.hero-text` / `.hero-text * { overflow: hidden }` cascade was removed to fix clipping (badges, shadows, CTA hover). The analysis below documents the **previous** conflict model; current hero overflow is handled without universal descendant overrides on the copy column.
+
 ## CSS Load Order (index.css → landing.css)
 
 1. `_layout.css` – layout, universal selectors, hero group
@@ -8,6 +10,8 @@
 4. `_features.css`, `_about.css`, `_footer.css`
 5. `_responsive.css` – media queries (1025px, 480px)
 6. `_accessibility.css` – reduced-motion (no overflow)
+
+**Override layer:** `_hero.css` and `_responsive.css` include a high-specificity block (e.g. `section.landing-hero.landing-section.section-visible .hero-text` and `.hero-text *`) so hero-text and its descendants never get layout’s `overflow-y: visible` when `section-visible` is present; page scroll is preserved and hero-text does not become a scroll container.
 
 ---
 
