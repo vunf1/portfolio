@@ -150,22 +150,25 @@ body.landing-page-active #app {
   max-width: 100% !important;
 }
 
-/* Hero content - no scroll constraints */
-/* CRITICAL: Ensure all hero child elements don't create scrollbars */
+/* Hero content - no scroll constraints (structural containers only; do not target buttons/cards/badges so Tailwind/shadcn utilities keep h-12, overflow, etc.) */
 .landing-hero .hero-content,
-.landing-hero .hero-text,
+.landing-hero .landing-hero__copy,
 .landing-hero .hero-visual,
 .landing-hero .hero-image-container,
 .landing-hero .hero-logo-wrapper,
 .landing-hero .hero-logo-subtitle,
-.landing-hero .hero-meta,
-.landing-hero .hero-actions {
+.landing-hero .hero-actions,
+.landing-hero #landing-hero-card-main,
+.landing-hero #landing-hero-card-visual {
   overflow: visible !important;
   overflow-x: hidden !important; /* CRITICAL: Prevent horizontal scrollbar */
   overflow-y: visible !important;
   height: auto !important;
   max-height: none !important;
   max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+  contain: none !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
 /* Direct children of landing-page - no scroll containers */
@@ -246,43 +249,16 @@ section.landing-hero.landing-section.section-visible::-webkit-scrollbar {
   height: 0 !important;
 }
 
-/* CRITICAL: Ensure ALL children of landing-hero cannot create scrollbars */
-/* Use universal selector with maximum specificity to override ANY conflicting rules */
-section.landing-hero *,
-section.landing-hero.landing-section *,
-section.landing-hero.landing-section.section-visible *,
-.landing-hero *,
-.landing-hero.landing-section *,
-.landing-hero.landing-section.section-visible *,
-.landing-page .landing-hero *,
-.landing-page .landing-hero.landing-section *,
-.landing-page .landing-hero.landing-section.section-visible *,
-.landing-page section.landing-hero *,
-.landing-page section.landing-hero.landing-section *,
-.landing-page section.landing-hero.landing-section.section-visible *,
-#app .landing-hero *,
-#app .landing-hero.landing-section *,
-#app .landing-hero.landing-section.section-visible *,
-body .landing-hero *,
-body .landing-hero.landing-section *,
-body .landing-hero.landing-section.section-visible * {
-  overflow: visible !important;
-  overflow-x: hidden !important;
-  overflow-y: visible !important;
-  max-height: none !important;
-  height: auto !important;
-  max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
-  /* Ensure no element can become a scroll container */
-  contain: none !important;
-  /* Hide scrollbars if they somehow appear */
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
-}
-
-/* Hide scrollbars in webkit for all hero children */
-.landing-hero *::-webkit-scrollbar,
-.landing-hero.landing-section *::-webkit-scrollbar,
-.landing-hero.landing-section.section-visible *::-webkit-scrollbar {
+/* Hide scrollbars in webkit for hero structural containers only (same list as above) */
+.landing-hero .hero-content::-webkit-scrollbar,
+.landing-hero .landing-hero__copy::-webkit-scrollbar,
+.landing-hero .hero-visual::-webkit-scrollbar,
+.landing-hero .hero-image-container::-webkit-scrollbar,
+.landing-hero .hero-logo-wrapper::-webkit-scrollbar,
+.landing-hero .hero-logo-subtitle::-webkit-scrollbar,
+.landing-hero .hero-actions::-webkit-scrollbar,
+.landing-hero #landing-hero-card-main::-webkit-scrollbar,
+.landing-hero #landing-hero-card-visual::-webkit-scrollbar {
   display: none !important;
   width: 0 !important;
   height: 0 !important;
@@ -301,6 +277,11 @@ body .landing-hero.landing-section.section-visible * {
 /* Exceptions: Center align taglines */
 .landing-page .hero-tagline,
 .landing-page .about-profile-tagline {
+  text-align: center;
+}
+
+/* Hero card header: keep role center (overrides .landing-page p justify) */
+.landing-hero #landing-hero-role {
   text-align: center;
 }
 

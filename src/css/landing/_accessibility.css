@@ -3,7 +3,7 @@
 /* ===== ACCESSIBILITY ===== */
 @media (prefers-reduced-motion: reduce) {
   .landing-section,
-  .hero-text,
+  .landing-hero__copy,
   .hero-visual,
   .features-header,
   .feature-card,

@@ -39,6 +39,11 @@
   opacity: 1;
 }
 
+/* Fixed navbar sits outside document flow; reserve space so content is not hidden under it */
+.page-transition-portfolio {
+  padding-top: var(--navbar-height);
+}
+
 @keyframes page-fade-in {
   from {
     opacity: 0;

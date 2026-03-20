@@ -44,13 +44,6 @@ body {
   transition: background-color var(--transition-base), color var(--transition-base);
 }
 
-/* Exception: nav-menu when open on mobile can scroll its content */
-.nav-menu:not(.collapsed) {
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: calc(100vh - var(--navbar-height));
-}
-
 /* Exception: modals can scroll their content */
 .modal {
   overflow-y: auto;
@@ -63,8 +56,7 @@ body {
   outline-offset: 2px;
 }
 
-/* Hero outline buttons (services, about): flat underline style */
-.hero-actions button:not(.hero-cta-primary):not(.hero-cta-contact),
+/* About / modal secondary actions: text-style with underline */
 .about-actions button:not(.about-cta-primary),
 .modal-footer button {
   border: none !important;
@@ -107,15 +99,6 @@ body {
   box-shadow: 0 4px 12px rgba(0, 123, 255, 0.25) !important;
 }
 
-/* Hero outline buttons (Services, About): same hover as Contact - shadow + brightness, no translate/scale */
-.hero-actions button:not(.hero-cta-primary):not(.hero-cta-contact) {
-  transition: box-shadow 0.2s ease, opacity 0.15s ease !important;
-}
-.hero-actions button:not(.hero-cta-primary):not(.hero-cta-contact):hover {
-  transform: none !important;
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2) !important;
-}
-
 .hero-cta-primary:active,
 .hero-cta-contact:active {
   transform: none !important;
@@ -141,13 +124,11 @@ body {
   opacity: 0.85;
 }
 
-.hero-actions button:not(.hero-cta-contact):active,
 .about-actions button:not(.about-cta-primary):active,
 .modal-footer button:active {
   opacity: 1;
 }
 
-.hero-actions button:focus,
 .about-actions button:focus,
 .modal-footer button:focus {
   outline: none !important;
@@ -160,7 +141,6 @@ body {
 }
 
 /* Flat style for outline/secondary only - exclude primary CTAs */
-/* Hero outline buttons (Services, About) keep full hover animation like Contact - no filter/box-shadow override */
 .about-actions button:not(.about-cta-primary):hover,
 .about-actions button:not(.about-cta-primary):active,
 .about-actions button:not(.about-cta-primary):focus,
@@ -182,13 +162,11 @@ body {
     scroll-behavior: auto;
   }
 
-  .hero-actions button:hover,
   .about-actions button:not(.about-cta-primary):hover,
   .modal-footer button:hover {
     transform: none;
   }
 
-  .hero-actions button:active,
   .about-actions button:not(.about-cta-primary):active,
   .modal-footer button:active {
     transform: none;

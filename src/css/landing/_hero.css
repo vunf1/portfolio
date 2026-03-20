@@ -1,7 +1,5 @@
 /* Landing Page Hero Section */
 
-/* ===== HERO SECTION ===== */
-/* min-height: 100vh only - section grows to fit content; min-height: min-content on children prevents scroll */
 .landing-hero {
   position: relative;
   min-height: 100vh;
@@ -18,62 +16,20 @@
   pointer-events: auto;
 }
 
-
-/* Override landing-section overflow for hero specifically */
 .landing-hero.landing-section {
   overflow-x: hidden !important;
   overflow-y: visible !important;
 }
 
+/* Shell: stacking + safe overflow; grid gaps/columns come from Tailwind on .hero-content */
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 1280px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 var(--space-6);
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: clamp(var(--space-8), 6vw, var(--space-16));
-  align-items: center;
-  overflow: visible;
-  height: auto;
-  min-height: 0;
   box-sizing: border-box;
+  overflow: visible;
+  min-height: 0;
 }
 
-.hero-text {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.hero-text-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.hero-badge {
-  display: inline-block;
-  padding: var(--space-2) var(--space-4);
-  background: rgba(0, 123, 255, 0.08);
-  color: var(--color-primary);
-  border: 1px solid rgba(0, 123, 255, 0.2);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  box-shadow: 0 1px 2px rgba(0, 123, 255, 0.06);
-}
-
-/* Prevent hero-badge from being cropped by overflow on parents.
-   The badge is a child of hero-title inside hero-text inside hero-content.
-   Clipping comes from ancestors (hero-content, hero-text, hero-title), NOT from hero-badge. */
-/* overflow: visible allows hero-badge background/shadow to show; min-height: min-content prevents scroll */
 .landing-hero .hero-content {
   overflow: visible !important;
   overflow-x: visible !important;
@@ -83,145 +39,26 @@
   touch-action: pan-y;
 }
 
-.landing-hero .hero-text {
-  overflow: hidden !important;
-  overflow-x: visible !important;
-  overflow-y: hidden !important;
-  max-height: none !important;
-  min-height: min-content !important;
-  touch-action: none; /* Disable scroll when touching hero-text */
-  padding-top: var(--space-4); /* Room for hero-badge background/shadow at top */
+/* Copy column — intentionally no universal `*` overflow rules (avoids shadcn/chip/badge clipping) */
+.landing-hero__copy {
+  min-width: 0;
 }
 
-/* Override layout universal selector and hero-title/hero-actions: disable scroll for all descendants */
-.landing-hero .hero-text *,
-.landing-hero .hero-text .hero-title,
-.landing-hero .hero-text .hero-badge,
-.landing-hero .hero-text .hero-title-main,
-.landing-hero .hero-text .hero-title-subtitle,
-.landing-hero .hero-text .hero-tagline,
-.landing-hero .hero-text .hero-summary,
-.landing-hero .hero-text .hero-meta,
-.landing-hero .hero-text .hero-meta-item,
-.landing-hero .hero-text .hero-actions,
-.landing-hero .hero-text .hero-actions button,
-.landing-hero .hero-text .hero-actions a,
-.landing-hero .hero-text svg,
-.landing-hero .hero-text span {
-  overflow: hidden !important;
-  overflow-y: hidden !important;
-  overflow-x: hidden !important;
-  touch-action: none !important;
-}
-
-.landing-hero .hero-title,
-.landing-page .hero-title {
-  margin-bottom: var(--space-4);
-  background: none !important;
-  -webkit-background-clip: unset !important;
-  background-clip: unset !important;
-  -webkit-text-fill-color: unset !important;
-  animation: none !important;
-  overflow: visible !important;
-  overflow-x: visible !important;
-  white-space: normal;
-  text-overflow: clip;
-  text-align: center;
-}
-
-.landing-hero .hero-title-main,
-.landing-page .hero-title-main,
-.hero-title .hero-title-main,
-.landing-hero .hero-title .hero-title-main,
-.landing-page .landing-hero .hero-title .hero-title-main {
-  display: block;
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-  color: #000000 !important;
-  -webkit-text-fill-color: #000000 !important;
-  background: none !important;
-  -webkit-background-clip: unset !important;
-  background-clip: unset !important;
-  margin-bottom: var(--space-2);
-  text-shadow: none !important;
-}
-
-
-.hero-title-subtitle {
-  display: block;
-  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-primary);
-  margin-top: var(--space-2);
-}
-
-.hero-tagline {
-  font-size: clamp(1.125rem, 2vw, 1.25rem);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-gray-700);
-  margin-bottom: var(--space-4);
-  line-height: var(--line-height-relaxed);
-  text-align: left;
-  word-spacing: normal;
-  letter-spacing: normal;
-}
-
-/* Center only the hero-tagline in landing-hero section */
-.landing-hero .hero-tagline,
-.landing-hero .hero-text .hero-tagline {
-  text-align: center;
-}
-
-.hero-summary {
-  font-size: clamp(1rem, 1.5vw, 1.125rem);
-  line-height: 1.8;
-  color: var(--color-gray-800);
-  margin-bottom: var(--space-6);
-  max-width: 52ch;
-  text-align: left;
-  word-spacing: normal;
-  letter-spacing: 0.01em;
-}
-
-.hero-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-5);
-  margin-bottom: var(--space-8);
-}
-
-.hero-meta-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  color: var(--color-gray-700);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-}
-
-.hero-meta-item i {
-  color: var(--color-primary);
-  font-size: var(--font-size-base);
-}
-
-.hero-actions {
-  display: flex;
-  gap: var(--space-4);
-  flex-wrap: wrap;
-  padding: 8px 4px;
-  margin: -8px -4px;
-}
-
-/* Allow hover scale/translate without clipping - override layout overflow-x */
 .landing-hero .hero-actions {
   overflow: visible !important;
   overflow-x: visible !important;
+  overflow-y: visible !important;
+}
+
+/* Prevent button hover from being clipped: ensure footer and card allow overflow */
+.landing-hero #landing-hero-card-footer,
+.landing-hero #landing-hero-card-footer > * {
+  overflow: visible !important;
 }
 
 .hero-actions .hero-cta-primary,
 .hero-actions .hero-cta-contact {
-  min-width: 160px;
+  min-width: 0;
 }
 
 .hero-visual {
@@ -242,18 +79,16 @@
 
 .hero-image-container {
   position: relative;
-  margin-bottom: var(--space-6);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: var(--space-4);
+  margin-bottom: 0;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
   overflow: hidden;
   overflow-x: hidden;
   overflow-y: visible;
+  background: none;
+  border: none;
+  box-shadow: none;
 }
 
 .hero-logo-wrapper {
@@ -261,8 +96,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 0 1 auto;
   width: 100%;
-  max-width: 100%;
+  max-width: min(100%, 560px);
   overflow: hidden;
   overflow-x: hidden;
   box-sizing: border-box;
@@ -287,13 +123,13 @@
 }
 
 .hero-logo-image {
-  width: clamp(300px, 50vw, 1000px);
+  width: auto;
   height: auto;
-  max-width: 100%;
-  max-height: none;
+  max-width: min(100%, 560px);
+  max-height: min(320px, 40vh);
   object-fit: contain;
   display: block;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  filter: none;
   transform: none;
   box-sizing: border-box;
 }
@@ -303,19 +139,18 @@
 }
 
 .hero-logo-subtitle {
-  margin-top: var(--space-6);
+  margin-top: 0;
   text-align: center;
-  font-size: clamp(1rem, 2vw, 2rem);
   font-weight: var(--font-weight-semibold);
   color: var(--color-primary);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: normal;
-  width: 100%;
+  min-width: 0;
   max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 var(--space-4);
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0 var(--space-2);
   box-sizing: border-box;
   opacity: 0;
   transform: translateY(10px);
@@ -349,7 +184,6 @@
 .hero-logo-subtitle-separator {
   display: inline-block;
   vertical-align: baseline;
-  margin: 0 calc(var(--space-2) + 0.4em);
   opacity: 0.6;
   color: var(--color-primary);
   font-weight: var(--font-weight-normal);
@@ -383,7 +217,7 @@
   -webkit-backdrop-filter: blur(20px);
   border-radius: var(--radius-xl);
   border: 1px solid rgba(0, 123, 255, 0.1);
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.08),
     0 2px 8px rgba(0, 123, 255, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
@@ -410,7 +244,7 @@
 
 .hero-highlight-item:hover {
   transform: translateY(-4px);
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.12),
     0 4px 12px rgba(0, 123, 255, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.95);
@@ -432,7 +266,7 @@
   color: white;
   font-size: 1.5rem;
   flex-shrink: 0;
-  box-shadow: 
+  box-shadow:
     0 4px 12px rgba(0, 123, 255, 0.25),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -441,7 +275,7 @@
 
 .hero-highlight-item:hover .highlight-icon {
   transform: scale(1.1) rotate(5deg);
-  box-shadow: 
+  box-shadow:
     0 6px 16px rgba(0, 123, 255, 0.35),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }

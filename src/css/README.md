@@ -268,41 +268,9 @@ Modular landing page architecture:
 
 ## Key Responsive Patterns
 
-### Pattern 1: Navigation Transformation
+### Pattern 1: Portfolio navigation
 
-```css
-/* Desktop: Horizontal navigation */
-.nav-list {
-  display: flex;
-  flex-direction: row;
-  gap: var(--space-4);
-}
-
-/* Mobile: Vertical menu with hamburger */
-@media (max-width: 991px) {
-  .nav-toggle {
-    display: block; /* Show hamburger icon */
-  }
-  
-  .nav-menu {
-    position: fixed;
-    top: var(--navbar-height);
-    left: 0;
-    right: 0;
-    transform: translateY(-100%);
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .nav-menu:not(.collapsed) {
-    transform: translateY(0);
-  }
-  
-  .nav-list {
-    flex-direction: column;
-    width: 100%;
-  }
-}
-```
+The portfolio bar is implemented in `Navigation.tsx`: a sticky header (Tailwind) with a centered section list on large viewports (`lg:flex`) and a **Sheet** slide-over on smaller screens. Legacy `.premium-nav` / hamburger markup is removed; keep section scrolling aligned with `--navbar-height` in `variables.css`.
 
 ### Pattern 2: Grid Column Reduction
 

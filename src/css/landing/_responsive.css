@@ -7,11 +7,16 @@
     gap: var(--space-8);
     text-align: center;
   }
-  
+
+  /* Same order as mobile: visual first, copy second (avoids conflict with Tailwind lg: at 1024px) */
   .hero-visual {
+    order: 1 !important;
     transform: translateY(30px);
     max-width: 500px;
     margin: 0 auto;
+  }
+  .landing-hero__copy {
+    order: 2 !important;
   }
   
   .hero-visual-visible {
@@ -19,10 +24,14 @@
   }
   
   .hero-logo-image {
-    width: clamp(300px, 45vw, 900px);
-    max-width: 100%;
-    max-height: none;
+    width: auto;
+    max-width: min(100%, 520px);
+    max-height: min(300px, 20vh);
     transform: none;
+  }
+
+  .hero-logo-wrapper {
+    max-width: min(100%, 560px);
   }
   
   .hero-profile-picture {
@@ -55,104 +64,74 @@
   }
 }
 
-/* Desktop: Stack words vertically when viewport is narrow enough to cause wrapping */
+/* Desktop: logo + subtitle stay horizontal; scale type and logo slightly up */
 @media (min-width: 769px) {
   .hero-logo-subtitle {
-    font-size: clamp(1rem, 2vw, 2rem);
-    white-space: normal;
-    width: 100%;
-    max-width: 100%;
-    padding: 0 var(--space-4);
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-    gap: var(--space-2);
+    font-size: clamp(0.8125rem, 1.45vw, 1.35rem);
   }
-  
-  .hero-logo-subtitle > span {
-    display: block;
-    width: 100%;
-    text-align: center;
-  }
-  
-  .hero-logo-subtitle-word {
-    white-space: nowrap;
-  }
-  
-  /* Hide separators when words are stacked */
-  .hero-logo-subtitle-separator {
-    display: none;
+
+  .hero-logo-image {
+    max-width: min(100%, 640px);
+    max-height: min(400px, 48vh);
   }
 }
 
-/* Very large desktop: Keep horizontal layout if there's enough space */
-@media (min-width: 1600px) {
-  .hero-logo-subtitle {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 0;
-  }
-  
-  .hero-logo-subtitle > span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-  }
-  
-  .hero-logo-subtitle-separator {
-    display: inline-block;
-  }
-}
-
-@media (max-width: 1025px) {
+/* Mobile/tablet: align with Tailwind lg (1024px). Use 1024 so ≤1024px = single column, visual first */
+@media (max-width: 1024px) {
   .landing-hero {
     min-height: 100vh !important;
-    padding: var(--space-8) var(--space-4);
+    /* Safe area for notched devices; fallback for older browsers */
+    padding-top: max(var(--space-8), env(safe-area-inset-top, 0px)) !important;
+    padding-bottom: max(var(--space-8), env(safe-area-inset-bottom, 0px)) !important;
+    padding-left: max(var(--space-4), env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(var(--space-4), env(safe-area-inset-right, 0px)) !important;
     overflow: visible !important;
     overflow-x: hidden !important; /* CRITICAL: Prevent horizontal scrollbar */
     overflow-y: visible !important;
     width: 100% !important;
     max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    box-sizing: border-box !important;
   }
-  
+
+  /* Ensure hero content is visible on load (no wait for JS) so all content shows when page loads */
+  .landing-hero .landing-hero__copy {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .landing-hero .hero-visual {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   .hero-content {
     padding: 0;
     grid-template-columns: 1fr;
-    gap: var(--space-4);
+    gap: clamp(var(--space-5), 4vw, var(--space-8));
     display: flex;
     flex-direction: column;
     align-items: center; /* Center align on mobile */
     justify-content: flex-start;
     max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
+    width: 100% !important;
     height: auto;
+    min-height: 0;
     overflow: visible !important;
     overflow-x: visible !important; /* Allow hero-badge to extend without clipping */
     overflow-y: visible !important; /* Allow hero-badge background/shadow to show */
   }
   
-  /* hero-text first so it's visible on load without scrolling */
-  .hero-text {
+  /* Copy column: center; explicit order so visual is always first, copy second (overrides Tailwind lg:order at 1024px) */
+  .landing-hero__copy {
+    order: 2 !important;
     text-align: center;
     align-items: center;
-    order: 1;
     width: 100%;
   }
 
-  /* CRITICAL: Disable scroll in hero-text and all children - override any other rules */
-  .landing-hero .hero-text,
-  .landing-hero .hero-text * {
-    overflow: hidden !important;
-    overflow-x: hidden !important;
-    overflow-y: hidden !important;
-    touch-action: none !important;
-    overscroll-behavior: contain !important;
-  }
-  
   .hero-visual {
-    order: 2;
+    order: 1 !important;
     transform: translateY(30px);
     width: 100%;
     /* CRITICAL: Prevent horizontal overflow */
@@ -165,6 +144,25 @@
   
   .hero-visual-visible {
     transform: translateY(0);
+  }
+
+  .landing-hero .landing-hero__copy {
+    padding: var(--space-2) 0;
+    max-width: 100%;
+    margin-inline: auto;
+    box-sizing: border-box;
+  }
+
+  .landing-hero .hero-visual .hero-image-container {
+    margin-bottom: 0;
+    margin-inline: auto;
+    padding: var(--space-2) 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .landing-hero .hero-actions {
+    margin-top: var(--space-1);
   }
   
   .hero-summary {
@@ -188,7 +186,12 @@
   }
   
   .hero-meta {
-    justify-content: center;
+    justify-content: center !important;
+  }
+
+  /* Override Tailwind sm:justify-start so meta is centered at all widths in this breakpoint */
+  .landing-hero #landing-hero-meta {
+    justify-content: center !important;
   }
   
   .features-container,
@@ -198,55 +201,64 @@
   }
   
   .hero-actions {
-    justify-content: center;
+    justify-content: center !important;
+    align-items: stretch;
     width: 100%;
+    max-width: min(100%, 36rem);
+    margin-inline: auto;
     flex-wrap: wrap;
     gap: var(--space-3);
   }
-  
+
+  /* Let utility classes control width; avoid capping touch targets on small screens */
   .hero-actions button {
-    flex: 1;
-    min-width: 130px;
-    max-width: 180px;
-  }
-  
-  .hero-actions .hero-cta-primary,
-  .hero-actions .hero-cta-contact {
-    flex: 1.2;
-    min-width: 140px;
-    max-width: 200px;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: none;
   }
   
   .hero-logo-image {
-    width: clamp(250px, 50vw, 375px);
-    max-width: 100%;
-    max-height: none;
+    width: auto;
+    max-width: min(100%, 220px);
+    max-height: min(120px, 18vh);
     transform: none;
+  }
+
+  .hero-logo-wrapper {
+    max-width: min(100%, 220px);
   }
   
   .hero-logo-subtitle {
-    font-size: calc(var(--font-size-base) * 1.25);
-    margin-top: var(--space-4);
+    font-size: clamp(0.6875rem, 2.5vw, 0.875rem);
+    margin-top: 0;
     white-space: normal;
-    padding: 0 var(--space-3);
-    width: 100%;
-    max-width: 100%;
+    padding: 0 var(--space-2);
+    flex: 1 1 9rem;
+    min-width: 0;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: var(--space-2);
+    gap: 0;
+  }
+
+  .hero-logo-subtitle > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
   }
 
   .hero-logo-subtitle-word {
-    display: block;
-    width: 100%;
+    display: inline-block;
+    white-space: nowrap;
     text-align: center;
     line-height: inherit;
   }
 
   .hero-logo-subtitle-separator {
-    display: none;
+    display: inline-block;
   }
   
   .hero-visual-visible .hero-logo-subtitle {
@@ -314,10 +326,26 @@
   .about-content {
     grid-template-columns: 1fr;
   }
+
+  .about-text {
+    gap: var(--space-6);
+    max-width: 100%;
+  }
+
+  .about-text-identity.about-profile-section {
+    padding-bottom: var(--space-6);
+  }
   
   .about-profile-section {
     flex-direction: column;
     text-align: center;
+  }
+
+  .landing-about .about-text-identity .about-profile-info,
+  .landing-about .about-text-identity .about-profile-name,
+  .landing-about .about-text-identity .about-profile-title,
+  .landing-about .about-text-identity .about-profile-tagline {
+    text-align: center !important;
   }
   
   .about-profile-picture {
@@ -391,31 +419,34 @@
 }
 
 @media (max-width: 480px) {
-  /* CRITICAL: Disable scroll in hero-text and all children */
-  .landing-hero .hero-text,
-  .landing-hero .hero-text * {
-    overflow: hidden !important;
-    overflow-x: hidden !important;
-    overflow-y: hidden !important;
-    touch-action: none !important;
-    overscroll-behavior: contain !important;
-  }
-
   .landing-hero {
     min-height: 100vh !important;
-    padding: var(--space-6) var(--space-4);
+    padding-top: max(var(--space-6), env(safe-area-inset-top, 0px)) !important;
+    padding-bottom: max(var(--space-6), env(safe-area-inset-bottom, 0px)) !important;
+    padding-left: max(var(--space-4), env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(var(--space-4), env(safe-area-inset-right, 0px)) !important;
     overflow: visible !important;
     overflow-x: hidden !important;
     overflow-y: visible !important;
     width: 100% !important;
     max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
   }
+
+  .landing-hero .landing-hero__copy {
+    padding: var(--space-2) 0;
+    max-width: 100%;
+  }
+
+  .landing-hero .hero-visual .hero-image-container {
+    max-width: 100%;
+    padding: var(--space-2) 0;
+  }
   
-  .hero-title-main {
+  .landing-hero #landing-hero-heading {
     font-size: 2rem;
     line-height: 1.2;
   }
-  
+
   .hero-title-subtitle {
     font-size: clamp(0.875rem, 3vw, 1.125rem);
     word-wrap: break-word;
@@ -443,29 +474,27 @@
   }
   
   .hero-logo-subtitle {
-    font-size: calc(var(--font-size-base) * 1.5);
-    letter-spacing: 0.05em;
+    font-size: clamp(0.6875rem, 2.8vw, 0.8125rem);
+    letter-spacing: 0.06em;
     white-space: normal;
-    padding: 0 var(--space-2);
-    width: 100%;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 0 var(--space-1);
+    margin-top: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: var(--space-2);
-    margin-top: var(--space-1);
+    align-items: center;
+    gap: 0;
   }
 
   .hero-logo-subtitle-word {
-    display: block;
-    width: 100%;
+    display: inline-block;
+    white-space: nowrap;
     text-align: center;
     line-height: inherit;
   }
 
   .hero-logo-subtitle-separator {
-    display: none;
+    display: inline-block;
   }
   
   .hero-visual-visible .hero-logo-subtitle {
@@ -484,10 +513,14 @@
   }
 
   .hero-logo-image {
-    width: clamp(200px, 80vw, 624px);
-    max-width: 100%;
-    max-height: none;
+    width: auto;
+    max-width: min(100%, 320px);
+    max-height: min(200px, 32vh);
     transform: none;
+  }
+
+  .hero-logo-wrapper {
+    max-width: min(100%, 360px);
   }
 
   .hero-image-container {
