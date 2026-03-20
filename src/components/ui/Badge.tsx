@@ -1,5 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { BadgeProps as BaseBadgeProps } from '../../types/components'
+import { useDebugId } from '../../lib/useDebugId'
 import { cn } from '../../lib/utils'
 
 const badgeVariants = cva(
@@ -9,6 +10,8 @@ const badgeVariants = cva(
       variant: {
         primary: 'bg-primary text-white',
         secondary: 'bg-secondary text-white',
+        outline:
+          'border border-primary/25 bg-primary/[0.06] text-primary shadow-sm',
         success: 'bg-success text-white',
         warning: 'bg-warning text-gray-900',
         danger: 'bg-danger text-white'
@@ -35,8 +38,9 @@ export function Badge({
   variant = 'primary',
   size = 'md'
 }: BadgeProps) {
+  const badgeId = useDebugId('ui-badge', id)
   return (
-    <span className={cn(badgeVariants({ variant, size }), className)} id={id}>
+    <span className={cn(badgeVariants({ variant, size }), className)} id={badgeId}>
       {children}
     </span>
   )

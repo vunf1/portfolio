@@ -23,6 +23,7 @@ export function Toaster() {
 
   return (
     <div
+      id="ui-toaster"
       className="fixed bottom-0 right-0 z-[1080] flex max-h-screen w-full flex-col gap-2 p-4 sm:max-w-[420px]"
       role="region"
       aria-label={t('common.notifications')}
@@ -52,6 +53,7 @@ function ToastCard({ item }: { item: ToastItem }) {
 
   return (
     <div
+      id={`toast-${item.id}`}
       className={cn(
         'flex items-start gap-3 rounded-lg border p-4 transition-all duration-200',
         style

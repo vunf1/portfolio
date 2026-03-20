@@ -8,6 +8,7 @@ export function PageLoader() {
 
   return (
     <div
+      id="page-loader"
       className="page-loader"
       role="status"
       aria-live="polite"

@@ -49,8 +49,10 @@ import {
   Moon,
   Sun,
   Home,
+  Menu,
   type LucideIcon
 } from 'lucide-preact'
+import { useDebugId } from '../../lib/useDebugId'
 import { cn } from '../../lib/utils'
 
 const iconMap: Record<string, LucideIcon> = {
@@ -127,7 +129,10 @@ const iconMap: Record<string, LucideIcon> = {
   'server': Shield,
   'moon': Moon,
   'sun': Sun,
-  'home': Home
+  'home': Home,
+  'bars': Menu,
+  'menu': Menu,
+  'navicon': Menu
 }
 
 export type IconName = keyof typeof iconMap
@@ -135,6 +140,7 @@ export type IconName = keyof typeof iconMap
 export interface IconProps {
   name: string
   className?: string
+  id?: string
   size?: number
   'aria-hidden'?: boolean
 }
@@ -143,11 +149,13 @@ export interface IconProps {
  * Renders an icon by name (maps Font Awesome-style names to Lucide icons).
  * Use for accessibility; pass aria-hidden when decorative.
  */
-export function Icon({ name, className, size = 18, 'aria-hidden': ariaHidden = true }: IconProps) {
+export function Icon({ name, className, id, size = 18, 'aria-hidden': ariaHidden = true }: IconProps) {
   const normalized = name.replace(/^fa-solid fa-|^fa-brands fa-|^fa /i, '').toLowerCase()
   const LucideIcon = iconMap[normalized] ?? HelpCircle
+  const iconId = useDebugId('ui-icon', id)
   return (
     <LucideIcon
+      id={iconId}
       size={size}
       className={cn('shrink-0 outline-none', className)}
       aria-hidden={ariaHidden}

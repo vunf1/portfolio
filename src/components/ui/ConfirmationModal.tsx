@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'preact/hooks'
 import { useTranslation } from '../../contexts/TranslationContext'
+import { useDebugId } from '../../lib/useDebugId'
 import { Button } from './Button'
 import { Icon } from './Icon'
 import { cn } from '../../lib/utils'
@@ -17,6 +18,8 @@ export function ConfirmationModal({
   icon: iconClass
 }: ConfirmationModalProps) {
   const { t } = useTranslation()
+  const modalRootId = useDebugId('ui-confirmation-modal', 'confirmation-modal')
+  const titleId = `${modalRootId}-title`
   const modalRef = useRef<HTMLDivElement>(null)
   const confirmButtonRef = useRef<HTMLButtonElement>(null)
 
@@ -58,19 +61,24 @@ export function ConfirmationModal({
 
   return (
     <div
+      id={modalRootId}
       className="fixed inset-0 z-[1050] flex items-center justify-center bg-black/50"
       ref={modalRef}
       onClick={handleOverlayClick}
       role="dialog"
       aria-modal="true"
-      aria-labelledby="confirmation-modal-title"
+      aria-labelledby={titleId}
     >
-      <div className="mx-4 w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 shadow-xl" onClick={e => e.stopPropagation()}>
-        <div className="flex items-center gap-3 pb-3">
+      <div
+        id={`${modalRootId}-panel`}
+        className="mx-4 w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 shadow-xl"
+        onClick={e => e.stopPropagation()}
+      >
+        <div id={`${modalRootId}-header`} className="flex items-center gap-3 pb-3">
           <div className={cn('flex h-10 w-10 shrink-0 items-center justify-center rounded-full', config.iconClass)}>
             <Icon name={config.icon} size={20} />
           </div>
-          <h5 className="text-lg font-semibold" id="confirmation-modal-title">
+          <h5 className="text-lg font-semibold" id={titleId}>
             {title || t('confirmation.title', 'Confirm Action')}
           </h5>
         </div>

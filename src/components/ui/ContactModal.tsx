@@ -533,6 +533,7 @@ export function ContactModal({
 
   return (
     <div
+      id="contact-modal"
       className={`contact-modal-premium fade show d-block ${className}`}
       ref={modalRef}
       onClick={handleOverlayClick}
@@ -540,8 +541,8 @@ export function ContactModal({
       aria-modal="true"
       aria-labelledby="contact-modal-title"
     >
-      <div className="contact-modal-dialog modal-mobile">
-        <div className="contact-modal-content flex flex-col max-w-2xl">
+      <div id="contact-modal-dialog" className="contact-modal-dialog modal-mobile">
+        <div id="contact-modal-content" className="contact-modal-content flex flex-col max-w-2xl">
           <div className="modal-header flex items-center justify-between gap-4 px-6 py-5 rounded-t-2xl">
             <h2 className="modal-title text-xl font-semibold text-white text-left" id="contact-modal-title">
               {t('contact.title', 'Contact Me')}

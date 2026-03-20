@@ -1,4 +1,5 @@
 import type { SectionProps } from '../../types/components'
+import { useDebugId } from '../../lib/useDebugId'
 import { cn } from '../../lib/utils'
 
 export function Section({
@@ -10,6 +11,7 @@ export function Section({
   variant = 'default',
   'data-section': dataSection
 }: SectionProps) {
+  const sectionId = useDebugId('ui-section', id)
   return (
     <section
       className={cn(
@@ -18,7 +20,7 @@ export function Section({
         variant === 'highlighted' && 'bg-primary/5',
         className
       )}
-      id={id}
+      id={sectionId}
       data-section={dataSection}
     >
       {(title || subtitle) && (
