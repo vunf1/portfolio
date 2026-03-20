@@ -1,9 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/preact'
+import { render, screen, fireEvent, within } from '@testing-library/preact'
 import { Navigation } from '../Navigation'
 import type { NavigationProps } from '../../types/components'
 
-// Mock the TranslationContext
+vi.mock('../../lib/scrollToPortfolioSection', () => ({
+  scrollToPortfolioSection: vi.fn()
+}))
+
 vi.mock('../../contexts/TranslationContext', () => ({
   useTranslation: () => ({
     t: (key: string) => {
@@ -15,9 +18,11 @@ vi.mock('../../contexts/TranslationContext', () => ({
         'navigation.education': 'Education',
         'navigation.skills': 'Skills',
         'navigation.projects': 'Projects',
-        'navigation.toggleMenu': 'Toggle navigation menu',
+        'navigation.menu': 'Menu',
+        'navigation.menuDescription': 'Jump to section',
+        'navigation.sectionsNav': 'Portfolio sections',
         'navigation.backToHome': 'Back to Home',
-        'navigation.backToLanding': 'Back to Landing Page',
+        'navigation.backToLanding': 'Back to Landing Page'
       }
       return translations[key] || key
     },
@@ -30,17 +35,11 @@ vi.mock('../../contexts/TranslationContext', () => ({
   preloadTranslations: vi.fn().mockResolvedValue(undefined)
 }))
 
-vi.mock('../../hooks/useTheme', () => ({
-  useTheme: () => ({
-    isDarkMode: false,
-    toggleTheme: vi.fn()
-  })
-}))
-
 const mockNavigationItems = [
   { id: 'about', label: 'About', icon: 'fa-user' },
   { id: 'experience', label: 'Experience', icon: 'fa-briefcase' },
-  { id: 'projects', label: 'Projects', icon: 'fa-code' },
+  { id: 'education', label: 'Education', icon: 'fa-graduation-cap' },
+  { id: 'projects', label: 'Projects', icon: 'fa-code' }
 ]
 
 const defaultProps: NavigationProps = {
@@ -48,166 +47,105 @@ const defaultProps: NavigationProps = {
   activeId: 'about'
 }
 
-describe('Navigation Component', () => {
+describe('Navigation', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    
-    // Mock window.scrollY
-    Object.defineProperty(window, 'scrollY', {
-      writable: true,
-      value: 0
-    })
-    
-    // Mock window.innerWidth
-    Object.defineProperty(window, 'innerWidth', {
-      writable: true,
-      value: 1024
-    })
+    Object.defineProperty(window, 'scrollY', { writable: true, value: 0 })
+    Object.defineProperty(window, 'innerWidth', { writable: true, value: 1200 })
   })
 
-  it('renders navigation with brand section', () => {
+  it('renders brand and subtitle', () => {
     render(<Navigation {...defaultProps} />)
-    
     expect(screen.getByText('João Maia')).toBeInTheDocument()
     expect(screen.getByText('Full-Stack Engineer')).toBeInTheDocument()
   })
 
-  it('renders navigation items', () => {
+  it('renders section links in desktop nav', () => {
     render(<Navigation {...defaultProps} />)
-    
-    expect(screen.getByText('About')).toBeInTheDocument()
-    expect(screen.getByText('Experience')).toBeInTheDocument()
-    expect(screen.getByText('Projects')).toBeInTheDocument()
+    const nav = screen.getByRole('navigation', { name: 'Portfolio sections' })
+    expect(within(nav).getByRole('button', { name: 'About' })).toBeInTheDocument()
+    expect(within(nav).getByRole('button', { name: 'Experience' })).toBeInTheDocument()
+    expect(within(nav).getByRole('button', { name: 'Projects' })).toBeInTheDocument()
   })
 
-  it('highlights active navigation item', () => {
+  it('highlights active section', () => {
     render(<Navigation {...defaultProps} activeId="projects" />)
-    
-    const activeLink = screen.getByText('Projects').closest('a')
-    expect(activeLink).toHaveClass('active')
+    const nav = screen.getByRole('navigation', { name: 'Portfolio sections' })
+    const active = within(nav).getByRole('button', { name: 'Projects' })
+    expect(active.className).toMatch(/bg-gray-100/)
   })
 
+  it('calls onNavigate when a section is clicked', () => {
+    const onNavigate = vi.fn()
+    render(<Navigation {...defaultProps} onNavigate={onNavigate} />)
+    fireEvent.click(screen.getByRole('button', { name: 'About' }))
+    expect(onNavigate).toHaveBeenCalledWith('about')
+  })
 
-  it('renders mobile toggle button', () => {
+  it('navigates to first section id when brand is clicked', () => {
+    const onNavigate = vi.fn()
+    render(<Navigation {...defaultProps} onNavigate={onNavigate} />)
+    const brand = screen.getByText('João Maia').closest('a')
+    fireEvent.click(brand!)
+    expect(onNavigate).toHaveBeenCalledWith('about')
+  })
+
+  it('adds shadow on scroll', () => {
     render(<Navigation {...defaultProps} />)
-    
-    const mobileToggle = screen.getByLabelText('Toggle navigation menu')
-    expect(mobileToggle).toBeInTheDocument()
-  })
+    const header = document.querySelector('header')
+    expect(header?.className).not.toMatch(/shadow-sm/)
 
-  it('toggles mobile menu when toggle button is clicked', () => {
-    render(<Navigation {...defaultProps} />)
-    
-    const mobileToggle = screen.getByLabelText('Toggle navigation menu')
-    const navMenu = document.querySelector('.nav-menu')
-    
-    expect(navMenu).toHaveClass('collapsed')
-    
-    fireEvent.click(mobileToggle)
-    expect(navMenu).not.toHaveClass('collapsed')
-    
-    fireEvent.click(mobileToggle)
-    expect(navMenu).toHaveClass('collapsed')
-  })
-
-  it('handles navigation item click', () => {
-    const mockOnNavigate = vi.fn()
-    render(<Navigation {...defaultProps} onNavigate={mockOnNavigate} />)
-    
-    const aboutLink = screen.getByText('About')
-    fireEvent.click(aboutLink)
-    
-    expect(mockOnNavigate).toHaveBeenCalledWith('about')
-  })
-
-  it('handles brand click', () => {
-    const mockOnNavigate = vi.fn()
-    render(<Navigation {...defaultProps} onNavigate={mockOnNavigate} />)
-    
-    const brandLink = screen.getByText('João Maia').closest('a')
-    fireEvent.click(brandLink!)
-    
-    expect(mockOnNavigate).toHaveBeenCalledWith('hero')
-  })
-
-  it('closes mobile menu when clicking outside', () => {
-    render(<Navigation {...defaultProps} />)
-    
-    const mobileToggle = screen.getByLabelText('Toggle navigation menu')
-    const navMenu = document.querySelector('.nav-menu')
-    
-    // Open mobile menu
-    fireEvent.click(mobileToggle)
-    expect(navMenu).not.toHaveClass('collapsed')
-    
-    // Click outside
-    fireEvent.click(document.body)
-    expect(navMenu).toHaveClass('collapsed')
-  })
-
-  it('closes mobile menu on desktop resize', () => {
-    render(<Navigation {...defaultProps} />)
-    
-    const mobileToggle = screen.getByLabelText('Toggle navigation menu')
-    const navMenu = document.querySelector('.nav-menu')
-    
-    // Open mobile menu
-    fireEvent.click(mobileToggle)
-    expect(navMenu).not.toHaveClass('collapsed')
-    
-    // Simulate desktop resize
-    Object.defineProperty(window, 'innerWidth', {
-      writable: true,
-      value: 1024
-    })
-    
-    fireEvent(window, new Event('resize'))
-    expect(navMenu).toHaveClass('collapsed')
-  })
-
-  it('applies scrolled class when scrolled', () => {
-    render(<Navigation {...defaultProps} />)
-    
-    const nav = document.querySelector('.premium-nav')
-    expect(nav).not.toHaveClass('scrolled')
-    
-    // Simulate scroll
-    Object.defineProperty(window, 'scrollY', {
-      writable: true,
-      value: 100
-    })
-    
+    Object.defineProperty(window, 'scrollY', { writable: true, value: 100 })
     fireEvent(window, new Event('scroll'))
-    expect(nav).toHaveClass('scrolled')
+
+    expect(header?.className).toMatch(/shadow-sm/)
   })
 
-  it('applies custom className', () => {
-    render(<Navigation {...defaultProps} className="custom-nav" />)
-    
-    const nav = document.querySelector('.premium-nav')
-    expect(nav).toHaveClass('custom-nav')
+  it('applies custom className and id on header', () => {
+    render(<Navigation {...defaultProps} className="custom-nav" id="custom-nav" />)
+    const header = document.getElementById('custom-nav')
+    expect(header).toBeTruthy()
+    expect(header?.className).toMatch(/custom-nav/)
   })
 
-  it('applies custom id', () => {
-    render(<Navigation {...defaultProps} id="custom-nav" />)
-    
-    const nav = document.getElementById('custom-nav')
-    expect(nav).toBeInTheDocument()
-  })
-
-  it('renders icons for navigation items', () => {
+  it('opens mobile sheet with section actions', () => {
+    Object.defineProperty(window, 'innerWidth', { writable: true, value: 600 })
     render(<Navigation {...defaultProps} />)
-    const nav = document.querySelector('nav')
-    expect(nav).toBeInTheDocument()
-    const icons = nav?.querySelectorAll('svg')
-    expect(icons?.length).toBeGreaterThan(0)
+
+    fireEvent.click(screen.getByRole('button', { name: /menu/i }))
+    const dialog = screen.getByRole('dialog')
+    expect(dialog).toBeInTheDocument()
+    expect(within(dialog).getByRole('button', { name: 'Education' })).toBeInTheDocument()
   })
 
-  it('handles navigation with no items', () => {
-    render(<Navigation {...defaultProps} items={[]} />)
-    
-    // Should still render brand and controls
+  it('closes sheet after section click on narrow viewport', () => {
+    Object.defineProperty(window, 'innerWidth', { writable: true, value: 600 })
+    render(<Navigation {...defaultProps} />)
+
+    fireEvent.click(screen.getByRole('button', { name: /menu/i }))
+    fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Projects' }))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('renders back control and calls onBackClick', () => {
+    const onBackClick = vi.fn()
+    render(
+      <Navigation
+        {...defaultProps}
+        showBackButton
+        onBackClick={onBackClick}
+      />
+    )
+    const back = screen.getAllByRole('button', { name: /back to home/i })[0]
+    fireEvent.click(back)
+    expect(onBackClick).toHaveBeenCalled()
+  })
+
+  it('with empty items still renders brand and uses experience as brand target', () => {
+    const onNavigate = vi.fn()
+    render(<Navigation {...defaultProps} items={[]} onNavigate={onNavigate} />)
     expect(screen.getByText('João Maia')).toBeInTheDocument()
-    expect(screen.getByLabelText('Toggle navigation menu')).toBeInTheDocument()
+    fireEvent.click(screen.getByText('João Maia').closest('a')!)
+    expect(onNavigate).toHaveBeenCalledWith('experience')
   })
 })

@@ -1,256 +1,209 @@
-import { useState, useEffect } from 'preact/hooks'
+import { useEffect, useState } from 'preact/hooks'
 import { useTranslation } from '../contexts/TranslationContext'
-import { Icon } from './ui/Icon'
+import { cn } from '../lib/utils'
+import { scrollToPortfolioSection } from '../lib/scrollToPortfolioSection'
 import type { NavigationProps } from '../types/components'
+import { Button } from './ui/Button'
+import { Icon } from './ui/Icon'
+import { Separator } from './ui/Separator'
+import { Sheet } from './ui/Sheet'
 
-export function Navigation({ 
-  items, 
-  activeId, 
-  onNavigate, 
-  variant = 'horizontal',
+/** Keep in sync with `--navbar-height` in `src/css/variables.css` */
+const NAV_HEIGHT = 80
+
+/** Calm nav chrome: no Button scale nudge, short color-only transition */
+const navControlMotion =
+  'motion-safe:hover:scale-100 active:scale-100 transition-colors duration-150 ease-out'
+
+/** Focus ring: neutral gray (avoid primary/blue outline on section buttons) */
+const navFocusRing = 'focus:outline-none focus-visible:ring-1 focus-visible:ring-gray-400/45 focus-visible:ring-offset-0'
+
+export function Navigation({
+  items,
+  activeId,
+  onNavigate,
   className = '',
-  id,
+  id = 'portfolio-nav',
   showBackButton = false,
   onBackClick
-}: NavigationProps & { showBackButton?: boolean; onBackClick?: () => void }) {
-  const [isNavCollapsed, setIsNavCollapsed] = useState(true)
-  const [isScrolled, setIsScrolled] = useState(false)
+}: NavigationProps) {
   const { t } = useTranslation()
+  const [sheetOpen, setSheetOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  const brandTargetId = items[0]?.id ?? 'experience'
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-
-    // Close mobile menu when clicking outside
-    const handleClickOutside = (event: Event) => {
-      const target = event.target as Element
-      const nav = document.querySelector('.premium-nav')
-      const toggle = document.querySelector('.nav-toggle')
-      
-      if (nav && toggle && !nav.contains(target) && !toggle.contains(target)) {
-        setIsNavCollapsed(true)
-        document.body.classList.remove('menu-open')
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    document.addEventListener('click', handleClickOutside)
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-      document.removeEventListener('click', handleClickOutside)
-      document.body.classList.remove('menu-open')
-    }
+    const onScroll = () => setIsScrolled(window.scrollY > 8)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const toggleNav = () => {
-    const newCollapsed = !isNavCollapsed
-    setIsNavCollapsed(newCollapsed)
-    
-    // Add/remove blur effect to page content
-    if (newCollapsed) {
-      document.body.classList.remove('menu-open')
-    } else {
-      document.body.classList.add('menu-open')
-    }
-  }
-
-  const scrollToSection = (sectionId: string) => {
-    // Alternative approach: Use a more reliable method to find and scroll to sections
-    const scrollToElement = () => {
-      // Method 1: Try getElementById first (fastest)
-      let element = document.getElementById(sectionId)
-      
-      // Method 2: If not found, try querySelector with more specific selector
-      if (!element) {
-        element = document.querySelector(`section[id="${sectionId}"]`)
-      }
-      
-      // Method 3: If still not found, try finding by data attribute or class
-      if (!element) {
-        element = document.querySelector(`[data-section="${sectionId}"]`)
-      }
-      
-      // Method 4: Last resort - find by section class and check if it contains the ID
-      if (!element) {
-        const sections = document.querySelectorAll('section')
-        for (const section of sections) {
-          if (section.id === sectionId) {
-            element = section
-            break
-          }
-        }
-      }
-      
-      if (element) {
-        // Calculate the scroll position accounting for fixed navbar
-        const navHeight = 80
-        const offset = 20
-        const elementRect = element.getBoundingClientRect()
-        const elementTop = elementRect.top + window.pageYOffset - navHeight - offset
-        
-        // Smooth scroll to the calculated position
-        window.scrollTo({
-          top: elementTop,
-          behavior: 'smooth'
-        })
-        
-        return true
-      }
-      
-      return false
-    }
-    
-    // Try to scroll immediately
-    if (!scrollToElement()) {
-      // If not found, use a more aggressive approach with multiple attempts
-      let attempts = 0
-      const maxAttempts = 10
-      
-      const retryScroll = () => {
-        attempts++
-        
-        if (scrollToElement()) {
-          return // Success!
-        }
-        
-        if (attempts < maxAttempts) {
-          // Try again with increasing delay
-          const delay = attempts * 100 // 100ms, 200ms, 300ms, etc.
-          setTimeout(retryScroll, delay)
-        } else {
-          // Final fallback: scroll to top
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          })
-        }
-      }
-      
-      // Start retry process
-      setTimeout(retryScroll, 50) // Small initial delay
-    }
-    
-    if (window.innerWidth < 992) {
-      setIsNavCollapsed(true)
-    }
-    
+  const navigateTo = (sectionId: string) => {
+    scrollToPortfolioSection(sectionId, { navHeight: NAV_HEIGHT, offset: 20 })
     onNavigate?.(sectionId)
+    if (window.innerWidth < 1024) {
+      setSheetOpen(false)
+    }
   }
 
-  // Close mobile menu when resizing to desktop
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 992) {
-        setIsNavCollapsed(true)
-      }
-    }
-
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
-  const navClasses = [
-    'premium-nav',
-    variant !== 'horizontal' && `nav-${variant}`,
-    isScrolled && 'scrolled',
-    className
-  ].filter(Boolean).join(' ')
+  const handleBack = () => {
+    setSheetOpen(false)
+    onBackClick?.()
+  }
 
   return (
-    <nav className={navClasses} id={id || 'sideNav'}>
-        <div className="nav-container">
-          {/* Back Button - Desktop Only */}
-          {showBackButton && (
-            <div className="nav-back-desktop">
-              <button
-                className="nav-back-button"
-                onClick={onBackClick}
-                title={t('navigation.backToLanding')}
+    <>
+      <header
+        id={id}
+        className={cn(
+          'fixed top-0 left-0 right-0 z-50 w-full border-b border-gray-200/90 bg-white/90 backdrop-blur-md transition-shadow duration-150 ease-out',
+          isScrolled && 'shadow-sm shadow-gray-900/5',
+          className
+        )}
+      >
+        <div className="mx-auto flex h-20 min-h-[var(--navbar-height)] max-w-[1200px] items-center gap-2 px-4 sm:gap-3 sm:px-6">
+          {showBackButton ? (
+            <>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className={cn('hidden shrink-0 gap-2 border-0 shadow-none sm:inline-flex hover:bg-gray-100/90', navControlMotion)}
+                onClick={handleBack}
               >
-                <Icon name="arrow-left" size={18} />
-                <span className="nav-text">{t('navigation.backToHome')}</span>
-              </button>
-            </div>
-          )}
+                <Icon name="arrow-left" size={16} aria-hidden />
+                <span className="hidden md:inline">{t('navigation.backToHome')}</span>
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="shrink-0 p-2 sm:hidden"
+                onClick={handleBack}
+                aria-label={t('navigation.backToLanding')}
+              >
+                <Icon name="arrow-left" size={18} aria-hidden />
+              </Button>
+              <Separator orientation="vertical" className="hidden h-6 sm:block" />
+            </>
+          ) : null}
 
-          {/* Brand */}
-          <a 
-            className="nav-brand" 
-            href="#hero" 
+          <a
+            href={`#${brandTargetId}`}
+            className={cn(
+              'flex min-w-0 max-w-[min(100%,15.5rem)] items-center gap-2 rounded-lg p-1 -m-1 text-left transition-colors duration-150 ease-out hover:bg-gray-100/90 sm:max-w-xs sm:gap-2.5',
+              navFocusRing
+            )}
             onClick={(e) => {
               e.preventDefault()
-              scrollToSection('hero')
+              navigateTo(brandTargetId)
             }}
           >
-            <div className="brand-content">
-              <div className="brand-avatar-container">
-                <img 
-                  className="brand-avatar" 
-                  src="./img/logo.png"
-                  alt="Logo"
-                  loading="lazy"
-                />
-              </div>
-              <div className="brand-text">
-                <span className="brand-name">{t('navigation.brand')}</span>
-                <span className="brand-title">{t('hero.title')}</span>
-              </div>
-            </div>
+            <span className="relative h-11 w-11 shrink-0 overflow-hidden rounded-md bg-transparent sm:h-12 sm:w-12">
+              <img
+                className="h-full w-full object-contain p-px sm:p-0.5"
+                src="./img/logo.png"
+                alt=""
+                loading="lazy"
+              />
+            </span>
+            <span className="min-w-0 flex-1 leading-tight">
+              <span className="block truncate text-xs font-semibold tracking-tight text-gray-900 sm:text-sm">
+                {t('navigation.brand')}
+              </span>
+              <span className="mt-0.5 block truncate text-[0.6875rem] text-gray-500 sm:text-xs">
+                {t('hero.title')}
+              </span>
+            </span>
           </a>
 
-        {/* Navigation Items */}
-        <div className={`nav-menu ${isNavCollapsed ? 'collapsed' : ''}`}>
-          <ul className="nav-list">
-            {items.map((item) => (
-              <li key={item.id} className="nav-item">
-                <a
-                  href={`#${item.id}`}
-                  className={`nav-link ${activeId === item.id ? 'active' : ''}`}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    scrollToSection(item.id)
-                    // Close mobile menu after navigation with small delay
-                    setTimeout(() => {
-                      setIsNavCollapsed(true)
-                      document.body.classList.remove('menu-open')
-                    }, 100)
-                  }}
-                >
-                  {item.icon && <Icon name={item.icon} size={18} className="nav-link-icon" />}
-                  <span className="nav-text">{item.label}</span>
-                </a>
-              </li>
-            ))}
-            {/* Back Button - Mobile Only */}
-            {showBackButton && (
-              <li className="nav-item nav-back-mobile">
-                <button
-                  className="nav-link nav-back-button"
-                  onClick={onBackClick}
-                  title={t('navigation.backToLanding')}
-                >
-                  <Icon name="arrow-left" size={18} />
-                  <span className="nav-text">{t('navigation.backToHome')}</span>
-                </button>
-              </li>
-            )}
-          </ul>
-        </div>
+          <nav
+            className="hidden min-h-0 min-w-0 flex-1 justify-center lg:flex"
+            aria-label={t('navigation.sectionsNav')}
+          >
+            <ul className="flex max-w-full flex-wrap items-center justify-center gap-0.5">
+              {items.map((item) => (
+                <li key={item.id} className="shrink-0">
+                  <button
+                    type="button"
+                    className={cn(
+                      'inline-flex max-w-[11rem] items-center gap-2 rounded-md px-2.5 py-2 text-left text-sm font-medium transition-colors duration-150 ease-out',
+                      navFocusRing,
+                      activeId === item.id
+                        ? 'bg-gray-100 text-gray-900'
+                        : 'text-gray-600 hover:bg-gray-50/90 hover:text-gray-900'
+                    )}
+                    onClick={() => navigateTo(item.id)}
+                  >
+                    {item.icon ? <Icon name={item.icon} size={16} aria-hidden /> : null}
+                    <span className="truncate">{item.label}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        {/* Mobile Toggle */}
-        <button
-          className="nav-toggle"
-          onClick={toggleNav}
-          aria-label={t('navigation.toggleMenu')}
-          aria-expanded={!isNavCollapsed}
-        >
-          <span className="hamburger-line"></span>
-          <span className="hamburger-line"></span>
-          <span className="hamburger-line"></span>
-        </button>
-      </div>
-    </nav>
+          <div className="ml-auto shrink-0 lg:hidden">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className={cn(
+                'gap-2 border-0 shadow-none outline-none ring-offset-0 hover:bg-gray-100/90 focus-visible:ring-1 focus-visible:ring-gray-400/45 focus-visible:ring-offset-0',
+                navControlMotion
+              )}
+              aria-expanded={sheetOpen}
+              aria-haspopup="dialog"
+              onClick={() => setSheetOpen(true)}
+            >
+              <Icon name="menu" size={18} aria-hidden />
+              <span className="sr-only sm:not-sr-only">{t('navigation.menu')}</span>
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      <Sheet
+        open={sheetOpen}
+        onOpenChange={setSheetOpen}
+        title={t('navigation.menu')}
+        description={t('navigation.menuDescription')}
+      >
+        <nav className="flex flex-col gap-1" aria-label={t('navigation.sectionsNav')}>
+          {showBackButton ? (
+            <Button
+              type="button"
+              variant="ghost"
+              className={cn(
+                'mb-2 w-full justify-start gap-2 border-0 shadow-none hover:bg-gray-100 focus-visible:ring-1 focus-visible:ring-gray-400/45 focus-visible:ring-offset-0',
+                navControlMotion
+              )}
+              onClick={handleBack}
+            >
+              <Icon name="arrow-left" size={18} aria-hidden />
+              {t('navigation.backToHome')}
+            </Button>
+          ) : null}
+          {items.map((item) => (
+            <Button
+              key={item.id}
+              type="button"
+              variant="ghost"
+              className={cn(
+                'h-auto w-full justify-start gap-3 py-3 text-left font-medium focus-visible:ring-1 focus-visible:ring-gray-400/45 focus-visible:ring-offset-0',
+                navControlMotion,
+                activeId === item.id && 'bg-gray-100 text-gray-900 hover:bg-gray-100'
+              )}
+              onClick={() => navigateTo(item.id)}
+            >
+              {item.icon ? <Icon name={item.icon} size={18} aria-hidden /> : null}
+              <span className="truncate">{item.label}</span>
+            </Button>
+          ))}
+        </nav>
+      </Sheet>
+    </>
   )
 }

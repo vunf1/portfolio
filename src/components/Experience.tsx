@@ -1,7 +1,8 @@
-import { useState, useRef } from 'preact/hooks'
+import { useState, useRef, useLayoutEffect } from 'preact/hooks'
 import type { JSX } from 'preact'
 import { useTranslation } from '../contexts/TranslationContext'
-import { Section, Icon } from './ui'
+import { cn } from '../lib/utils'
+import { Section, Icon, Button } from './ui'
 import type { ExperienceProps } from '../types'
 
 export function Experience({ experiences, className = '', id }: ExperienceProps) {
@@ -11,38 +12,74 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [dragOffset, setDragOffset] = useState(0)
+  const [viewportWidth, setViewportWidth] = useState(0)
   const carouselRef = useRef<HTMLDivElement>(null)
 
-  // Safety check: if no experiences data, return null
   if (!experiences || experiences.length === 0) {
     return null
   }
 
-  // Minimum swipe distance (in px)
   const minSwipeDistance = 50
+  const slideCount = experiences.length
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const node = carouselRef.current
+      if (!node) {
+        return
+      }
+      const cs = getComputedStyle(node)
+      const pl = Number.parseFloat(cs.paddingLeft) || 0
+      const pr = Number.parseFloat(cs.paddingRight) || 0
+      /* clientWidth includes padding; slides must match the *content* box only */
+      const contentWidth = node.clientWidth - pl - pr
+      setViewportWidth(Math.max(0, Math.round(contentWidth)))
+    }
+
+    measure()
+
+    const node = carouselRef.current
+    if (!node || typeof ResizeObserver === 'undefined') {
+      return
+    }
+
+    const ro = new ResizeObserver(measure)
+    ro.observe(node)
+    return () => ro.disconnect()
+  }, [slideCount])
+
+  const onCarouselKeyDown = (e: JSX.TargetedKeyboardEvent<HTMLDivElement>) => {
+    if (slideCount <= 1) {
+      return
+    }
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault()
+      prevSlide()
+    }
+    if (e.key === 'ArrowRight') {
+      e.preventDefault()
+      nextSlide()
+    }
+  }
 
   const goToSlide = (index: number) => {
-    // Ensure drag state is reset before transition
     setIsDragging(false)
     setDragOffset(0)
     setCurrentIndex(index)
   }
 
   const nextSlide = () => {
-    // Ensure drag state is reset before transition
     setIsDragging(false)
     setDragOffset(0)
     setCurrentIndex((prev) => (prev + 1) % experiences.length)
   }
 
   const prevSlide = () => {
-    // Ensure drag state is reset before transition
     setIsDragging(false)
     setDragOffset(0)
     setCurrentIndex((prev) => (prev - 1 + experiences.length) % experiences.length)
   }
 
-  // Touch handlers for swipe gestures with visual feedback
   const onTouchStart = (e: JSX.TargetedTouchEvent<HTMLDivElement>) => {
     setTouchEnd(null)
     setTouchStart(e.touches[0].clientX)
@@ -56,8 +93,7 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
     }
     const currentX = e.touches[0].clientX
     setTouchEnd(currentX)
-    const offset = currentX - touchStart
-    setDragOffset(offset)
+    setDragOffset(currentX - touchStart)
   }
 
   const onTouchEnd = () => {
@@ -66,16 +102,14 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
       setDragOffset(0)
       return
     }
-    
+
     const distance = touchStart - touchEnd
     const isLeftSwipe = distance > minSwipeDistance
     const isRightSwipe = distance < -minSwipeDistance
 
-    // Reset drag state first
     setDragOffset(0)
     setIsDragging(false)
 
-    // Use requestAnimationFrame to ensure smooth transition after drag
     requestAnimationFrame(() => {
       if (isLeftSwipe) {
         nextSlide()
@@ -86,38 +120,37 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
     })
   }
 
+  const trackTranslatePx =
+    viewportWidth > 0 ? -currentIndex * viewportWidth + (isDragging ? dragOffset : 0) : 0
+  const trackWidthPx = viewportWidth > 0 ? viewportWidth * slideCount : undefined
+
   const renderTechnologies = (technologies: string[]) => {
     if (!technologies || technologies.length === 0) {
       return null
     }
 
     return (
-      <div className="card-technologies">
-        <strong>Technologies:</strong>
+      <section className="experience-card__block card-technologies" aria-label={String(t('experience.technologies'))}>
+        <h4 className="experience-card__block-label">{t('experience.technologies')}</h4>
         <div className="tech-tags">
           {technologies.map((tech, techIndex) => {
-            // Check if this is a section title (starts and ends with "---")
             if (tech.startsWith('---') && tech.endsWith('---')) {
-              const title = tech.slice(3, -3).trim() // Remove the "---" and trim
+              const title = tech.slice(3, -3).trim()
               return (
                 <div key={techIndex} className="tech-section-title">
                   {title}
                 </div>
               )
             }
-            
-            // Regular technology tag
+
             return (
-              <span 
-                key={techIndex} 
-                className="tech-tag"
-              >
+              <span key={techIndex} className="tech-tag">
                 {tech}
               </span>
             )
           })}
         </div>
-      </div>
+      </section>
     )
   }
 
@@ -127,154 +160,219 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
     }
 
     return (
-      <div className="card-highlights">
-        <div className="highlights-header">
-          <div className="highlights-icon-wrapper">
+      <section className="experience-card__block card-highlights" aria-label={String(t('experience.highlights'))}>
+        <div className="highlights-header experience-card__block-head">
+          <div className="highlights-icon-wrapper" aria-hidden>
             <Icon name="star" size={18} />
           </div>
-          <strong className="highlight-title">Key Highlights:</strong>
+          <h4 className="highlight-title experience-card__block-title">{t('experience.highlights')}</h4>
         </div>
-        <div className="highlights-list">
+        <ul className="highlights-list experience-card__list">
           {highlights.map((highlight, highlightIndex) => (
-            <div key={highlightIndex} className="highlight-item">
-              <Icon name="arrow-right" size={14} className="highlight-arrow" />
-              <div className="highlight-text-container">
-                <span className="highlight-text">{highlight}</span>
-              </div>
-            </div>
+            <li key={highlightIndex} className="highlight-item">
+              <Icon name="arrow-right" size={14} className="highlight-arrow" aria-hidden />
+              <span className="highlight-text">{highlight}</span>
+            </li>
           ))}
-        </div>
-      </div>
+        </ul>
+      </section>
     )
   }
 
-  const renderExperienceCard = (exp: typeof experiences[0], index: number) => (
-    <div 
-      key={index} 
-      className="experience-card premium-card"
-    >
-                <div className="card-header">
-                  <h3 className="card-title">{exp.title}</h3>
-                  <div className="card-company">
-                    {exp.company}
-                    {exp.location && <span className="text-muted"> • {exp.location}</span>}
-                  </div>
-                  <div className="card-period">{exp.period}</div>
+  const renderExperienceCard = (exp: (typeof experiences)[0], index: number) => {
+    const titleId = `experience-card-title-${index}`
+    return (
+      <article
+        className={cn('experience-card', 'premium-card', 'experience-card--structured')}
+        aria-labelledby={titleId}
+      >
+        <header className="experience-card__header card-header">
+          <div className="experience-card__meta">
+            {exp.period ? (
+              <span className="experience-card__period">{exp.period}</span>
+            ) : null}
+            {slideCount > 1 ? (
+              <span className="experience-card__index" aria-hidden>
+                {index + 1}/{slideCount}
+              </span>
+            ) : null}
+          </div>
+          <h3 id={titleId} className="card-title">
+            {exp.title}
+          </h3>
+          <p className="experience-card__org">
+            <span className="experience-card__company">{exp.company}</span>
+            {exp.location ? (
+              <span className="experience-card__location">
+                <span className="experience-card__sep" aria-hidden>
+                  {' '}
+                  ·{' '}
+                </span>
+                {exp.location}
+              </span>
+            ) : null}
+          </p>
+        </header>
+
+        <div className="experience-card__body card-body">
+          <section className="experience-card__block experience-card__overview" aria-label={String(t('experience.overview'))}>
+            <p className="card-description experience-card__description">{exp.description}</p>
+          </section>
+
+          {exp.impact ? (
+            <section className="experience-card__block card-impact" aria-label={String(t('experience.impact'))}>
+              <div className="impact-header experience-card__block-head">
+                <div className="impact-icon-wrapper" aria-hidden>
+                  <Icon name="chart-line" size={18} />
                 </div>
-                
-                <div className="card-body">
-                  <p className="card-description">{exp.description}</p>
-                  
-                  {exp.technologies && exp.technologies.length > 0 && renderTechnologies(exp.technologies)}
-                  
-                  {exp.impact && (
-                    <div className="card-impact">
-                      <div className="impact-header">
-                        <div className="impact-icon-wrapper">
-                          <Icon name="chart-line" size={18} />
-                        </div>
-                        <strong className="impact-title">Impact:</strong>
-                      </div>
-                      <p className="impact-text">{exp.impact}</p>
-                    </div>
-                  )}
-                  
-                  {exp.highlights && exp.highlights.length > 0 && renderHighlights(exp.highlights)}
-                  
-                  {exp.achievements && exp.achievements.length > 0 && (
-                    <div className="card-achievements">
-                      <div className="achievements-header">
-                        <div className="achievements-icon-wrapper">
-                          <Icon name="trophy" size={18} />
-                        </div>
-                        <strong className="achievements-title">Key Achievements:</strong>
-                      </div>
-                      <div className="achievements-list">
-                        {exp.achievements.map((achievement, achievementIndex) => (
-                          <div key={achievementIndex} className="achievement-item">
-                            <div className="achievement-icon">
-                              <Icon name="check" size={14} />
-                            </div>
-                            <span className="achievement-text">{achievement}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div> 
-                  )}
+                <h4 className="impact-title experience-card__block-title">{t('experience.impact')}</h4>
+              </div>
+              <p className="impact-text">{exp.impact}</p>
+            </section>
+          ) : null}
+
+          {exp.highlights && exp.highlights.length > 0 ? renderHighlights(exp.highlights) : null}
+
+          {exp.achievements && exp.achievements.length > 0 ? (
+            <section className="experience-card__block card-achievements" aria-label={String(t('experience.achievements'))}>
+              <div className="achievements-header experience-card__block-head">
+                <div className="achievements-icon-wrapper" aria-hidden>
+                  <Icon name="trophy" size={18} />
                 </div>
-    </div>
-  )
+                <h4 className="achievements-title experience-card__block-title">{t('experience.achievements')}</h4>
+              </div>
+              <ul className="achievements-list experience-card__list">
+                {exp.achievements.map((achievement, achievementIndex) => (
+                  <li key={achievementIndex} className="achievement-item">
+                    <span className="achievement-icon" aria-hidden>
+                      <Icon name="check" size={14} />
+                    </span>
+                    <span className="achievement-text">{achievement}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
+
+          {exp.technologies && exp.technologies.length > 0 ? renderTechnologies(exp.technologies) : null}
+        </div>
+      </article>
+    )
+  }
+
+  const progressLabel =
+    slideCount > 1
+      ? t('experience.slideProgress', undefined, {
+          current: String(currentIndex + 1),
+          total: String(slideCount)
+        })
+      : ''
 
   return (
-    <Section 
-      id={id || 'experience'} 
+    <Section
+      id={id || 'experience'}
       data-section="experience"
-      className={className} 
-      title={String(t('experience.title'))} 
+      className={cn('experience-section', className)}
+      title={String(t('experience.title'))}
       subtitle={String(t('experience.subtitle'))}
     >
-      {/* Carousel - Works on all screen sizes */}
-      <div className="experience-carousel-wrapper">
-        <div 
-          className="experience-carousel-container"
-          ref={carouselRef}
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-          tabIndex={0}
-          role="region"
-          aria-label={t('experience.carouselAria')}
-        >
-          <div 
-            className={`experience-carousel-track ${isDragging ? 'no-transition' : ''}`}
-            style={{ 
-              transform: `translateX(calc(-${currentIndex * 100}% + ${currentIndex * 128}px + ${isDragging ? dragOffset : 0}px))`
-            }}
-          >
-            {experiences.map((exp, index) => (
-              <div key={index} className="experience-carousel-slide">
-                {renderExperienceCard(exp, index)}
+      <div className="experience-section__inner">
+        {slideCount > 1 ? (
+          <div className="experience-toolbar">
+            <p className="experience-toolbar__progress" aria-live="polite" aria-atomic="true">
+              {progressLabel}
+            </p>
+            <p className="experience-toolbar__current">
+              <span className="experience-toolbar__role-title">{experiences[currentIndex]?.title}</span>
+            </p>
+          </div>
+        ) : null}
+
+        <div className="experience-carousel-wrapper">
+          <div className="experience-carousel-chrome">
+            {slideCount > 1 ? (
+              <>
+                <div className="experience-carousel-nav-wrap experience-carousel-nav-wrap--prev">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="experience-carousel-nav-inner"
+                    onClick={prevSlide}
+                    aria-label={String(t('experience.prevAria'))}
+                  >
+                    <Icon name="chevron-left" size={18} aria-hidden />
+                  </Button>
+                </div>
+                <div className="experience-carousel-nav-wrap experience-carousel-nav-wrap--next">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="experience-carousel-nav-inner"
+                    onClick={nextSlide}
+                    aria-label={String(t('experience.nextAria'))}
+                  >
+                    <Icon name="chevron-right" size={18} aria-hidden />
+                  </Button>
+                </div>
+              </>
+            ) : null}
+
+            <div
+              ref={carouselRef}
+              className="experience-carousel-viewport"
+              onTouchStart={onTouchStart}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEnd}
+              onKeyDown={onCarouselKeyDown}
+              tabIndex={0}
+              role="region"
+              aria-roledescription="carousel"
+              aria-label={String(t('experience.carouselAria'))}
+            >
+              <div
+                className={cn('experience-carousel-track', isDragging && 'no-transition')}
+                style={
+                  {
+                    width: trackWidthPx !== undefined ? `${trackWidthPx}px` : undefined,
+                    transform: `translateX(${trackTranslatePx}px)`
+                  } as JSX.CSSProperties
+                }
+              >
+                {experiences.map((exp, index) => (
+                  <div
+                    key={index}
+                    className="experience-carousel-slide"
+                    style={
+                      viewportWidth > 0
+                        ? ({ width: `${viewportWidth}px`, flex: '0 0 auto' } as JSX.CSSProperties)
+                        : undefined
+                    }
+                    aria-hidden={index !== currentIndex}
+                  >
+                    {renderExperienceCard(exp, index)}
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
-          
-          {/* Navigation Arrows - Hidden on mobile */}
-          {experiences.length > 1 && (
-            <>
-              <button
-                className="experience-carousel-nav experience-carousel-prev"
-                onClick={prevSlide}
-                aria-label={t('experience.prevAria')}
-                type="button"
-              >
-                <Icon name="chevron-left" size={20} />
-              </button>
-              <button
-                className="experience-carousel-nav experience-carousel-next"
-                onClick={nextSlide}
-                aria-label={t('experience.nextAria')}
-                type="button"
-              >
-                <Icon name="chevron-right" size={20} />
-              </button>
-            </>
-          )}
+
+          {slideCount > 1 ? (
+            <div className="experience-carousel-dots">
+              {experiences.map((_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  className={cn('experience-carousel-dot', index === currentIndex && 'active')}
+                  onClick={() => goToSlide(index)}
+                  aria-label={String(t('experience.goToAria', undefined, { n: String(index + 1) }))}
+                  aria-current={index === currentIndex ? 'true' : undefined}
+                />
+              ))}
+            </div>
+          ) : null}
         </div>
-        
-        {/* Navigation Dots */}
-        {experiences.length > 1 && (
-          <div className="experience-carousel-dots">
-            {experiences.map((_, index) => (
-              <button
-                key={index}
-                className={`experience-carousel-dot ${index === currentIndex ? 'active' : ''}`}
-                onClick={() => goToSlide(index)}
-                aria-label={t('experience.goToAria', undefined, { n: String(index + 1) })}
-                type="button"
-              />
-            ))}
-          </div>
-        )}
       </div>
     </Section>
   )
