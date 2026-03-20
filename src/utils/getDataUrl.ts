@@ -14,3 +14,15 @@ export function getDataUrl(language: string, filename: string): string {
   }
   return BASE_NORM + path
 }
+
+/** Resolves a path from `public/` (e.g. `/img/x.png`) for the current Vite base. */
+export function publicAssetUrl(path: string): string {
+  if (path.startsWith('http://') || path.startsWith('https://')) {
+    return path
+  }
+  const clean = path.replace(/^\/+/, '')
+  if (typeof window !== 'undefined') {
+    return new URL(clean, window.location.origin + BASE_NORM).href
+  }
+  return BASE_NORM + clean
+}
