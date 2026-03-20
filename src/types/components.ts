@@ -1,5 +1,6 @@
 // Component Props Types
 import type { ComponentChildren } from 'preact'
+import type { Project } from './portfolio'
 
 // Base Component Props
 export interface BaseComponentProps {
@@ -22,7 +23,28 @@ export interface CardProps extends BaseComponentProps {
   subtitle?: string
   variant?: 'default' | 'elevated' | 'outlined'
   hover?: boolean
+  /** When true, children are not wrapped in default padding (shadcn-style composed layouts). */
+  flush?: boolean
 }
+
+/** shadcn/ui-style card sections (composition API) */
+export interface CardHeaderProps extends BaseComponentProps {}
+
+export type CardTitleElement = 'h1' | 'h2' | 'h3' | 'h4' | 'div' | 'span'
+
+export interface CardTitleProps extends BaseComponentProps {
+  as?: CardTitleElement
+}
+
+export type CardDescriptionElement = 'p' | 'div'
+
+export interface CardDescriptionProps extends BaseComponentProps {
+  as?: CardDescriptionElement
+}
+
+export interface CardContentProps extends BaseComponentProps {}
+
+export interface CardFooterProps extends BaseComponentProps {}
 
 // Button Component Props
 export interface ButtonProps extends BaseComponentProps {
@@ -43,7 +65,7 @@ export interface ButtonProps extends BaseComponentProps {
 
 // Badge Component Props
 export interface BadgeProps extends BaseComponentProps {
-  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger'
+  variant?: 'primary' | 'secondary' | 'outline' | 'success' | 'warning' | 'danger'
   size?: 'sm' | 'md' | 'lg'
 }
 
@@ -181,7 +203,8 @@ export interface NavigationProps extends BaseComponentProps {
   }>
   activeId?: string
   onNavigate?: (id: string) => void
-  variant?: 'horizontal' | 'vertical' | 'mobile'
+  showBackButton?: boolean
+  onBackClick?: () => void
 }
 
 // Hero Component Props
@@ -237,23 +260,7 @@ export interface SkillsProps extends BaseComponentProps {
 
 // Projects Component Props
 export interface ProjectsProps extends BaseComponentProps {
-  projects: Array<{
-    id: string
-    name: string
-    description: string
-    longDescription: string
-    technologies: string[]
-    features: string[]
-    url: string
-    demo: string
-    image: string
-    period: string
-    role: string
-    teamSize: number
-    highlights: string[]
-    challenges: string
-    solutions: string
-  }>
+  projects: Project[]
 }
 
 // Education Component Props

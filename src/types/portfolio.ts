@@ -105,6 +105,13 @@ export interface Project {
   highlights: string[]
   challenges: string
   solutions: string
+  /** Security & hardening measures (case-study panel). */
+  security?: string[]
+  /**
+   * When false, skip iframe (sites that send X-Frame-Options / CSP frame-ancestors show a browser error if embedded).
+   * Show an external-open panel instead.
+   */
+  embedInModal?: boolean
 }
 
 export interface Certification {
