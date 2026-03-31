@@ -121,8 +121,11 @@ export default defineConfig(({ mode }) => {
       exclude: ['@preact/preset-vite'],
     },
     server: {
-      port: 3000,
-      open: true,
+      host: true,
+      port: 1234,
+      strictPort: true,
+      allowedHosts: ['portfolio'],
+      open: 'http://portfolio:1234/',
       headers: {
         'X-Content-Type-Options': 'nosniff',
         'X-Frame-Options': 'DENY',
@@ -133,8 +136,11 @@ export default defineConfig(({ mode }) => {
       }
     },
     preview: {
-      port: 3000,
-      open: true,
+      host: true,
+      port: 1234,
+      strictPort: true,
+      allowedHosts: ['portfolio'],
+      open: 'http://portfolio:1234/',
       headers: {
         'X-Content-Type-Options': 'nosniff',
         'X-Frame-Options': 'DENY',

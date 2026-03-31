@@ -41,6 +41,13 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 })
 
+// JSDOM does not implement scrollTo (logs "Not implemented"); scrollLock and modals call it on unlock
+Object.defineProperty(window, 'scrollTo', {
+  writable: true,
+  configurable: true,
+  value: vi.fn(),
+})
+
 // Mock localStorage with English as default
 const localStorageMock = {
   getItem: vi.fn((key: string) => {
@@ -73,8 +80,8 @@ global.sessionStorage = sessionStorageMock
 // delete (window as any).location
 Object.defineProperty(window, 'location', {
   value: {
-    href: 'http://localhost:3000',
-    origin: 'http://localhost:3000',
+    href: 'http://portfolio:1234',
+    origin: 'http://portfolio:1234',
     pathname: '/',
     search: '',
     hash: '',
