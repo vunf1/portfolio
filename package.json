@@ -1,6 +1,6 @@
 {
   "name": "joao-maia-portfolio",
-  "version": "1.0.0",
+  "version": "3.2.0",
   "description": "João Maia's Modern Portfolio Website built with Vite + Preact",
   "type": "module",
   "scripts": {
