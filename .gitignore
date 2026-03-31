@@ -173,6 +173,9 @@ node_modules/
 
 dist/
 /.cursor
+# Local AI / change-analysis artifacts (not for version control)
+.ai/
+
 /coverage
 /coverage
 coverage/
