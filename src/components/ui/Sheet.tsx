@@ -1,5 +1,7 @@
-import { useEffect } from 'preact/hooks'
+import { useEffect, useLayoutEffect } from 'preact/hooks'
+import { createPortal } from 'preact/compat'
 import type { ComponentChildren } from 'preact'
+import { lockScroll, unlockScroll } from '../../lib/scrollLock'
 import { useDebugId } from '../../lib/useDebugId'
 import { cn } from '../../lib/utils'
 import { Button } from './Button'
@@ -27,14 +29,15 @@ export function Sheet({
   const sheetBaseId = useDebugId('ui-sheet')
   const titleId = `${sheetBaseId}-title`
 
-  useEffect(() => {
+  /* useLayoutEffect: unlock runs in the same commit as close, before paint and before queued timeouts.
+     useEffect cleanup can run after setTimeout(0), leaving body fixed while nav tries to scroll. */
+  useLayoutEffect(() => {
     if (!open) {
       return
     }
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
+    lockScroll()
     return () => {
-      document.body.style.overflow = prev
+      unlockScroll()
     }
   }, [open])
 
@@ -50,12 +53,13 @@ export function Sheet({
     return () => window.removeEventListener('keydown', onKey)
   }, [open, onOpenChange])
 
-  if (!open) {
+  if (!open || typeof document === 'undefined') {
     return null
   }
 
-  return (
-    <div id={sheetBaseId} className={cn('fixed inset-0 z-[100] flex', className)}>
+  /* Portal: escape page-transition overflow/transform contexts; z above FAB (~10k), below contact modal (~10002). */
+  return createPortal(
+    <div id={sheetBaseId} className={cn('fixed inset-0 z-[10001] flex', className)}>
       <button
         type="button"
         id={`${sheetBaseId}-backdrop`}
@@ -100,6 +104,7 @@ export function Sheet({
           {children}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

@@ -43,7 +43,11 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
   }
 
   return (
-    <section id="testimonials" data-section="testimonials" className="testimonials-container">
+    <section
+      id="testimonials"
+      data-section="testimonials"
+      className="section testimonials-container"
+    >
       <div className="testimonials-carousel">
         {/* Main Testimonial Display */}
         <div className="testimonial-main">

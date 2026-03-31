@@ -185,18 +185,23 @@
   width: 100%;
 }
 
+/* Match About: no extra grey “island”; spacing only */
 .features-approach {
-  background: #f6f7f8;
-  border-radius: var(--radius-2xl);
-  padding: var(--space-12);
   margin-top: var(--space-16);
+  padding: 0;
+  background: transparent;
+}
+
+/* Same centered header treatment as main features block */
+.landing-features .approach-section-header.features-header {
+  margin-bottom: var(--space-12);
 }
 
 .approach-content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1.2fr);
   gap: var(--space-12);
-  align-items: center;
+  align-items: start;
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -207,144 +212,69 @@
   transform: translateY(0);
 }
 
-.approach-title {
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: var(--font-weight-bold);
-  margin-bottom: var(--space-4);
-  color: var(--color-text);
+.approach-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  max-width: min(68ch, 100%);
+  min-width: 0;
 }
 
-.approach-description {
-  font-family: var(--font-family-serif);
-  font-size: var(--font-size-base);
-  font-weight: 500;
-  line-height: 1.7;
-  color: var(--color-gray-700);
-  margin-bottom: var(--space-6);
-  text-align: justify !important;
-  text-justify: inter-word;
-  max-width: 68ch;
-  word-spacing: normal;
-  letter-spacing: 0.01em;
+/* Panel chrome reused from About via .about-text-narrative-inner */
+.landing-features .approach-text-panel .approach-description {
+  margin-bottom: 0;
+  max-width: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.02);
-  hyphens: auto;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
 }
 
-.approach-description p {
-  margin-bottom: 1.5em;
+.landing-features .approach-highlights-panel .approach-highlights {
+  margin: 0;
+  padding: 0;
 }
 
-.approach-description p:last-child {
-  margin-bottom: 0;
+.landing-features .approach-highlights-panel .core-value-item {
+  align-items: flex-start;
 }
 
-.approach-highlights {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-.approach-highlight {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  color: var(--color-gray-700);
-}
-
-.approach-highlight i {
+.landing-features .approach-highlights-panel .core-value-item > svg,
+.landing-features .approach-highlights-panel .core-value-item .icon {
+  margin-top: 0.14em;
   color: var(--color-primary);
-  font-size: var(--font-size-lg);
 }
 
 .approach-visual {
   display: flex;
-  justify-content: center;
-}
-
-.approach-card {
-  background: #f6f7f8;
-  border: 2px solid var(--color-gray-200);
-  border-radius: var(--radius-xl);
-  padding: var(--space-6);
-  width: 100%;
-  max-width: 400px;
-  box-shadow: var(--shadow-md);
-}
-
-.approach-card-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  margin-bottom: var(--space-4);
-  padding-bottom: var(--space-4);
-  border-bottom: 1px solid var(--color-gray-200);
-}
-
-.approach-card-dots {
-  display: flex;
-  gap: var(--space-1);
-}
-
-.approach-card-dots span {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--color-gray-300);
-}
-
-.approach-card-dots span:first-child {
-  background: #ff5f57;
-}
-
-.approach-card-dots span:nth-child(2) {
-  background: #ffbd2e;
-}
-
-.approach-card-dots span:last-child {
-  background: #28ca42;
-}
-
-.approach-stats {
-  display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-6);
+  justify-content: stretch;
+  min-width: 0;
 }
 
-.approach-stat {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
+/* Same rail card treatment as About quick-facts / details */
+.landing-features .approach-card.about-details-card {
+  width: 100%;
+  max-width: none;
+  margin-bottom: 0;
+  padding: var(--space-6);
+  box-sizing: border-box;
 }
 
-.approach-stat-icon {
-  width: 48px;
-  height: 48px;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.25rem;
-  flex-shrink: 0;
+.landing-features .approach-stats {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  align-items: stretch;
 }
 
-.approach-stat-content h4 {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  margin-bottom: var(--space-1);
-  color: var(--color-text);
-}
-
-.approach-stat-content p {
-  font-size: var(--font-size-sm);
-  color: var(--color-gray-600);
+.landing-features .approach-stat.about-detail-item {
   margin: 0;
+}
+
+.landing-features .approach-stat.about-detail-item > div strong {
+  font-size: var(--font-size-base);
 }
 
 @keyframes featureCardEnter {

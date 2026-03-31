@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
   overflow-y: visible !important;
   overscroll-behavior: none;
   touch-action: pan-y;
@@ -17,7 +17,7 @@
 }
 
 .landing-hero.landing-section {
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
   overflow-y: visible !important;
 }
 
@@ -39,7 +39,7 @@
   touch-action: pan-y;
 }
 
-/* Copy column — intentionally no universal `*` overflow rules (avoids shadcn/chip/badge clipping) */
+/* Copy column: intentionally no universal `*` overflow rules (avoids shadcn/chip/badge clipping) */
 .landing-hero__copy {
   min-width: 0;
 }
@@ -67,8 +67,8 @@
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
   width: 100%;
   max-width: 100%;
-  overflow: hidden;
-  overflow-x: hidden;
+  overflow: clip;
+  overflow-x: clip;
   box-sizing: border-box;
 }
 
@@ -83,8 +83,7 @@
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  overflow: hidden;
-  overflow-x: hidden;
+  overflow-x: clip;
   overflow-y: visible;
   background: none;
   border: none;
@@ -99,8 +98,8 @@
   flex: 0 1 auto;
   width: 100%;
   max-width: min(100%, 560px);
-  overflow: hidden;
-  overflow-x: hidden;
+  overflow: clip;
+  overflow-x: clip;
   box-sizing: border-box;
 }
 

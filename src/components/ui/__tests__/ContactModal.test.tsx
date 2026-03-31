@@ -1,6 +1,7 @@
  
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/preact'
+import { resetScrollLockForTests } from '../../../lib/scrollLock'
 import { ContactModal } from '../ContactModal'
 import type { ContactModalProps } from '../../../types'
 
@@ -71,7 +72,7 @@ describe('ContactModal Component', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     mockSendContactEmail.mockResolvedValue(undefined)
-    document.body.style.overflow = ''
+    resetScrollLockForTests()
   })
 
   it('does not render when isOpen is false', () => {

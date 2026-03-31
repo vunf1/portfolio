@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks'
 import { useTranslation } from '../../contexts/TranslationContext'
+import { AboutDescriptionSpoiler } from './AboutDescriptionSpoiler'
 import { Button } from '../ui/Button'
 import { Card } from '../ui/Card'
 import { Icon } from '../ui/Icon'
@@ -97,42 +98,103 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
             </div>
 
             <div className="about-text-narrative">
-              <p className="about-description">{t('landing.about.description')}</p>
+              <div className="about-text-narrative-inner">
+                <AboutDescriptionSpoiler
+                  text={t('landing.about.description')}
+                  readMoreLabel={t('landing.about.readMore')}
+                  readLessLabel={t('landing.about.readLess')}
+                />
+              </div>
             </div>
+          </div>
 
-            <div className="about-text-details">
-              <Card variant="default" hover={false} className="about-details-card">
-                <div className="about-details">
-                  <div className="about-detail-item">
-                    <Icon name="map-marker-alt" size={18} />
-                    <div>
-                      <strong>{t('landing.about.location')}</strong>
-                      <p>{personal?.location || ''}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="about-detail-item">
-                    <Icon name="clock" size={18} />
-                    <div>
-                      <strong>{t('landing.about.availability')}</strong>
-                      <p>{personal?.availability || ''}</p>
-                    </div>
-                  </div>
-                  
-                  {personal.remote && (
+          <aside className="about-sidebar">
+            <div className="about-sidebar-top-row">
+              <div className="about-sidebar-details">
+                <Card
+                  variant="default"
+                  hover={false}
+                  title={t('landing.about.quickFacts')}
+                  className="about-details-card"
+                >
+                  <div className="about-details">
                     <div className="about-detail-item">
-                      <Icon name="laptop" size={18} />
+                      <Icon name="map-marker-alt" size={18} />
                       <div>
-                        <strong>{t('landing.about.remoteWork')}</strong>
-                        <p>{personal.remote}</p>
+                        <strong>{t('landing.about.location')}</strong>
+                        <p>{personal?.location || ''}</p>
                       </div>
                     </div>
-                  )}
+
+                    <div className="about-detail-item">
+                      <Icon name="clock" size={18} />
+                      <div>
+                        <strong>{t('landing.about.availability')}</strong>
+                        <p>{personal?.availability || ''}</p>
+                      </div>
+                    </div>
+
+                    {personal.remote ? (
+                      <div className="about-detail-item">
+                        <Icon name="laptop" size={18} />
+                        <div>
+                          <strong>{t('landing.about.remoteWork')}</strong>
+                          <p>{personal.remote}</p>
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+                </Card>
+              </div>
+
+              <div className="about-sidebar-core">
+                <Card
+                  variant="default"
+                  title={t('landing.about.coreValues')}
+                  hover={false}
+                  className="about-core-values-card"
+                >
+                  <ul className="core-values-list">
+                    {personal.coreValues.map((value, index) => (
+                      <li key={index} className="core-value-item">
+                        <Icon name="check-circle" size={18} />
+                        <span className="core-value-item__text">{value}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </Card>
+              </div>
+            </div>
+
+            <div className="about-sidebar-connect">
+              <Card
+                variant="default"
+                title={t('landing.about.connectWithMe')}
+                hover={false}
+                className="about-social-card"
+              >
+                <div className="social-links-grid">
+                  {social
+                    .filter((socialItem) => socialItem.name !== 'Portfolio' && socialItem.name !== 'Carteira')
+                    .map((socialItem) => (
+                      <a
+                        key={socialItem.name}
+                        href={socialItem.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="social-link-item"
+                        style={{ '--social-color': socialItem.color || '#3b82f6' }}
+                        title={socialItem.description}
+                      >
+                        <Icon name={socialItem.icon} size={16} aria-hidden />
+                        <span className="social-name">{socialItem.name}</span>
+                      </a>
+                    ))}
                 </div>
               </Card>
             </div>
 
-            <div className="about-text-actions about-actions">
+            <div className="about-sidebar-cta about-actions">
               <Button
                 ref={ctaRef}
                 variant="primaryElevated"
@@ -146,51 +208,7 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
                 {t('landing.about.ctaSkills')}
               </Button>
             </div>
-          </div>
-          
-          <div className="about-sidebar">
-            <Card 
-              variant="default" 
-              title={t('landing.about.coreValues')} 
-              hover={false}
-              className="about-core-values-card"
-            >
-              <ul className="core-values-list">
-                {personal.coreValues.map((value, index) => (
-                  <li key={index} className="core-value-item">
-                    <Icon name="check-circle" size={18} />
-                    <span>{value}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-            
-            <Card 
-              variant="default" 
-              title={t('landing.about.connectWithMe')} 
-              hover={false}
-              className="about-social-card"
-            >
-              <div className="social-links-grid">
-                {social
-                  .filter((socialItem) => socialItem.name !== 'Portfolio' && socialItem.name !== 'Carteira')
-                  .map((socialItem) => (
-                    <a 
-                      key={socialItem.name} 
-                      href={socialItem.url} 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="social-link-item"
-                      style={{ '--social-color': socialItem.color || '#3b82f6' }}
-                      title={socialItem.description}
-                    >
-                      <Icon name={socialItem.icon} size={16} aria-hidden />
-                      <span className="social-name">{socialItem.name}</span>
-                    </a>
-                  ))}
-              </div>
-            </Card>
-          </div>
+          </aside>
         </div>
       </div>
     </section>

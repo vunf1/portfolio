@@ -60,7 +60,7 @@ export function Card({
 }
 
 /**
- * shadcn/ui-style card layout primitives (Preact; no Radix Slot — use `as` on title/description when needed).
+ * shadcn/ui-style card layout primitives (Preact; no Radix Slot: use `as` on title/description when needed).
  */
 export function CardHeader({ className = '', id, children }: CardHeaderProps) {
   const headerId = useDebugId('ui-card-header', id)

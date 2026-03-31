@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'preact/hooks'
 import { useTranslation } from '../../contexts/TranslationContext'
 import { sendContactEmail } from '../../utils/emailSender'
+import { lockScroll, unlockScroll } from '../../lib/scrollLock'
 import { toast } from '../../lib/toast-store'
 import { validateEmail, validateName, validatePhone } from '../../utils/validation'
 import { cn } from '../../lib/utils'
@@ -265,7 +266,18 @@ export function ContactModal({
     }
   }, [isOpen])
 
-  // Handle escape key - preserve form data
+  // Scroll lock only tracks isOpen (avoid unlock/relock when isSubmitting toggles)
+  useEffect(() => {
+    if (!isOpen) {
+      return
+    }
+    lockScroll()
+    return () => {
+      unlockScroll()
+    }
+  }, [isOpen])
+
+  // Escape key: separate effect so deps can include isSubmitting without touching scroll lock
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isOpen && !isSubmitting) {
@@ -277,13 +289,10 @@ export function ContactModal({
 
     if (isOpen) {
       document.addEventListener('keydown', handleEscape)
-      // Prevent body scroll when modal is open using CSS class
-      document.body.classList.add('modal-open')
     }
 
     return () => {
       document.removeEventListener('keydown', handleEscape)
-      document.body.classList.remove('modal-open')
     }
   }, [isOpen, onClose, isSubmitting])
 

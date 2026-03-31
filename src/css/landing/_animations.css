@@ -8,7 +8,7 @@
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
               transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: visible !important;
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
   overflow-y: visible !important;
   position: relative;
   display: block;
@@ -22,9 +22,18 @@
   transform: translateY(0);
   /* Ensure section-visible doesn't create scrollbars */
   overflow: visible !important;
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
   overflow-y: visible !important;
   height: auto !important;
   max-height: none !important;
+}
+
+/* Footer: skip scroll-reveal (opacity 0 + translateY); at end-of-page it causes flicker,
+ * perceived layout jump, and fights IO timing (rootMargin) vs scroll position. */
+.landing-footer.landing-section,
+.landing-footer.landing-section.section-visible {
+  opacity: 1;
+  transform: none;
+  transition: none;
 }
 

@@ -1,7 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent, within } from '@testing-library/preact'
+import { render, screen, fireEvent, within, waitFor } from '@testing-library/preact'
 import { Navigation } from '../Navigation'
 import type { NavigationProps } from '../../types/components'
+import { scrollToPortfolioSection } from '../../lib/scrollToPortfolioSection'
 
 vi.mock('../../lib/scrollToPortfolioSection', () => ({
   scrollToPortfolioSection: vi.fn()
@@ -115,6 +116,7 @@ describe('Navigation', () => {
     fireEvent.click(screen.getByRole('button', { name: /menu/i }))
     const dialog = screen.getByRole('dialog')
     expect(dialog).toBeInTheDocument()
+    expect(document.body.contains(dialog)).toBe(true)
     expect(within(dialog).getByRole('button', { name: 'Education' })).toBeInTheDocument()
   })
 
@@ -125,6 +127,20 @@ describe('Navigation', () => {
     fireEvent.click(screen.getByRole('button', { name: /menu/i }))
     fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Projects' }))
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('defers scroll until after mobile sheet closes (scroll lock released)', async () => {
+    const scrollMock = vi.mocked(scrollToPortfolioSection)
+    scrollMock.mockClear()
+    Object.defineProperty(window, 'innerWidth', { writable: true, value: 600 })
+    render(<Navigation {...defaultProps} />)
+
+    fireEvent.click(screen.getByRole('button', { name: /menu/i }))
+    fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Education' }))
+
+    await waitFor(() => {
+      expect(scrollMock).toHaveBeenCalledWith('education', { navHeight: 80, offset: 20 })
+    })
   })
 
   it('renders back control and calls onBackClick', () => {

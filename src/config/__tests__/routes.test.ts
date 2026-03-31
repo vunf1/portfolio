@@ -54,7 +54,7 @@ describe('routes', () => {
   describe('isPathnameInvalid', () => {
     beforeEach(() => {
       Object.defineProperty(window, 'location', {
-        value: { pathname: '/', origin: 'http://localhost:3000' },
+        value: { pathname: '/', origin: 'http://portfolio:1234' },
         writable: true,
       })
     })

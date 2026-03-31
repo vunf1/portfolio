@@ -21,6 +21,7 @@ import { FloatingActionButton } from './components/FloatingActionButton'
 import { ContactModal } from './components/ui/ContactModal'
 import { LandingPage } from './components/landing/LandingPage'
 import { preloadPortfolioChunks } from './utils/preloadPortfolioChunks'
+import { scrollToPortfolioSection } from './lib/scrollToPortfolioSection'
 import { initializeSEO, updateSEOOnLanguageChange } from './utils/seo'
 
 const logWarning = (message: string, detail: unknown) => {
@@ -57,19 +58,38 @@ export function App() {
     isTransitioning: isExitingLanding || isExitingPortfolio
   })
 
-  const handleNavigateToPortfolio = useCallback(async () => {
-    if (isExitingLanding || showPortfolio) {return}
-    window.scrollTo(0, 0)
-    setHideLanding(false)
-    setIsExitingLanding(true)
-    hasVisitedPortfolioRef.current = true
-    await preloadPortfolioChunks().catch((err) => {
-      logWarning('Preload portfolio chunks failed', err)
-    })
-    setShowPortfolio(true)
-    setIsExitingLanding(false)
-    route(toPortfolioRoute(), false)
-  }, [isExitingLanding, showPortfolio, setShowPortfolio])
+  const PORTFOLIO_NAV_HEIGHT = 80
+  const PORTFOLIO_SCROLL_OFFSET = 20
+
+  const handleNavigateToPortfolio = useCallback(
+    async (sectionId?: string) => {
+      if (isExitingLanding || showPortfolio) {return}
+      window.scrollTo(0, 0)
+      setHideLanding(false)
+      setIsExitingLanding(true)
+      hasVisitedPortfolioRef.current = true
+      await preloadPortfolioChunks().catch((err) => {
+        logWarning('Preload portfolio chunks failed', err)
+      })
+      setShowPortfolio(true)
+      setIsExitingLanding(false)
+      route(toPortfolioRoute(), false)
+      if (sectionId) {
+        const scrollToSection = () => {
+          scrollToPortfolioSection(sectionId, {
+            navHeight: PORTFOLIO_NAV_HEIGHT,
+            offset: PORTFOLIO_SCROLL_OFFSET
+          })
+          setActiveSection(sectionId)
+        }
+        requestAnimationFrame(() => {
+          setTimeout(scrollToSection, 120)
+          setTimeout(scrollToSection, 420)
+        })
+      }
+    },
+    [isExitingLanding, showPortfolio, setShowPortfolio]
+  )
 
   const handleContactClick = useCallback(() => {
     setIsContactModalOpen(true)

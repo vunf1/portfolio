@@ -7,10 +7,29 @@ interface LandingFooterProps {
   personal: Personal
   social: Social[]
   onWarmPortfolio?: () => void
+  onContactClick?: () => void
+  /** Hide portfolio “Projects” when there is no projects section (matches main nav). */
+  showProjects?: boolean
   className?: string
 }
 
-export function LandingFooter({ personal, social, onWarmPortfolio, className = '' }: LandingFooterProps) {
+function scrollToLandingSection(sectionId: string, e: Event) {
+  e.preventDefault()
+  document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
+}
+
+function dispatchNavigateToPortfolio(section?: string) {
+  window.dispatchEvent(new CustomEvent('navigateToPortfolio', { detail: section ? { section } : {} }))
+}
+
+export function LandingFooter({
+  personal,
+  social,
+  onWarmPortfolio,
+  onContactClick,
+  showProjects = true,
+  className = ''
+}: LandingFooterProps) {
   const { t } = useTranslation()
 
   return (
@@ -45,20 +64,23 @@ export function LandingFooter({ personal, social, onWarmPortfolio, className = '
               <h4 className="footer-section-title">{t('landing.footer.navigation')}</h4>
               <ul className="footer-list">
                 <li>
-                  <a href="#about" onClick={(e) => { 
-                    e.preventDefault(); 
-                    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); 
-                  }}>
+                  <a href="#features" onClick={(e) => scrollToLandingSection('features', e)}>
+                    {t('landing.footer.services')}
+                  </a>
+                </li>
+                <li>
+                  <a href="#about" onClick={(e) => scrollToLandingSection('about', e)}>
                     {t('landing.footer.about')}
                   </a>
                 </li>
                 <li>
-                  <a href="#features" onClick={(e) => { 
-                    e.preventDefault(); 
-                    document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); 
-                  }}>
-                    {t('landing.footer.services')}
-                  </a>
+                  <button
+                    type="button"
+                    className="footer-list-link"
+                    onClick={() => onContactClick?.()}
+                  >
+                    {t('landing.hero.ctaContact')}
+                  </button>
                 </li>
                 <li>
                   <a
@@ -67,25 +89,27 @@ export function LandingFooter({ personal, social, onWarmPortfolio, className = '
                     onFocus={onWarmPortfolio}
                     onClick={(e) => {
                       e.preventDefault()
-                      window.dispatchEvent(new CustomEvent('navigateToPortfolio'))
+                      dispatchNavigateToPortfolio('experience')
                     }}
                   >
                     {t('landing.footer.experience')}
                   </a>
                 </li>
-                <li>
-                  <a
-                    href={toFullPath('/portfolio')}
-                    onMouseEnter={onWarmPortfolio}
-                    onFocus={onWarmPortfolio}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      window.dispatchEvent(new CustomEvent('navigateToPortfolio'))
-                    }}
-                  >
-                    {t('landing.footer.projects')}
-                  </a>
-                </li>
+                {showProjects ? (
+                  <li>
+                    <a
+                      href={toFullPath('/portfolio')}
+                      onMouseEnter={onWarmPortfolio}
+                      onFocus={onWarmPortfolio}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        dispatchNavigateToPortfolio('projects')
+                      }}
+                    >
+                      {t('landing.footer.projects')}
+                    </a>
+                  </li>
+                ) : null}
               </ul>
             </div>
             
@@ -94,14 +118,46 @@ export function LandingFooter({ personal, social, onWarmPortfolio, className = '
                 {t('landing.footer.expertise')}
               </h4>
               <ul className="footer-list">
-                <li><a href="#features">{t('landing.features.expertiseItems.fullStackEng')}</a></li>
-                <li><a href="#features">{t('landing.features.expertiseItems.aiAutomation')}</a></li>
-                <li><a href="#features">{t('landing.features.expertiseItems.enterpriseWeb')}</a></li>
-                <li><a href="#features">{t('landing.features.expertiseItems.cloudInfra')}</a></li>
-                <li><a href="#features">{t('landing.features.expertiseItems.liveStreaming')}</a></li>
-                <li><a href="#features">{t('landing.features.expertiseItems.computerRepair')}</a></li>
-                <li><a href="#features">{t('landing.features.expertiseItems.itConsulting')}</a></li>
-                <li><a href="#features">{t('landing.features.expertiseItems.serverRack')}</a></li>
+                <li>
+                  <a href="#features" onClick={(e) => scrollToLandingSection('features', e)}>
+                    {t('landing.features.expertiseItems.fullStackEng')}
+                  </a>
+                </li>
+                <li>
+                  <a href="#features" onClick={(e) => scrollToLandingSection('features', e)}>
+                    {t('landing.features.expertiseItems.aiAutomation')}
+                  </a>
+                </li>
+                <li>
+                  <a href="#features" onClick={(e) => scrollToLandingSection('features', e)}>
+                    {t('landing.features.expertiseItems.enterpriseWeb')}
+                  </a>
+                </li>
+                <li>
+                  <a href="#features" onClick={(e) => scrollToLandingSection('features', e)}>
+                    {t('landing.features.expertiseItems.cloudInfra')}
+                  </a>
+                </li>
+                <li>
+                  <a href="#features" onClick={(e) => scrollToLandingSection('features', e)}>
+                    {t('landing.features.expertiseItems.liveStreaming')}
+                  </a>
+                </li>
+                <li>
+                  <a href="#features" onClick={(e) => scrollToLandingSection('features', e)}>
+                    {t('landing.features.expertiseItems.computerRepair')}
+                  </a>
+                </li>
+                <li>
+                  <a href="#features" onClick={(e) => scrollToLandingSection('features', e)}>
+                    {t('landing.features.expertiseItems.itConsulting')}
+                  </a>
+                </li>
+                <li>
+                  <a href="#features" onClick={(e) => scrollToLandingSection('features', e)}>
+                    {t('landing.features.expertiseItems.serverRack')}
+                  </a>
+                </li>
               </ul>
             </div>
             

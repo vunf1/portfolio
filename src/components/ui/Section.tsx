@@ -15,6 +15,7 @@ export function Section({
   return (
     <section
       className={cn(
+        'section',
         'py-16',
         variant === 'alternate' && 'bg-gray-50',
         variant === 'highlighted' && 'bg-primary/5',

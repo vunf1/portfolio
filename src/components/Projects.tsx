@@ -7,7 +7,7 @@ import type { ProjectsProps } from '../types'
 import type { Project } from '../types/portfolio'
 
 function projectInitials(name: string): string {
-  const parts = name.replace(/[—–-].*$/, '').trim().split(/\s+/).filter(Boolean)
+  const parts = name.replace(/[\u2013\u2014\-:].*$/, '').trim().split(/\s+/).filter(Boolean)
   if (parts.length >= 2) {
     return (parts[0][0] + parts[1][0]).toUpperCase()
   }

@@ -3,7 +3,8 @@
 .page-transition-wrapper {
   position: relative;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .page-transition {

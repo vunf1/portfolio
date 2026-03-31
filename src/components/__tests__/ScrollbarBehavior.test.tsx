@@ -150,7 +150,7 @@ describe('Scrollbar Behavior Tests', () => {
       })
     })
     
-    it('should have body overflow hidden (not creating scrollbar)', () => {
+    it('should apply landing-page-active to body (overflow-x clip, vertical chain to html)', () => {
       const app = document.createElement('div')
       app.id = 'app'
       document.body.appendChild(app)
@@ -168,18 +168,17 @@ describe('Scrollbar Behavior Tests', () => {
         setTimeout(() => {
           const body = document.body
           
-          // Check class is applied (CSS ensures overflow: hidden)
+          // CSS: overflow-x clip + overflow-y visible (no hidden+visible -> y:auto promotion)
           expect(body.classList.contains('landing-page-active')).toBe(true)
           
-          // In jsdom, computed styles may return empty strings, so we verify class presence
-          // The CSS rules in landing/_layout.css ensure overflow: hidden for body.landing-page-active
+          // landing/_layout.css: body does not create its own vertical scrollbar; html scrolls
           
           resolve()
         }, 200)
       })
     })
     
-    it('should have #app overflow hidden (not creating scrollbar)', () => {
+    it('should keep #app under landing-page-active without vertical overflow clip', () => {
       const app = document.createElement('div')
       app.id = 'app'
       document.body.appendChild(app)
@@ -202,8 +201,7 @@ describe('Scrollbar Behavior Tests', () => {
             // Check that body has landing-page-active class (which applies styles to #app)
             expect(document.body.classList.contains('landing-page-active')).toBe(true)
             
-            // In jsdom, computed styles may return empty strings, so we verify class presence
-            // The CSS rules in landing/_layout.css ensure overflow: hidden for body.landing-page-active #app
+            // landing/_layout.css: #app uses overflow-x clip + overflow-y visible (single html scrollbar)
           }
           
           resolve()
@@ -314,7 +312,7 @@ describe('Scrollbar Behavior Tests', () => {
           
           // In jsdom, scrollHeight and clientHeight may not be accurate
           // Instead, we verify the classes are applied which ensure correct scroll behavior
-          // The CSS ensures html can scroll while body and #app cannot
+          // html scrolls; body/#app use overflow-x clip + overflow-y visible (no nested scroll containers)
           
           const appElement = document.getElementById('app')
           expect(appElement).not.toBeNull()
@@ -354,8 +352,7 @@ describe('Scrollbar Behavior Tests', () => {
           
           // In jsdom, scrollHeight and clientHeight may not be accurate
           // Instead, we verify the classes are applied which ensure only html scrolls
-          // The CSS ensures html.landing-page-active has overflow-y: auto
-          // while body.landing-page-active has overflow: hidden
+          // html has overflow-y: auto; body uses overflow-x clip + overflow-y: visible (spec-safe)
           
           resolve()
         }, 200)

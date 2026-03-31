@@ -9,7 +9,7 @@ import type { PortfolioData } from '../../types/portfolio'
 
 interface LandingPageProps {
   portfolioData: PortfolioData
-  onNavigateToPortfolio: () => void
+  onNavigateToPortfolio: (portfolioSectionId?: string) => void
   onWarmPortfolio?: () => void
   className?: string
 }
@@ -26,12 +26,14 @@ export function LandingPage({ portfolioData, onNavigateToPortfolio, onWarmPortfo
     document.body.classList.add('landing-page-active')
     document.documentElement.classList.add('landing-page-active')
     
-    // Listen for custom navigation events
-    const handleNavigateToPortfolio = () => {
-      onNavigateToPortfolio()
+    // Listen for custom navigation events (detail.section = portfolio id after transition)
+    const handleNavigateToPortfolioEvent = (e: Event) => {
+      const detail = (e as CustomEvent<{ section?: string }>).detail
+      onWarmPortfolio?.()
+      onNavigateToPortfolio(detail?.section)
     }
-    
-    window.addEventListener('navigateToPortfolio', handleNavigateToPortfolio)
+
+    window.addEventListener('navigateToPortfolio', handleNavigateToPortfolioEvent)
     
     // Setup scroll animations for sections
     const observerOptions = {
@@ -54,10 +56,10 @@ export function LandingPage({ portfolioData, onNavigateToPortfolio, onWarmPortfo
     return () => {
       document.body.classList.remove('landing-page-active')
       document.documentElement.classList.remove('landing-page-active')
-      window.removeEventListener('navigateToPortfolio', handleNavigateToPortfolio)
+      window.removeEventListener('navigateToPortfolio', handleNavigateToPortfolioEvent)
       observer.disconnect()
     }
-  }, [onNavigateToPortfolio])
+  }, [onNavigateToPortfolio, onWarmPortfolio])
 
   const handleNavigateToPortfolio = () => {
     onWarmPortfolio?.()
@@ -80,7 +82,13 @@ export function LandingPage({ portfolioData, onNavigateToPortfolio, onWarmPortfo
         onNavigateToPortfolio={handleNavigateToPortfolio}
         onWarmPortfolio={onWarmPortfolio}
       />
-      <LandingFooter personal={personal} social={portfolioData.social || []} onWarmPortfolio={onWarmPortfolio} />
+      <LandingFooter
+        personal={personal}
+        social={portfolioData.social || []}
+        onWarmPortfolio={onWarmPortfolio}
+        onContactClick={handleContactClick}
+        showProjects={Boolean(portfolioData.projects && portfolioData.projects.length > 0)}
+      />
       <FloatingActionButton onContactClick={handleContactClick} />
       <ContactModal
         isOpen={isContactModalOpen}

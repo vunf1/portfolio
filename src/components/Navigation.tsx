@@ -41,10 +41,23 @@ export function Navigation({
   }, [])
 
   const navigateTo = (sectionId: string) => {
-    scrollToPortfolioSection(sectionId, { navHeight: NAV_HEIGHT, offset: 20 })
     onNavigate?.(sectionId)
-    if (window.innerWidth < 1024) {
+    const isMobileSheet = window.innerWidth < 1024
+    if (isMobileSheet) {
       setSheetOpen(false)
+    }
+    const runScroll = () =>
+      scrollToPortfolioSection(sectionId, { navHeight: NAV_HEIGHT, offset: 20 })
+    /*
+     * Mobile sheet: unlock runs in Sheet useLayoutEffect cleanup (same commit as close).
+     * Double rAF waits until layout + scroll restoration are settled before scrolling (avoids wrong Y).
+     */
+    if (isMobileSheet) {
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(runScroll)
+      })
+    } else {
+      runScroll()
     }
   }
 

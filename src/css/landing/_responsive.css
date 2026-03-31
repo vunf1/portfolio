@@ -48,12 +48,6 @@
     gap: var(--space-8);
   }
   
-  .about-sidebar {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-6);
-  }
-  
   .footer-content {
     grid-template-columns: 1fr;
     gap: var(--space-8);
@@ -86,7 +80,7 @@
     padding-left: max(var(--space-4), env(safe-area-inset-left, 0px)) !important;
     padding-right: max(var(--space-4), env(safe-area-inset-right, 0px)) !important;
     overflow: visible !important;
-    overflow-x: hidden !important; /* CRITICAL: Prevent horizontal scrollbar */
+    overflow-x: clip !important; /* clip avoids hidden+visible -> y:auto */
     overflow-y: visible !important;
     width: 100% !important;
     max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
@@ -136,7 +130,7 @@
     width: 100%;
     /* CRITICAL: Prevent horizontal overflow */
     overflow: visible !important;
-    overflow-x: hidden !important; /* CRITICAL: Prevent horizontal scrollbar */
+    overflow-x: clip !important; /* clip avoids hidden+visible -> y:auto */
     overflow-y: visible !important;
     min-width: 0;
     max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
@@ -352,18 +346,19 @@
     margin: 0 auto var(--space-4);
   }
   
+  /* Story first, then rail */
   .about-sidebar {
-    order: -1;
-    margin-bottom: var(--space-8);
+    margin-top: var(--space-2);
+    margin-bottom: 0;
   }
-  
-  .about-actions {
-    justify-content: center;
+
+  .about-sidebar .about-actions {
+    justify-content: stretch;
   }
-  
-  .about-actions button {
+
+  .about-sidebar .about-actions button {
     width: 100%;
-    max-width: 280px;
+    max-width: none;
   }
   
   .footer-content {
@@ -426,7 +421,7 @@
     padding-left: max(var(--space-4), env(safe-area-inset-left, 0px)) !important;
     padding-right: max(var(--space-4), env(safe-area-inset-right, 0px)) !important;
     overflow: visible !important;
-    overflow-x: hidden !important;
+    overflow-x: clip !important;
     overflow-y: visible !important;
     width: 100% !important;
     max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
@@ -527,7 +522,7 @@
     margin-bottom: 0;
     max-width: 100% !important; /* CRITICAL: Prevent horizontal overflow */
     overflow: visible !important;
-    overflow-x: hidden !important; /* CRITICAL: Prevent horizontal scrollbar */
+    overflow-x: clip !important; /* clip avoids hidden+visible -> y:auto */
     overflow-y: visible !important;
   }
   
@@ -614,6 +609,21 @@
     flex-wrap: nowrap;
     align-items: center;
     gap: var(--space-2);
+  }
+}
+
+/* About: align with description spoiler breakpoint (narrow phones) */
+@media (max-width: 767px) {
+  .landing-page .landing-about .about-subtitle {
+    text-align: start !important;
+    text-justify: auto;
+    max-width: 100%;
+    margin-inline: 0;
+  }
+
+  .about-sidebar-top-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
   }
 }
 

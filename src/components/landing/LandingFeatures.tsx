@@ -99,84 +99,60 @@ export function LandingFeatures({ className = '' }: LandingFeaturesProps) {
         </div>
 
         <div className="features-approach">
+          <div className={`features-header approach-section-header ${isVisible ? 'features-header-visible' : ''}`}>
+            <h3 className="features-title">
+              <span className="features-title-main">{t('landing.features.howIWork')}</span>
+            </h3>
+          </div>
           <div className={`approach-content ${isVisible ? 'approach-content-visible' : ''}`}>
             <div className="approach-text">
-              <h3 className="approach-title">{t('landing.features.howIWork')}</h3>
-              <p className="approach-description">{t('landing.features.approachDescription')}</p>
-              
-              <div className="approach-highlights">
-                <div className="approach-highlight">
-                  <Icon name="check-circle" size={20} />
-                  <span>
-                    {t('landing.features.approachHighlight1')}
-                  </span>
-                </div>
-                <div className="approach-highlight">
-                  <Icon name="check-circle" size={20} />
-                  <span>
-                    {t('landing.features.approachHighlight2')}
-                  </span>
-                </div>
-                <div className="approach-highlight">
-                  <Icon name="check-circle" size={20} />
-                  <span>
-                    {t('landing.features.approachHighlight3')}
-                  </span>
-                </div>
-                <div className="approach-highlight">
-                  <Icon name="check-circle" size={20} />
-                  <span>
-                    {t('landing.features.approachHighlight4')}
-                  </span>
-                </div>
+              <div className="about-text-narrative-inner approach-text-panel">
+                <p className="approach-description">{t('landing.features.approachDescription')}</p>
               </div>
             </div>
-            
+
             <div className="approach-visual">
-              <div className="approach-card">
-                <div className="approach-card-header">
-                  <div className="approach-card-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+              <div className="about-text-narrative-inner approach-highlights-panel">
+                <ul className="approach-highlights core-values-list" role="list">
+                  <li className="approach-highlight core-value-item">
+                    <Icon name="check-circle" size={18} aria-hidden />
+                    <span className="core-value-item__text">{t('landing.features.approachHighlight1')}</span>
+                  </li>
+                  <li className="approach-highlight core-value-item">
+                    <Icon name="check-circle" size={18} aria-hidden />
+                    <span className="core-value-item__text">{t('landing.features.approachHighlight2')}</span>
+                  </li>
+                  <li className="approach-highlight core-value-item">
+                    <Icon name="check-circle" size={18} aria-hidden />
+                    <span className="core-value-item__text">{t('landing.features.approachHighlight3')}</span>
+                  </li>
+                  <li className="approach-highlight core-value-item">
+                    <Icon name="check-circle" size={18} aria-hidden />
+                    <span className="core-value-item__text">{t('landing.features.approachHighlight4')}</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="approach-card about-details-card">
+                <div className="approach-stats">
+                  <div className="approach-stat about-detail-item">
+                    <Icon name="handshake" size={18} />
+                    <div>
+                      <strong>{t('landing.features.partnership')}</strong>
+                      <p>{t('landing.features.partnershipDesc')}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="approach-card-body">
-                  <div className="approach-stats">
-                    <div className="approach-stat">
-                      <div className="approach-stat-icon">
-                        <Icon name="handshake" size={24} />
-                      </div>
-                      <div className="approach-stat-content">
-                        <h4>
-                          {t('landing.features.partnership')}
-                        </h4>
-                        <p>{t('landing.features.partnershipDesc')}</p>
-                      </div>
+                  <div className="approach-stat about-detail-item">
+                    <Icon name="clock" size={18} />
+                    <div>
+                      <strong>{t('landing.features.realisticTimelines')}</strong>
+                      <p>{t('landing.features.realisticTimelinesDesc')}</p>
                     </div>
-                    
-                    <div className="approach-stat">
-                      <div className="approach-stat-icon">
-                        <Icon name="clock" size={24} />
-                      </div>
-                      <div className="approach-stat-content">
-                        <h4>
-                          {t('landing.features.realisticTimelines')}
-                        </h4>
-                        <p>{t('landing.features.realisticTimelinesDesc')}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="approach-stat">
-                      <div className="approach-stat-icon">
-                        <Icon name="heart" size={24} />
-                      </div>
-                      <div className="approach-stat-content">
-                        <h4>
-                          {t('landing.features.dedicatedSupport')}
-                        </h4>
-                        <p>{t('landing.features.dedicatedSupportDesc')}</p>
-                      </div>
+                  </div>
+                  <div className="approach-stat about-detail-item">
+                    <Icon name="heart" size={18} />
+                    <div>
+                      <strong>{t('landing.features.dedicatedSupport')}</strong>
+                      <p>{t('landing.features.dedicatedSupportDesc')}</p>
                     </div>
                   </div>
                 </div>

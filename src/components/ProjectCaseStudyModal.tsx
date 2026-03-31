@@ -7,11 +7,12 @@ import { Icon } from './ui/Icon'
 import { Card } from './ui/Card'
 import { Badge } from './ui/Badge'
 import { Separator } from './ui/Separator'
+import { lockScroll, unlockScroll } from '../lib/scrollLock'
 import { cn } from '../lib/utils'
 import { publicAssetUrl } from '../utils/getDataUrl'
 
 function projectInitials(name: string): string {
-  const parts = name.replace(/[—–-].*$/, '').trim().split(/\s+/).filter(Boolean)
+  const parts = name.replace(/[\u2013\u2014\-:].*$/, '').trim().split(/\s+/).filter(Boolean)
   if (parts.length >= 2) {
     return (parts[0][0] + parts[1][0]).toUpperCase()
   }
@@ -27,7 +28,7 @@ const DETAIL_MIN = 260
 const DETAIL_MAX = 600
 /** Default width when an iframe preview is shown (more room for the embed). */
 const DETAIL_DEFAULT_WITH_EMBED = 340
-/** Wider default when there is no iframe—more readable project description. */
+/** Wider default when there is no iframe (more readable project description). */
 const DETAIL_DEFAULT_EXPANDED = 500
 
 function safeHostname(url: string): string {
@@ -47,7 +48,7 @@ interface ProjectCaseStudyModalProps {
 /**
  * Case-study dialog (shadcn-style: Card, Button, Badge, Separator).
  * Live preview uses an iframe when `embedInModal !== false`. Set `embedInModal: false` in data for sites that block framing (avoids blank areas / browser security interstitials).
- * Overlay starts below the fixed portfolio nav — keep `top` in sync with `--navbar-height` in `src/css/variables.css` and `NAV_HEIGHT` in `Navigation.tsx`.
+ * Overlay starts below the fixed portfolio nav; keep `top` in sync with `--navbar-height` in `src/css/variables.css` and `NAV_HEIGHT` in `Navigation.tsx`.
  */
 export function ProjectCaseStudyModal({ project, isOpen, onClose }: ProjectCaseStudyModalProps) {
   const { t } = useTranslation()
@@ -88,10 +89,9 @@ export function ProjectCaseStudyModal({ project, isOpen, onClose }: ProjectCaseS
     if (!isOpen) {
       return
     }
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
+    lockScroll()
     return () => {
-      document.body.style.overflow = prev
+      unlockScroll()
     }
   }, [isOpen])
 
@@ -147,57 +147,82 @@ export function ProjectCaseStudyModal({ project, isOpen, onClose }: ProjectCaseS
   }
 
   const iframeTitle = hostname
-    ? String(t('projects.livePreviewIframeTitle', 'Live preview — {{host}}', { host: hostname }))
+    ? String(t('projects.livePreviewIframeTitle', 'Live preview: {{host}}', { host: hostname }))
     : String(t('projects.livePreview', 'Live preview'))
 
   return (
     <div
       ref={modalRef}
-      className="fixed inset-x-0 bottom-0 top-[var(--navbar-height)] z-[1060] flex items-center justify-center bg-black/55 p-2 sm:p-4"
+      className="fixed inset-x-0 bottom-0 top-[var(--navbar-height)] z-[1060] flex items-stretch justify-center bg-black/55 p-0 pb-[env(safe-area-inset-bottom,0px)] sm:items-center sm:p-4 sm:pb-4"
       onClick={overlayClick}
       role="presentation"
     >
       <div
-        className="flex max-h-[min(92vh,920px)] w-full max-w-[min(100%,1400px)] flex-col overflow-hidden rounded-2xl border border-gray-200/90 bg-white text-gray-900 shadow-2xl"
+        className={cn(
+          'flex w-full max-w-[min(100%,1400px)] flex-col bg-white text-gray-900 shadow-2xl',
+          /* <lg: one scroll (dialog); lg+: centered card, details pane scrolls inside */
+          'h-full min-h-0 overflow-y-auto overscroll-y-contain rounded-none border-0 border-gray-200/90',
+          'sm:h-auto sm:max-h-[min(92vh,920px)] sm:rounded-2xl sm:border sm:border-gray-200/90',
+          'lg:max-h-[min(92vh,920px)] lg:overflow-hidden'
+        )}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-labelledby="project-case-study-title"
       >
-        <header className="flex shrink-0 flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-5">
-          <div className="min-w-0 flex-1">
-            <h2 id="project-case-study-title" className="truncate text-lg font-semibold tracking-tight text-gray-900">
-              {project.name}
-            </h2>
-            <p className="truncate text-xs text-gray-500 sm:text-sm">
-              {project.period}
-              {project.role ? ` · ${project.role}` : ''}
-            </p>
-          </div>
-          <div className="flex shrink-0 flex-wrap items-center gap-2">
-            {liveUrl ? (
+        <div className="sticky top-0 z-10 shrink-0 bg-white/95 backdrop-blur-sm lg:static lg:bg-transparent lg:backdrop-blur-none">
+          <header className="flex items-start gap-2 px-3 pb-2 pt-[max(0.75rem,env(safe-area-inset-top,0px))] sm:items-center sm:gap-3 sm:px-5 sm:pb-3 sm:pt-3">
+            <div className="min-w-0 flex-1 pr-1">
+              <h2
+                id="project-case-study-title"
+                className="text-base font-semibold leading-snug tracking-tight text-gray-900 sm:text-lg"
+              >
+                <span className="line-clamp-3 sm:line-clamp-2">{project.name}</span>
+              </h2>
+              <p className="mt-0.5 line-clamp-2 text-xs text-gray-500 sm:text-sm">
+                {project.period}
+                {project.role ? ` · ${project.role}` : ''}
+              </p>
+            </div>
+            <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+              {liveUrl ? (
+                <Button
+                  href={liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="ghost"
+                  size="sm"
+                  aria-label={String(t('projects.openSite'))}
+                  className={cn(
+                    'h-11 min-w-[2.75rem] gap-1.5 px-2.5 text-primary shadow-none hover:bg-primary/[0.06] hover:text-primary-dark sm:h-9 sm:min-w-0 sm:px-3',
+                    modalButtonMotion
+                  )}
+                >
+                  <Icon name="external-link" size={16} className="shrink-0" aria-hidden />
+                  <span className="hidden sm:inline">{t('projects.openSite')}</span>
+                </Button>
+              ) : null}
               <Button
-                href={liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                type="button"
                 variant="ghost"
                 size="sm"
+                onClick={onClose}
+                aria-label={String(t('projects.closeModal'))}
                 className={cn(
-                  'gap-1.5 text-primary shadow-none hover:bg-primary/[0.06] hover:text-primary-dark',
+                  'h-11 w-11 shrink-0 rounded-full p-0 text-gray-600 hover:bg-gray-100 hover:text-gray-900 sm:h-9 sm:w-9 sm:rounded-md',
                   modalButtonMotion
                 )}
               >
-                <Icon name="external-link" size={14} aria-hidden />
-                {t('projects.openSite')}
+                <Icon name="times" size={20} aria-hidden />
               </Button>
-            ) : null}
-          </div>
-        </header>
+            </div>
+          </header>
 
-        <Separator className="bg-gray-200" />
+          <Separator className="bg-gray-200" />
+        </div>
 
-        <div className="flex min-h-0 min-w-0 flex-1 flex-col lg:flex-row">
-          <div className="flex min-h-0 min-w-0 flex-1 flex-col border-b border-gray-100 lg:border-b-0 lg:border-r lg:border-gray-100">
+        <div className="flex w-full flex-col lg:min-h-0 lg:flex-1 lg:flex-row lg:overflow-hidden">
+          <div className="flex w-full shrink-0 flex-col border-b border-gray-100 lg:min-h-0 lg:flex-1 lg:border-b-0 lg:border-r lg:border-gray-100">
             <div className="flex items-center justify-between gap-2 border-b border-gray-50 px-3 py-2 sm:px-4">
               <span className="text-xs font-medium uppercase tracking-wide text-gray-500">
                 {liveUrl && !allowIframeEmbed
@@ -206,18 +231,19 @@ export function ProjectCaseStudyModal({ project, isOpen, onClose }: ProjectCaseS
               </span>
             </div>
             <div
-              className={`relative flex flex-1 items-stretch bg-gray-50 p-4 sm:p-6 ${
+              className={cn(
+                'relative flex items-stretch bg-gray-50 p-3 sm:p-6',
                 liveUrl && allowIframeEmbed
-                  ? 'min-h-[240px] sm:min-h-[300px] lg:min-h-[420px]'
-                  : 'min-h-[200px] sm:min-h-[240px] lg:min-h-[280px]'
-              }`}
+                  ? 'min-h-[min(52vw,280px)] sm:min-h-[300px] lg:min-h-[420px]'
+                  : 'min-h-[min(44vw,220px)] sm:min-h-[240px] lg:min-h-[280px]'
+              )}
             >
-              <Card variant="default" hover={false} className="flex min-h-0 w-full flex-1 flex-col overflow-hidden border-gray-200/80 bg-white/95 shadow-sm">
-                <div className="-m-6 flex min-h-0 flex-1 flex-col">
+              <Card variant="default" hover={false} className="flex min-h-0 w-full flex-col overflow-hidden border-gray-200/80 bg-white/95 shadow-sm lg:flex-1">
+                <div className="flex min-h-0 flex-col sm:-m-6">
                   {liveUrl ? (
                     allowIframeEmbed ? (
                       <>
-                        <div className="relative min-h-[220px] w-full flex-1 overflow-hidden bg-gray-100 sm:min-h-[280px] lg:min-h-[320px]">
+                        <div className="relative min-h-[min(48vw,240px)] w-full overflow-hidden bg-gray-100 sm:min-h-[280px] lg:min-h-[320px]">
                           <iframe
                             src={liveUrl}
                             title={iframeTitle}
@@ -226,11 +252,11 @@ export function ProjectCaseStudyModal({ project, isOpen, onClose }: ProjectCaseS
                             referrerPolicy="no-referrer-when-downgrade"
                           />
                         </div>
-                        <div className="flex flex-col items-center gap-3 border-t border-gray-100 px-6 py-5 text-center">
+                        <div className="flex flex-col items-center gap-3 border-t border-gray-100 px-4 py-4 text-center sm:px-6 sm:py-5">
                           <p className="max-w-md text-xs leading-relaxed text-gray-600 sm:text-sm">
                             {t(
                               'projects.previewNote',
-                              'An embedded preview only appears when the live site allows framing. Many production sites block that on purpose to protect users. If the area above stays empty, open the project in a new window—the full site always loads there.'
+                              'An embedded preview only appears when the live site allows framing. Many production sites block that on purpose to protect users. If the area above stays empty, open the project in a new window; the full site always loads there.'
                             )}
                           </p>
                           <Button
@@ -271,7 +297,7 @@ export function ProjectCaseStudyModal({ project, isOpen, onClose }: ProjectCaseS
                         <p className="max-w-md text-sm leading-relaxed text-gray-600">
                           {t(
                             'projects.previewOpenExternally',
-                            'This site is configured not to appear inside other pages—a common security measure. It opens in its own window here so you see the same experience a visitor would, without bypassing that protection.'
+                            'This site is configured not to appear inside other pages (a common security measure). It opens in its own window here so you see the same experience a visitor would, without bypassing that protection.'
                           )}
                         </p>
                         <Button
@@ -307,10 +333,10 @@ export function ProjectCaseStudyModal({ project, isOpen, onClose }: ProjectCaseS
           />
 
           <aside
-            className="flex max-h-[45vh] min-h-0 w-full flex-col overflow-y-auto border-gray-100 bg-white lg:max-h-none lg:w-auto lg:shrink-0 lg:border-l"
+            className="flex w-full flex-col border-gray-100 bg-white pb-[max(1rem,env(safe-area-inset-bottom,0px))] lg:min-h-0 lg:w-auto lg:shrink-0 lg:overflow-y-auto lg:border-l lg:pb-0"
             style={isLg ? { width: detailWidth, minWidth: DETAIL_MIN, maxWidth: DETAIL_MAX } : undefined}
           >
-            <div className="space-y-5 p-4 sm:p-5">
+            <div className="space-y-5 px-4 pb-5 pt-1 sm:p-5 sm:pt-0">
               <section>
                 <h3 className="mb-2 text-xs font-bold uppercase tracking-wide text-gray-500">{t('projects.overview')}</h3>
                 <p className="text-sm leading-relaxed text-gray-700">{project.longDescription}</p>

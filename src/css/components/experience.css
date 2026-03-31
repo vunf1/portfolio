@@ -60,7 +60,7 @@
   }
 }
 
-/* ===== EXPERIENCE CAROUSEL (viewport width measured in JS — one slide per view) ===== */
+/* ===== EXPERIENCE CAROUSEL (viewport width measured in JS; one slide per view) ===== */
 
 .experience-carousel-wrapper {
   width: 100%;
@@ -257,7 +257,7 @@
   margin-top: var(--space-4); /* Reduced from var(--space-8) */
 }
 
-/* Full-width experience card for "Autonomous — Self-Study" */
+/* Full-width experience card for "Autonomous: Self-Study" */
 .experience-full-width {
   grid-column: 1 / -1; /* Span all 3 columns */
 }

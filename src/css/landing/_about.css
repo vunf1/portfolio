@@ -65,8 +65,9 @@
 
 .about-content {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1.2fr);
   gap: var(--space-12);
+  align-items: start;
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -93,18 +94,291 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 }
 
+.about-text-narrative {
+  min-width: 0;
+  overflow: visible;
+}
+
 .about-text-narrative .about-description {
   margin-bottom: 0;
 }
 
-.about-text-details .about-details-card {
+/* Full narrative text: never clamp or clip (desktop + mobile expanded) */
+.about-description.about-description--full {
+  display: block;
+  overflow: visible;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  -webkit-box-orient: unset;
+  max-height: none;
+}
+
+.about-text-narrative-inner {
+  position: relative;
+  padding: clamp(var(--space-6), 2.8vw, var(--space-8));
+  border-radius: var(--card-radius, 0.75rem);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 12px 40px rgba(15, 23, 42, 0.06);
+  overflow: visible;
+  min-width: 0;
+}
+
+.dark .about-text-narrative-inner {
+  background: rgba(15, 23, 42, 0.42);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* Editorial body inside narrative panels (About + Features approach) */
+.landing-page .landing-about .about-text-narrative-inner .about-description,
+.landing-page .landing-features .about-text-narrative-inner .approach-description {
+  font-family: var(--font-family-serif);
+  font-size: clamp(1.015625rem, 1.2vw, 1.09375rem);
+  font-weight: 400;
+  line-height: 1.78;
+  letter-spacing: 0.011em;
+  color: var(--color-gray-700);
+  text-align: start;
+  text-justify: auto;
+  hyphens: none;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  font-variant-numeric: oldstyle-nums;
+}
+
+.dark .landing-page .landing-about .about-text-narrative-inner .about-description,
+.dark .landing-page .landing-features .about-text-narrative-inner .approach-description {
+  color: rgba(226, 232, 240, 0.94);
+}
+
+/* Mobile description spoiler */
+.about-description-spoiler {
   margin-bottom: 0;
 }
 
-.about-text-actions.about-actions {
+.about-description-spoiler .about-description {
+  margin-bottom: 0;
+}
+
+.about-description--clamped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
+  overflow: hidden;
+}
+
+.about-description-spoiler-body {
+  position: relative;
+  overflow: visible;
+}
+
+/* Mobile collapsed: frosted blur + fade so more text shows but tail is obscured until “Read more” */
+.about-description-spoiler-body--faded::after {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4rem;
+  border-radius: 0 0 calc(var(--card-radius, 0.75rem) - 2px) calc(var(--card-radius, 0.75rem) - 2px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .about-description-spoiler-body--faded::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.55)
+    );
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  .dark .about-text-narrative-inner .about-description-spoiler-body--faded::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(15, 23, 42, 0),
+      rgba(15, 23, 42, 0.65)
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-description-spoiler-body--faded::after {
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(255, 255, 255, 0.97)
+    );
+  }
+
+  .dark .about-text-narrative-inner .about-description-spoiler-body--faded::after {
+    background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.95));
+  }
+}
+
+.about-description-spoiler-toggle {
+  width: 100%;
+  margin-top: var(--space-4);
+  min-height: 44px;
+  justify-content: center;
+}
+
+/* Right rail: [ Quick facts | Core values ] → Connect → CTA */
+.about-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.about-sidebar-top-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: stretch;
+  min-width: 0;
+}
+
+.about-sidebar-details,
+.about-sidebar-core {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Equal-height cards: flex column on Card root + growing body */
+.about-sidebar-top-row .about-details-card,
+.about-sidebar-top-row .about-core-values-card {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-sidebar-top-row .about-details-card > div:last-child,
+.about-sidebar-top-row .about-core-values-card > div:last-child {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-sidebar-top-row .about-details {
+  flex: 1 1 auto;
+  gap: var(--space-2);
+  align-content: start;
+}
+
+.about-sidebar-top-row .core-values-list {
+  flex: 1 1 auto;
+  gap: var(--space-2);
+}
+
+/* Compact footprint: tighter chrome in the top pair */
+.about-sidebar-top-row .about-details-card > div:first-child,
+.about-sidebar-top-row .about-core-values-card > div:first-child {
+  padding: var(--space-3) var(--space-4);
+}
+
+.about-sidebar-top-row .about-details-card > div:first-child h3,
+.about-sidebar-top-row .about-core-values-card > div:first-child h3 {
+  font-size: var(--font-size-base, 1rem);
+  line-height: var(--line-height-snug, 1.35);
+}
+
+.about-sidebar-top-row .about-details-card > div:last-child:not(:only-child),
+.about-sidebar-top-row .about-core-values-card > div:last-child:not(:only-child) {
+  padding: var(--space-4);
+}
+
+.about-sidebar-top-row .about-detail-item {
+  padding: var(--space-3);
+  gap: var(--space-2);
+}
+
+.about-sidebar-top-row .about-detail-item strong {
+  font-size: var(--font-size-sm);
+}
+
+.about-sidebar-top-row .about-detail-item p {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.about-sidebar-top-row .core-value-item {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.about-sidebar-top-row .core-value-item > svg,
+.about-sidebar-top-row .core-value-item .icon,
+.about-sidebar-top-row .core-value-item i {
+  margin-top: 0.12em;
+}
+
+.about-sidebar-top-row .core-value-item .icon,
+.about-sidebar-top-row .core-value-item svg,
+.about-sidebar-top-row .about-detail-item .icon,
+.about-sidebar-top-row .about-detail-item svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.about-sidebar-connect {
+  min-width: 0;
+  padding-top: var(--space-2);
+  margin-top: var(--space-1);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dark .about-sidebar-connect {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.about-sidebar-details .about-details-card {
+  margin-bottom: 0;
+}
+
+/* Narrow rail: stack location / availability / remote as rows */
+.about-sidebar .about-details {
+  grid-template-columns: 1fr;
+}
+
+.about-sidebar .about-detail-item:last-child:nth-child(odd) {
+  grid-column: auto;
+}
+
+.about-sidebar-cta.about-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
   padding-top: var(--space-4);
-  margin-top: 0;
+  margin-top: var(--space-2);
   border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.dark .about-sidebar-cta.about-actions {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.about-sidebar .about-cta-primary {
+  width: 100%;
+  justify-content: center;
 }
 
 .about-profile-section {
@@ -182,7 +456,7 @@
   font-family: var(--font-family-serif);
   font-size: clamp(1rem, 1.15vw, 1.0625rem);
   font-weight: 500;
-  line-height: 1.78;
+  line-height: 1.82;
   color: var(--color-gray-700);
   margin-bottom: var(--space-6);
   text-align: start;
@@ -210,10 +484,15 @@
 /* Details card: Shadcn-style Card component */
 .about-details-card {
   border-radius: var(--card-radius, 0.75rem);
-  margin-bottom: var(--space-6);
+  margin-bottom: 0;
   border-color: rgba(0, 123, 255, 0.12) !important;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
   background: rgba(255, 255, 255, 0.92);
+}
+
+.dark .about-details-card {
+  background: rgba(15, 23, 42, 0.45);
+  border-color: rgba(59, 130, 246, 0.22) !important;
 }
 
 .about-details {
@@ -281,12 +560,6 @@
   gap: var(--space-4);
 }
 
-.about-sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
-}
-
 /* Sidebar cards: Shadcn-style Card component */
 .about-core-values-card,
 .about-social-card {
@@ -305,7 +578,7 @@
 
 .core-value-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-3);
   color: var(--color-gray-700);
   font-size: var(--font-size-sm);
@@ -313,12 +586,21 @@
   text-align: left;
 }
 
+/* Icon optically centered on the first line of text (not the full wrapped block) */
 .core-value-item > svg,
 .core-value-item .icon,
 .core-value-item i {
   color: var(--color-primary);
   flex-shrink: 0;
   line-height: 1;
+  margin-top: 0.14em;
+}
+
+.core-value-item__text {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
 }
 
 .social-links-grid {
