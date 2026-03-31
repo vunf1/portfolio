@@ -10,7 +10,7 @@
 [![Vite](https://img.shields.io/badge/Vite-5.1.4-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Preact](https://img.shields.io/badge/Preact-10.19.6-673AB8?logo=preact&logoColor=white)](https://preactjs.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4.3-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Vitest](https://img.shields.io/badge/Vitest-1.3.1-6E9F18?logo=vitest&logoColor=white)](https://vitest.dev/)
+[![Vitest](https://img.shields.io/badge/Vitest-1.6-6E9F18?logo=vitest&logoColor=white)](https://vitest.dev/)
 
 <!-- Compliance & Standards -->
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -34,7 +34,9 @@ A modern, enterprise-grade professional website built with **Vite + Preact + Typ
 - ⚡ **Performance Optimized** - <60KB initial JS, lazy loading, code splitting
 - 🎯 **Scrollbar Management** - Single scroll container architecture preventing double scrollbars
 - 🎭 **Smooth Animations** - Intersection Observer-based scroll animations with reduced motion support
-- 💬 **Centralized Modal State** - Efficient contact modal management with CSS-based scroll lock
+- 💬 **Centralized Modal State** - Contact modal and sheets use a shared `scrollLock` helper to lock body scroll safely in JSDOM and browsers
+- 📂 **Case studies** - Project case study modal with structured content from JSON
+- ✂️ **About “read more”** - Expandable about copy (`AboutDescriptionSpoiler`) with reduced-motion–friendly behavior
 
 ### **Technical Excellence**
 - 🏗️ **Modern Architecture** - Vite + Preact + TypeScript with strict typing
@@ -57,6 +59,7 @@ portfolio/
 │   │   │   ├── LandingHero.tsx     # Hero section
 │   │   │   ├── LandingFeatures.tsx  # Features section
 │   │   │   ├── LandingAbout.tsx     # About section
+│   │   │   ├── AboutDescriptionSpoiler.tsx  # Expandable about description
 │   │   │   ├── LandingFooter.tsx     # Footer section
 │   │   │   └── VideoBackground.tsx   # Video background component
 │   │   ├── __tests__/       # Component tests
@@ -65,9 +68,9 @@ portfolio/
 │   │   └── ...              # Other sections
 │   ├── hooks/               # Custom React hooks
 │   │   ├── __tests__/       # Hook tests
-│   │   ├── useI18n.ts       # Internationalization
-│   │   ├── usePortfolioData.ts  # Portfolio data fetching
-│   │   └── useModularPortfolioData.ts  # Modular data loading
+│   │   ├── usePortfolioData.ts  # Portfolio data fetching (incl. projects manifest)
+│   │   ├── useMediaQuery.ts # Responsive breakpoint hook
+│   │   └── useRouteSync.ts  # Route / URL sync helpers
 │   ├── types/               # TypeScript type definitions
 │   │   ├── portfolio.ts     # Portfolio data types
 │   │   ├── components.ts    # Component types
@@ -75,7 +78,7 @@ portfolio/
 │   │   ├── n8n.ts           # n8n integration types
 │   │   └── seo.ts           # SEO and metadata types
 │   ├── contexts/            # React contexts
-│   │   └── TranslationContext.tsx
+│   │   └── TranslationContext.tsx  # Locale + useTranslation() for UI strings
 │   ├── css/                 # Styling
 │   │   ├── tokens.css       # Design tokens
 │   │   ├── variables.css    # CSS variables
@@ -106,7 +109,9 @@ portfolio/
 │   │   ├── validation.ts    # Form validation (E.164, email, name)
 │   │   ├── n8nClient.ts     # n8n webhook integration client
 │   │   ├── seo.ts           # SEO utilities and structured data
+│   │   ├── getDataUrl.ts    # Public data URL helpers
 │   │   └── preloadPortfolioChunks.ts  # Performance optimization
+│   ├── lib/                 # Small shared libraries (scrollLock, locale, utils, …)
 │   ├── test/                # Test utilities
 │   │   ├── setup.ts         # Test setup
 │   │   └── test-utils.tsx   # Testing utilities
@@ -115,14 +120,17 @@ portfolio/
 │   └── i18n.ts              # i18n configuration
 ├── public/                   # Static assets
 │   ├── data/                # JSON data files
-│   │   ├── en/              # English content
-│   │   └── pt-PT/           # Portuguese content
+│   │   ├── en/              # English content (e.g. personal.json, ui.json)
+│   │   │   └── projects/    # One JSON per project + manifest.json (load order)
+│   │   └── pt-PT/           # Portuguese (pt-PT) content (same layout)
 │   ├── img/                 # Images and assets
 │   └── _headers             # Security headers
 ├── scripts/                 # Build and utility scripts
 │   ├── copy-data.cjs        # Data copying script
+│   ├── manage.mjs           # Interactive CLI to edit portfolio JSON (dev)
 │   ├── optimize-images.cjs  # Image optimization
 │   └── verify-dist.js       # Build verification script
+├── manage.ps1               # Windows entry point for scripts/manage.mjs
 ├── .github/                 # GitHub configuration
 │   └── workflows/           # GitHub Actions workflows
 │       ├── ci.yml          # CI/CD pipeline
@@ -249,8 +257,9 @@ This website contains personal information that should be customized for your ow
 - `public/data/pt-PT/social.json` - Portuguese social media links
 - `public/data/en/meta.json` - SEO metadata and Open Graph tags
 - `public/data/pt-PT/meta.json` - Portuguese SEO metadata
+- `public/data/en/projects/` and `public/data/pt-PT/projects/` - Case studies (`manifest.json` + one JSON per project)
 - `index.html` - Meta tags and page title
-- `vite.config.ts` - Application title
+- `vite.config.ts` - Dev server and build options (see `server` / `preview` for local URL)
 
 **Example Personal Data Structure:**
 ```json
@@ -274,8 +283,9 @@ The project implements a single scroll container architecture:
 
 ### **Internationalization**
 Update language files in `public/data/`:
-- `en/` - English content (JSON format)
-- `pt-PT/` - Portuguese content (JSON format)
+- `en/` - English content (JSON format), including `ui.json` for landing copy
+- `pt-PT/` - Portuguese (Portugal) content (JSON format)
+- **Projects** live under `public/data/<locale>/projects/` (manifest + per-project files), not a single `projects.json`
 
 ### **Design System**
 Customize design tokens in `src/css/tokens.css`:
@@ -313,7 +323,9 @@ npm run test -- ScrollbarBehavior
 ```
 
 #### **Content Management**
-- **Website Data**: Update JSON files in `public/data/`
+- **Website Data**: Update JSON files in `public/data/en/` and `public/data/pt-PT/` (personal, ui, experience, education, etc.)
+- **Projects (case studies)**: Each locale uses `public/data/<locale>/projects/manifest.json` (array of filenames, in display order) and one file per project, e.g. `public/data/en/projects/my-project-slug.json`. `usePortfolioData` loads the manifest, then fetches each file in parallel.
+- **Interactive editor (dev)**: From the repo root, run `node scripts/manage.mjs` or `.\manage.ps1` (Windows) for a guided CLI to edit JSON content (uses devDependencies `@clack/prompts`, `picocolors`).
 - **Styling**: Modify CSS files in `src/css/`
 - **Components**: Edit TypeScript files in `src/components/`
 - **Validation**: Update form validation logic in `src/utils/validation.ts`
@@ -695,11 +707,14 @@ The project uses three GitHub Actions workflows for continuous integration and d
 ### **Common Issues**
 
 #### **Development Server Issues**
+- **Cannot open `http://portfolio:1234/`**: Add a hosts entry so the name resolves (e.g. `127.0.0.1 portfolio` on Windows: `C:\Windows\System32\drivers\etc\hosts`). Vite is configured with `allowedHosts: ['portfolio']`.
+- **Browser blocks or wrong site**: Use exactly `http://portfolio:1234/` (or adjust `vite.config.ts` `server` / `preview` if you prefer `localhost`).
+
 ```bash
 # Clear cache and reinstall
 npm run clean:all && npm install
 
-# If port 1234 is already in use, override e.g.:
+# If port 1234 is already in use, pass another port (you may need to relax strictPort/allowedHosts in vite.config.ts for long-term use)
 npm run dev -- --port 3001
 ```
 
@@ -796,12 +811,13 @@ npm run build -- --debug
 ## 🔄 **Maintenance & Updates**
 
 ### **Recent Improvements**
-- ✅ **Scrollbar Architecture**: Implemented single scroll container preventing double scrollbars
-- ✅ **CSS Refactoring**: Modular CSS architecture with proper overflow management
-- ✅ **Modal State Management**: Centralized contact modal state in LandingPage component
-- ✅ **Test Coverage**: Added comprehensive scrollbar behavior and modal tests
-- ✅ **Responsive Fixes**: Resolved horizontal scrollbar issues across all breakpoints
-- ✅ **Performance**: Optimized FAB and animation components to prevent scroll container creation
+- ✅ **Projects data layout**: Manifest-driven `public/data/<locale>/projects/` (easier diffs and ordering than one large `projects.json`)
+- ✅ **Manage CLI**: `scripts/manage.mjs` / `manage.ps1` for editing portfolio JSON locally
+- ✅ **Dev server defaults**: Vite listens on **port 1234** with host `portfolio` (`allowedHosts`); map `portfolio` → `127.0.0.1` in your hosts file and open `http://portfolio:1234/`
+- ✅ **Scroll lock**: Shared `src/lib/scrollLock.ts` for sheets and contact modal (test-friendly `scrollTo` in Vitest setup)
+- ✅ **Landing UX**: Refreshed landing sections, **AboutDescriptionSpoiler**, **useMediaQuery**, case study modal updates
+- ✅ **Tests**: `ProjectCaseStudyModal`, `AboutDescriptionSpoiler`, `scrollLock`, `ui` key guards for landing about
+- ✅ **Repo hygiene**: `.ai/` ignored (local analysis/artifacts only)
 
 ### **Regular Maintenance**
 ```bash
@@ -860,21 +876,25 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📝 **Changelog**
 
-### **v3.1.0 - Scrollbar & Architecture Improvements** (Latest)
-- 🎯 **Scrollbar Fixes**: Single scroll container architecture preventing double scrollbars
-- 🎨 **CSS Refactoring**: Modular CSS architecture with proper overflow management
-- 🔧 **Modal Refactoring**: Centralized contact modal state management in LandingPage
-- 🧪 **Test Enhancements**: Added comprehensive scrollbar behavior tests
-- 🎭 **Animation Improvements**: Optimized scroll animations with proper overflow handling
-- 📱 **Responsive Fixes**: Fixed horizontal scrollbar issues on mobile devices
-- 🎨 **FAB Optimization**: Prevented scrollbar creation in floating action buttons
-- 🧹 **Code Cleanup**: Removed inline scrollbar fixes in favor of CSS-based solutions
-- 🚀 **GitHub Pages Fixes**: 
-  - Fixed base path configuration for GitHub Pages deployment
-  - Added automatic base path detection from repository name
-  - Enhanced workflow with dist folder verification and .nojekyll creation
-  - Fixed environment variable reading from process.env for GitHub Actions
-  - Improved error handling and deployment verification
+### **v3.2.0 - Data tooling, landing refresh, and dev server** (Latest — March 2026)
+- 📂 **Projects as multi-file data**: Removed monolithic `projects.json`; each locale uses `projects/manifest.json` plus one JSON file per project; `usePortfolioData` loads and merges in manifest order
+- 🛠️ **Content CLI**: Added `scripts/manage.mjs` and `manage.ps1` (Windows) with `@clack/prompts` / `picocolors` for interactive JSON edits
+- 🌐 **Vite dev/preview**: Default URL `http://portfolio:1234/` with `host: true`, `strictPort`, and `allowedHosts: ['portfolio']`; Lighthouse script targets the same origin
+- 🎨 **Landing & UI**: Landing sections restyled; **AboutDescriptionSpoiler** for long about copy; **useMediaQuery** for responsive behavior; **ProjectCaseStudyModal** and related components updated
+- 🔒 **Scroll lock**: Centralized `src/lib/scrollLock.ts` used by sheet and contact modal; Vitest `setup` mocks `window.scrollTo` for stable tests
+- 🧪 **Tests**: Added/expanded coverage for case study modal, about spoiler, scroll lock, and UI key alignment for landing about
+- 📚 **Docs**: EmailJS / env examples and meta copy tweaks; **`.ai/`** added to `.gitignore` for local tooling output
+
+### **v3.1.0 - Scrollbar & architecture improvements**
+- 🎯 **Scrollbar fixes**: Single scroll container architecture preventing double scrollbars
+- 🎨 **CSS refactoring**: Modular CSS architecture with proper overflow management
+- 🔧 **Modal refactoring**: Centralized contact modal state management in LandingPage
+- 🧪 **Test enhancements**: Comprehensive scrollbar behavior tests
+- 🎭 **Animation improvements**: Optimized scroll animations with proper overflow handling
+- 📱 **Responsive fixes**: Horizontal scrollbar issues addressed across breakpoints
+- 🎨 **FAB optimization**: Reduced risk of extra scroll containers from FAB/animations
+- 🧹 **Code cleanup**: CSS-first scrollbar discipline
+- 🚀 **GitHub Pages**: Base path detection, `dist` verification, `.nojekyll`, `process.env` in Actions
 
 ### **v3.0.0 - Enterprise Professional Website Release**
 - 🏗️ **Modern Architecture**: Complete migration to Vite + Preact + TypeScript
