@@ -183,7 +183,7 @@ To forward contact form submissions to **joaomaia@jmsit.cloud**, configure your 
 
 1. Add a **Webhook** node to receive the payload.
 2. Add an **Send Email** (or equivalent) node.
-3. Set the **To** field to `{{ $json.recipientEmail }}` — the form sends `recipientEmail: "joaomaia@jmsit.cloud"` in every submission.
+3. Set the **To** field to `{{ $json.recipientEmail }}`; the form sends `recipientEmail: "joaomaia@jmsit.cloud"` in every submission.
 4. Use other payload fields for the email body, e.g. `{{ $json.name }}`, `{{ $json.email }}`, `{{ $json.message }}`, etc.
 
 ## Security Notes

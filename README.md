@@ -160,6 +160,7 @@ yarn install
 ```bash
 # Start development server with hot reload
 npm run dev
+# Default URL: http://portfolio:1234/ (requires `portfolio` → 127.0.0.1 in your hosts file)
 
 # Fast development (skip data copying)
 npm run dev:fast
@@ -184,6 +185,7 @@ npm run build:gh-pages
 ```bash
 npm run preview
 ```
+Serves the production build at **http://portfolio:1234/** (same host/port as dev; see `vite.config.ts` `preview`).
 
 ## 🔧 **Configuration**
 
@@ -191,7 +193,7 @@ npm run preview
 Create `.env.local` for local development:
 ```bash
 # Application URL (optional, defaults to current origin)
-VITE_APP_URL="http://localhost:3000"
+VITE_APP_URL="http://portfolio:1234"
 
 # EmailJS - Contact Form (REQUIRED for form to work)
 # See docs/EMAILJS_SETUP.md for full setup
@@ -218,7 +220,7 @@ The contact form sends submissions to **joaomaia@jmsit.cloud** via [EmailJS](htt
 
 **Features:**
 - Client-side sending via @emailjs/browser (no server required)
-- Public key only — no private credentials in the browser
+- Public key only; no private credentials in the browser
 - Rate limiting (5s throttle) and headless blocking
 - Contact form modal: FAB + Hero CTA
 
@@ -596,9 +598,9 @@ The CI/CD pipeline requires EmailJS environment variables for the contact form. 
 2. Navigate to **Settings** > **Secrets and variables** > **Actions**
 3. Click **New repository secret**
 4. Add the following secrets:
-   - **Name**: `VITE_EMAILJS_PUBLIC_KEY` — **Value**: Your EmailJS public key
-   - **Name**: `VITE_EMAILJS_SERVICE_ID` — **Value**: Your EmailJS service ID
-   - **Name**: `VITE_EMAILJS_TEMPLATE_ID` — **Value**: Your EmailJS template ID
+   - **Name**: `VITE_EMAILJS_PUBLIC_KEY`; **Value**: Your EmailJS public key
+   - **Name**: `VITE_EMAILJS_SERVICE_ID`; **Value**: Your EmailJS service ID
+   - **Name**: `VITE_EMAILJS_TEMPLATE_ID`; **Value**: Your EmailJS template ID
 
 **Important:**
 - These secrets are used during the build process in GitHub Actions
@@ -697,7 +699,7 @@ The project uses three GitHub Actions workflows for continuous integration and d
 # Clear cache and reinstall
 npm run clean:all && npm install
 
-# Check for port conflicts
+# If port 1234 is already in use, override e.g.:
 npm run dev -- --port 3001
 ```
 

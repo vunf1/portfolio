@@ -37,11 +37,11 @@ Layout matches the reference design:
 4. **Content:** Paste the full HTML from `contact-form.html` into the Content/Body field
 5. Save the template and note the **Template ID**
 
-**Note:** `contact-form.html` is the email body only. The "To Email" field is in the template's metadata/sidebar — it is separate from the HTML content.
+**Note:** `contact-form.html` is the email body only. The "To Email" field is in the template's metadata/sidebar; it is separate from the HTML content.
 
 ### Email Client Compatibility
 
-- **Inline styles only** — no `<style>` blocks or external CSS
-- **No CSS animations** — `@keyframes`, `transition`, `animation` are stripped by most clients
-- **Tables for layout** — used for the info grid (reliable across clients)
-- **No JavaScript** — email clients do not execute JS
+- **Inline styles only:** no `<style>` blocks or external CSS
+- **No CSS animations:** `@keyframes`, `transition`, `animation` are stripped by most clients
+- **Tables for layout:** used for the info grid (reliable across clients)
+- **No JavaScript:** email clients do not execute JS

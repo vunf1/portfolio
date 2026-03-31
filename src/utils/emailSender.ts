@@ -8,7 +8,7 @@
  * 1. Create account at https://www.emailjs.com
  * 2. Add an email service (Gmail, SendGrid, Hostinger, etc.)
  * 3. Create a template with variables: from_name, from_email, subject, message, phone, company_name, company_id, to_email
- * 4. In the template settings, set "To Email" to {{to_email}} (required — 422 if empty)
+ * 4. In the template settings, set "To Email" to {{to_email}} (required; 422 if empty)
  * 5. Set env vars in .env.local: VITE_EMAILJS_PUBLIC_KEY, VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID
  *    Optional: VITE_EMAILJS_TO_EMAIL (default: joaomaia@jmsit.cloud)
  */
@@ -49,7 +49,7 @@ export async function sendContactEmail(data: ContactFormData): Promise<void> {
   }
 
   const websiteUrl = typeof window !== 'undefined' ? window.location.origin : ''
-  /** logo_url: page logo image URL for email header — use explicit env or derive from origin */
+  /** logo_url: page logo image URL for email header; use explicit env or derive from origin */
   const logoImageUrl =
     (envLogoUrl?.length ?? 0) > 0
       ? envLogoUrl!

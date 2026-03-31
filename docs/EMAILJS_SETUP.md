@@ -1,4 +1,4 @@
-# EmailJS Setup — Contact Form
+# EmailJS Setup: Contact Form
 
 The contact form sends emails to the configured recipient (default: **joaomaia@jmsit.cloud**) via [EmailJS](https://www.emailjs.com) over HTTPS. EmailJS and the connected provider handle TLS/encryption in transit.
 
@@ -6,10 +6,10 @@ The contact form sends emails to the configured recipient (default: **joaomaia@j
 
 Vite loads env files in this order (later overrides earlier):
 
-- `.env` — base, committed to git
-- `.env.local` — **local overrides, git-ignored** ← use for real credentials
-- `.env.development` / `.env.production` — mode-specific
-- `.env.[mode].local` — mode-specific local
+- `.env`: base, committed to git
+- `.env.local`: **local overrides, git-ignored** ← use for real credentials
+- `.env.development` / `.env.production`: mode-specific
+- `.env.[mode].local`: mode-specific local
 
 In development (`npm run dev`), `.env.local` takes precedence, so your real EmailJS keys there are used. Never commit `.env.local`.
 
@@ -28,7 +28,7 @@ In development (`npm run dev`), `.env.local` takes precedence, so your real Emai
 ## 3. Create Email Template
 
 1. Go to **Email Templates** → **Create New Template**
-2. **Required:** Set **To Email** to `{{to_email}}` — if empty, you get 422 "recipients address is empty"
+2. **Required:** Set **To Email** to `{{to_email}}`; if empty, you get 422 "recipients address is empty"
 3. Set **Subject** to `Portfolio: {{subject}}`
 4. For **Content**, copy the HTML from `email-templates/contact-form.html` in this repo
 
@@ -77,21 +77,21 @@ For production, set these in your hosting platform’s environment (e.g. GitHub 
 
 The template's **To** / **To Email** field is empty. Fix in one of two ways:
 
-**Option A — Dynamic (recommended)**  
+**Option A: Dynamic (recommended)**  
 1. Open [dashboard.emailjs.com/admin/templates](https://dashboard.emailjs.com/admin/templates)
 2. Open the template whose ID matches `VITE_EMAILJS_TEMPLATE_ID` in `.env.local`
-3. Find the **To Email** (or **To**) input — usually in the right sidebar or "Email" section
+3. Find the **To Email** (or **To**) input, usually in the right sidebar or "Email" section
 4. Type exactly: `{{to_email}}` (double curly braces, underscore, no spaces)
 5. **Save** the template (top-right)
 
-**Option B — Hardcoded**  
+**Option B: Hardcoded**  
 If dynamic fails, set **To Email** to the fixed address: `joaomaia@jmsit.cloud`  
 (You lose the ability to override via `VITE_EMAILJS_TO_EMAIL`, but it works.)
 
 **Verify you’re editing the right template**  
 In dev, the console logs `[EmailJS] Sending to template <YOUR_TEMPLATE_ID>`. That ID must match `VITE_EMAILJS_TEMPLATE_ID` in `.env.local`. Edit the template with that exact ID.
 
-**Test with diagnostic page** — Run `npm run dev`, open `http://localhost:3000/emailjs-test.html`, paste your keys from `.env.local`, and click Send. If you get 422 there too, the template's "To Email" is wrong.
+**Test with diagnostic page:** Run `npm run dev`, open `http://portfolio:1234/emailjs-test.html`, paste your keys from `.env.local`, and click Send. If you get 422 there too, the template's "To Email" is wrong.
 
 ## Security & Rate Limiting
 
@@ -102,6 +102,6 @@ In dev, the console logs `[EmailJS] Sending to template <YOUR_TEMPLATE_ID>`. Tha
 
 ## Package
 
-- **@emailjs/browser** v4.4.1 — latest official SDK ([docs](https://www.emailjs.com/docs/sdk/send/))
+- **@emailjs/browser** v4.4.1: latest official SDK ([docs](https://www.emailjs.com/docs/sdk/send/))
 - Uses `emailjs.send(serviceID, templateID, templateParams, options)` per official API
 - No server needed for basic contact forms
