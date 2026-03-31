@@ -1,0 +1,36 @@
+{
+  "id": "image-database-manager-pyqt",
+  "name": "Gestor de base de dados de imagens (PyQt5)",
+  "description": "GUI PyQt5 que ingere registos JSON de imagens, constrói tabelas dinâmicas, resolve caminhos de pastas por várias convenções de nome e abre diretórios correspondentes.",
+  "longDescription": "Os utilizadores mantêm um catálogo de imagens em JSON; a aplicação mostra tabelas ordenáveis e filtráveis, constrói caminhos de pasta candidatos com várias convenções de nome (espaço, underscore, concatenado, só modelo), verifica existência e abre o gestor de ficheiros do sistema quando há correspondência. As definições guardam-se em `settings.json`; builds empacotados opcionais incluem ícones e fundos.",
+  "technologies": [
+    "Python",
+    "PyQt5",
+    "JSON"
+  ],
+  "features": [
+    "Ingestão JSON para tabelas dinâmicas",
+    "Várias estratégias de nomeação de pastas",
+    "Erros visíveis quando caminhos faltam",
+    "Ficheiro de definições configurável",
+    "Script de build opcional com pacote de assets"
+  ],
+  "url": "https://github.com/vunf1/Dynamic-Database",
+  "demo": "https://github.com/vunf1/Dynamic-Database",
+  "embedInModal": false,
+  "image": "",
+  "period": "2022–2026",
+  "role": "Navegador desktop de dados",
+  "teamSize": 1,
+  "highlights": [
+    "Resolve convenções de nomeação confusas no disco com estratégias explícitas",
+    "Mensagens de validação e erro claras quando dados ou caminhos falham"
+  ],
+  "challenges": "Pressupostos de sistema de ficheiros partem-se quando assets se movem entre volumes ou locales de SO.",
+  "solutions": "Definições configuráveis, verificações de caminho resilientes e erros claros antes de invocar Explorer/Finder.",
+  "security": [
+    "Nunca publicar passwords de desencriptação em documentação ou material promocional",
+    "Validar fontes JSON antes de operações de sistema de ficheiros",
+    "Sanitizar caminhos para evitar surpresas de traversal"
+  ]
+}

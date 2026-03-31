@@ -1,0 +1,45 @@
+{
+  "id": "rust-license-platform-axum",
+  "name": "Plataforma de licenças em Rust (Axum + React)",
+  "description": "Serviço de licenciamento contentorizado em Rust (Axum) com frontend React, persistência MongoDB, sessões JWT e cabeçalhos HMAC para verificação por máquina.",
+  "longDescription": "Esta stack entrega um serviço de licenciamento amigo de Podman/Docker: API Rust Axum com OpenAPI, MongoDB para persistência e SPA React para fluxos de utilizador. Utilizadores verificados gerem chaves via endpoints autenticados; a verificação por máquina usa assinaturas HMAC com carimbo temporal em cabeçalhos dedicados. Ficheiros compose de desenvolvimento e produção separam preocupações mantendo health checks e scripts de build/test reproduzíveis.",
+  "technologies": [
+    "Rust",
+    "Axum",
+    "MongoDB",
+    "React",
+    "TypeScript",
+    "JWT",
+    "OpenAPI",
+    "Podman",
+    "Docker"
+  ],
+  "features": [
+    "Endpoints de health, readiness e versão para orquestração",
+    "Registo, verificação de email, login e gestão de sessão",
+    "Fluxos de emissão/verificação de licença com cabeçalhos de atestação de máquina",
+    "Documento OpenAPI servido para integradores",
+    "Stacks compose dev/prod com portas documentadas",
+    "Corredores de teste automatizados para frontend e backend incluídos no projeto"
+  ],
+  "url": "https://github.com/vunf1/rust-web-license-sytem",
+  "demo": "https://github.com/vunf1/rust-web-license-sytem",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Backend + desenho de API + integração frontend",
+  "teamSize": 1,
+  "highlights": [
+    "Fronteira de serviço Rust fortemente tipada com papéis de assinatura explícitos",
+    "Separação clara entre sessões de browser e API de verificação por máquina",
+    "Checklist operacional centrada em contentores na documentação"
+  ],
+  "challenges": "Duas superfícies cliente (humanos vs máquinas) multiplicam casos-limite em autenticação, replay e deriva de relógio.",
+  "solutions": "Documentar verificação HMAC com carimbo temporal, exigir segredos de produção para JWT e assinatura de máquina, e manter OpenAPI como contrato.",
+  "security": [
+    "Segredo de assinatura JWT obrigatório em produção",
+    "Segredo dedicado para assinatura de máquina (X-Signature)",
+    "Pepper de digest de licença configurável por ambiente",
+    "Orientação explícita: nunca commitar segredos; usar env ou segredos de orquestração"
+  ]
+}

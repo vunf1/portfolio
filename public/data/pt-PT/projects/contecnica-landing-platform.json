@@ -1,0 +1,47 @@
+{
+  "id": "contecnica-landing-platform",
+  "name": "Contecnica: Plataforma de landing",
+  "description": "Monorepo de produção com FastAPI, PostgreSQL, Redis e Next.js App Router; alterações na admin publicam na BD e invalidam a cache pública via WebSocket.",
+  "longDescription": "A stack de marketing da Contecnica é um monorepo orientado a produção: backend FastAPI assíncrono (SQLAlchemy 2, PostgreSQL, Redis, Alembic) e frontend Next.js App Router (TypeScript, shadcn/ui, Motion). As alterações de conteúdo passam primeiro pela API; o sistema difunde invalidação tipada por WebSocket para a app pública voltar a ir buscar JSON autoritativo. Fluxos Docker/Podman, documentação de ambientes e pacotes de release (incluindo variantes GHCR) suportam deploys repetíveis.",
+  "technologies": [
+    "FastAPI",
+    "Python",
+    "PostgreSQL",
+    "Redis",
+    "SQLAlchemy 2",
+    "Alembic",
+    "Next.js",
+    "TypeScript",
+    "WebSocket",
+    "Docker",
+    "Podman"
+  ],
+  "features": [
+    "API REST com SQLAlchemy assíncrono e migrações Alembic",
+    "Site público Next.js com limites servidor/cliente e refetch tipado de conteúdo",
+    "Redis no percurso de notificação para fan-out de mudanças de conteúdo",
+    "Canal WebSocket com verificação de Origin e orientação TLS em produção",
+    "Docker Compose para stacks locais e com forma de produção",
+    "Scripts de empacotamento de release para build no servidor e pulls de imagens GHCR",
+    "manage.ps1 Windows / TUI Node para operações frequentes"
+  ],
+  "url": "https://github.com/vunf1/Contecnica-LandingPage-Project",
+  "demo": "https://github.com/vunf1/Contecnica-LandingPage-Project",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Full-stack (API + frontend + ferramentas de deploy)",
+  "teamSize": 1,
+  "highlights": [
+    "Fonte de verdade na base de dados com invalidação de cache explícita",
+    "Separação clara entre Next.js público e superfície documentada da API FastAPI",
+    "Scripts operacionais alinhados com hosting centrado em contentores"
+  ],
+  "challenges": "Sites de marketing com fluxos tipo CMS e performance estática exigem semântica de cache consistente e atualizações em tempo real sem JSON público desatualizado.",
+  "solutions": "Escritas primeiro na BD, Redis para fan-out, e cliente que refetch após invalidação, com configuração WebSocket e de origem documentada junto aos ficheiros compose.",
+  "security": [
+    "Uso de WebSocket com âmbito de Origin documentado para dev vs produção",
+    "Separação de preocupações públicas vs admin na API",
+    "Segredos apenas nos alvos de deploy; no código-fonte ficam templates .env sem valores reais"
+  ]
+}

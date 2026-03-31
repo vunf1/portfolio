@@ -1,0 +1,33 @@
+{
+  "id": "site-backup-packaging",
+  "name": "Web snapshot backup packaging",
+  "description": "Packaged snapshots of a public site tree plus dated archives for hand-offs—focused on reproducible backup artifacts rather than live hosting configuration.",
+  "longDescription": "Versioned zip archives alongside a public_html-style tree so teams can compare, restore, or audit static and PHP deployments. The layout supports disciplined packaging and clear separation from credentials and internal server paths.",
+  "technologies": [
+    "ZIP archives",
+    "Static/PHP site tree"
+  ],
+  "features": [
+    "Dated archive artifacts for point-in-time recovery discussions",
+    "Co-located site tree for comparison with packaged outputs",
+    ".gitignore patterns for large binaries where appropriate"
+  ],
+  "url": "https://github.com/vunf1/backup-nirvanamed",
+  "demo": "https://github.com/vunf1/backup-nirvanamed",
+  "embedInModal": false,
+  "image": "",
+  "period": "2025",
+  "role": "Backup hygiene and release artifacts",
+  "teamSize": 1,
+  "highlights": [
+    "Demonstrates operational maturity around site snapshots",
+    "Useful for migration or audit conversations with stakeholders"
+  ],
+  "challenges": "Backups can accidentally include secrets if entire trees are archived without exclusion rules.",
+  "solutions": "Document what to exclude (.env, private keys), prefer sanitized exports for sharing, and never publish archive passwords.",
+  "security": [
+    "Scan archives before sharing externally",
+    "Keep credentials out of packaged trees",
+    "Encrypt offline backups when stored on removable media"
+  ]
+}

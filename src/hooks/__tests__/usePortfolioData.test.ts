@@ -41,7 +41,7 @@ const mockPersonalData = {
   availability: "Open to new opportunities",
   relocation: "Willing to relocate",
   remote: "Open to remote work",
-  languages: ["Portuguese — C2 (speaking), C1 (writing), C2 (comprehension)"],
+  languages: ["Portuguese: C2 (speaking), C1 (writing), C2 (comprehension)"],
   coreValues: ["Continuous learning", "Creativity with purpose"]
 }
 
@@ -225,10 +225,34 @@ const sectionResponses: Record<string, unknown> = {
   testimonials: []
 }
 
+const minimalProjectStub = {
+  id: 'stub',
+  name: 'Stub',
+  description: '',
+  longDescription: '',
+  technologies: [] as string[],
+  features: [] as string[],
+  url: '',
+  demo: '',
+  image: '',
+  period: '',
+  role: '',
+  teamSize: 1,
+  highlights: [] as string[],
+  challenges: '',
+  solutions: ''
+}
+
 const setupSuccessfulFetches = () => {
   mockFetch.mockImplementation((input: RequestInfo) => {
     const target = typeof input === 'string' ? input : input.toString()
-    const match = target.match(/\/([a-z-]+)\.json/i)
+    if (target.includes('/projects/manifest.json')) {
+      return Promise.resolve(buildResponse([]))
+    }
+    if (/\/projects\/(?!manifest\.json)[^/]+\.json/i.test(target)) {
+      return Promise.resolve(buildResponse(minimalProjectStub))
+    }
+    const match = target.match(/\/([a-z-]+)\.json(?:\?|$)/i)
     const section = match?.[1]
 
     if (!section || !(section in sectionResponses)) {
@@ -318,34 +342,40 @@ describe('usePortfolioData Hook', () => {
   })
 
   it('handles invalid response data', async () => {
-    // Mock responses that return invalid data
-    mockFetch
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // personal
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // social
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // experience
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // education
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // skills
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) }) // meta
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // projects
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // certifications
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // interests
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // awards
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }) // testimonials
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockUIData) }) // ui
-      // Repeat for pt-PT
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(null) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockUIData) })
+    mockFetch.mockImplementation((input: RequestInfo) => {
+      const target = typeof input === 'string' ? input : input.toString()
+      if (target.includes('/projects/manifest.json')) {
+        return Promise.resolve(buildResponse([]))
+      }
+      if (/\/projects\/(?!manifest\.json)[^/]+\.json/i.test(target)) {
+        return Promise.resolve(buildResponse(minimalProjectStub))
+      }
+      if (target.includes('/personal.json')) {
+        return Promise.resolve({ ok: true, json: () => Promise.resolve(null) })
+      }
+      if (target.includes('/social.json')) {
+        return Promise.resolve({ ok: true, json: () => Promise.resolve(null) })
+      }
+      if (target.includes('/experience.json')) {
+        return Promise.resolve({ ok: true, json: () => Promise.resolve(null) })
+      }
+      if (target.includes('/education.json')) {
+        return Promise.resolve({ ok: true, json: () => Promise.resolve(null) })
+      }
+      if (target.includes('/skills.json')) {
+        return Promise.resolve({ ok: true, json: () => Promise.resolve(null) })
+      }
+      if (target.includes('/meta.json')) {
+        return Promise.resolve({ ok: true, json: () => Promise.resolve(null) })
+      }
+      if (target.includes('/ui.json')) {
+        return Promise.resolve(buildResponse(mockUIData))
+      }
+      if (target.match(/\/(certifications|interests|awards|testimonials)\.json/)) {
+        return Promise.resolve(buildResponse([]))
+      }
+      return Promise.reject(new Error(`Unhandled fetch for ${target}`))
+    })
 
     const { result } = renderHook(() => usePortfolioData())
 

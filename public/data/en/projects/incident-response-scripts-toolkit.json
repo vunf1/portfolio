@@ -1,0 +1,35 @@
+{
+  "id": "incident-response-scripts-toolkit",
+  "name": "Security scripts · Incident response toolkit (Windows + Linux)",
+  "description": "Modular PowerShell and Bash scripts for endpoint containment, investigation, eradication, and verification after suspected compromise.",
+  "longDescription": "This toolkit packages incident-response playbooks as code: Windows paths cover containment, investigation, eradication, and recovery with parameterised entrypoints (hostname, user, timeframe, scope). Linux scripts support server hunting across multiple targets. The toolkit emphasises repeatable execution, structured logging, and separation of duties between phases so teams can coordinate during live incidents.",
+  "technologies": [
+    "PowerShell",
+    "Bash",
+    "Python helpers"
+  ],
+  "features": [
+    "Windows IR orchestration scripts with scoped parameters",
+    "Linux hunt scripts for multi-host triage",
+    "Documented directory layout for each phase",
+    "Quick-start snippets for administrators"
+  ],
+  "url": "https://github.com/vunf1/CyberS-Scripts",
+  "demo": "https://github.com/vunf1/CyberS-Scripts",
+  "embedInModal": false,
+  "image": "",
+  "period": "2023–2026",
+  "role": "Security automation author",
+  "teamSize": 1,
+  "highlights": [
+    "Bridges Windows endpoint and Linux server response workflows",
+    "Emphasises phased IR over one-off manual commands"
+  ],
+  "challenges": "Incident scripts are powerful; misuse can destroy evidence or cause downtime.",
+  "solutions": "Document prerequisites, scope flags, and dry-run guidance; require administrative intent before running destructive phases.",
+  "security": [
+    "Run only on systems you own or are authorised to investigate",
+    "Protect script outputs—they may contain sensitive forensic data",
+    "Review commands before execution in regulated environments"
+  ]
+}

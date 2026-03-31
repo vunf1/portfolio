@@ -1,0 +1,39 @@
+{
+  "id": "php-version-manager-tauri",
+  "name": "PHP Version Manager (Tauri + Rust + React)",
+  "description": "Cross-platform GUI to install, switch, and remove PHP runtimes with checksum-verified downloads, PATH management, and atomic operations with rollback.",
+  "longDescription": "phpvm targets developers who juggle multiple PHP versions: a Tauri shell hosts a React UI that lists installed and available releases, tracks download cache with checksum verification, switches active versions with PATH updates, and removes unused builds. Rust on the backend provides memory-safe file operations with rollback support, while the interface exposes progress reporting and settings for mirrors and cache locations.",
+  "technologies": [
+    "Rust",
+    "Tauri",
+    "React",
+    "TypeScript"
+  ],
+  "features": [
+    "Download and install official PHP builds with integrity checks",
+    "One-click activation with automatic PATH updates",
+    "Cache management and cleanup tools",
+    "Tabbed UI for installed, available, cache, and settings views",
+    "Progress reporting for long-running downloads",
+    "Cross-platform focus with primary support for Windows and Linux"
+  ],
+  "url": "https://github.com/vunf1/php-version-manager",
+  "demo": "https://github.com/vunf1/php-version-manager",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Systems tooling + desktop UX",
+  "teamSize": 1,
+  "highlights": [
+    "Combines Rust safety with a modern React interface",
+    "Operational focus: checksums, atomic installs, rollback",
+    "Developer-experience oriented tabbed workflows"
+  ],
+  "challenges": "Filesystem and PATH mutations are risky on end-user machines; mistakes brick shells or leave partial installs.",
+  "solutions": "Atomic operations with rollback, verified checksum pipeline, and explicit UX around destructive actions.",
+  "security": [
+    "Verify download checksums before install",
+    "Avoid running the GUI with elevated privileges unless necessary",
+    "Store settings without embedding secrets"
+  ]
+}

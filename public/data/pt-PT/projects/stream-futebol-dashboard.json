@@ -1,0 +1,41 @@
+{
+  "id": "stream-futebol-dashboard",
+  "name": "Streaming · Painel de marcador de futebol (desktop Python)",
+  "description": "Superfície desktop CustomTkinter para marcadores ao vivo com dados de equipas em MongoDB, exportação de texto para OBS, fluxos de penáltis e ganchos opcionais de licenciamento.",
+  "longDescription": "Aplicação desktop-first para equipas em recintos desportivos: incrementar e decrementar marcadores por campo, gerir penáltis, persistir equipas em MongoDB (incluindo compatibilidade com Atlas), exportar ficheiros `.txt` para fontes de texto OBS, e executar várias instâncias independentes. Inclui UI em modo escuro, notificações, vistas admin protegidas por PIN, tratamento criptográfico de ficheiros .env e empacotamento PyInstaller para distribuição.",
+  "technologies": [
+    "Python",
+    "CustomTkinter",
+    "MongoDB",
+    "PyInstaller",
+    "cryptography",
+    "psutil"
+  ],
+  "features": [
+    "Marcadores multi-instância para vários relvados",
+    "Autocomplete de metadados de equipas com Mongo",
+    "Lógica de grandes penalidades com salvaguardas contra edições acidentais",
+    "Exportações de texto prontas para OBS",
+    "Ganchos opcionais de subsistema de licenciamento quando ativados",
+    "Utilitários com atualização automática e consciência de processos onde configurado"
+  ],
+  "url": "https://github.com/vunf1/Stream_Futebol_Dashboard",
+  "demo": "https://github.com/vunf1/Stream_Futebol_Dashboard",
+  "embedInModal": false,
+  "image": "",
+  "period": "2023–2026",
+  "role": "Ferramentas desktop de transmissão",
+  "teamSize": 1,
+  "highlights": [
+    "Liga marcação no recinto ao OBS através de ficheiros de texto simples",
+    "Camada Mongo amiga da cloud com considerações de backup local",
+    "UX CustomTkinter cuidada para dias de jogo de alta pressão"
+  ],
+  "challenges": "Ferramentas de desporto ao vivo têm de permanecer responsivas com atualizações concorrentes e falhas transitórias de rede para o MongoDB.",
+  "solutions": "Padrões de cache local, locks de edição onde necessário, e separação clara entre vistas admin e marcador.",
+  "security": [
+    "Cifrar material `.env` sensível com auxiliares documentados em criptografia",
+    "Proteger connection strings MongoDB; nunca publicá-las em documentação pública ou capturas de ecrã",
+    "PIN em ações destrutivas de gestão de equipas"
+  ]
+}

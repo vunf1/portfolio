@@ -1,0 +1,37 @@
+{
+  "id": "n8n-docker-self-host",
+  "name": "n8n: Dockerized self-host stack",
+  "description": "Self-hosted n8n automation layout with Docker Compose, backup scripts, reverse-proxy oriented folders, and maintenance assets—suitable for private workflow hosting.",
+  "longDescription": "Self-hosted workflow automation using Docker Compose: service definitions, container context, scripts, and supporting static assets to run n8n on private infrastructure. Backup helpers and deployment-oriented directories are structured so secrets and internal endpoints stay in private configuration. The layout emphasises repeatable operations—start/stop, backups, upgrades—rather than embedding business-specific workflow logic in versioned files.",
+  "technologies": [
+    "n8n",
+    "Docker",
+    "Docker Compose",
+    "Shell"
+  ],
+  "features": [
+    "Compose-first layout for bringing automation online in a controlled environment",
+    "Backup script scaffolding for database snapshots",
+    "Supporting folders for proxy TLS material and maintenance pages (populated per operator)",
+    "Separation between runtime volumes and versioned configuration"
+  ],
+  "url": "https://github.com/vunf1/n8n-local",
+  "demo": "https://github.com/vunf1/n8n-local",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Automation infrastructure",
+  "teamSize": 1,
+  "highlights": [
+    "Keeps workflow automation under your own Docker runtime",
+    "Operational scripts for backup discipline",
+    "Sensitive hostnames and secrets stay in private configuration, not in public-facing descriptions"
+  ],
+  "challenges": "Self-hosted automation must stay patched, backed up, and reachable only to trusted networks.",
+  "solutions": "Rely on compose with documented volumes, scripted backups, and TLS termination at the edge—never embedding secrets in public JSON.",
+  "security": [
+    "Store webhook URLs, API keys, and DB passwords only in private env files",
+    "Restrict administrative ports via firewall or VPN",
+    "Rotate automation credentials on a schedule"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "nirvanamed-wordpress-operations",
+  "name": "Nirvanamed.pt: WordPress site operations",
+  "description": "WordPress-based clinic site tree with PHP 8.3 compatibility work, local dev notes, and asset packaging—focused on maintainable hosting operations.",
+  "longDescription": "WordPress deployment layout with core structure, themes and plugins under wp-content, and supporting tooling, plus technical notes for PHP 8.3 alignment, layout debugging, and local development. The focus is long-running site maintenance rather than a greenfield SPA: traceable fixes, verification notes, and repeatable workflows for the team running the site.",
+  "technologies": [
+    "WordPress",
+    "PHP 8.3",
+    "HTML/CSS",
+    "JavaScript",
+    "MySQL"
+  ],
+  "features": [
+    "Versioned site tree suitable for staged updates and audits",
+    "Technical write-ups for compatibility and layout verification",
+    "Separation between packaged assets and working directories",
+    "Operational documentation alongside the PHP application"
+  ],
+  "url": "https://github.com/vunf1/Nirvanamed.pt-Website",
+  "demo": "https://github.com/vunf1/Nirvanamed.pt-Website",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Maintenance, PHP upgrades, and deployment hygiene",
+  "teamSize": 1,
+  "highlights": [
+    "Emphasis on traceable change history for a live WordPress property",
+    "PHP version migration support material captured in-repo",
+    "Practical packaging patterns for backups and hand-offs"
+  ],
+  "challenges": "Long-lived WordPress installs accumulate theme/plugin drift and hosting-specific constraints; upgrades must be verifiable without exposing internal credentials in docs.",
+  "solutions": "Keep operational notes and verification artifacts in version control while storing secrets only in server environment configuration; prefer documented checklists over ad-hoc production edits.",
+  "security": [
+    "Credentials and connection strings belong only in host configuration, not in public documentation",
+    "Treat wp-content and custom modules as part of the attack surface—updates and reviews are first-class"
+  ]
+}

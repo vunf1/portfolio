@@ -1,0 +1,36 @@
+{
+  "id": "image-database-manager-pyqt",
+  "name": "Image Database Manager (PyQt5)",
+  "description": "PyQt5 GUI that ingests JSON image records, builds dynamic tables, resolves folder paths across naming conventions, and opens matching directories.",
+  "longDescription": "Users maintain a JSON-defined image catalog; the app renders sortable, filterable tables, builds candidate folder paths using several naming strategies (space, underscore, concatenated, model-only), checks that paths exist, and opens the system file manager when a match is found. Settings persist in `settings.json`; optional packaged builds bundle icons and backgrounds.",
+  "technologies": [
+    "Python",
+    "PyQt5",
+    "JSON"
+  ],
+  "features": [
+    "JSON ingestion to dynamic tables",
+    "Multiple folder naming strategies",
+    "Error surfacing when paths are missing",
+    "Configurable settings file",
+    "Optional build script with asset bundling"
+  ],
+  "url": "https://github.com/vunf1/Dynamic-Database",
+  "demo": "https://github.com/vunf1/Dynamic-Database",
+  "embedInModal": false,
+  "image": "",
+  "period": "2022–2026",
+  "role": "Desktop data navigator",
+  "teamSize": 1,
+  "highlights": [
+    "Solves messy on-disk naming conventions with explicit strategies",
+    "Clear validation messages when paths or data are invalid"
+  ],
+  "challenges": "Filesystem assumptions break when assets move between drives or OS locales.",
+  "solutions": "Configurable settings, resilient path checks, and clear errors before shelling out to Explorer/Finder.",
+  "security": [
+    "Never publish decryption passwords in public documentation or marketing material",
+    "Validate JSON sources before executing filesystem operations",
+    "Sanitize paths to avoid traversal surprises"
+  ]
+}

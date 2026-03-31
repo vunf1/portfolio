@@ -1,0 +1,37 @@
+{
+  "id": "n8n-docker-self-host",
+  "name": "n8n: Stack Docker self-host",
+  "description": "Layout de automação n8n self-hosted com Docker Compose, scripts de backup, pastas orientadas a proxy inverso e assets de manutenção.",
+  "longDescription": "Automação de workflows self-hosted com Docker Compose: definições de serviços, contexto de contentor, scripts e assets estáticos de suporte para correr n8n em infraestrutura privada. Inclui auxiliares de backup e estrutura para deploy atrás de proxy, mantendo endpoints internos e credenciais em configuração privada. O layout privilegia operações repetíveis — arranque, paragem, backups, atualizações — em vez de incorporar lógica de negócio específica em ficheiros versionados.",
+  "technologies": [
+    "n8n",
+    "Docker",
+    "Docker Compose",
+    "Shell"
+  ],
+  "features": [
+    "Layout compose-first para colocar automações online em ambiente controlado",
+    "Scaffolding de scripts para snapshots de base de dados",
+    "Pastas de suporte para material TLS de proxy e páginas de manutenção (preenchidas em deploy)",
+    "Separação entre volumes de runtime e configuração versionada"
+  ],
+  "url": "https://github.com/vunf1/n8n-local",
+  "demo": "https://github.com/vunf1/n8n-local",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Infraestrutura de automação",
+  "teamSize": 1,
+  "highlights": [
+    "Mantém automação workflow no seu próprio runtime Docker",
+    "Scripts operacionais para disciplina de backup",
+    "Hostnames sensíveis e segredos ficam em configuração privada, não em texto público"
+  ],
+  "challenges": "Automação self-hosted precisa de patches, backups e alcance apenas a redes confiáveis.",
+  "solutions": "Usar Compose com volumes documentados, backups scriptados e TLS na borda; manter credenciais apenas em ficheiros de ambiente privados.",
+  "security": [
+    "URLs de webhook, chaves API e passwords de BD apenas em ficheiros privados .env",
+    "Restringir portas administrativas com firewall ou VPN",
+    "Rodar credenciais de automação em calendário"
+  ]
+}

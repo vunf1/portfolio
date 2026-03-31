@@ -1,0 +1,29 @@
+{
+  "id": "msl-work-system-tray",
+  "name": "Windows utilities · System tray tools (multi_scripts_lib/work)",
+  "description": "System tray oriented scripts/utilities under multi_scripts_lib/work/system tray for lightweight always-on Windows helpers.",
+  "longDescription": "Lightweight utilities under `multi_scripts_lib/work/system tray` for background tasks reachable from the Windows system tray without a full application window.",
+  "technologies": [
+    "Python",
+    "Windows"
+  ],
+  "features": [
+    "Targets system tray interaction patterns",
+    "Scoped to multi_scripts_lib/work/system tray"
+  ],
+  "url": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/system%20tray",
+  "demo": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/system%20tray",
+  "embedInModal": false,
+  "image": "",
+  "period": "2023–2026",
+  "role": "Windows shell integration",
+  "teamSize": 1,
+  "highlights": [
+    "Always-available helpers from the system tray"
+  ],
+  "challenges": "Tray apps must fail gracefully when permissions or session state changes.",
+  "solutions": "Document startup requirements and handle missing tray APIs defensively in code.",
+  "security": [
+    "Tray apps are high-visibility targets—sign binaries and minimise privileges"
+  ]
+}

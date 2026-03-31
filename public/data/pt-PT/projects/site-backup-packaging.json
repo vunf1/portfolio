@@ -1,0 +1,33 @@
+{
+  "id": "site-backup-packaging",
+  "name": "Empacotamento de snapshots de site",
+  "description": "Snapshots empacotados da árvore pública do site e ficheiros datados para hand-offs — foco em artefactos de backup reproduzíveis, não em configuração de hosting em tempo real.",
+  "longDescription": "Ficheiros zip datados junto a uma árvore tipo public_html para comparar, restaurar ou auditar deploys estáticos e PHP. O conjunto suporta empacotamento disciplinado e separação clara de credenciais e caminhos internos de servidores.",
+  "technologies": [
+    "ZIP archives",
+    "Static/PHP site tree"
+  ],
+  "features": [
+    "Artefactos de arquivo datados para conversas de restauro pontual",
+    "Árvore de site co-localizada para comparação com saídas empacotadas",
+    "Padrões .gitignore para binários grandes quando apropriado"
+  ],
+  "url": "https://github.com/vunf1/backup-nirvanamed",
+  "demo": "https://github.com/vunf1/backup-nirvanamed",
+  "embedInModal": false,
+  "image": "",
+  "period": "2025",
+  "role": "Higiene de backup e artefactos de release",
+  "teamSize": 1,
+  "highlights": [
+    "Demonstra maturidade operacional em torno de snapshots de site",
+    "Útil para conversas de migração ou auditoria com stakeholders"
+  ],
+  "challenges": "Backups podem incluir acidentalmente segredos se árvores inteiras forem arquivadas sem regras de exclusão.",
+  "solutions": "Documentar o que excluir (.env, chaves privadas), preferir exportações sanitizadas para partilha, e nunca publicar passwords de arquivo.",
+  "security": [
+    "Analisar ficheiros antes de partilhar externamente",
+    "Manter credenciais fora das árvores empacotadas",
+    "Cifrar backups offline em suportes removíveis"
+  ]
+}

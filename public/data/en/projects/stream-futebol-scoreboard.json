@@ -1,0 +1,40 @@
+{
+  "id": "stream-futebol-scoreboard",
+  "name": "Streaming · Football scoreboard (Flask + Preact)",
+  "description": "Real-time football scoreboard for broadcast: Flask + Socket.IO backend, Preact + TypeScript frontend, WebSocket sync, and OBS-oriented layouts.",
+  "longDescription": "A dual-runtime scoreboard system: Python Flask with Socket.IO powers rooms, file watchers, and asset management, while a Preact SPA renders responsive overlay scenes for streaming software. Features include multi-field support, timers, sponsor rotation, penalty boards, intro sequences, and modular components for customization. PyInstaller tooling lives alongside the backend for packaging when operators need executables.",
+  "technologies": [
+    "Python",
+    "Flask",
+    "Socket.IO",
+    "Preact",
+    "TypeScript",
+    "WebSocket"
+  ],
+  "features": [
+    "Multi-room Socket.IO architecture",
+    "File watchers to bridge control-desk tools and web state",
+    "Preact components for scoreboard, sponsors, intros, and penalties",
+    "PyInstaller helpers for distributable builds",
+    "OBS/Streamlabs-oriented layout defaults"
+  ],
+  "url": "https://github.com/vunf1/Stream_Futebol_Scoreboard",
+  "demo": "https://github.com/vunf1/Stream_Futebol_Scoreboard",
+  "embedInModal": false,
+  "image": "",
+  "period": "2023–2026",
+  "role": "Broadcast overlay engineering",
+  "teamSize": 1,
+  "highlights": [
+    "Clear split between realtime server and lightweight Preact UI",
+    "Designed for multi-match venues with parallel fields",
+    "Packaging path for teams that prefer standalone binaries"
+  ],
+  "challenges": "Hybrid Python + JS stacks must agree on schema evolution and reconnect behaviour when OBS reloads browser sources.",
+  "solutions": "Socket.IO rooms, documented event payloads, and resilient client bootstrapping on the Preact side.",
+  "security": [
+    "Run Flask behind TLS in production LANs",
+    "Authenticate control endpoints if exposed outside trusted networks",
+    "Sanitize uploaded sponsor assets"
+  ]
+}

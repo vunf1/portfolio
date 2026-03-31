@@ -1,0 +1,41 @@
+{
+  "id": "stream-futebol-dashboard",
+  "name": "Streaming · Football score dashboard (Python desktop)",
+  "description": "CustomTkinter desktop control surface for live football scores with MongoDB team data, OBS text exports, penalty workflows, and optional licensing hooks.",
+  "longDescription": "Desktop-first control app for venue staff: increment and decrement scores per pitch, manage penalties, persist teams in MongoDB (including Atlas-compatible setups), export `.txt` files for OBS text sources, and run multiple independent instances. Includes dark-mode UI, notifications, PIN-protected admin views, encrypted environment handling, and PyInstaller packaging for distribution.",
+  "technologies": [
+    "Python",
+    "CustomTkinter",
+    "MongoDB",
+    "PyInstaller",
+    "cryptography",
+    "psutil"
+  ],
+  "features": [
+    "Multi-instance scoreboards for parallel pitches",
+    "Mongo-backed autocomplete for team metadata",
+    "Penalty shootout logic with safeguards against accidental edits",
+    "OBS-ready text exports",
+    "Optional licensing subsystem hooks where enabled",
+    "Auto-refreshing process-aware utilities where configured"
+  ],
+  "url": "https://github.com/vunf1/Stream_Futebol_Dashboard",
+  "demo": "https://github.com/vunf1/Stream_Futebol_Dashboard",
+  "embedInModal": false,
+  "image": "",
+  "period": "2023–2026",
+  "role": "Desktop broadcast tooling",
+  "teamSize": 1,
+  "highlights": [
+    "Connects venue scorekeeping to OBS through simple text file exports",
+    "Cloud-friendly Mongo tier with local backup considerations",
+    "Polished CustomTkinter UX for high-pressure match days"
+  ],
+  "challenges": "Live sports tooling must stay responsive during concurrent updates and network hiccups to MongoDB.",
+  "solutions": "Local caching patterns, edit locks where needed, and clear separation between admin and scoreboard views.",
+  "security": [
+    "Encrypt sensitive `.env` material with documented cryptography helpers",
+    "Protect MongoDB connection strings; never publish them in public documentation or screenshots",
+    "PIN gates for destructive team management actions"
+  ]
+}

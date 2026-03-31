@@ -1,0 +1,33 @@
+{
+  "id": "msl-work-infoplus-cli",
+  "name": "Windows utilities · Info+ CLI (multi_scripts_lib/work)",
+  "description": "PyInstaller-oriented CLI utility living under multi_scripts_lib/work/Info+_CLI—packaged Windows tooling with documented build flags.",
+  "longDescription": "CLI utility within the `multi_scripts_lib` monorepo (`work/Info+_CLI`), built with PyInstaller (`--onefile`, icon, version resources) around `runScriptDecode.py`. Presented here as its own entry alongside other `work/` utilities rather than as the whole monorepo. Implementation lives under the monorepo’s `work` folder in source control.",
+  "technologies": [
+    "Python",
+    "PyInstaller",
+    "Windows"
+  ],
+  "features": [
+    "One-file executable packaging recipe",
+    "Version resource and icon embedding guidance",
+    "Isolated subtree inside multi_scripts_lib/work"
+  ],
+  "url": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/Info%2B_CLI",
+  "demo": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/Info%2B_CLI",
+  "embedInModal": false,
+  "image": "",
+  "period": "2023–2026",
+  "role": "Packaged utility authoring",
+  "teamSize": 1,
+  "highlights": [
+    "Demonstrates shipping Windows-friendly CLI binaries",
+    "Clear monorepo path for discoverability"
+  ],
+  "challenges": "Small monorepo slices often ship with minimal documentation.",
+  "solutions": "Describe capabilities that match the code and build instructions; the source link points to the exact subtree.",
+  "security": [
+    "Sign binaries when distributing outside internal networks",
+    "Avoid embedding secrets inside frozen executables"
+  ]
+}

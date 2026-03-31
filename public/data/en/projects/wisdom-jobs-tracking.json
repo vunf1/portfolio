@@ -1,0 +1,46 @@
+{
+  "id": "wisdom-jobs-tracking",
+  "name": "Wisdom: Multi-tenant jobs tracking platform",
+  "description": "FastAPI + MongoDB backend, React + TypeScript SPA, optional Tauri desktop shell, Podman/Docker-first ops, and extensive security/deployment documentation.",
+  "longDescription": "Wisdom is a multi-tenant job-tracking product: a secure FastAPI API on MongoDB (JWT auth, company-scoped data, rich domain flows described in backend documentation) and a Vite-powered React frontend with TypeScript. The stack runs under Podman or Docker Compose variants (development, Gunicorn, Nuitka-hardened builds, registry-based pulls). A Tauri desktop wrapper reuses the web UI with its own security guidance. Documentation covers RBAC, metrics, reporting, webhooks, environment variables, and incident response—operations are treated as a first-class concern.",
+  "technologies": [
+    "FastAPI",
+    "Python 3.12",
+    "MongoDB",
+    "React",
+    "TypeScript",
+    "Vite",
+    "Tauri",
+    "Podman",
+    "Docker",
+    "JWT"
+  ],
+  "features": [
+    "Multi-tenant REST API with documented flows (auth, jobs, clients, processos, companies, branding)",
+    "React SPA with shared environment configuration and production build pipeline",
+    "Multiple compose topologies for dev, scaled API workers, and compiled backend options",
+    "Tauri desktop packaging with security-focused documentation",
+    "Windows and shell manage menus for repeatable deployments",
+    "Deep documentation index for security architecture and data protection"
+  ],
+  "url": "https://github.com/vunf1/Jobs-Tracking-Personal",
+  "demo": "https://github.com/vunf1/Jobs-Tracking-Personal",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Full-stack platform + hardening + deployment automation",
+  "teamSize": 1,
+  "highlights": [
+    "Security and operations treated as parallel tracks to feature work",
+    "Container-native workflows with GHCR and EasyPanel-oriented notes",
+    "Desktop and web clients sharing one API contract"
+  ],
+  "challenges": "Multi-tenant SaaS-style systems need consistent RBAC stories, safe secret distribution across compose files, and observable production paths.",
+  "solutions": "Centralise documentation for env vars, provide hardened deployment profiles (Gunicorn/Nuitka), and document websocket, metrics, and webhook flows explicitly.",
+  "security": [
+    "JWT-based API authentication with documented rotation practices",
+    "Dedicated security architecture and incident response documentation",
+    "Separation of platform superadmin vs tenant-safe RBAC described in backend feature docs",
+    "Guidance for Podman rootless and secret handling in deployment docs"
+  ]
+}

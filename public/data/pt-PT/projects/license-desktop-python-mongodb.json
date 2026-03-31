@@ -1,0 +1,38 @@
+{
+  "id": "license-desktop-python-mongodb",
+  "name": "Gestor desktop de licenças (Python + MongoDB)",
+  "description": "Aplicação desktop CustomTkinter para gerar, pesquisar e exportar licenças com armazenamento MongoDB, exportação CSV e conversão de timezone para Lisboa.",
+  "longDescription": "Utilitário Python para equipas que gerem registos de licença localmente: criação estruturada, pesquisa e filtragem de conjuntos grandes, exportação CSV e MongoDB como sistema de registo com pool de ligações. A UI enfatiza validação de formulários, dados aleatórios para testes e conversão automática de carimbos temporais para Europe/Lisboa.",
+  "technologies": [
+    "Python",
+    "CustomTkinter",
+    "MongoDB",
+    "pymongo"
+  ],
+  "features": [
+    "Fluxos de geração e edição de licenças com validação",
+    "Persistência em MongoDB",
+    "Exportação CSV para relatórios",
+    "Pesquisa e filtro em todos os campos relevantes",
+    "Gerador de dados aleatórios para demos e QA"
+  ],
+  "url": "https://github.com/vunf1/License-System",
+  "demo": "https://github.com/vunf1/License-System",
+  "embedInModal": false,
+  "image": "",
+  "period": "2023–2026",
+  "role": "Ferramentas desktop + camada de dados",
+  "teamSize": 1,
+  "highlights": [
+    "UI desktop pragmática sem exigir deploy web",
+    "Modelos Mongo e camada de gestão explícitos",
+    "Apresentação com timezone para operações em Portugal"
+  ],
+  "challenges": "Apps desktop têm de proteger credenciais de BD nas estações de trabalho e evitar fugas em capturas de ecrã ou logs.",
+  "solutions": "Usar templates .env, manter segredos fora do controlo de versões, e documentar manuseamento seguro de URIs Mongo nas estações de trabalho.",
+  "security": [
+    "Segredos carregados de ficheiros de ambiente — não valores por omissão commitados",
+    "Validação de entrada na UI antes da persistência",
+    "Fluxos de exportação devem excluir identificadores internos da BD ao partilhar CSVs externamente"
+  ]
+}

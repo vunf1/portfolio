@@ -56,7 +56,7 @@
       "Design Patterns",
       "OOP"
     ],
-    "title": "Autonomous — Self-Study"
+    "title": "Autonomous: Self-Study"
   },
   {
     "achievements": [
@@ -68,7 +68,7 @@
       "Streaming automation: OBS/FFmpeg/NDI, RTMP/SRT, overlay control, health checks, failover."
     ],
     "company": "Freelance",
-    "description": "Deliver end-to-end solutions for small businesses and individual clients. Software: full SDLC from requirements and design through implementation, testing, containerization, CI/CD, observability, and secure-by-default deployments—favoring reproducible builds, infrastructure-as-code patterns, and well-documented runbooks.\n Networking: L1/L2/L3 design and configuration (routing/switching), VLAN segmentation, DHCP/DNS services, NAT and QoS policies, wireless planning, and secure remote access (site-to-site and remote-user VPNs) troubleshooting and incident response.\n Streaming: multi-camera live productions with encoder setup, RTMP/SRT ingest, NDI routing, audio mixing, and real-time overlays/scoreboards; redundancy planning, QoS tuning, and live monitoring to maintain stable feeds under varying network conditions. Across domains, I apply automation (Python, Bash, PowerShell, AI-assisted tooling) to standardize provisioning, configuration, documentation, and reporting—reducing toil, lowering MTTR, and improving reliability, performance, and security.",
+    "description": "Deliver end-to-end solutions for small businesses and individual clients. Software: full SDLC from requirements and design through implementation, testing, containerization, CI/CD, observability, and secure-by-default deployments, favoring reproducible builds, infrastructure-as-code patterns, and well-documented runbooks.\n Networking: L1/L2/L3 design and configuration (routing/switching), VLAN segmentation, DHCP/DNS services, NAT and QoS policies, wireless planning, and secure remote access (site-to-site and remote-user VPNs) troubleshooting and incident response.\n Streaming: multi-camera live productions with encoder setup, RTMP/SRT ingest, NDI routing, audio mixing, and real-time overlays/scoreboards; redundancy planning, QoS tuning, and live monitoring to maintain stable feeds under varying network conditions. Across domains, I apply automation (Python, Bash, PowerShell, AI-assisted tooling) to standardize provisioning, configuration, documentation, and reporting, reducing toil, lowering MTTR, and improving reliability, performance, and security.",
     "duration": "8+ years",
     "highlights": [
       "End-to-end Software Engineering (SDLC, clean architecture, containers, CI/CD, IaC)",
@@ -84,7 +84,7 @@
     "location": "Portugal",
     "period": "July 2017 – Present",
     "technologies": [],
-    "title": "Freelance — Software & Networking Engineer, IT Consultant, Streaming Technician"
+    "title": "Freelance: Software & Networking Engineer, IT Consultant, Streaming Technician"
   },
   {
     "achievements": [
@@ -96,7 +96,7 @@
       "Delivered hands-on training for new employees and interns, accelerating adoption of optimized processes."
     ],
     "company": "Hardstock Lda.",
-    "description": "Designed and implemented an end-to-end, high-throughput refurbishment and deployment workflow for resale PCs, combining network-boot provisioning (PXE) with an SFTP-backed artifact depot and custom Python/PowerShell CLI tooling. Built a standardized imaging pipeline that chainloads a minimal WinPE/maintenance environment via PXE, executes pre-flight hardware diagnostics (CPU/RAM/storage SMART and quick surface checks), captures asset/serial metadata, and enforces go/no-go gates before imaging. Orchestrated unattended OS installation and post-install provisioning (driver bundle staging, firmware/BIOS updates where applicable, policy/config baselines), followed by verification steps (health checks, telemetry collection, and burn-in spot tests) to ensure consistent outcomes with minimal technician intervention.\n\nEstablished a controlled SFTP release process for golden images, drivers, and scripts with checksum validation, and least-privilege access; Implemented resilient, idempotent CLI commands that support parallel batches, safe retries, and structured JSON logs for traceability. Added lightweight observability—per-station throughput, failure modes, and simple dashboards and daily reports to highlight bottlenecks and continuous-improvement opportunities.\n\n RMA handling (intake triage, status transitions, and labeling/traceability), reducing wait states and rework. Automated repetitive technician steps (checklists, image selection, driver matching, report generation), cutting average per-machine cycle time from ~15–20 minutes to ~3–5 minutes and enabling consistent multi-unit runs. Delivered practical training (shadowing, quick-ref guides) for technicians and interns to accelerate adoption, improve first-pass yield, and maintain standardized quality across the team.",
+    "description": "Designed and implemented an end-to-end, high-throughput refurbishment and deployment workflow for resale PCs, combining network-boot provisioning (PXE) with an SFTP-backed artifact depot and custom Python/PowerShell CLI tooling. Built a standardized imaging pipeline that chainloads a minimal WinPE/maintenance environment via PXE, executes pre-flight hardware diagnostics (CPU/RAM/storage SMART and quick surface checks), captures asset/serial metadata, and enforces go/no-go gates before imaging. Orchestrated unattended OS installation and post-install provisioning (driver bundle staging, firmware/BIOS updates where applicable, policy/config baselines), followed by verification steps (health checks, telemetry collection, and burn-in spot tests) to ensure consistent outcomes with minimal technician intervention.\n\nEstablished a controlled SFTP release process for golden images, drivers, and scripts with checksum validation, and least-privilege access; Implemented resilient, idempotent CLI commands that support parallel batches, safe retries, and structured JSON logs for traceability. Added lightweight observability: per-station throughput, failure modes, and simple dashboards and daily reports to highlight bottlenecks and continuous-improvement opportunities.\n\n RMA handling (intake triage, status transitions, and labeling/traceability), reducing wait states and rework. Automated repetitive technician steps (checklists, image selection, driver matching, report generation), cutting average per-machine cycle time from ~15–20 minutes to ~3–5 minutes and enabling consistent multi-unit runs. Delivered practical training (shadowing, quick-ref guides) for technicians and interns to accelerate adoption, improve first-pass yield, and maintain standardized quality across the team.",
     "duration": "10 months",
     "impact": "Increased overall efficiency of refurbishing and testing workflows; improved training and onboarding speed; reduced operational costs through automation.",
     "location": "Arcozelo, Portugal",

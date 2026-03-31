@@ -1,0 +1,39 @@
+{
+  "id": "php-version-manager-tauri",
+  "name": "Gestor de versões PHP (Tauri + Rust + React)",
+  "description": "GUI multiplataforma para instalar, alternar e remover runtimes PHP com downloads verificados por checksum, gestão de PATH e operações atómicas com rollback.",
+  "longDescription": "O phpvm dirige-se a programadores que alternam várias versões PHP: um shell Tauri aloja UI React que lista versões instaladas e disponíveis, gere cache de download com verificação de checksum, alterna versões ativas com atualizações de PATH e remove builds não usados. Rust no backend garante operações de ficheiro memory-safe com suporte a rollback, enquanto a interface expõe progresso e definições para mirrors e localização de cache.",
+  "technologies": [
+    "Rust",
+    "Tauri",
+    "React",
+    "TypeScript"
+  ],
+  "features": [
+    "Download e instalação de builds PHP oficiais com verificações de integridade",
+    "Ativação num clique com atualizações automáticas do PATH",
+    "Gestão e limpeza de cache",
+    "UI com separadores para instaladas, disponíveis, cache e definições",
+    "Relatório de progresso para downloads longos",
+    "Alvos multiplataforma (Windows e Linux destacados no README)"
+  ],
+  "url": "https://github.com/vunf1/php-version-manager",
+  "demo": "https://github.com/vunf1/php-version-manager",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Ferramentas de sistemas + UX desktop",
+  "teamSize": 1,
+  "highlights": [
+    "Combina segurança de memória Rust com interface React moderna",
+    "Foco operacional: checksums, instalações atómicas, rollback",
+    "Fluxos com separadores orientados à experiência do programador"
+  ],
+  "challenges": "Mutações do sistema de ficheiros e PATH são arriscadas nas máquinas dos utilizadores; erros partem consolas ou deixam instalações a meio.",
+  "solutions": "Operações atómicas com rollback, pipeline de checksum verificado, e UX explícita em torno de ações destrutivas.",
+  "security": [
+    "Verificar checksums de download antes da instalação",
+    "Evitar executar a GUI com privilégios elevados salvo necessidade",
+    "Armazenar definições sem embutir segredos"
+  ]
+}

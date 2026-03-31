@@ -1,0 +1,45 @@
+{
+  "id": "ecommerce-vendure-next",
+  "name": "Headless commerce: Vendure + Next.js",
+  "description": "Headless e-commerce template with Vendure (GraphQL, Stripe, PostgreSQL, Redis) and a Next.js storefront, Docker/Podman deploys, and Caddy for production HTTPS.",
+  "longDescription": "A commerce reference implementation pairing Vendure on Node.js/TypeScript with a Next.js storefront. The commerce layer exposes GraphQL Shop and Admin APIs, supports Stripe (cards, MB WAY, Multibanco and related local payment methods where configured), EU VAT/B2B-oriented custom fields, and S3/MinIO-backed assets. The storefront uses SSR, Tailwind, shadcn/ui, TanStack Query, and Zustand. Deployment is container-first with compose files, Caddy as reverse proxy in production, and a Windows manage.ps1 console for common lifecycle tasks.",
+  "technologies": [
+    "Vendure",
+    "Next.js",
+    "TypeScript",
+    "GraphQL",
+    "PostgreSQL",
+    "Redis",
+    "Stripe",
+    "Docker",
+    "Podman",
+    "Caddy"
+  ],
+  "features": [
+    "Multi-channel commerce core with orders, products, and admin API",
+    "Next.js storefront with theme contract and Vendure GraphQL client",
+    "Stripe payment flows and asset storage integration",
+    "Development and production compose stacks",
+    "Caddy configuration for automatic HTTPS where a domain is available",
+    "manage.ps1-driven workflows for build, deploy, and packaging"
+  ],
+  "url": "https://github.com/vunf1/E-Commerce_Template",
+  "demo": "https://github.com/vunf1/E-Commerce_Template",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Full-stack commerce + DevOps templates",
+  "teamSize": 1,
+  "highlights": [
+    "End-to-end headless pattern from catalog to checkout integration",
+    "Operational scripts that mirror how Windows-based operators run containers",
+    "Documentation for observability and deployment variants shipped with the project"
+  ],
+  "challenges": "Headless commerce requires tight alignment between storefront UX, payment webhooks, and long-lived database migrations across Vendure upgrades.",
+  "solutions": "Keep vendure and storefront in one workspace with shared tooling, health-checked compose services, and documented environment separation for dev vs prod.",
+  "security": [
+    "Secrets and keys only via environment configuration",
+    "Reverse proxy and TLS termination documented for production shapes",
+    "Stripe and webhook configuration treated as sensitive operations"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "msl-work-infoplus-gui",
+  "name": "Windows utilities · Info+ GUI companion (multi_scripts_lib/work)",
+  "description": "GUI companion utilities adjacent to Info+_CLI within multi_scripts_lib/work/info+_GUI for Windows desktop workflows.",
+  "longDescription": "Graphical companion to the Info+ CLI in the same `multi_scripts_lib` monorepo (`work/info+_GUI`), aimed at Windows desktop workflows. Scope is intentionally narrow and paired with the CLI entry.",
+  "technologies": [
+    "Python",
+    "Windows desktop"
+  ],
+  "features": [
+    "Co-located with Info+ CLI under multi_scripts_lib/work",
+    "Focused surface for graphical workflows"
+  ],
+  "url": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/info%2B_GUI",
+  "demo": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/info%2B_GUI",
+  "embedInModal": false,
+  "image": "",
+  "period": "2023–2026",
+  "role": "Desktop utility companion",
+  "teamSize": 1,
+  "highlights": [
+    "Shows paired CLI/GUI packaging patterns inside one workspace"
+  ],
+  "challenges": "Limited public documentation for this slice of the monorepo.",
+  "solutions": "Keep the summary concise; the source link shows the full implementation context.",
+  "security": [
+    "Review GUI dependencies for supply-chain risk before distribution"
+  ]
+}

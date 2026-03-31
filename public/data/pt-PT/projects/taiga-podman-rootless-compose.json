@@ -1,0 +1,40 @@
+{
+  "id": "taiga-podman-rootless-compose",
+  "name": "Taiga PM: Compose Podman rootless",
+  "description": "Stack Compose Podman rootless para Taiga com nginx à frente, fluxos documentados WSL2/Linux e scripts opcionais de backup/restauro.",
+  "longDescription": "Infraestrutura descrita em código-fonte para correr o Taiga sem daemon Docker: Podman Compose, nginx como entrada HTTP (porta 8080 por omissão) e orientação para WSL2 rootless face a Linux nativo. Fluxo típico: copiar `.env.example`, criar diretórios de dados persistentes, `podman compose up`, criar superutilizador Django e opcionalmente carregar templates por omissão. Inclui scripts shell de backup e restauro.",
+  "technologies": [
+    "Podman",
+    "Podman Compose",
+    "nginx",
+    "Taiga",
+    "PostgreSQL",
+    "RabbitMQ",
+    "Shell"
+  ],
+  "features": [
+    "Entrada HTTP única via proxy inverso nginx",
+    "Documentação rootless-first para WSL2 e servidores Linux",
+    "Layout de volumes para postgres, media, estáticos e mensagens",
+    "Auxiliares opcionais backup.sh / restore.sh",
+    "Orientação para evitar armadilhas de performance /mnt/c no WSL2"
+  ],
+  "url": "https://github.com/vunf1/Project-Manager-Backlogs",
+  "demo": "https://github.com/vunf1/Project-Manager-Backlogs",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Engenharia de plataforma / hosting interno de PM",
+  "teamSize": 1,
+  "highlights": [
+    "Fluência em contentores rootless para software de colaboração de longa duração",
+    "Scripts operacionais para disciplina de backup"
+  ],
+  "challenges": "A pegada multi-serviço do Taiga é sensível a permissões de volumes e workers assíncronos.",
+  "solutions": "Documentar preparação de diretórios, segredos de ambiente (SECRET_KEY, passwords BD, credenciais Rabbit) e runbooks de primeiro arranque.",
+  "security": [
+    "Gerar segredos fortes para SECRET_KEY, base de dados e utilizadores RabbitMQ",
+    "Não expor a porta 8080 amplamente sem terminação TLS",
+    "Executar backups off-site com cifra"
+  ]
+}

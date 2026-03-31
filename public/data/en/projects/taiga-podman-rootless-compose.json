@@ -1,0 +1,40 @@
+{
+  "id": "taiga-podman-rootless-compose",
+  "name": "Taiga PM: rootless Podman Compose",
+  "description": "Rootless Podman Compose stack for Taiga with nginx front door, documented WSL2/Linux workflows, and optional backup/restore scripts.",
+  "longDescription": "Infrastructure defined in version control for running Taiga without a Docker daemon: Podman Compose definitions, nginx as the HTTP entry (port 8080 by default), and guidance for WSL2 versus native Linux rootless setups. Deployment flow: copy `.env.example`, create persistent data directories, run `podman compose up`, create Django superusers, and optionally load default templates. Shell scripts for backup and restore ship with the stack.",
+  "technologies": [
+    "Podman",
+    "Podman Compose",
+    "nginx",
+    "Taiga",
+    "PostgreSQL",
+    "RabbitMQ",
+    "Shell"
+  ],
+  "features": [
+    "Single HTTP entry via nginx reverse proxy",
+    "Rootless-first documentation for WSL2 and Linux servers",
+    "Data volume layout for postgres, media, static assets, and messaging",
+    "Optional backup.sh / restore.sh helpers",
+    "Guidance to avoid /mnt/c performance traps on WSL2"
+  ],
+  "url": "https://github.com/vunf1/Project-Manager-Backlogs",
+  "demo": "https://github.com/vunf1/Project-Manager-Backlogs",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Platform engineering / internal PM hosting",
+  "teamSize": 1,
+  "highlights": [
+    "Shows rootless container fluency for long-running collaboration software",
+    "Operational scripts for backup discipline"
+  ],
+  "challenges": "Taiga’s multi-service footprint is sensitive to volume permissions and async workers.",
+  "solutions": "Document directory prep, env secrets (SECRET_KEY, DB passwords, Rabbit creds), and compose runbooks for first boot.",
+  "security": [
+    "Generate strong secrets for SECRET_KEY, database, and RabbitMQ users",
+    "Do not expose port 8080 broadly without TLS termination",
+    "Run backups off-site with encryption"
+  ]
+}

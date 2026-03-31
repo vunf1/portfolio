@@ -1,0 +1,46 @@
+{
+  "id": "licensehub-php-preact",
+  "name": "LicenseHub Pro: PHP + Preact license platform",
+  "description": "Full-stack license management with Vite/Preact, PHP 8, MySQL, Stripe, Argon2id, optional 2FA, and GDPR-oriented account flows.",
+  "longDescription": "LicenseHub Pro pairs a Preact + TypeScript frontend (Tailwind, i18n EN/pt-PT, accessibility-minded UI) with a PHP REST backend backed by MySQL. It covers secure authentication, payment-gated service creation with Stripe (cards, MB WAY, Multibanco where configured), license lifecycle (issue, rotate, suspend, revoke), device binding with grace periods, HMAC-based keys, audit trails, and OpenAPI 3.1 documentation. Docker-oriented development and deployment paths are documented alongside config-driven behaviour.",
+  "technologies": [
+    "Preact",
+    "TypeScript",
+    "Vite",
+    "Tailwind CSS",
+    "PHP 8",
+    "MySQL",
+    "Stripe",
+    "OpenAPI 3.1",
+    "Docker"
+  ],
+  "features": [
+    "Argon2id password hashing with optional TOTP 2FA and backup codes",
+    "CSRF protection, secure sessions, rate limiting, and brute-force mitigations",
+    "Stripe checkout flows with refund and license state coordination",
+    "REST API with role separation and audit logging",
+    "Internationalized UI with dark/light themes",
+    "Device binding and machine verification patterns for software licensing"
+  ],
+  "url": "https://github.com/vunf1/web-License-System",
+  "demo": "https://github.com/vunf1/web-License-System",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Full-stack product engineering",
+  "teamSize": 1,
+  "highlights": [
+    "Security-first defaults across auth, payments, and license APIs",
+    "Configuration-driven behaviour for straightforward operations",
+    "Documented GDPR export/delete flows in product materials"
+  ],
+  "challenges": "Licensing platforms sit at the intersection of payments, cryptographic key hygiene, and abuse resistance; mistakes echo into customer trust.",
+  "solutions": "Layer explicit CSRF and session controls, structured audit logs, Stripe webhooks with idempotent handling, and environment-only secrets with rotation guidance.",
+  "security": [
+    "Argon2id for passwords; TOTP 2FA optional",
+    "CSRF tokens on mutating requests; secure cookie flags in production",
+    "Rate limiting and brute-force protections on sensitive endpoints",
+    "Stripe and webhook secrets confined to environment configuration",
+    "HMAC and peppered digests for license material—no plaintext key material in logs"
+  ]
+}

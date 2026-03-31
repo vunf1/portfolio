@@ -1,0 +1,47 @@
+{
+  "id": "contecnica-landing-platform",
+  "name": "Contecnica: Landing platform",
+  "description": "Production monorepo with FastAPI, PostgreSQL, Redis, and Next.js App Router; admin edits publish to the DB and invalidate the public cache over WebSocket.",
+  "longDescription": "Contecnica’s marketing stack is built as a production-oriented monorepo: an async FastAPI backend (SQLAlchemy 2, PostgreSQL, Redis, Alembic) and a Next.js App Router frontend (TypeScript, shadcn/ui, Motion). Content changes are written through the API first; the system broadcasts typed WebSocket invalidation so the public app re-fetches authoritative JSON. Docker/Podman workflows, env documentation, and release bundles (including GHCR-oriented packaging) support repeatable deploys.",
+  "technologies": [
+    "FastAPI",
+    "Python",
+    "PostgreSQL",
+    "Redis",
+    "SQLAlchemy 2",
+    "Alembic",
+    "Next.js",
+    "TypeScript",
+    "WebSocket",
+    "Docker",
+    "Podman"
+  ],
+  "features": [
+    "REST API with async SQLAlchemy and migrations via Alembic",
+    "Next.js public site with server/client boundaries and typed content refetch",
+    "Redis-backed notification path for content-change fan-out",
+    "WebSocket channel with origin checks and production TLS guidance",
+    "Docker Compose for local and production-shaped stacks",
+    "Release packaging scripts for on-server build and GHCR image pulls",
+    "Windows manage.ps1 / Node TUI for common operations"
+  ],
+  "url": "https://github.com/vunf1/Contecnica-LandingPage-Project",
+  "demo": "https://github.com/vunf1/Contecnica-LandingPage-Project",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Full-stack (API + frontend + deploy tooling)",
+  "teamSize": 1,
+  "highlights": [
+    "Single source of truth in the database with explicit cache invalidation",
+    "Clear split between public Next.js and FastAPI documentation surface",
+    "Operational scripts aligned with container-first hosting"
+  ],
+  "challenges": "Marketing sites that mix CMS-like workflows with static performance need consistent cache semantics and safe realtime updates without stale public JSON.",
+  "solutions": "Use DB-first writes, Redis for fan-out, and a client that refetches on invalidation while keeping production WebSocket and origin configuration documented next to compose files.",
+  "security": [
+    "Origin-scoped WebSocket usage documented for dev vs production",
+    "Separate public vs admin concerns in API design",
+    "Secrets live only on deployment targets; source control carries env templates without live values"
+  ]
+}

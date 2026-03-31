@@ -1,0 +1,29 @@
+{
+  "id": "msl-work-touchscreen",
+  "name": "Utilitários Windows · Auxiliares touch (multi_scripts_lib/work)",
+  "description": "Utilitários orientados a touch sob multi_scripts_lib/work/touchscreen para cenários de quiosque ou hardware de campo.",
+  "longDescription": "Utilitários em `multi_scripts_lib/work/touchscreen` para cenários Windows com interação primária por toque (quiosques, equipamento de campo). Resumo breve; pormenores na árvore de código ligada.",
+  "technologies": [
+    "Python",
+    "Windows"
+  ],
+  "features": [
+    "Localizada em multi_scripts_lib/work/touchscreen",
+    "Alvo a restrições de interação touch-first"
+  ],
+  "url": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/touchscreen",
+  "demo": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/touchscreen",
+  "embedInModal": false,
+  "image": "",
+  "period": "2023–2026",
+  "role": "Scripting adjacente a hardware",
+  "teamSize": 1,
+  "highlights": [
+    "Experiência para além do teclado/rato tradicional"
+  ],
+  "challenges": "Alvos táteis e escala de visualização variam por dispositivo.",
+  "solutions": "Testar em hardware representativo; documentar resoluções mínimas quando relevante.",
+  "security": [
+    "Implementações quiosque precisam de endurecimento — desativar fugas onde exigido"
+  ]
+}

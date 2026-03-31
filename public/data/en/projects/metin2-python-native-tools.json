@@ -1,0 +1,33 @@
+{
+  "id": "metin2-python-native-tools",
+  "name": "Game scripts · Metin2 Python native build helpers",
+  "description": "Small toolchain for compiling Python extension modules into native binaries for legacy Metin2 client automation workflows (Python 2.7 / 32-bit oriented).",
+  "longDescription": "Small toolchain for building C extensions with `setupdll.py` and `build_ext`, producing Windows-native binaries (`.pyd` outputs renamed to `.dll` where required by the client). Scope stays narrow: native helpers alongside client-side automation, not a full game engine. Uses a legacy Python 2.7 / 32-bit-oriented toolchain; automation should follow the game publisher’s terms of service.",
+  "technologies": [
+    "Python",
+    "C extensions",
+    "Windows builds"
+  ],
+  "features": [
+    "Documented build_ext flow for in-place native modules",
+    "Guidance on renaming outputs for client-side loading expectations",
+    "Minimal surface area for maintainers"
+  ],
+  "url": "https://github.com/vunf1/Metin2-Scripts",
+  "demo": "https://github.com/vunf1/Metin2-Scripts",
+  "embedInModal": false,
+  "image": "",
+  "period": "2018–2024",
+  "role": "Native tooling for game automation experiments",
+  "teamSize": 1,
+  "highlights": [
+    "Demonstrates low-level Windows native build steps for game client extensions",
+    "Small, clearly bounded scope"
+  ],
+  "challenges": "Legacy Python stacks are difficult to reproduce on current workstations.",
+  "solutions": "Document the expected interpreter and keep build scripts isolated from unrelated dependencies.",
+  "security": [
+    "Never distribute unsigned binaries as trusted software",
+    "Assume game automation may violate ToS—use only where permitted"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "auto-close-pids-pyside6",
+  "name": "Auto-Close PIDs (PySide6)",
+  "description": "Aplicação desktop Qt multiplataforma para agendar terminação graciosa de processos selecionados após um atraso, com introspeção ao vivo via psutil.",
+  "longDescription": "UI PySide6 lista processos (PID, nome, utilizador, estado, memória), suporta multi-seleção e agenda terminações após atraso em segundos, minutos ou horas, com vários agendamentos independentes. Atualização automática da lista, terminação graciosa antes de forçar encerramento, e suporte a Windows, macOS e Linux.",
+  "technologies": [
+    "Python",
+    "PySide6",
+    "Qt",
+    "psutil"
+  ],
+  "features": [
+    "UI desktop moderna com estética profissional",
+    "Orquestração multi-agendamento",
+    "Seleção por checkbox resiliente a refreshes",
+    "Terminação graciosa com escalação para forçar",
+    "Atualização automática a cada cinco segundos"
+  ],
+  "url": "https://github.com/vunf1/auto-close-PIDs",
+  "demo": "https://github.com/vunf1/auto-close-PIDs",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Utilitário desktop de sistemas",
+  "teamSize": 1,
+  "highlights": [
+    "Liberta recursos após trabalhos longos",
+    "Uma base de código para várias plataformas"
+  ],
+  "challenges": "Matadores de processos são perigosos se clicados por engano ou executados com privilégios elevados.",
+  "solutions": "Exigir seleções explícitas, confirmações para agendamentos destrutivos e registo de ações quando possível.",
+  "security": [
+    "Executar com menor privilégio possível",
+    "Evitar agendar terminação de PIDs críticos do sistema",
+    "Avisar quando vários utilizadores partilham a estação"
+  ]
+}

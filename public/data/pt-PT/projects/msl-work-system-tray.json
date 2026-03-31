@@ -1,0 +1,29 @@
+{
+  "id": "msl-work-system-tray",
+  "name": "Utilitários Windows · Ferramentas de tabuleiro (multi_scripts_lib/work)",
+  "description": "Scripts/utilitários orientados ao tabuleiro do sistema sob multi_scripts_lib/work/system tray para auxiliares Windows sempre disponíveis.",
+  "longDescription": "Utilitários ligeiros em `multi_scripts_lib/work/system tray` para tarefas em segundo plano acessíveis a partir do tabuleiro do sistema Windows, sem janela principal completa.",
+  "technologies": [
+    "Python",
+    "Windows"
+  ],
+  "features": [
+    "Padrões de interação com o tabuleiro do sistema",
+    "Âmbito em multi_scripts_lib/work/system tray"
+  ],
+  "url": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/system%20tray",
+  "demo": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/system%20tray",
+  "embedInModal": false,
+  "image": "",
+  "period": "2023–2026",
+  "role": "Integração com shell Windows",
+  "teamSize": 1,
+  "highlights": [
+    "Ferramentas sempre acessíveis a partir do tabuleiro do sistema"
+  ],
+  "challenges": "Apps de tabuleiro têm de degradar graciosamente quando permissões ou estado de sessão mudam.",
+  "solutions": "Documentar requisitos de arranque e falhar de forma defensiva em código quando APIs do tabuleiro faltam.",
+  "security": [
+    "Apps de tabuleiro são alvos visíveis — assinar binários e minimizar privilégios"
+  ]
+}

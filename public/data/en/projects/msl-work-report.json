@@ -1,0 +1,29 @@
+{
+  "id": "msl-work-report",
+  "name": "Windows utilities · Report helpers (multi_scripts_lib/work/report)",
+  "description": "Report-generation helpers under multi_scripts_lib/work/report for scripted Windows operational outputs.",
+  "longDescription": "Helpers under `multi_scripts_lib/work/report` for assembling or formatting operational reports on Windows. High-level summary here; implementation detail lives in the linked source tree.",
+  "technologies": [
+    "Python",
+    "Windows"
+  ],
+  "features": [
+    "Located under multi_scripts_lib/work/report",
+    "Intended for repeatable reporting automation"
+  ],
+  "url": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/report",
+  "demo": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/report",
+  "embedInModal": false,
+  "image": "",
+  "period": "2023–2026",
+  "role": "Automation scripting",
+  "teamSize": 1,
+  "highlights": [
+    "Illustrates breadth of the multi_scripts_lib workbench"
+  ],
+  "challenges": "Light documentation relative to code size.",
+  "solutions": "Treat the source tree as the reference; extend docs if the tool grows into a standalone product.",
+  "security": [
+    "Sanitise data before embedding into reports shared externally"
+  ]
+}

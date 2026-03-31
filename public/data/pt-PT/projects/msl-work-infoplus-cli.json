@@ -1,0 +1,33 @@
+{
+  "id": "msl-work-infoplus-cli",
+  "name": "Utilitários Windows · Info+ CLI (multi_scripts_lib/work)",
+  "description": "Utilitário CLI orientado a PyInstaller sob multi_scripts_lib/work/Info+_CLI — ferramenta Windows empacotada com flags de build documentadas.",
+  "longDescription": "Utilitário CLI no monorepo `multi_scripts_lib` (`work/Info+_CLI`), empacotado com PyInstaller (`--onefile`, ícone, recursos de versão) em torno de `runScriptDecode.py`. Apresentado como projeto separado de outros utilitários em `work/` em vez do monorepo completo. O código-fonte vive na subárvore `work` do monorepo.",
+  "technologies": [
+    "Python",
+    "PyInstaller",
+    "Windows"
+  ],
+  "features": [
+    "Receita de executável one-file",
+    "Orientação para incorporar recurso de versão e ícone",
+    "Subárvore isolada dentro de multi_scripts_lib/work"
+  ],
+  "url": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/Info%2B_CLI",
+  "demo": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/Info%2B_CLI",
+  "embedInModal": false,
+  "image": "",
+  "period": "2023–2026",
+  "role": "Autoria de utilitário empacotado",
+  "teamSize": 1,
+  "highlights": [
+    "Demonstra entrega de binários CLI amigáveis para Windows",
+    "Caminho explícito no monorepo para descoberta"
+  ],
+  "challenges": "Fatias pequenas de monorepo costumam ter documentação limitada.",
+  "solutions": "Alinhar a descrição ao que o código e as instruções de build mostram; a ligação aponta para a subárvore exata.",
+  "security": [
+    "Assinar binários ao distribuir fora de redes internas",
+    "Evitar embutir segredos em executáveis congelados"
+  ]
+}

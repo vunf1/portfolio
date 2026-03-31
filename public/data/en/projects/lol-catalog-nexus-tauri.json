@@ -1,0 +1,39 @@
+{
+  "id": "lol-catalog-nexus-tauri",
+  "name": "LoL Catalog Nexus (Tauri + Vite)",
+  "description": "Offline-first League of Legends cosmetics catalog: Tauri + Rust core, Vite UI, bundled JSON schema, prefetch pipeline for CDN assets, zero network on cold start.",
+  "longDescription": "Desktop catalog for champions, skins, and chromas. Rust owns domain models, storage adapters, and Tauri commands; the frontend uses Vite + TypeScript with generated types from `lol_localdb.schema.json`. Data Dragon and CommunityDragon feed prefetch scripts that hydrate `frontend/public/lol-asset-cache/` so production builds can boot without network I/O. Owned state is tracked per entity with schema migrations versioned in metadata.",
+  "technologies": [
+    "Tauri",
+    "Rust",
+    "Vite",
+    "TypeScript",
+    "JSON Schema"
+  ],
+  "features": [
+    "Bundled local database with schema versioning",
+    "Prefetch workflow for metadata and art assets",
+    "IPC boundary between UI and Rust services",
+    "Optional Riot API usage for rotation (non-core)",
+    "Tests and fixtures for local DB behaviour"
+  ],
+  "url": "https://github.com/vunf1/LoL-Catalog-Nexus",
+  "demo": "https://github.com/vunf1/LoL-Catalog-Nexus",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Desktop product + data pipeline",
+  "teamSize": 1,
+  "highlights": [
+    "Strict offline-first rule: no network calls when local DB exists",
+    "Schema-driven TypeScript generation",
+    "Asset protocol bridging for cached imagery"
+  ],
+  "challenges": "Large game catalogs require disciplined prefetch and cache invalidation to avoid stale art or bloated bundles.",
+  "solutions": "Versioned schema, scripted prefetch, and explicit separation between bundled resources and optional live calls.",
+  "security": [
+    "Treat third-party CDNs as untrusted—verify downloads in prefetch tooling",
+    "Avoid storing Riot credentials in the offline catalog; optional API is peripheral",
+    "Ship without embedding personal player account data"
+  ]
+}

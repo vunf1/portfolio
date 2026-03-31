@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { useState, useEffect, useCallback } from 'preact/hooks'
 import type { PortfolioData, UsePortfolioDataReturn } from '../types'
+import type { Project } from '../types/portfolio'
 import { getDataUrl } from '../utils/getDataUrl'
 
 type SupportedLanguage = 'en' | 'pt-PT'
@@ -39,6 +40,20 @@ async function loadJsonFile<T>(url: string): Promise<T> {
   return await response.json()
 }
 
+/** Loads `projects/manifest.json` (ordered filenames) then each `projects/<file>`. */
+async function loadProjectsMerged(language: SupportedLanguage): Promise<Project[]> {
+  const manifestUrl = getDataUrl(language, 'projects/manifest.json')
+  const manifest = await loadJsonFile<unknown>(manifestUrl)
+  if (!Array.isArray(manifest) || !manifest.every((f) => typeof f === 'string')) {
+    throw new Error(`Invalid projects manifest at ${manifestUrl}: expected string[]`)
+  }
+  const files = manifest as string[]
+  const projects = await Promise.all(
+    files.map((file) => loadJsonFile<Project>(getDataUrl(language, `projects/${file}`)))
+  )
+  return projects
+}
+
 async function ensureSectionLoaded(
   language: SupportedLanguage,
   section: string,
@@ -54,9 +69,14 @@ async function ensureSectionLoaded(
   if (!fetchPromise) {
     fetchPromise = (async () => {
       try {
-        const dataUrl = getDataUrl(language, `${section}.json`)
-        const data = await loadJsonFile<Record<string, unknown>>(dataUrl)
-        languageData.set(section, data)
+        if (section === 'projects') {
+          const projects = await loadProjectsMerged(language)
+          languageData.set(section, projects as unknown as Record<string, unknown>)
+        } else {
+          const dataUrl = getDataUrl(language, `${section}.json`)
+          const data = await loadJsonFile<Record<string, unknown>>(dataUrl)
+          languageData.set(section, data)
+        }
       } catch (error) {
         if (import.meta.env.DEV) {
           console.warn(`Failed to load ${section} for ${language}:`, error)

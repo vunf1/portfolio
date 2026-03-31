@@ -1,0 +1,33 @@
+{
+  "id": "metin2-python-native-tools",
+  "name": "Scripts de jogo · Metin2 — auxiliares nativos Python",
+  "description": "Pequena cadeia de ferramentas para compilar extensões Python em binários nativos para fluxos de automação do cliente Metin2 (orientação Python 2.7 / 32-bit).",
+  "longDescription": "Pequena cadeia de ferramentas para compilar extensões C com `setupdll.py` e `build_ext`, produzindo binários Windows nativos (saídas `.pyd` renomeadas para `.dll` quando o cliente assim o exige). Âmbito intencionalmente estreito: auxiliares nativos junto de automação do cliente, não um motor de jogo completo. Baseia-se numa toolchain Python legada (ex.: 2.7, 32 bits); a automação deve respeitar os termos do publicador do jogo.",
+  "technologies": [
+    "Python",
+    "Extensões C",
+    "Builds Windows"
+  ],
+  "features": [
+    "Fluxo documentado build_ext para módulos nativos in-place",
+    "Orientação sobre renomear saídas para expetativas de carregamento do cliente",
+    "Superfície mínima para mantenedores"
+  ],
+  "url": "https://github.com/vunf1/Metin2-Scripts",
+  "demo": "https://github.com/vunf1/Metin2-Scripts",
+  "embedInModal": false,
+  "image": "",
+  "period": "2018–2024",
+  "role": "Ferramentas nativas para experiências de automação em jogos",
+  "teamSize": 1,
+  "highlights": [
+    "Demonstra passos de build nativo Windows para extensões do cliente do jogo",
+    "Âmbito reduzido e bem delimitado"
+  ],
+  "challenges": "Stacks Python legadas são difíceis de reproduzir em estações modernas.",
+  "solutions": "Documentar o interpretador esperado e isolar scripts de build de dependências não relacionadas.",
+  "security": [
+    "Nunca distribuir binários não assinados como software de confiança",
+    "Assumir que automação de jogos pode violar ToS — usar apenas onde permitido"
+  ]
+}

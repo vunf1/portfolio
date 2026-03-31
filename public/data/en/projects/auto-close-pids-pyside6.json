@@ -1,0 +1,37 @@
+{
+  "id": "auto-close-pids-pyside6",
+  "name": "Auto-Close PIDs (PySide6)",
+  "description": "Cross-platform Qt desktop app to schedule graceful termination of selected processes after a delay, with live process introspection via psutil.",
+  "longDescription": "PySide6 UI lists processes (PID, name, user, status, memory), supports multi-select, and schedules terminations after a delay in seconds, minutes, or hours, including multiple independent schedules. The app refreshes automatically, prefers graceful termination before force-kill, and targets Windows, macOS, and Linux.",
+  "technologies": [
+    "Python",
+    "PySide6",
+    "Qt",
+    "psutil"
+  ],
+  "features": [
+    "Modern desktop UI with premium styling cues",
+    "Multi-schedule orchestration",
+    "Checkbox selection with refresh resilience",
+    "Graceful terminate with escalation to force kill",
+    "Auto-refresh every five seconds"
+  ],
+  "url": "https://github.com/vunf1/auto-close-PIDs",
+  "demo": "https://github.com/vunf1/auto-close-PIDs",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Desktop systems utility",
+  "teamSize": 1,
+  "highlights": [
+    "Useful for freeing resources after long-running jobs",
+    "Cross-platform story with one codebase"
+  ],
+  "challenges": "Process killers are dangerous if mis-clicked or run with elevated privileges.",
+  "solutions": "Require explicit selections, show confirmations for destructive schedules, and log actions where feasible.",
+  "security": [
+    "Run with least privilege",
+    "Avoid scheduling terminations for system-critical PIDs",
+    "Warn when multiple users share a workstation"
+  ]
+}

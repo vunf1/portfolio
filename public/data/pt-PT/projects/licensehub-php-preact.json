@@ -1,0 +1,46 @@
+{
+  "id": "licensehub-php-preact",
+  "name": "LicenseHub Pro: plataforma PHP + Preact",
+  "description": "Gestão de licenças full-stack com Vite/Preact, PHP 8, MySQL, Stripe, Argon2id, 2FA opcional e fluxos de conta com preocupações RGPD.",
+  "longDescription": "O LicenseHub Pro junta um frontend Preact + TypeScript (Tailwind, i18n EN/pt-PT, UI com preocupações de acessibilidade) a um backend REST PHP com MySQL. Cobre autenticação segura, criação de serviços condicionada a pagamento Stripe (cartões, MB WAY, Multibanco quando configurados), ciclo de vida de licenças (emitir, rodar, suspender, revogar), binding de dispositivos com períodos de tolerância, chaves com HMAC, trilhos de auditoria e OpenAPI 3.1. Desenvolvimento e deploy com Docker documentados juntamente com comportamento orientado a configuração.",
+  "technologies": [
+    "Preact",
+    "TypeScript",
+    "Vite",
+    "Tailwind CSS",
+    "PHP 8",
+    "MySQL",
+    "Stripe",
+    "OpenAPI 3.1",
+    "Docker"
+  ],
+  "features": [
+    "Passwords com Argon2id, 2FA TOTP opcional e códigos de recuperação",
+    "Protecção CSRF, sessões seguras, rate limiting e mitigação de brute-force",
+    "Fluxos Stripe com coordenação de reembolsos e estado de licença",
+    "API REST com separação de papéis e registo de auditoria",
+    "UI internacionalizada com temas claro/escuro",
+    "Padrões de binding de dispositivo e verificação para integração em software"
+  ],
+  "url": "https://github.com/vunf1/web-License-System",
+  "demo": "https://github.com/vunf1/web-License-System",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Engenharia de produto full-stack",
+  "teamSize": 1,
+  "highlights": [
+    "Predefinições de segurança em autenticação, pagamentos e APIs de licença",
+    "Comportamento orientado a configuração para operação do dia a dia",
+    "Fluxos documentados de exportação/remoção RGPD nos materiais do produto"
+  ],
+  "challenges": "Plataformas de licenciamento cruzam pagamentos, higiene criptográfica e resistência a abusos; erros repercutem na confiança do cliente.",
+  "solutions": "Camadas explícitas de CSRF e sessão, logs de auditoria estruturados, webhooks Stripe idempotentes, e segredos apenas em ambiente com orientação de rotação.",
+  "security": [
+    "Argon2id para passwords; 2FA TOTP opcional",
+    "Tokens CSRF em pedidos mutáveis; cookies seguros em produção",
+    "Rate limiting e proteções brute-force em endpoints sensíveis",
+    "Segredos Stripe e webhooks confinados à configuração de ambiente",
+    "HMAC e digests com pepper para material de licença — sem chaves em texto nos logs"
+  ]
+}

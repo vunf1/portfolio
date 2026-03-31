@@ -1,0 +1,45 @@
+{
+  "id": "ecommerce-vendure-next",
+  "name": "Comércio headless: Vendure + Next.js",
+  "description": "Template de e-commerce headless com Vendure (GraphQL, Stripe, PostgreSQL, Redis), montra Next.js, deploy Docker/Podman e Caddy para HTTPS em produção.",
+  "longDescription": "Implementação de referência que junta Vendure em Node.js/TypeScript a uma montra Next.js. A camada de comércio expõe APIs GraphQL Shop e Admin, suporta Stripe (cartões, MB WAY, Multibanco e métodos locais afins quando configurados), campos B2B/IVA UE, e assets em S3/MinIO. A montra usa SSR, Tailwind, shadcn/ui, TanStack Query e Zustand. O deploy é centrado em contentores (compose), Caddy como proxy inverso em produção, e consola manage.ps1 no Windows para tarefas de ciclo de vida.",
+  "technologies": [
+    "Vendure",
+    "Next.js",
+    "TypeScript",
+    "GraphQL",
+    "PostgreSQL",
+    "Redis",
+    "Stripe",
+    "Docker",
+    "Podman",
+    "Caddy"
+  ],
+  "features": [
+    "Núcleo multi-canal com encomendas, produtos e Admin API",
+    "Montra Next.js com contrato de tema e cliente GraphQL Vendure",
+    "Integração de pagamentos Stripe e armazenamento de assets",
+    "Stacks compose para desenvolvimento e produção",
+    "Configuração Caddy para HTTPS automático com domínio",
+    "Fluxos manage.ps1 para build, deploy e empacotamento"
+  ],
+  "url": "https://github.com/vunf1/E-Commerce_Template",
+  "demo": "https://github.com/vunf1/E-Commerce_Template",
+  "embedInModal": false,
+  "image": "",
+  "period": "2024–2026",
+  "role": "Engenharia full-stack de comércio + templates DevOps",
+  "teamSize": 1,
+  "highlights": [
+    "Padrão headless de ponta a ponta do catálogo à integração de checkout",
+    "Scripts operacionais para equipas que usam Windows com contentores",
+    "Documentação para observabilidade e variantes de deploy incluída no projeto"
+  ],
+  "challenges": "O comércio headless exige alinhamento forte entre UX da montra, webhooks de pagamento e migrações de BD ao longo de upgrades Vendure.",
+  "solutions": "Manter vendure e montra num workspace com tooling partilhado, serviços compose com health checks, e separação documentada de ambientes dev vs prod.",
+  "security": [
+    "Chaves e segredos apenas via configuração de ambiente",
+    "Proxy inverso e terminação TLS documentados para topologias de produção",
+    "Configuração Stripe e webhooks tratada como operação sensível"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "license-desktop-python-mongodb",
+  "name": "License desktop manager (Python + MongoDB)",
+  "description": "CustomTkinter desktop app for generating, searching, and exporting licenses with MongoDB storage, CSV export, and Lisbon timezone handling.",
+  "longDescription": "A Python desktop utility for teams managing license records locally: create structured licenses, search and filter large sets, export to CSV, and keep MongoDB as the system of record with connection pooling. The UI emphasises form validation, randomised sample data for testing, and automatic conversion of timestamps to Europe/Lisbon for operational clarity.",
+  "technologies": [
+    "Python",
+    "CustomTkinter",
+    "MongoDB",
+    "pymongo"
+  ],
+  "features": [
+    "License generation and editing flows with validation",
+    "MongoDB-backed persistence layer",
+    "CSV export for reporting hand-offs",
+    "Search and filter across license fields",
+    "Random data generator for demos and QA"
+  ],
+  "url": "https://github.com/vunf1/License-System",
+  "demo": "https://github.com/vunf1/License-System",
+  "embedInModal": false,
+  "image": "",
+  "period": "2023–2026",
+  "role": "Desktop tooling + data layer",
+  "teamSize": 1,
+  "highlights": [
+    "Pragmatic desktop UI without requiring a web deployment",
+    "Explicit Mongo models and manager abstraction",
+    "Timezone-aware display for Portuguese operations"
+  ],
+  "challenges": "Desktop apps must guard database credentials on workstations and avoid leaking connection strings through screenshots or logs.",
+  "solutions": "Use .env templates, keep secrets out of version control, and document secure handling for MongoDB URIs on workstations.",
+  "security": [
+    "Secrets loaded from environment files—not committed defaults",
+    "Validate inputs at the UI layer before persistence",
+    "Export flows should exclude internal database identifiers when sharing CSVs externally"
+  ]
+}
