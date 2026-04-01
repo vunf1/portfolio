@@ -6,6 +6,7 @@ import { LandingFooter } from './LandingFooter'
 import { FloatingActionButton } from '../FloatingActionButton'
 import { ContactModal } from '../ui/ContactModal'
 import type { PortfolioData } from '../../types/portfolio'
+import { filterProjectsForProjectsArea } from '../../lib/projectsArea'
 
 interface LandingPageProps {
   portfolioData: PortfolioData
@@ -87,9 +88,9 @@ export function LandingPage({ portfolioData, onNavigateToPortfolio, onWarmPortfo
         social={portfolioData.social || []}
         onWarmPortfolio={onWarmPortfolio}
         onContactClick={handleContactClick}
-        showProjects={Boolean(portfolioData.projects && portfolioData.projects.length > 0)}
+        showProjects={filterProjectsForProjectsArea(portfolioData.projects).length > 0}
       />
-      <FloatingActionButton onContactClick={handleContactClick} />
+      <FloatingActionButton onContactClick={handleContactClick} hideContact={isContactModalOpen} />
       <ContactModal
         isOpen={isContactModalOpen}
         onClose={() => {

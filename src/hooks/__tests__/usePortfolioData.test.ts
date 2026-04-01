@@ -246,6 +246,9 @@ const minimalProjectStub = {
 const setupSuccessfulFetches = () => {
   mockFetch.mockImplementation((input: RequestInfo) => {
     const target = typeof input === 'string' ? input : input.toString()
+    if (target.includes('projects-area.json')) {
+      return Promise.resolve(buildResponse({}))
+    }
     if (target.includes('/projects/manifest.json')) {
       return Promise.resolve(buildResponse([]))
     }
@@ -344,6 +347,9 @@ describe('usePortfolioData Hook', () => {
   it('handles invalid response data', async () => {
     mockFetch.mockImplementation((input: RequestInfo) => {
       const target = typeof input === 'string' ? input : input.toString()
+      if (target.includes('projects-area.json')) {
+        return Promise.resolve(buildResponse({}))
+      }
       if (target.includes('/projects/manifest.json')) {
         return Promise.resolve(buildResponse([]))
       }
@@ -399,6 +405,12 @@ describe('usePortfolioData Hook', () => {
     const { result } = renderHook(() => usePortfolioData())
     
     expect(typeof result.current.loadAllSections).toBe('function')
+  })
+
+  it('provides retryLoadCritical function', () => {
+    const { result } = renderHook(() => usePortfolioData())
+
+    expect(typeof result.current.retryLoadCritical).toBe('function')
   })
 
   it('provides isSectionLoaded function', () => {

@@ -48,11 +48,15 @@ describe('AboutDescriptionSpoiler', () => {
     const user = userEvent.setup()
 
     vi.spyOn(HTMLElement.prototype, 'scrollHeight', 'get').mockImplementation(function (this: HTMLElement) {
-      if (isAboutDescriptionParagraph(this)) return 400
+      if (isAboutDescriptionParagraph(this)) {
+        return 400
+      }
       return 32
     })
     vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockImplementation(function (this: HTMLElement) {
-      if (isAboutDescriptionParagraph(this)) return 120
+      if (isAboutDescriptionParagraph(this)) {
+        return 120
+      }
       return 32
     })
 
@@ -78,11 +82,15 @@ describe('AboutDescriptionSpoiler', () => {
   it('hides toggle on mobile when text does not overflow the clamp', async () => {
     setMatchMedia(true)
     vi.spyOn(HTMLElement.prototype, 'scrollHeight', 'get').mockImplementation(function (this: HTMLElement) {
-      if (isAboutDescriptionParagraph(this)) return 100
+      if (isAboutDescriptionParagraph(this)) {
+        return 100
+      }
       return 32
     })
     vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockImplementation(function (this: HTMLElement) {
-      if (isAboutDescriptionParagraph(this)) return 100
+      if (isAboutDescriptionParagraph(this)) {
+        return 100
+      }
       return 32
     })
 

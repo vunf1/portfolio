@@ -10,6 +10,9 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  /* No scrollbar-gutter here: `src/lib/scrollLock.ts` already applies measured padding-right on
+   * `body` when overlays open. Pairing `scrollbar-gutter: stable` with that compensation double-
+   * reserves space and shifts the page left behind modals. */
   /* Scroll rules are handled in landing/_layout.css for landing page */
   /* For portfolio page, html should scroll naturally */
   overflow-x: clip !important; /* clip: no nested scroll vs hidden+visible -> y:auto */
@@ -31,6 +34,16 @@ html.landing-page-active {
   min-height: 100% !important;
 }
 
+/* Fixed nav uses the viewport as containing block; body padding from scroll lock does not inset it */
+html[data-scroll-locked] #portfolio-nav {
+  right: var(--scrollbar-compensation, 0px);
+}
+
+/* Full-viewport fixed layers (Tailwind inset-x-0 / inset-0) also use the viewport CB; without this they
+ * stay wider than the body content column after scroll lock and appear to shift vs the page + FAB. */
+html[data-scroll-locked] [data-scroll-lock-fixed] {
+  right: var(--scrollbar-compensation, 0px);
+}
 
 /* Apply text justify to all paragraph and text content */
 p,

@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from 'preact/hooks'
 import type { PortfolioData, UsePortfolioDataReturn } from '../types'
 import type { Project } from '../types/portfolio'
-import { getDataUrl } from '../utils/getDataUrl'
+import { getDataUrl, getSharedDataUrl } from '../utils/getDataUrl'
 
 type SupportedLanguage = 'en' | 'pt-PT'
 type LoadedSectionsByLanguage = Record<SupportedLanguage, Set<string>>
@@ -40,18 +40,55 @@ async function loadJsonFile<T>(url: string): Promise<T> {
   return await response.json()
 }
 
-/** Loads `projects/manifest.json` (ordered filenames) then each `projects/<file>`. */
+function parseProjectsAreaMap(raw: unknown): Record<string, 'on' | 'off'> {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
+    return {}
+  }
+  const out: Record<string, 'on' | 'off'> = {}
+  for (const [id, v] of Object.entries(raw as Record<string, unknown>)) {
+    if (v === 'off') {
+      out[id] = 'off'
+    } else if (v === 'on') {
+      out[id] = 'on'
+    } else if (import.meta.env.DEV) {
+      console.warn(`[portfolio] projects-area.json: ignored invalid value for "${id}" (expected "on" or "off")`)
+    }
+  }
+  return out
+}
+
+function resolveProjectsArea(id: string, areaMap: Record<string, 'on' | 'off'>): 'on' | 'off' {
+  const v = areaMap[id]
+  if (v === 'off') {
+    return 'off'
+  }
+  return 'on'
+}
+
+/** Loads shared `data/projects-area.json`, `projects/manifest.json`, then each `projects/<file>`; applies visibility from the index only. */
 async function loadProjectsMerged(language: SupportedLanguage): Promise<Project[]> {
   const manifestUrl = getDataUrl(language, 'projects/manifest.json')
-  const manifest = await loadJsonFile<unknown>(manifestUrl)
+  const areaUrl = getSharedDataUrl('projects-area.json')
+
+  const [manifest, areaRaw] = await Promise.all([
+    loadJsonFile<unknown>(manifestUrl),
+    loadJsonFile<unknown>(areaUrl).catch(() => ({}))
+  ])
+
   if (!Array.isArray(manifest) || !manifest.every((f) => typeof f === 'string')) {
     throw new Error(`Invalid projects manifest at ${manifestUrl}: expected string[]`)
   }
   const files = manifest as string[]
+  const areaMap = parseProjectsAreaMap(areaRaw)
+
   const projects = await Promise.all(
     files.map((file) => loadJsonFile<Project>(getDataUrl(language, `projects/${file}`)))
   )
-  return projects
+
+  return projects.map((p) => ({
+    ...p,
+    projectsArea: resolveProjectsArea(p.id, areaMap)
+  }))
 }
 
 async function ensureSectionLoaded(
@@ -226,22 +263,21 @@ export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): Use
     })
   }, [])
 
-  useEffect(() => {
-    let cancelled = false
-
-    const ensureCriticalSections = async () => {
+  const loadCriticalSections = useCallback(
+    async (signal: { cancelled: boolean }) => {
       setError(null)
       const cachedData = dataCache.get(currentLanguage)
       const missingCritical = CRITICAL_SECTIONS.filter(section => !(cachedData?.has(section)))
 
       if (missingCritical.length === 0 && cachedData) {
         const criticalData = createCriticalData(cachedData)
-        
-        // Validate critical data before setting it
+
         if (!criticalData || !criticalData.personal || !criticalData.meta || !criticalData.social) {
-          // If cached data is invalid, reload it
           setLoading(true)
         } else {
+          if (signal.cancelled) {
+            return
+          }
           setPortfolioData(criticalData)
           markSectionsLoaded(currentLanguage, CRITICAL_SECTIONS)
           setLoading(false)
@@ -254,13 +290,12 @@ export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): Use
 
       try {
         const languageData = await loadLanguageSections(currentLanguage, CRITICAL_SECTIONS)
-        if (cancelled) {
+        if (signal.cancelled) {
           return
         }
 
         const criticalData = createCriticalData(languageData)
-        
-        // Validate critical data before setting it
+
         if (!criticalData || !criticalData.personal || !criticalData.meta || !criticalData.social) {
           const missingFields = []
           if (!criticalData) {
@@ -275,41 +310,49 @@ export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): Use
           if (!criticalData?.social) {
             missingFields.push('social')
           }
-          
+
           const errorMsg = `Missing critical portfolio data fields: ${missingFields.join(', ')}`
-          // Always log errors for debugging
           console.error('Portfolio data validation failed:', errorMsg, criticalData)
           throw new Error(errorMsg)
         }
-        
+
         setPortfolioData(criticalData)
         markSectionsLoaded(currentLanguage, CRITICAL_SECTIONS)
         criticalPrefetched[currentLanguage] = true
       } catch (err) {
-        if (cancelled) {
+        if (signal.cancelled) {
           return
         }
 
         const normalizedError = err instanceof Error ? err : new Error('Unknown error occurred')
         setError(normalizedError)
-        // Always log errors for debugging (even in production)
         console.error('Error loading portfolio data:', normalizedError)
         if (normalizedError.stack) {
           console.error('Error stack:', normalizedError.stack)
         }
       } finally {
-        if (!cancelled) {
+        if (!signal.cancelled) {
           setLoading(false)
         }
       }
-    }
+    },
+    [currentLanguage, markSectionsLoaded]
+  )
 
-    ensureCriticalSections()
-
+  useEffect(() => {
+    const signal = { cancelled: false }
+    void loadCriticalSections(signal)
     return () => {
-      cancelled = true
+      signal.cancelled = true
     }
-  }, [currentLanguage, markSectionsLoaded])
+  }, [currentLanguage, loadCriticalSections])
+
+  const retryLoadCritical = useCallback(() => {
+    setError(null)
+    setLoading(true)
+    const signal = { cancelled: false }
+    void loadCriticalSections(signal)
+  }, [loadCriticalSections])
 
   useEffect(() => {
     if (loading || !portfolioData) {
@@ -432,6 +475,7 @@ export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): Use
     error,
     loadSection,
     loadAllSections,
+    retryLoadCritical,
     loadedSections: Array.from(loadedSectionsByLanguage[currentLanguage] ?? []),
     isSectionLoaded,
     getSectionLoadingStatus

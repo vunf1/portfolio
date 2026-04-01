@@ -8,6 +8,8 @@ export interface UsePortfolioDataReturn {
   error: Error | null
   loadSection: (section: string) => Promise<void>
   loadAllSections: () => Promise<void>
+  /** Re-fetch critical sections after a failure (no full page reload). */
+  retryLoadCritical: () => void
   loadedSections: string[]
   isSectionLoaded: (section: string) => boolean
   getSectionLoadingStatus: (section: string) => 'loaded' | 'critical' | 'pending'

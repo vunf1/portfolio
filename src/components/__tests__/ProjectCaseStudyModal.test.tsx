@@ -15,7 +15,12 @@ vi.mock('../../contexts/TranslationContext', () => ({
         'projects.previewNote': 'Preview note',
         'projects.openLiveExperience': 'Open in new window',
         'projects.previewOpenExternally': 'Open externally copy',
+        'projects.framingProtectionLabel': 'Framing protection',
         'projects.previewUnavailable': 'No demo',
+        'projects.previewUnavailableTitle': 'No live demo title',
+        'projects.openImageFullSize': 'Open full image',
+        'projects.viewFullImage': 'Full size',
+        'projects.imagePreviewDialog': 'Image preview',
         'projects.overview': 'Overview',
         'projects.features': 'Features',
         'projects.technologies': 'Technologies',
@@ -72,19 +77,17 @@ describe('ProjectCaseStudyModal', () => {
     expect(container.firstChild).toBeNull()
   })
 
-  it('shows dialog with title and close control', () => {
+  it('closes the case study dialog on Escape', () => {
     const onClose = vi.fn()
     render(<ProjectCaseStudyModal project={projectFixture()} isOpen onClose={onClose} />)
 
     expect(screen.getByRole('dialog')).toBeTruthy()
     expect(screen.getByText('Sample Case Study')).toBeTruthy()
-    const closeBtn = screen.getByRole('button', { name: 'Close' })
-    expect(closeBtn).toBeTruthy()
-    fireEvent.click(closeBtn)
+    fireEvent.keyDown(window, { key: 'Escape' })
     expect(onClose).toHaveBeenCalledTimes(1)
   })
 
-  it('renders external-open panel when embed is disabled', () => {
+  it('renders stacked layout with security label when embed is disabled', () => {
     render(
       <ProjectCaseStudyModal
         project={projectFixture({ embedInModal: false })}
@@ -92,7 +95,40 @@ describe('ProjectCaseStudyModal', () => {
         onClose={vi.fn()}
       />
     )
+    expect(screen.getByText('Framing protection')).toBeTruthy()
     expect(screen.getByText('Open externally copy')).toBeTruthy()
+    expect(screen.getByText(/example\.com/)).toBeTruthy()
     expect(document.querySelector('iframe')).toBeNull()
+  })
+
+  it('shows initials in header when there is no live URL and no image', () => {
+    render(
+      <ProjectCaseStudyModal
+        project={projectFixture({ url: '', demo: '', image: '', name: 'Alpha Beta Gamma' })}
+        isOpen
+        onClose={vi.fn()}
+      />
+    )
+    expect(screen.getByText('AB')).toBeTruthy()
+    expect(screen.getByText('No demo')).toBeTruthy()
+    expect(screen.getByText('No live demo title')).toBeTruthy()
+  })
+
+  it('shows project hero image when there is no live URL', () => {
+    render(
+      <ProjectCaseStudyModal
+        project={projectFixture({
+          url: '',
+          demo: '',
+          image: './img/projects/sample.png',
+          name: 'With Image'
+        })}
+        isOpen
+        onClose={vi.fn()}
+      />
+    )
+    const img = document.querySelector('img[src="./img/projects/sample.png"]')
+    expect(img).toBeTruthy()
+    expect(screen.getByRole('button', { name: 'Open full image' })).toBeTruthy()
   })
 })

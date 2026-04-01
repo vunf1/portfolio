@@ -37,6 +37,11 @@
   contain: none !important;
 }
 
+/* Contact modal stacks at z-index ~10002–10004; default FAB 9999 would sit under the backdrop */
+body:has(#contact-modal) .fab-items-static {
+  z-index: 10050 !important;
+}
+
 /* FAB Item Wrapper - prevents layout shifts when buttons scale */
 /* Best practice: Fixed size wrapper to prevent layout shifts */
 .fab-item-wrapper {
@@ -63,13 +68,18 @@
   contain: none !important;
 }
 
-/* Account for scrollbar width - position FAB to the left of scrollbar */
+/* Desktop: sit left of a classic vertical scrollbar (~15–17px). When scroll lock hides it,
+ * use plain 24px — do not blend measured width with a hardcoded 17px (causes FAB jump). */
 @media (min-width: 768px) {
   .fab-items-static {
-    right: calc(24px + 17px); /* Standard scrollbar width (15-17px) */
+    right: calc(24px + 17px);
     max-width: calc(100vw - 48px - 17px);
-    /* Add extra padding for scaled buttons */
     padding-right: 8px;
+  }
+
+  html[data-scroll-locked] .fab-items-static {
+    right: 24px;
+    max-width: calc(100vw - 48px);
   }
 }
 

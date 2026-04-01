@@ -338,3 +338,15 @@ export interface ErrorBoundaryState {
   hasError: boolean
   error: Error | null
 }
+
+/** Shared full-page UI for data load failures and inner ErrorBoundary runtime errors */
+export interface PortfolioErrorFallbackProps {
+  variant: 'runtime' | 'data'
+  title: string
+  message: string
+  onTryAgain?: () => void
+  /** Shown inside a DEV-only `<details>` (message only, no stack in UI) */
+  devErrorMessage?: string
+  /** Render FloatingActionButton (theme / locale) */
+  withFab?: boolean
+}

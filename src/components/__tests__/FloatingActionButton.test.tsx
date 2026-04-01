@@ -131,6 +131,11 @@ describe('FloatingActionButton', () => {
     expect(mockToggleDarkMode).toHaveBeenCalledTimes(1)
   })
 
+  it('hides contact button when hideContact is true', () => {
+    render(<FloatingActionButton hideContact />)
+    expect(screen.queryByRole('button', { name: /contact me/i })).not.toBeInTheDocument()
+  })
+
   it('shows switch to light label when isDark is true', () => {
     mockUseDarkReader.mockReturnValue({
       isDark: true,

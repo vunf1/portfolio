@@ -1,5 +1,11 @@
 /* ===== PREMIUM COMPACT CONTACT MODAL ===== */
 
+/* When scroll lock applies body padding, match right edge to content (same as #portfolio-nav). */
+html[data-scroll-locked] .contact-modal-premium {
+  right: var(--scrollbar-compensation, 0px) !important;
+  width: auto !important;
+}
+
 /* Modal Backdrop - Premium blur effect */
 .contact-modal-premium {
   position: fixed !important;

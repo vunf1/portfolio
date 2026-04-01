@@ -91,6 +91,11 @@ export interface Skills {
 
 export interface Project {
   id: string
+  /**
+   * Applied at load time from shared `public/data/projects-area.json` (not stored in each project file).
+   * `"on"` lists this project in the portfolio projects grid; `"off"` hides it there while still loading data.
+   */
+  projectsArea?: 'on' | 'off'
   name: string
   description: string
   longDescription: string

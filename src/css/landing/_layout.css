@@ -6,6 +6,8 @@
 html {
   overflow-x: clip !important;
   overflow-y: auto !important;
+  /* Scrollbar width during modal/sheet lock is handled in `scrollLock.ts` (body padding + --scrollbar-compensation).
+   * Do not add scrollbar-gutter: stable here — it stacks with that JS and shifts layout when overlays open. */
   height: auto !important;
   min-height: 100% !important;
   max-height: none !important;

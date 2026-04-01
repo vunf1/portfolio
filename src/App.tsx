@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'preact/compat'
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'preact/compat'
 import { route } from 'preact-router'
 import { usePortfolioData } from './hooks/usePortfolioData'
 import { useRouteSync } from './hooks/useRouteSync'
@@ -12,8 +12,7 @@ import {
 import { NotFoundView } from './components/NotFoundView'
 import { Navigation } from './components/Navigation'
 import { ErrorBoundary } from './components/ErrorBoundary'
-import { Icon } from './components/ui/Icon'
-import { Button } from './components/ui/Button'
+import { PortfolioErrorFallback } from './components/PortfolioErrorFallback'
 import { Toaster } from './components/ui/Toaster'
 import { PageLoader } from './components/ui/PageLoader'
 import { SectionPlaceholder } from './components/SectionPlaceholder'
@@ -23,6 +22,7 @@ import { LandingPage } from './components/landing/LandingPage'
 import { preloadPortfolioChunks } from './utils/preloadPortfolioChunks'
 import { scrollToPortfolioSection } from './lib/scrollToPortfolioSection'
 import { initializeSEO, updateSEOOnLanguageChange } from './utils/seo'
+import { filterProjectsForProjectsArea } from './lib/projectsArea'
 
 const logWarning = (message: string, detail: unknown) => {
   if (import.meta.env.DEV) {
@@ -43,7 +43,11 @@ const Testimonials = lazy(() => import('./components/Testimonials').then(module 
 
 export function App() {
   const { t, currentLanguage } = useTranslation()
-  const { portfolioData, loading, error, loadAllSections } = usePortfolioData(currentLanguage)
+  const { portfolioData, loading, error, loadAllSections, retryLoadCritical } = usePortfolioData(currentLanguage)
+  const projectsInArea = useMemo(
+    () => filterProjectsForProjectsArea(portfolioData?.projects),
+    [portfolioData?.projects]
+  )
   const [activeSection, setActiveSection] = useState('experience')
   const [isContactModalOpen, setIsContactModalOpen] = useState(false)
   const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false)
@@ -399,39 +403,33 @@ export function App() {
 
   if (error) {
     return (
-      <>
-        <div className="error">
-          <div className="error-content">
-            <Icon name="exclamation-triangle" size={48} className="mb-4" />
-            <h2>{t('common.error')}</h2>
-            <p>{t('common.somethingWentWrong')}</p>
-            <Button variant="primary" className="mt-4" onClick={() => window.location.reload()}>
-              <Icon name="refresh" size={18} className="mr-2" />
-              {t('common.refresh')}
-            </Button>
-          </div>
-        </div>
-        <FloatingActionButton hideContact />
-      </>
+      <PortfolioErrorFallback
+        variant="data"
+        title={t('common.errorDataTitle', 'We couldn’t load your portfolio')}
+        message={t(
+          'common.errorDataMessage',
+          'We could not load your portfolio data. Check your connection and try again, or refresh the page.'
+        )}
+        onTryAgain={retryLoadCritical}
+        devErrorMessage={error.message}
+        withFab
+      />
     )
   }
 
+  /* Loading finished with no portfolio and no error: rare (e.g. cancelled in-flight). Same recovery as error path. */
   if (!portfolioData) {
     return (
-      <>
-        <div className="error">
-          <div className="error-content">
-            <Icon name="info-circle" size={48} className="mb-4" />
-            <h2>{t('common.error')}</h2>
-            <p>{t('common.somethingWentWrong')}</p>
-            <Button variant="primary" className="mt-4" onClick={() => window.location.reload()}>
-              <Icon name="refresh" size={18} className="mr-2" />
-              {t('common.refresh')}
-            </Button>
-          </div>
-        </div>
-        <FloatingActionButton hideContact />
-      </>
+      <PortfolioErrorFallback
+        variant="data"
+        title={t('common.errorDataTitle', 'We couldn’t load your portfolio')}
+        message={t(
+          'common.errorDataMessage',
+          'We could not load your portfolio data. Check your connection and try again, or refresh the page.'
+        )}
+        onTryAgain={retryLoadCritical}
+        withFab
+      />
     )
   }
 
@@ -470,7 +468,7 @@ export function App() {
             { id: 'experience', label: String(t('navigation.experience')), icon: 'fa-solid fa-briefcase' },
             { id: 'education', label: String(t('navigation.education')), icon: 'fa-solid fa-graduation-cap' },
             { id: 'skills', label: String(t('navigation.skills')), icon: 'fa-solid fa-code' },
-            ...(portfolioData.projects && portfolioData.projects.length > 0 ? [{ id: 'projects', label: String(t('navigation.projects')), icon: 'fa-solid fa-folder' }] : []),
+            ...(projectsInArea.length > 0 ? [{ id: 'projects', label: String(t('navigation.projects')), icon: 'fa-solid fa-folder' }] : []),
             ...(portfolioData.certifications && portfolioData.certifications.length > 0 ? [{ id: 'certifications', label: String(t('navigation.certifications')), icon: 'fa-solid fa-certificate' }] : []),
             ...(portfolioData.testimonials && portfolioData.testimonials.length > 0 ? [{ id: 'testimonials', label: String(t('navigation.testimonials')), icon: 'fa-solid fa-quote-left' }] : []),
             ...(portfolioData.interests && portfolioData.interests.length > 0 ? [{ id: 'interests', label: String(t('navigation.interests')), icon: 'fa-solid fa-heart' }] : []),
@@ -499,9 +497,9 @@ export function App() {
           </Suspense>
           
           {/* Projects Section */}
-          {portfolioData.projects && portfolioData.projects.length > 0 && (
+          {projectsInArea.length > 0 && (
             <Suspense fallback={<SectionPlaceholder />}>
-              <Projects projects={portfolioData.projects} />
+              <Projects projects={projectsInArea} />
             </Suspense>
           )}
           
@@ -535,7 +533,7 @@ export function App() {
         </div>
 
 
-        <FloatingActionButton onContactClick={handleContactClick} />
+        <FloatingActionButton onContactClick={handleContactClick} hideContact={isContactModalOpen} />
           </div>
         )}
       </div>

@@ -15,12 +15,21 @@ export function getDataUrl(language: string, filename: string): string {
   return BASE_NORM + path
 }
 
-/** Resolves a path from `public/` (e.g. `/img/x.png`) for the current Vite base. */
+/** URL for language-agnostic portfolio data under `public/data/` (e.g. projects-area.json). */
+export function getSharedDataUrl(filename: string): string {
+  const path = `data/${filename}`.replace(/\/+/g, '/')
+  if (typeof window !== 'undefined') {
+    return new URL(path, window.location.origin + BASE_NORM).href
+  }
+  return BASE_NORM + path
+}
+
+/** Resolves a path from `public/` (e.g. `img/x.png`, `./img/x.png`, `/img/x.png`) for the current Vite base. */
 export function publicAssetUrl(path: string): string {
   if (path.startsWith('http://') || path.startsWith('https://')) {
     return path
   }
-  const clean = path.replace(/^\/+/, '')
+  const clean = path.replace(/^\.\//, '').replace(/^\/+/, '')
   if (typeof window !== 'undefined') {
     return new URL(clean, window.location.origin + BASE_NORM).href
   }

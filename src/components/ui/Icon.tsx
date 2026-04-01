@@ -51,6 +51,7 @@ import {
   Sun,
   Home,
   Menu,
+  Maximize2,
   type LucideIcon
 } from 'lucide-preact'
 import { useDebugId } from '../../lib/useDebugId'
@@ -134,7 +135,9 @@ const iconMap: Record<string, LucideIcon> = {
   'home': Home,
   'bars': Menu,
   'menu': Menu,
-  'navicon': Menu
+  'navicon': Menu,
+  'maximize': Maximize2,
+  'expand': Maximize2
 }
 
 export type IconName = keyof typeof iconMap
