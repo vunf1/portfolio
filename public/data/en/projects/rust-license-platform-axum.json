@@ -1,8 +1,8 @@
 {
   "id": "rust-license-platform-axum",
   "name": "Rust license platform (Axum + React)",
-  "description": "Containerized licensing API in Rust (Axum) with a React frontend, MongoDB persistence, JWT sessions, and signed machine verification headers.",
-  "longDescription": "This stack delivers a Podman/Docker-friendly licensing service: a Rust Axum API with OpenAPI exposure, MongoDB for persistence, and a React SPA for user flows. Verified users manage license keys through authenticated endpoints; machine verification uses timestamped HMAC signatures on dedicated headers. Development and production compose files split concerns while keeping health checks and build/test scripts reproducible.",
+  "description": "Containerized licensing API in Rust (Axum) with a React frontend, MongoDB persistence, JWT sessions, and signed machine verification—memory-safe service layer, explicit crypto boundaries, and OpenAPI as the integration contract.",
+  "longDescription": "This stack delivers a Podman/Docker-friendly licensing service: a Rust Axum API with OpenAPI exposure, MongoDB for persistence, and a React SPA for user flows. Verified users manage license keys through authenticated endpoints; machine verification uses timestamped HMAC signatures on dedicated headers so browser sessions and headless clients follow different trust models. Development and production compose files split concerns while health, readiness, and version endpoints support orchestration; build and test scripts keep the typed Rust boundary reproducible.",
   "technologies": [
     "Rust",
     "Axum",
@@ -15,6 +15,7 @@
     "Docker"
   ],
   "features": [
+    "Rust service layer for memory safety around crypto and persistence boundaries",
     "Health, readiness, and version endpoints for orchestration",
     "Registration, email verification, login, and session management",
     "License issue/verify flows with machine attestation headers",
@@ -22,24 +23,26 @@
     "Compose-based dev/prod stacks with documented ports",
     "Automated frontend and backend test runners included in the project"
   ],
-  "url": "https://github.com/vunf1/rust-web-license-sytem",
-  "demo": "https://github.com/vunf1/rust-web-license-sytem",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/rust-license-platform-axum.svg",
+  "period": "Jan 2026 – Feb 2026",
   "role": "Backend + API design + frontend integration",
   "teamSize": 1,
   "highlights": [
-    "Strongly typed Rust service boundary with explicit signing roles",
-    "Clear separation between browser sessions and machine API verification",
+    "Strongly typed Rust service boundary with explicit signing roles for JWT vs machine attestation",
+    "Clear separation between browser sessions and machine API verification—reduces token confusion",
+    "OpenAPI served for integrators; compose profiles for reproducible dev/prod shapes",
     "Container-first operations checklist in documentation"
   ],
   "challenges": "Dual client surfaces (humans in browsers vs machines calling APIs) multiply edge cases around authentication, replay, and clock skew.",
   "solutions": "Document timestamped HMAC verification, require production secrets for JWT and machine signing keys, and keep OpenAPI as the contract for integrators.",
   "security": [
-    "JWT signing secret required in production",
-    "Dedicated machine signing secret for X-Signature verification",
+    "JWT signing secret required in production; short-lived tokens preferred where configured",
+    "Dedicated machine signing secret for X-Signature verification—independent from browser JWT",
     "License digest pepper configurable per environment",
+    "Timestamped HMAC mitigates naive replay within documented clock-skew windows",
     "Explicit guidance: never commit secrets; use env files or orchestration secrets"
   ]
 }

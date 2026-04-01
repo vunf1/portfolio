@@ -1,8 +1,8 @@
 {
   "id": "stream-cs2-overlay-platform",
   "name": "Streaming · CS2 tournament overlay platform",
-  "description": "Rust backend ingesting CS2 Game State Integration, WebSocket fan-out, React control dashboard, browser overlays for OBS, and optional Tauri desktop packaging.",
-  "longDescription": "End-to-end tournament overlay stack: a Rust service accepts GSI payloads (optional token), maintains authoritative match state, and streams updates over WebSocket to a React dashboard and HTML overlay scenes tuned for OBS Browser Source. The dashboard supports full CRUD for teams and players, manual overrides with audit history, stale detection when GSI stops, JSON import/export, and optional PIN protection on mutating routes. Podman Compose supports development and production-style runs; Tauri can package a desktop build when needed.",
+  "description": "Rust backend ingesting CS2 Game State Integration with WebSocket fan-out, a React control plane, and OBS overlays—built around a single authoritative state, optional GSI auth, and auditable operator overrides.",
+  "longDescription": "End-to-end tournament overlay stack: a Rust service accepts GSI payloads (optional token), maintains authoritative match state, and streams updates over WebSocket to a React dashboard and HTML overlay scenes tuned for OBS Browser Source. The architecture keeps ingest, state transitions, and broadcast paths explicit so desyncs and stale data are detectable rather than silent. The dashboard supports full CRUD for teams and players, manual overrides with audit history, stale detection when GSI stops, JSON import/export, and optional PIN protection on mutating routes. Podman Compose supports development and production-style runs; Tauri can package a desktop build when needed.",
   "technologies": [
     "Rust",
     "React",
@@ -13,6 +13,7 @@
     "Podman"
   ],
   "features": [
+    "Rust core as single source of truth for match state consumed by dashboard and overlays",
     "GSI HTTP ingest with heartbeat/stale detection",
     "Dashboard for match control, assets, theming, and overrides",
     "Multiple overlay layouts (scoreboard, economy, veto, lower thirds, etc.)",
@@ -20,11 +21,11 @@
     "JSON tournament import/export",
     "manage.ps1 / Node TUI for developer ergonomics"
   ],
-  "url": "https://github.com/vunf1/Stream_CS2_Overlay",
-  "demo": "https://github.com/vunf1/Stream_CS2_Overlay",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/stream-cs2-overlay-platform.svg",
+  "period": "Mar 2026",
   "role": "Realtime systems + broadcast UX",
   "teamSize": 1,
   "highlights": [
@@ -35,8 +36,9 @@
   "challenges": "Live esports overlays must stay in sync within milliseconds while tolerating game crashes and partial GSI payloads.",
   "solutions": "Central Rust state machine, WebSocket delivery, stale indicators, and explicit override tooling with auditability.",
   "security": [
-    "Optional GSI auth token support",
-    "PIN-guarded write routes where enabled",
-    "Do not expose dashboard write APIs to untrusted networks without TLS and access control"
+    "Optional GSI auth token support to reduce spoofed ingest on shared LANs",
+    "PIN-guarded write routes where enabled; audit trail on manual overrides",
+    "Do not expose dashboard write APIs to untrusted networks without TLS and access control",
+    "Treat overlay URLs as broadcast-readable—avoid embedding operator secrets in browser sources"
   ]
 }

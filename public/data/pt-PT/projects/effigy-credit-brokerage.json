@@ -1,8 +1,8 @@
 {
   "id": "effigy-credit-brokerage",
   "name": "Effigy: Plataforma de intermediação de crédito",
-  "description": "Site público e simuladores de crédito para um intermediário de crédito em Portugal, com API JSON em PHP e área de administração React para taxas, equipa e parceiros.",
-  "longDescription": "Entrega de ponta a ponta para a Effigy: SPA Vite + React 18 com páginas de produto, simuladores configuráveis (habitação, pessoal, automóvel, transferência de crédito, obras), secções de equipa e parceiros alimentadas por uma API REST unificada em /api/, e fluxos de contacto / simulação persistidos num backend PHP 8 com armazenamento JSON em ficheiro e registo auditável. Rotas de administração protegem operações de CMS sobre taxas (integrações ECB/BdP/AT), equipa, parceiros e imagens de marca/redes sociais. As submissões usam ficheiros JSON por IP, locks exclusivos no registo partilhado de contactos e escrita atómica (ficheiro temporário + rename). No simulador público, o envio automático é debounced, com timeout de 15s no cliente, repetição em falhas transitórias 5xx/rede e deduplicação de payload idêntico em 60s, de modo que «guardado» só corresponde a resposta OK da API. A stack visa cPanel e Docker (PHP-FPM + Nginx), com constantes em shared/ consumidas pelo frontend em build.",
+  "description": "Site público e simuladores de crédito para um intermediário de crédito em Portugal, com API JSON em PHP em camadas, superfície de administração reforçada e SPA React—arquitectura assente em validação, persistência atómica e middleware de segurança explícito.",
+  "longDescription": "Entrega de ponta a ponta para a Effigy: SPA Vite + React 18 com páginas de produto, simuladores configuráveis (habitação, pessoal, automóvel, transferência de crédito, obras), secções de equipa e parceiros alimentadas por uma API REST unificada em /api/, e fluxos de contacto / simulação persistidos num backend PHP 8 com armazenamento JSON em ficheiro e registo auditável. O backend está organizado como uma cadeia de middleware explícita (CORS, CSRF, autenticação, imposição de HTTPS na administração) para que políticas transversais de segurança e transporte fiquem centralizadas em vez de espalhadas pelos handlers. Rotas de administração protegem operações de CMS sobre taxas (integrações ECB/BdP/AT), equipa, parceiros e imagens de marca/redes sociais. As submissões usam ficheiros JSON por IP, locks exclusivos no registo partilhado de contactos e escrita atómica (ficheiro temporário + rename). No simulador público, o envio automático é debounced, com timeout de 15s no cliente, repetição em falhas transitórias 5xx/rede e deduplicação de payload idêntico em 60s, de modo que «guardado» só corresponde a resposta OK da API. Constantes partilhadas em shared/ mantêm o SPA e os contratos PHP alinhados em build. A stack visa cPanel e Docker (PHP-FPM + Nginx).",
   "technologies": [
     "React 18",
     "TypeScript",
@@ -16,6 +16,7 @@
     "Docker"
   ],
   "features": [
+    "Middleware PHP em camadas para política de transporte, autenticação e CSRF—mantém os handlers focados na lógica de domínio",
     "Simuladores de crédito configuráveis com taxas em tempo real via /api/taxas",
     "Secções de parceiros e equipa com imagens servidas por /api/assets",
     "Submissões de contacto e simulação com validação no servidor; simulador no cliente: envio debounced, timeout 15s, repetições em 5xx/rede, deduplicação a 60s",
@@ -29,13 +30,13 @@
   "demo": "https://effigy.pt/",
   "embedInModal": false,
   "image": "https://effigy.pt/api/assets/images/brand/navbar-logo.svg",
-  "period": "2025",
+  "period": "dezembro de 2025 - março de 2026",
   "role": "Full-stack (frontend + API + segurança)",
   "teamSize": 2,
   "highlights": [
-    "Superfície /api única para consumidores públicos e admin",
-    "Locks em ficheiro e armazenamento por IP para fiabilidade das submissões",
-    "Modelo de sessão + CSRF para todas as operações de escrita na administração"
+    "Superfície /api única para consumidores públicos e admin com envelope de segurança consistente",
+    "Persistência segura para concorrência: flock, escrita atómica e pasta data/ fora de HTTP directo",
+    "Modelo de sessão + CSRF para todas as operações de escrita na administração; segredos e chaves de assinatura apenas via ambiente"
   ],
   "challenges": "Sites financeiros exigem simuladores corretos, taxas editáveis sem redeploy e proteção rigorosa da administração e dos dados de submissão em alojamento partilhado.",
   "solutions": "Router PHP com middleware explícito (CORS, CSRF, autenticação, HTTPS na admin), registos JSON para taxas e assets, e admin React que segue os mesmos contratos da app pública. Submissões com leitura–modificação–escrita bloqueada no índice de contactos e nos ficheiros por IP, escrita atómica de ficheiro completo, e pasta data/ fora do alcance HTTP direto. A camada do simulador alinha UX com fiabilidade: POSTs debounced, espera limitada, repetições controladas e supressão de duplicados sem marcar sucesso até a API responder OK.",

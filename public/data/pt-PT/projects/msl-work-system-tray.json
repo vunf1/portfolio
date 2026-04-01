@@ -1,21 +1,22 @@
 {
   "id": "msl-work-system-tray",
   "name": "Utilitários Windows · Ferramentas de tabuleiro (multi_scripts_lib/work)",
-  "description": "Scripts/utilitários orientados ao tabuleiro do sistema sob multi_scripts_lib/work/system tray para auxiliares Windows sempre disponíveis.",
-  "longDescription": "Utilitários ligeiros em `multi_scripts_lib/work/system tray` para tarefas em segundo plano acessíveis a partir do tabuleiro do sistema Windows, sem janela principal completa.",
+  "description": "Utilitários no tabuleiro do sistema em multi_scripts_lib/work/system tray—processos de longa duração onde menor privilégio, assinatura e degradação graciosa importam.",
+  "longDescription": "Utilitários ligeiros em `multi_scripts_lib/work/system tray` para tarefas em segundo plano acessíveis a partir do tabuleiro do sistema Windows, sem janela principal completa. Código residente no tabuleiro é altamente visível no endpoint: falhas devem ser discretas mas observáveis, e privilégios devem permanecer mínimos salvo necessidade explícita de elevação.",
   "technologies": [
     "Python",
     "Windows"
   ],
   "features": [
-    "Padrões de interação com o tabuleiro do sistema",
-    "Âmbito em multi_scripts_lib/work/system tray"
+    "Padrões de interação com o tabuleiro sem janelas de primeiro plano desnecessárias",
+    "Âmbito em multi_scripts_lib/work/system tray",
+    "Tratamento defensivo quando APIs do tabuleiro ou estado de sessão estão indisponíveis"
   ],
-  "url": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/system%20tray",
-  "demo": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/system%20tray",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2023–2026",
+  "image": "./img/projects/msl-work-system-tray.svg",
+  "period": "dezembro de 2025",
   "role": "Integração com shell Windows",
   "teamSize": 1,
   "highlights": [

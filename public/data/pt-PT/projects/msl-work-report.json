@@ -1,21 +1,22 @@
 {
   "id": "msl-work-report",
   "name": "Utilitários Windows · Auxiliares de relatório (multi_scripts_lib/work/report)",
-  "description": "Auxiliares de geração de relatórios sob multi_scripts_lib/work/report para saídas operacionais scriptadas no Windows.",
-  "longDescription": "Auxiliares em `multi_scripts_lib/work/report` para montar ou formatar relatórios operacionais no Windows. Resumo de alto nível aqui; detalhe de implementação na árvore de código ligada.",
+  "description": "Auxiliares de relatório em multi_scripts_lib/work/report—saídas estruturadas e orientação de sanitização antes de partilha externa.",
+  "longDescription": "Auxiliares em `multi_scripts_lib/work/report` para montar ou formatar relatórios operacionais no Windows. Dados recolhidos de anfitriões podem incluir identificadores sensíveis; as saídas devem ser revistas ou redigidas antes de sair de limites confiáveis. Resumo de alto nível aqui; detalhe na árvore de código ligada.",
   "technologies": [
     "Python",
     "Windows"
   ],
   "features": [
     "Localizada em multi_scripts_lib/work/report",
-    "Destinada a automação de relatórios repetível"
+    "Automação de relatórios repetível com localizações de saída previsíveis",
+    "Consciência de dados: campos operacionais podem exigir redacção em relatórios partilhados"
   ],
-  "url": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/report",
-  "demo": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/report",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2023–2026",
+  "image": "./img/projects/msl-work-report.svg",
+  "period": "março de 2025 - abril de 2025",
   "role": "Scripting de automação",
   "teamSize": 1,
   "highlights": [

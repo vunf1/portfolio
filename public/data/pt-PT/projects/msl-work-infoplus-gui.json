@@ -1,21 +1,22 @@
 {
   "id": "msl-work-infoplus-gui",
   "name": "Utilitários Windows · Info+ GUI (multi_scripts_lib/work)",
-  "description": "Companheira GUI adjacente a Info+_CLI dentro de multi_scripts_lib/work/info+_GUI para fluxos desktop Windows.",
-  "longDescription": "Interface gráfica complementar ao Info+ CLI no mesmo monorepo `multi_scripts_lib` (`work/info+_GUI`), para fluxos desktop em Windows. Âmbito reduzido, em conjunto com a entrada do CLI.",
+  "description": "GUI companheira de Info+_CLI em multi_scripts_lib/work/info+_GUI—arquitectura CLI/GUI emparelhada e superfície estreita para revisão de dependências.",
+  "longDescription": "Interface gráfica complementar ao Info+ CLI no mesmo monorepo `multi_scripts_lib` (`work/info+_GUI`), para fluxos desktop em Windows. Âmbito reduzido e emparelhado com a entrada CLI para raciocinar em conjunto sobre lógica e dependências partilhadas. Adequada a tooling interno onde a ergonomia GUI importa mas o modelo de ameaça ainda exige revisão de dependências antes de distribuição alargada.",
   "technologies": [
     "Python",
     "Windows desktop"
   ],
   "features": [
-    "Co-localizada com Info+ CLI sob multi_scripts_lib/work",
-    "Superfície focada em fluxos gráficos"
+    "Co-localizada com Info+ CLI sob multi_scripts_lib/work para manutenção conjunta",
+    "Superfície focada em fluxos gráficos—limita creep acidental de funcionalidades",
+    "Arquitectura emparelhada: reutilização de padrões entre CLI e GUI quando faz sentido"
   ],
-  "url": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/info%2B_GUI",
-  "demo": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/info%2B_GUI",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2023–2026",
+  "image": "./img/projects/msl-work-infoplus-gui.svg",
+  "period": "dezembro de 2024",
   "role": "Companheira desktop do utilitário",
   "teamSize": 1,
   "highlights": [
@@ -24,6 +25,8 @@
   "challenges": "Documentação pública limitada para esta fatia do monorepo.",
   "solutions": "Resumo breve; o código na ligação fornece o contexto completo.",
   "security": [
-    "Rever dependências da GUI para risco de cadeia de fornecimento antes da distribuição"
+    "Rever dependências da GUI para risco de cadeia de fornecimento antes da distribuição",
+    "Assinar binários ao sair de redes confiáveis; evitar auto-update de origens não verificadas",
+    "Manter caminhos de dados de utilizador fora de directórios world-writable quando possível"
   ]
 }

@@ -1,8 +1,8 @@
 {
   "id": "effigy-fiscal-rates-addon",
   "name": "Effigy: atualizador de dados fiscais (PHP)",
-  "description": "Subsistema PHP 8.2 modular que obtém e coloca em cache dados fiscais europeus e portugueses (Euribor, tabelas de impostos, IVA, inflação) para integração com a stack de crédito.",
-  "longDescription": "Empacotado como módulo em public_html com suporte Docker, o atualizador fiscal orquestra chamadas HTTPS a APIs oficiais (BCE, Eurostat, fontes oficiais portuguesas conforme a documentação do módulo), normaliza resultados, valida integridade de cache e alimenta JSON em cache e ficheiros de texto legados usados por simuladores a montante. Um CLI permite execuções manuais e testes; PHPUnit cobre componentes centrais. Docker Compose permite verificação local numa porta fixa sem tocar em hosts de produção.",
+  "description": "Subsistema PHP 8.2 modular que obtém e coloca em cache dados fiscais europeus e portugueses—TLS verificado, caches com integridade e pipelines testáveis para a montante de crédito nunca consumir números silenciosamente errados.",
+  "longDescription": "Empacotado como módulo em public_html com suporte Docker, o atualizador fiscal orquestra chamadas HTTPS a APIs oficiais (BCE, Eurostat, fontes oficiais portuguesas conforme a documentação do módulo), normaliza resultados, valida integridade de cache e alimenta JSON em cache e ficheiros de texto legados usados por simuladores a montante. A arquitectura separa clientes HTTP, transformação e persistência para que falhas sejam observáveis e repetições não corrompam estado bom anterior. Um CLI permite execuções manuais e testes; PHPUnit cobre componentes centrais. Docker Compose permite verificação local numa porta fixa sem tocar em hosts de produção.",
   "technologies": [
     "PHP 8.2",
     "Docker",
@@ -17,23 +17,24 @@
     "Dockerfile e compose para execuções locais reproduzíveis",
     "Separação entre cache, logs e código do módulo público"
   ],
-  "url": "https://github.com/vunf1/client-add-on-euribor",
-  "demo": "https://github.com/vunf1/client-add-on-euribor",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2025",
+  "image": "./img/projects/effigy-fiscal-rates-addon.svg",
+  "period": "outubro de 2025",
   "role": "Módulo backend + testes de integração",
   "teamSize": 1,
   "highlights": [
-    "Pipeline determinístico de APIs oficiais até artefactos consumidos pelos simuladores",
-    "Componentes PHP com testes para transformações fiscais",
-    "Ambiente em contentor para testes de fumo e QA local"
+    "Pipeline determinístico e testado de APIs oficiais até artefactos dos simuladores",
+    "Verificações de integridade e registo estruturado reduzem risco de corrupção silenciosa do cache",
+    "Ambiente em contentor para smoke tests e QA sem tocar em produção"
   ],
   "challenges": "Dados financeiros de referência têm de permanecer atuais e verificáveis perante alterações das APIs a montante, sem corrupção silenciosa do cache.",
   "solutions": "Classe orquestradora central, validação explícita de cache, registo estruturado e testes automatizados sobre o atualizador e o cliente HTTP.",
   "security": [
-    "Cliente HTTPS com verificação de certificados ativa",
-    "Segredos via templates de ambiente — não embutidos no código do módulo",
-    "Layout de ficheiros com menor privilégio para cache e logs"
+    "Cliente HTTPS com verificação de certificados ativa—sem descidas silenciosas para canais inseguros",
+    "Segredos via templates de ambiente—não embutidos no código do módulo",
+    "Layout de ficheiros com menor privilégio para cache e logs; separação de raízes web executáveis onde documentado",
+    "Erros das APIs a montante e falhas de parse reflectidos em logs em vez de sobrescrever cache válido à cega"
   ]
 }

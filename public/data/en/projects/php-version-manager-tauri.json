@@ -1,8 +1,8 @@
 {
   "id": "php-version-manager-tauri",
   "name": "PHP Version Manager (Tauri + Rust + React)",
-  "description": "Cross-platform GUI to install, switch, and remove PHP runtimes with checksum-verified downloads, PATH management, and atomic operations with rollback.",
-  "longDescription": "phpvm targets developers who juggle multiple PHP versions: a Tauri shell hosts a React UI that lists installed and available releases, tracks download cache with checksum verification, switches active versions with PATH updates, and removes unused builds. Rust on the backend provides memory-safe file operations with rollback support, while the interface exposes progress reporting and settings for mirrors and cache locations.",
+  "description": "Cross-platform GUI to install, switch, and remove PHP runtimes—integrity-verified downloads, atomic filesystem operations with rollback, and a memory-safe Rust core behind the React UI.",
+  "longDescription": "phpvm targets developers who juggle multiple PHP versions: a Tauri shell hosts a React UI that lists installed and available releases, tracks download cache with checksum verification, switches active versions with PATH updates, and removes unused builds. Rust on the backend provides memory-safe file operations with rollback support so partial installs are recoverable; the interface exposes progress reporting and settings for mirrors and cache locations. The design treats runtime binaries as supply-chain inputs that must be verified before execution.",
   "technologies": [
     "Rust",
     "Tauri",
@@ -17,23 +17,26 @@
     "Progress reporting for long-running downloads",
     "Cross-platform focus with primary support for Windows and Linux"
   ],
-  "url": "https://github.com/vunf1/php-version-manager",
-  "demo": "https://github.com/vunf1/php-version-manager",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/php-version-manager-tauri.svg",
+  "period": "Jan 2026",
   "role": "Systems tooling + desktop UX",
   "teamSize": 1,
   "highlights": [
-    "Combines Rust safety with a modern React interface",
-    "Operational focus: checksums, atomic installs, rollback",
-    "Developer-experience oriented tabbed workflows"
+    "Rust-backed filesystem mutations with rollback—reduces bricked dev shells from half-written trees",
+    "Operational focus: checksum-verified tarballs before activation",
+    "Developer-experience oriented tabbed workflows with explicit destructive-action UX",
+    "Separation between UI state and installation engine for easier auditing"
   ],
   "challenges": "Filesystem and PATH mutations are risky on end-user machines; mistakes brick shells or leave partial installs.",
   "solutions": "Atomic operations with rollback, verified checksum pipeline, and explicit UX around destructive actions.",
   "security": [
-    "Verify download checksums before install",
+    "Verify download checksums before install; prefer official mirrors",
     "Avoid running the GUI with elevated privileges unless necessary",
-    "Store settings without embedding secrets"
+    "Store settings without embedding secrets or API tokens",
+    "Atomic install paths prevent inconsistent half-upgrades observable by other tools",
+    "User PATH mutations are explicit in UX to avoid silent system-wide changes without consent"
   ]
 }

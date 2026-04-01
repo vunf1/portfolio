@@ -1,8 +1,8 @@
 {
   "id": "site-backup-packaging",
   "name": "Web snapshot backup packaging",
-  "description": "Packaged snapshots of a public site tree plus dated archives for hand-offs—focused on reproducible backup artifacts rather than live hosting configuration.",
-  "longDescription": "Versioned zip archives alongside a public_html-style tree so teams can compare, restore, or audit static and PHP deployments. The layout supports disciplined packaging and clear separation from credentials and internal server paths.",
+  "description": "Packaged snapshots of a public site tree plus dated archives for hand-offs—data-governance aware: reproducible artifacts, explicit exclusion guidance, and no credential leakage in shared bundles.",
+  "longDescription": "Versioned zip archives alongside a public_html-style tree so teams can compare, restore, or audit static and PHP deployments. The layout supports disciplined packaging, `.gitignore`-style thinking for large binaries, and clear separation from credentials and internal server paths—treating backups as a security object, not only a recovery object.",
   "technologies": [
     "ZIP archives",
     "Static/PHP site tree"
@@ -12,16 +12,17 @@
     "Co-located site tree for comparison with packaged outputs",
     ".gitignore patterns for large binaries where appropriate"
   ],
-  "url": "https://github.com/vunf1/backup-nirvanamed",
-  "demo": "https://github.com/vunf1/backup-nirvanamed",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2025",
+  "image": "./img/projects/site-backup-packaging.svg",
+  "period": "Dec 2025",
   "role": "Backup hygiene and release artifacts",
   "teamSize": 1,
   "highlights": [
-    "Demonstrates operational maturity around site snapshots",
-    "Useful for migration or audit conversations with stakeholders"
+    "Operational maturity around site snapshots and verifiable point-in-time artifacts",
+    "Useful for migration, compliance, and audit conversations with stakeholders",
+    "Security-conscious packaging: know what must never enter a shared archive"
   ],
   "challenges": "Backups can accidentally include secrets if entire trees are archived without exclusion rules.",
   "solutions": "Document what to exclude (.env, private keys), prefer sanitized exports for sharing, and never publish archive passwords.",

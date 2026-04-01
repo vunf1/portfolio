@@ -1,8 +1,8 @@
 {
   "id": "php-version-manager-tauri",
   "name": "Gestor de versões PHP (Tauri + Rust + React)",
-  "description": "GUI multiplataforma para instalar, alternar e remover runtimes PHP com downloads verificados por checksum, gestão de PATH e operações atómicas com rollback.",
-  "longDescription": "O phpvm dirige-se a programadores que alternam várias versões PHP: um shell Tauri aloja UI React que lista versões instaladas e disponíveis, gere cache de download com verificação de checksum, alterna versões ativas com atualizações de PATH e remove builds não usados. Rust no backend garante operações de ficheiro memory-safe com suporte a rollback, enquanto a interface expõe progresso e definições para mirrors e localização de cache.",
+  "description": "GUI multiplataforma para instalar, alternar e remover runtimes PHP—downloads com verificação de integridade, operações atómicas com rollback e núcleo Rust memory-safe por detrás da UI React.",
+  "longDescription": "O phpvm dirige-se a programadores que alternam várias versões PHP: um shell Tauri aloja UI React que lista versões instaladas e disponíveis, gere cache de download com verificação de checksum, alterna versões ativas com atualizações de PATH e remove builds não usados. Rust no backend garante operações de ficheiro memory-safe com rollback para recuperar instalações parciais; a interface expõe progresso e definições para mirrors e cache. O desenho trata binários de runtime como inputs de cadeia de fornecimento a verificar antes da execução.",
   "technologies": [
     "Rust",
     "Tauri",
@@ -17,23 +17,26 @@
     "Relatório de progresso para downloads longos",
     "Alvos multiplataforma (Windows e Linux destacados no README)"
   ],
-  "url": "https://github.com/vunf1/php-version-manager",
-  "demo": "https://github.com/vunf1/php-version-manager",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/php-version-manager-tauri.svg",
+  "period": "janeiro de 2026",
   "role": "Ferramentas de sistemas + UX desktop",
   "teamSize": 1,
   "highlights": [
-    "Combina segurança de memória Rust com interface React moderna",
-    "Foco operacional: checksums, instalações atómicas, rollback",
-    "Fluxos com separadores orientados à experiência do programador"
+    "Mutações do sistema de ficheiros com rollback em Rust—menos consolas partidas por árvores a meio",
+    "Foco operacional: tarballs verificados por checksum antes da activação",
+    "Fluxos com separadores e UX explícita em torno de acções destrutivas",
+    "Separação entre estado da UI e motor de instalação para auditoria mais simples"
   ],
   "challenges": "Mutações do sistema de ficheiros e PATH são arriscadas nas máquinas dos utilizadores; erros partem consolas ou deixam instalações a meio.",
   "solutions": "Operações atómicas com rollback, pipeline de checksum verificado, e UX explícita em torno de ações destrutivas.",
   "security": [
-    "Verificar checksums de download antes da instalação",
+    "Verificar checksums de download antes da instalação; preferir mirrors oficiais",
     "Evitar executar a GUI com privilégios elevados salvo necessidade",
-    "Armazenar definições sem embutir segredos"
+    "Armazenar definições sem embutir segredos ou tokens de API",
+    "Caminhos de instalação atómicos evitam upgrades inconsistentes observáveis por outras ferramentas",
+    "Mutações de PATH explícitas na UX para evitar alterações silenciosas em todo o sistema sem consentimento"
   ]
 }

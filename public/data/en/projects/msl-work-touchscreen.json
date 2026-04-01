@@ -1,21 +1,22 @@
 {
   "id": "msl-work-touchscreen",
   "name": "Windows utilities · Touchscreen helpers (multi_scripts_lib/work)",
-  "description": "Touchscreen-oriented utilities under multi_scripts_lib/work/touchscreen for kiosk or field hardware scenarios.",
-  "longDescription": "Utilities under `multi_scripts_lib/work/touchscreen` for touch-first Windows setups such as kiosks or field devices. Short summary; full detail in the linked source.",
+  "description": "Touchscreen utilities under multi_scripts_lib/work/touchscreen for kiosk or field hardware—UX and hardening considerations for unattended devices.",
+  "longDescription": "Utilities under `multi_scripts_lib/work/touchscreen` for touch-first Windows setups such as kiosks or field devices. Kiosk deployments imply a stricter threat model: physical access, shared sessions, and accidental escape from full-screen shells. Short summary; full detail in the linked source.",
   "technologies": [
     "Python",
     "Windows"
   ],
   "features": [
     "Located under multi_scripts_lib/work/touchscreen",
-    "Targets touch-first interaction constraints"
+    "Targets touch-first interaction constraints (target sizes, scaling)",
+    "Kiosk-oriented guidance: minimise escape hatches and privileged shortcuts where required"
   ],
-  "url": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/touchscreen",
-  "demo": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/touchscreen",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2023–2026",
+  "image": "./img/projects/msl-work-touchscreen.svg",
+  "period": "Dec 2024",
   "role": "Hardware-adjacent scripting",
   "teamSize": 1,
   "highlights": [

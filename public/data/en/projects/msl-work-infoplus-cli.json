@@ -1,28 +1,30 @@
 {
   "id": "msl-work-infoplus-cli",
   "name": "Windows utilities · Info+ CLI (multi_scripts_lib/work)",
-  "description": "PyInstaller-oriented CLI utility living under multi_scripts_lib/work/Info+_CLI—packaged Windows tooling with documented build flags.",
-  "longDescription": "CLI utility within the `multi_scripts_lib` monorepo (`work/Info+_CLI`), built with PyInstaller (`--onefile`, icon, version resources) around `runScriptDecode.py`. Presented here as its own entry alongside other `work/` utilities rather than as the whole monorepo. Implementation lives under the monorepo’s `work` folder in source control.",
+  "description": "PyInstaller-oriented CLI utility under multi_scripts_lib/work/Info+_CLI—reproducible Windows builds, version metadata embedded, and supply-chain-aware distribution guidance.",
+  "longDescription": "CLI utility within the `multi_scripts_lib` monorepo (`work/Info+_CLI`), built with PyInstaller (`--onefile`, icon, version resources) around `runScriptDecode.py`. The packaging recipe favours deterministic build flags and traceable version resources so operators can verify what they ship. Presented here as its own entry alongside other `work/` utilities rather than as the whole monorepo. Implementation lives under the monorepo’s `work` folder in source control.",
   "technologies": [
     "Python",
     "PyInstaller",
     "Windows"
   ],
   "features": [
-    "One-file executable packaging recipe",
-    "Version resource and icon embedding guidance",
-    "Isolated subtree inside multi_scripts_lib/work"
+    "One-file executable packaging recipe with documented PyInstaller flags",
+    "Version resource and icon embedding for traceability and installer hygiene",
+    "Isolated subtree inside multi_scripts_lib/work—clear module boundary",
+    "Build reproducibility mindset: minimise implicit environment dependencies"
   ],
-  "url": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/Info%2B_CLI",
-  "demo": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/Info%2B_CLI",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2023–2026",
+  "image": "./img/projects/msl-work-infoplus-cli.svg",
+  "period": "Dec 2024 – Dec 2025",
   "role": "Packaged utility authoring",
   "teamSize": 1,
   "highlights": [
-    "Demonstrates shipping Windows-friendly CLI binaries",
-    "Clear monorepo path for discoverability"
+    "Shipping Windows-friendly CLI binaries with embedded version metadata",
+    "Clear monorepo path for discoverability and ownership of dependencies",
+    "Security: code signing and secret-free frozen bundles for external distribution"
   ],
   "challenges": "Small monorepo slices often ship with minimal documentation.",
   "solutions": "Describe capabilities that match the code and build instructions; the source link points to the exact subtree.",

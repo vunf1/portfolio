@@ -1,8 +1,8 @@
 {
   "id": "licensehub-php-preact",
   "name": "LicenseHub Pro: PHP + Preact license platform",
-  "description": "Full-stack license management with Vite/Preact, PHP 8, MySQL, Stripe, Argon2id, optional 2FA, and GDPR-oriented account flows.",
-  "longDescription": "LicenseHub Pro pairs a Preact + TypeScript frontend (Tailwind, i18n EN/pt-PT, accessibility-minded UI) with a PHP REST backend backed by MySQL. It covers secure authentication, payment-gated service creation with Stripe (cards, MB WAY, Multibanco where configured), license lifecycle (issue, rotate, suspend, revoke), device binding with grace periods, HMAC-based keys, audit trails, and OpenAPI 3.1 documentation. Docker-oriented development and deployment paths are documented alongside config-driven behaviour.",
+  "description": "Full-stack license management with Vite/Preact, PHP 8, MySQL, Stripe, Argon2id, optional 2FA, and GDPR-oriented flows—layered auth, auditability, and API contracts suitable for a production-grade licensing surface.",
+  "longDescription": "LicenseHub Pro pairs a Preact + TypeScript frontend (Tailwind, i18n EN/pt-PT, accessibility-minded UI) with a PHP REST backend backed by MySQL. It covers secure authentication, payment-gated service creation with Stripe (cards, MB WAY, Multibanco where configured), license lifecycle (issue, rotate, suspend, revoke), device binding with grace periods, HMAC-based keys, audit trails, and OpenAPI 3.1 documentation. The backend is organised around explicit role separation, CSRF-aware session flows, and structured audit logs so security decisions are enforceable, not advisory. Docker-oriented development and deployment paths are documented alongside config-driven behaviour.",
   "technologies": [
     "Preact",
     "TypeScript",
@@ -15,6 +15,7 @@
     "Docker"
   ],
   "features": [
+    "OpenAPI 3.1 as the machine-readable contract for integrators and internal review",
     "Argon2id password hashing with optional TOTP 2FA and backup codes",
     "CSRF protection, secure sessions, rate limiting, and brute-force mitigations",
     "Stripe checkout flows with refund and license state coordination",
@@ -22,25 +23,27 @@
     "Internationalized UI with dark/light themes",
     "Device binding and machine verification patterns for software licensing"
   ],
-  "url": "https://github.com/vunf1/web-License-System",
-  "demo": "https://github.com/vunf1/web-License-System",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/licensehub-php-preact.svg",
+  "period": "Sep 2025",
   "role": "Full-stack product engineering",
   "teamSize": 1,
   "highlights": [
-    "Security-first defaults across auth, payments, and license APIs",
-    "Configuration-driven behaviour for straightforward operations",
+    "Security-first defaults across auth, payments, and license APIs—not bolt-on hardening",
+    "HMAC and peppered digests for license material; structured audit trail for accountability",
+    "Configuration-driven behaviour for straightforward operations and safer rotations",
     "Documented GDPR export/delete flows in product materials"
   ],
   "challenges": "Licensing platforms sit at the intersection of payments, cryptographic key hygiene, and abuse resistance; mistakes echo into customer trust.",
   "solutions": "Layer explicit CSRF and session controls, structured audit logs, Stripe webhooks with idempotent handling, and environment-only secrets with rotation guidance.",
   "security": [
-    "Argon2id for passwords; TOTP 2FA optional",
+    "Argon2id for passwords; TOTP 2FA optional with backup codes",
     "CSRF tokens on mutating requests; secure cookie flags in production",
     "Rate limiting and brute-force protections on sensitive endpoints",
-    "Stripe and webhook secrets confined to environment configuration",
-    "HMAC and peppered digests for license material—no plaintext key material in logs"
+    "Stripe and webhook secrets confined to environment configuration; idempotent webhook handling",
+    "HMAC and peppered digests for license material—no plaintext key material in logs",
+    "Role-aware REST surface with audit logging for privileged license operations"
   ]
 }

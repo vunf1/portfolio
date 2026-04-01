@@ -2,7 +2,7 @@
   "id": "wisdom-jobs-tracking",
   "name": "Wisdom: Multi-tenant jobs tracking platform",
   "description": "FastAPI + MongoDB backend, React + TypeScript SPA, optional Tauri desktop shell, Podman/Docker-first ops, and extensive security/deployment documentation.",
-  "longDescription": "Wisdom is a multi-tenant job-tracking product: a secure FastAPI API on MongoDB (JWT auth, company-scoped data, rich domain flows described in backend documentation) and a Vite-powered React frontend with TypeScript. The stack runs under Podman or Docker Compose variants (development, Gunicorn, Nuitka-hardened builds, registry-based pulls). A Tauri desktop wrapper reuses the web UI with its own security guidance. Documentation covers RBAC, metrics, reporting, webhooks, environment variables, and incident response—operations are treated as a first-class concern.",
+  "longDescription": "Wisdom is a multi-tenant job-tracking product: a secure FastAPI API on MongoDB (JWT auth, company-scoped data, rich domain flows described in backend documentation) and a Vite-powered React frontend with TypeScript. Tenant isolation and RBAC are documented as part of the architecture—not as an afterthought—alongside metrics, reporting, and webhooks. The stack runs under Podman or Docker Compose variants (development, Gunicorn, Nuitka-hardened builds, registry-based pulls). A Tauri desktop wrapper reuses the web UI with its own security guidance. Documentation covers security architecture, environment variables, and incident response—operations are treated as a first-class concern equal to product features.",
   "technologies": [
     "FastAPI",
     "Python 3.12",
@@ -16,18 +16,18 @@
     "JWT"
   ],
   "features": [
-    "Multi-tenant REST API with documented flows (auth, jobs, clients, processos, companies, branding)",
+    "Multi-tenant REST API with documented flows and company-scoped data boundaries (auth, jobs, clients, processos, companies, branding)",
     "React SPA with shared environment configuration and production build pipeline",
     "Multiple compose topologies for dev, scaled API workers, and compiled backend options",
     "Tauri desktop packaging with security-focused documentation",
     "Windows and shell manage menus for repeatable deployments",
     "Deep documentation index for security architecture and data protection"
   ],
-  "url": "https://github.com/vunf1/Jobs-Tracking-Personal",
-  "demo": "https://github.com/vunf1/Jobs-Tracking-Personal",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/wisdom_logo.png",
+  "period": "Sep 2025 – Mar 2026",
   "role": "Full-stack platform + hardening + deployment automation",
   "teamSize": 1,
   "highlights": [

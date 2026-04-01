@@ -1,25 +1,26 @@
 {
   "id": "image-database-manager-pyqt",
   "name": "Image Database Manager (PyQt5)",
-  "description": "PyQt5 GUI that ingests JSON image records, builds dynamic tables, resolves folder paths across naming conventions, and opens matching directories.",
-  "longDescription": "Users maintain a JSON-defined image catalog; the app renders sortable, filterable tables, builds candidate folder paths using several naming strategies (space, underscore, concatenated, model-only), checks that paths exist, and opens the system file manager when a match is found. Settings persist in `settings.json`; optional packaged builds bundle icons and backgrounds.",
+  "description": "PyQt5 GUI that ingests JSON image records, builds dynamic tables, resolves folder paths across naming conventions, and opens matching directories—with validation and path hygiene before shelling out to the OS file manager.",
+  "longDescription": "Users maintain a JSON-defined image catalog; the app renders sortable, filterable tables, builds candidate folder paths using several naming strategies (space, underscore, concatenated, model-only), checks that paths exist, and opens the system file manager when a match is found. JSON sources are validated before filesystem operations; candidate paths are checked to reduce traversal surprises when data is messy or user-edited. Settings persist in `settings.json`; optional packaged builds bundle icons and backgrounds.",
   "technologies": [
     "Python",
     "PyQt5",
     "JSON"
   ],
   "features": [
-    "JSON ingestion to dynamic tables",
-    "Multiple folder naming strategies",
-    "Error surfacing when paths are missing",
+    "JSON ingestion to dynamic tables with validation before FS access",
+    "Multiple folder naming strategies for messy on-disk conventions",
+    "Error surfacing when paths are missing or JSON is malformed",
     "Configurable settings file",
-    "Optional build script with asset bundling"
+    "Optional build script with asset bundling",
+    "Defensive normalisation of user-provided path components"
   ],
-  "url": "https://github.com/vunf1/Dynamic-Database",
-  "demo": "https://github.com/vunf1/Dynamic-Database",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2022–2026",
+  "image": "./img/projects/image-database-manager-pyqt.svg",
+  "period": "Dec 2024",
   "role": "Desktop data navigator",
   "teamSize": 1,
   "highlights": [
@@ -31,6 +32,8 @@
   "security": [
     "Never publish decryption passwords in public documentation or marketing material",
     "Validate JSON sources before executing filesystem operations",
-    "Sanitize paths to avoid traversal surprises"
+    "Sanitize and normalise paths to avoid traversal surprises from untrusted catalog edits",
+    "Open-in-FM actions only after existence checks—no blind shelling to arbitrary strings",
+    "Treat shared JSON catalogs as untrusted input when they originate from third parties"
   ]
 }

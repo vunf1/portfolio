@@ -2,7 +2,7 @@
   "id": "wisdom-jobs-tracking",
   "name": "Wisdom: Plataforma multi-inquilino de acompanhamento de trabalhos",
   "description": "Backend FastAPI + MongoDB, SPA React + TypeScript, shell desktop Tauri opcional, operações Podman/Docker-first e documentação extensa de segurança e deploy.",
-  "longDescription": "O Wisdom é um produto multi-inquilino de acompanhamento de trabalhos: API FastAPI segura sobre MongoDB (JWT, dados por empresa, fluxos de domínio descritos na documentação de backend) e frontend React com Vite e TypeScript. A stack corre sob Podman ou Docker Compose (desenvolvimento, Gunicorn, builds Nuitka endurecidos, pulls a partir de registry). Um invólucro desktop Tauri reutiliza a UI web com orientação de segurança própria. A documentação cobre RBAC, métricas, relatórios, webhooks, variáveis de ambiente e resposta a incidentes — operação e segurança têm o mesmo peso que as funcionalidades de produto.",
+  "longDescription": "O Wisdom é um produto multi-inquilino de acompanhamento de trabalhos: API FastAPI segura sobre MongoDB (JWT, dados por empresa, fluxos de domínio descritos na documentação de backend) e frontend React com Vite e TypeScript. O isolamento entre inquilinos e o RBAC fazem parte da arquitectura documentada—não são notas tardias—junto com métricas, relatórios e webhooks. A stack corre sob Podman ou Docker Compose (desenvolvimento, Gunicorn, builds Nuitka endurecidos, pulls a partir de registry). Um invólucro desktop Tauri reutiliza a UI web com orientação de segurança própria. A documentação cobre arquitectura de segurança, variáveis de ambiente e resposta a incidentes—operação e segurança têm o mesmo peso que as funcionalidades de produto.",
   "technologies": [
     "FastAPI",
     "Python 3.12",
@@ -16,18 +16,18 @@
     "JWT"
   ],
   "features": [
-    "API REST multi-inquilino com fluxos documentados (auth, trabalhos, clientes, processos, empresas, branding)",
+    "API REST multi-inquilino com fluxos documentados e limites de dados por empresa (auth, trabalhos, clientes, processos, empresas, branding)",
     "SPA React com configuração de ambiente partilhada e pipeline de build de produção",
     "Várias topologias compose para dev, workers API escalados e opções de backend compiladas",
     "Empacotamento desktop Tauri com documentação focada em segurança",
     "Menus manage Windows/shell para deploys repetíveis",
     "Índice profundo de documentação para arquitetura de segurança e proteção de dados"
   ],
-  "url": "https://github.com/vunf1/Jobs-Tracking-Personal",
-  "demo": "https://github.com/vunf1/Jobs-Tracking-Personal",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/wisdom_logo.png",
+  "period": "setembro de 2025 - março de 2026",
   "role": "Plataforma full-stack + endurecimento + automação de deploy",
   "teamSize": 1,
   "highlights": [

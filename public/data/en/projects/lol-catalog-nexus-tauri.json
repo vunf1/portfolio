@@ -1,8 +1,8 @@
 {
   "id": "lol-catalog-nexus-tauri",
   "name": "LoL Catalog Nexus (Tauri + Vite)",
-  "description": "Offline-first League of Legends cosmetics catalog: Tauri + Rust core, Vite UI, bundled JSON schema, prefetch pipeline for CDN assets, zero network on cold start.",
-  "longDescription": "Desktop catalog for champions, skins, and chromas. Rust owns domain models, storage adapters, and Tauri commands; the frontend uses Vite + TypeScript with generated types from `lol_localdb.schema.json`. Data Dragon and CommunityDragon feed prefetch scripts that hydrate `frontend/public/lol-asset-cache/` so production builds can boot without network I/O. Owned state is tracked per entity with schema migrations versioned in metadata.",
+  "description": "Offline-first League of Legends cosmetics catalog: Tauri + Rust core, Vite UI, schema-versioned local DB, and a verified prefetch pipeline—strict IPC and supply-chain aware asset handling.",
+  "longDescription": "Desktop catalog for champions, skins, and chromas. Rust owns domain models, storage adapters, and Tauri commands; the frontend uses Vite + TypeScript with generated types from `lol_localdb.schema.json` so UI and persistence share one contract. Data Dragon and CommunityDragon feed prefetch scripts that hydrate `frontend/public/lol-asset-cache/` so production builds can boot without network I/O. Owned state is tracked per entity with schema migrations versioned in metadata. The architecture treats third-party CDNs as untrusted inputs: verification belongs in the prefetch tooling, not assumed at runtime.",
   "technologies": [
     "Tauri",
     "Rust",
@@ -11,17 +11,18 @@
     "JSON Schema"
   ],
   "features": [
+    "Rust–Tauri IPC boundary with explicit commands instead of ad-hoc shell access",
     "Bundled local database with schema versioning",
     "Prefetch workflow for metadata and art assets",
     "IPC boundary between UI and Rust services",
     "Optional Riot API usage for rotation (non-core)",
     "Tests and fixtures for local DB behaviour"
   ],
-  "url": "https://github.com/vunf1/LoL-Catalog-Nexus",
-  "demo": "https://github.com/vunf1/LoL-Catalog-Nexus",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/lol-catalog-nexus-tauri.svg",
+  "period": "Jan 2026",
   "role": "Desktop product + data pipeline",
   "teamSize": 1,
   "highlights": [
@@ -34,6 +35,8 @@
   "security": [
     "Treat third-party CDNs as untrusted—verify downloads in prefetch tooling",
     "Avoid storing Riot credentials in the offline catalog; optional API is peripheral",
-    "Ship without embedding personal player account data"
+    "Ship without embedding personal player account data",
+    "Schema migrations are explicit to prevent silent data corruption across upgrades",
+    "Tauri surface minimisation: only expose commands the UI truly needs"
   ]
 }

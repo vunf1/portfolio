@@ -1,8 +1,8 @@
 {
   "id": "stream-futebol-scoreboard",
   "name": "Streaming · Marcador de futebol (Flask + Preact)",
-  "description": "Marcador de futebol em tempo real para transmissão: backend Flask + Socket.IO, frontend Preact + TypeScript, sincronização WebSocket e layouts para OBS.",
-  "longDescription": "Sistema duplo: Python Flask com Socket.IO gere salas, observadores de ficheiros e gestão de assets, enquanto SPA Preact renderiza cenas de overlay responsivas para software de streaming. Inclui multi-campo, temporizadores, rotação de patrocinadores, quadros de penáltis, sequências de intro e componentes modulares. Ferramentas PyInstaller acompanham o backend para quem precisa de executáveis autónomos.",
+  "description": "Marcador de futebol em tempo real: Flask + Socket.IO, Preact + TypeScript, salas com WebSocket e contratos de eventos documentados—resiliência quando o OBS recarrega fontes.",
+  "longDescription": "Sistema duplo: Python Flask com Socket.IO gere salas, observadores de ficheiros e gestão de assets, enquanto SPA Preact renderiza cenas de overlay responsivas para software de streaming. Inclui multi-campo, temporizadores, rotação de patrocinadores, quadros de penáltis, sequências de intro e componentes modulares. A arquitectura separada mantém transporte (salas, reconexões, formas de payload) documentado para recuperação previsível quando o OBS ou a mesa de controlo reiniciam. Ferramentas PyInstaller acompanham o backend para quem precisa de executáveis autónomos.",
   "technologies": [
     "Python",
     "Flask",
@@ -12,23 +12,25 @@
     "WebSocket"
   ],
   "features": [
+    "Payloads de eventos Socket.IO documentados para estabilidade do contrato mesa ↔ overlay",
     "Arquitetura multi-sala Socket.IO",
     "Observadores de ficheiros a ligar ferramentas de controlo ao estado web",
     "Componentes Preact para marcador, patrocinadores, intros e penáltis",
     "Auxiliares PyInstaller para builds distribuíveis",
     "Predefinições de layout orientadas a OBS/Streamlabs"
   ],
-  "url": "https://github.com/vunf1/Stream_Futebol_Scoreboard",
-  "demo": "https://github.com/vunf1/Stream_Futebol_Scoreboard",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2023–2026",
+  "image": "./img/projects/stream-futebol-scoreboard.svg",
+  "period": "julho de 2025 - março de 2026",
   "role": "Engenharia de overlay de transmissão",
   "teamSize": 1,
   "highlights": [
-    "Separação clara entre servidor em tempo real e UI Preact leve",
+    "Separação clara entre servidor em tempo real e UI Preact leve—resiliência operacional sob reloads",
     "Concebido para recintos com vários campos em paralelo",
-    "Caminho de empacotamento para equipas que preferem binários autónomos"
+    "Caminho de empacotamento para equipas que preferem binários autónomos",
+    "Postura de segurança assume LANs de transmissão confiáveis salvo autenticação em endpoints de controlo"
   ],
   "challenges": "Stacks híbridas Python + JS têm de alinhar evolução de esquema e comportamento de reconexão quando o OBS recarrega browser sources.",
   "solutions": "Salas Socket.IO, payloads de eventos documentados e arranque resiliente no cliente Preact.",

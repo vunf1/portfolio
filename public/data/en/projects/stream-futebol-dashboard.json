@@ -1,8 +1,8 @@
 {
   "id": "stream-futebol-dashboard",
   "name": "Streaming · Football score dashboard (Python desktop)",
-  "description": "CustomTkinter desktop control surface for live football scores with MongoDB team data, OBS text exports, penalty workflows, and optional licensing hooks.",
-  "longDescription": "Desktop-first control app for venue staff: increment and decrement scores per pitch, manage penalties, persist teams in MongoDB (including Atlas-compatible setups), export `.txt` files for OBS text sources, and run multiple independent instances. Includes dark-mode UI, notifications, PIN-protected admin views, encrypted environment handling, and PyInstaller packaging for distribution.",
+  "description": "CustomTkinter desktop control surface for live football scores with MongoDB team data, OBS text exports, and PIN-gated admin—layered safeguards around destructive actions and credential handling.",
+  "longDescription": "Desktop-first control app for venue staff: increment and decrement scores per pitch, manage penalties, persist teams in MongoDB (including Atlas-compatible setups), export `.txt` files for OBS text sources, and run multiple independent instances. Architecture separates scorekeeping views from administrative mutations; encrypted environment handling reduces plaintext exposure of Atlas URIs on disk. Includes dark-mode UI, notifications, PIN-protected admin views, and PyInstaller packaging for distribution.",
   "technologies": [
     "Python",
     "CustomTkinter",
@@ -12,6 +12,7 @@
     "psutil"
   ],
   "features": [
+    "Separation between operator scorekeeping UI and PIN-gated administrative actions",
     "Multi-instance scoreboards for parallel pitches",
     "Mongo-backed autocomplete for team metadata",
     "Penalty shootout logic with safeguards against accidental edits",
@@ -19,11 +20,11 @@
     "Optional licensing subsystem hooks where enabled",
     "Auto-refreshing process-aware utilities where configured"
   ],
-  "url": "https://github.com/vunf1/Stream_Futebol_Dashboard",
-  "demo": "https://github.com/vunf1/Stream_Futebol_Dashboard",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2023–2026",
+  "image": "./img/projects/apitofinal_logo.png",
+  "period": "Jul 2023 – Nov 2025",
   "role": "Desktop broadcast tooling",
   "teamSize": 1,
   "highlights": [
@@ -36,6 +37,8 @@
   "security": [
     "Encrypt sensitive `.env` material with documented cryptography helpers",
     "Protect MongoDB connection strings; never publish them in public documentation or screenshots",
-    "PIN gates for destructive team management actions"
+    "PIN gates for destructive team management actions",
+    "Least-privilege MongoDB users for venue kiosks where Atlas policies allow",
+    "Validate penalty and score mutations to reduce accidental double-application under load"
   ]
 }

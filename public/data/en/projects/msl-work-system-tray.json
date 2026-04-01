@@ -1,21 +1,22 @@
 {
   "id": "msl-work-system-tray",
   "name": "Windows utilities · System tray tools (multi_scripts_lib/work)",
-  "description": "System tray oriented scripts/utilities under multi_scripts_lib/work/system tray for lightweight always-on Windows helpers.",
-  "longDescription": "Lightweight utilities under `multi_scripts_lib/work/system tray` for background tasks reachable from the Windows system tray without a full application window.",
+  "description": "System tray utilities under multi_scripts_lib/work/system tray—long-lived Windows helpers where least privilege, signing, and graceful degradation matter.",
+  "longDescription": "Lightweight utilities under `multi_scripts_lib/work/system tray` for background tasks reachable from the Windows system tray without a full application window. Tray-resident code is treated as high visibility on the endpoint: failures should be quiet but observable, and privileges should stay minimal unless a feature explicitly requires elevation.",
   "technologies": [
     "Python",
     "Windows"
   ],
   "features": [
-    "Targets system tray interaction patterns",
-    "Scoped to multi_scripts_lib/work/system tray"
+    "Targets system tray interaction patterns without unnecessary foreground windows",
+    "Scoped to multi_scripts_lib/work/system tray",
+    "Defensive handling when tray APIs or session state are unavailable"
   ],
-  "url": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/system%20tray",
-  "demo": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/system%20tray",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2023–2026",
+  "image": "./img/projects/msl-work-system-tray.svg",
+  "period": "Dec 2025",
   "role": "Windows shell integration",
   "teamSize": 1,
   "highlights": [

@@ -1,8 +1,8 @@
 {
   "id": "licensehub-php-preact",
   "name": "LicenseHub Pro: plataforma PHP + Preact",
-  "description": "Gestão de licenças full-stack com Vite/Preact, PHP 8, MySQL, Stripe, Argon2id, 2FA opcional e fluxos de conta com preocupações RGPD.",
-  "longDescription": "O LicenseHub Pro junta um frontend Preact + TypeScript (Tailwind, i18n EN/pt-PT, UI com preocupações de acessibilidade) a um backend REST PHP com MySQL. Cobre autenticação segura, criação de serviços condicionada a pagamento Stripe (cartões, MB WAY, Multibanco quando configurados), ciclo de vida de licenças (emitir, rodar, suspender, revogar), binding de dispositivos com períodos de tolerância, chaves com HMAC, trilhos de auditoria e OpenAPI 3.1. Desenvolvimento e deploy com Docker documentados juntamente com comportamento orientado a configuração.",
+  "description": "Gestão de licenças full-stack com Vite/Preact, PHP 8, MySQL, Stripe, Argon2id e 2FA opcional—autenticação em camadas, auditoria e contratos API próprios de uma superfície de licenciamento em produção.",
+  "longDescription": "O LicenseHub Pro junta um frontend Preact + TypeScript (Tailwind, i18n EN/pt-PT, UI com preocupações de acessibilidade) a um backend REST PHP com MySQL. Cobre autenticação segura, criação de serviços condicionada a pagamento Stripe (cartões, MB WAY, Multibanco quando configurados), ciclo de vida de licenças (emitir, rodar, suspender, revogar), binding de dispositivos com períodos de tolerância, chaves com HMAC, trilhos de auditoria e OpenAPI 3.1. O backend organiza-se em torno de separação explícita de papéis, fluxos de sessão com CSRF e logs de auditoria estruturados para que políticas de segurança sejam aplicáveis, não apenas descritas. Desenvolvimento e deploy com Docker documentados juntamente com comportamento orientado a configuração.",
   "technologies": [
     "Preact",
     "TypeScript",
@@ -15,6 +15,7 @@
     "Docker"
   ],
   "features": [
+    "OpenAPI 3.1 como contrato legível por máquina para integradores e revisão interna",
     "Passwords com Argon2id, 2FA TOTP opcional e códigos de recuperação",
     "Protecção CSRF, sessões seguras, rate limiting e mitigação de brute-force",
     "Fluxos Stripe com coordenação de reembolsos e estado de licença",
@@ -22,25 +23,27 @@
     "UI internacionalizada com temas claro/escuro",
     "Padrões de binding de dispositivo e verificação para integração em software"
   ],
-  "url": "https://github.com/vunf1/web-License-System",
-  "demo": "https://github.com/vunf1/web-License-System",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/licensehub-php-preact.svg",
+  "period": "setembro de 2025",
   "role": "Engenharia de produto full-stack",
   "teamSize": 1,
   "highlights": [
-    "Predefinições de segurança em autenticação, pagamentos e APIs de licença",
-    "Comportamento orientado a configuração para operação do dia a dia",
+    "Predefinições de segurança em autenticação, pagamentos e APIs de licença—hardening integrado, não adicionado depois",
+    "HMAC e digests com pepper; trilho de auditoria para responsabilização",
+    "Comportamento orientado a configuração para operação e rotações mais seguras",
     "Fluxos documentados de exportação/remoção RGPD nos materiais do produto"
   ],
   "challenges": "Plataformas de licenciamento cruzam pagamentos, higiene criptográfica e resistência a abusos; erros repercutem na confiança do cliente.",
   "solutions": "Camadas explícitas de CSRF e sessão, logs de auditoria estruturados, webhooks Stripe idempotentes, e segredos apenas em ambiente com orientação de rotação.",
   "security": [
-    "Argon2id para passwords; 2FA TOTP opcional",
+    "Argon2id para passwords; 2FA TOTP opcional com códigos de recuperação",
     "Tokens CSRF em pedidos mutáveis; cookies seguros em produção",
     "Rate limiting e proteções brute-force em endpoints sensíveis",
-    "Segredos Stripe e webhooks confinados à configuração de ambiente",
-    "HMAC e digests com pepper para material de licença — sem chaves em texto nos logs"
+    "Segredos Stripe e webhooks confinados à configuração de ambiente; webhooks idempotentes",
+    "HMAC e digests com pepper para material de licença—sem chaves em texto nos logs",
+    "Superfície REST consciente de papéis com auditoria em operações privilegiadas de licença"
   ]
 }

@@ -62,6 +62,10 @@
   "common": {
     "darkMode": "Dark Mode",
     "error": "Error",
+    "errorDataMessage": "We could not load your portfolio data. Check your connection and try again, or refresh the page.",
+    "errorDataTitle": "We couldn’t load your portfolio",
+    "errorDevDetails": "Technical details (development only)",
+    "errorUnexpectedTitle": "Something interrupted the experience",
     "errorBoundaryMessage": "We're sorry, but something unexpected happened. Please try refreshing the page.",
     "language": "Language",
     "lightMode": "Light Mode",
@@ -71,6 +75,7 @@
     "refreshPage": "Refresh Page",
     "somethingWentWrong": "Something went wrong",
     "theme": "Theme",
+    "tryAgain": "Try again",
     "tryRefreshing": "Please try refreshing the page."
   },
   "fab": {
@@ -162,7 +167,12 @@
     "overview": "Overview",
     "previewNote": "An embedded preview only appears when the live site allows framing. Many production sites block that on purpose to protect users. If the area above stays empty, open the project in a new window; the full site always loads there.",
     "previewOpenExternally": "This site is configured not to appear inside other pages (a common security measure). It opens in its own window here so you see the same experience a visitor would, without bypassing that protection.",
+    "framingProtectionLabel": "Framing protection",
     "previewUnavailable": "No public demo link is available for this entry.",
+    "previewUnavailableTitle": "No live demo for this project",
+    "imagePreviewDialog": "Project image preview",
+    "openImageFullSize": "View project image full size",
+    "viewFullImage": "Full size",
     "resizePanel": "Drag to resize the details panel",
     "role": "Role",
     "security": "Security & compliance",

@@ -1,8 +1,8 @@
 {
   "id": "nirvanamed-wordpress-operations",
   "name": "Nirvanamed.pt: WordPress site operations",
-  "description": "WordPress-based clinic site tree with PHP 8.3 compatibility work, local dev notes, and asset packaging—focused on maintainable hosting operations.",
-  "longDescription": "WordPress deployment layout with core structure, themes and plugins under wp-content, and supporting tooling, plus technical notes for PHP 8.3 alignment, layout debugging, and local development. The focus is long-running site maintenance rather than a greenfield SPA: traceable fixes, verification notes, and repeatable workflows for the team running the site.",
+  "description": "WordPress-based clinic site tree with PHP 8.3 compatibility work and disciplined operations—change control, least exposure of credentials, and a clear separation between code, content, and secrets.",
+  "longDescription": "WordPress deployment layout with core structure, themes and plugins under wp-content, and supporting tooling, plus technical notes for PHP 8.3 alignment, layout debugging, and local development. The focus is long-running site maintenance rather than a greenfield SPA: traceable fixes, verification notes, and repeatable workflows for the team running the site. Architecture is treated as an attack-surface map—wp-content, plugins, and uploads are reviewed as part of routine hygiene; configuration that could leak DB or SMTP credentials never lives in public trees.",
   "technologies": [
     "WordPress",
     "PHP 8.3",
@@ -13,25 +13,29 @@
   "features": [
     "Versioned site tree suitable for staged updates and audits",
     "Technical write-ups for compatibility and layout verification",
-    "Separation between packaged assets and working directories",
-    "Operational documentation alongside the PHP application"
+    "Separation between packaged assets, working directories, and host-only secrets",
+    "Operational documentation alongside the PHP application",
+    "Checklist-oriented mindset: updates, backups, and rollback paths documented where relevant"
   ],
-  "url": "https://github.com/vunf1/Nirvanamed.pt-Website",
-  "demo": "https://github.com/vunf1/Nirvanamed.pt-Website",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/nirvanamed-wordpress-operations.svg",
+  "period": "Jan 2026 – Mar 2026",
   "role": "Maintenance, PHP upgrades, and deployment hygiene",
   "teamSize": 1,
   "highlights": [
-    "Emphasis on traceable change history for a live WordPress property",
-    "PHP version migration support material captured in-repo",
-    "Practical packaging patterns for backups and hand-offs"
+    "Traceable change history for a live WordPress property—operations as engineering",
+    "PHP 8.3 migration and verification material captured in-repo",
+    "Practical packaging patterns for backups and hand-offs without baking secrets into artifacts",
+    "Security-aware maintenance: themes/plugins treated as first-class supply-chain and exposure risk"
   ],
   "challenges": "Long-lived WordPress installs accumulate theme/plugin drift and hosting-specific constraints; upgrades must be verifiable without exposing internal credentials in docs.",
   "solutions": "Keep operational notes and verification artifacts in version control while storing secrets only in server environment configuration; prefer documented checklists over ad-hoc production edits.",
   "security": [
-    "Credentials and connection strings belong only in host configuration, not in public documentation",
-    "Treat wp-content and custom modules as part of the attack surface—updates and reviews are first-class"
+    "Credentials and connection strings belong only in host configuration, not in public documentation or VCS",
+    "Treat wp-content and custom modules as part of the attack surface—updates and reviews are first-class",
+    "Prefer role-based admin accounts, strong authentication, and least-privilege DB users on production hosts",
+    "Backups and exports reviewed for accidental inclusion of .env or private keys before sharing"
   ]
 }

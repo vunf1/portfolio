@@ -1,8 +1,8 @@
 {
   "id": "taiga-podman-rootless-compose",
   "name": "Taiga PM: rootless Podman Compose",
-  "description": "Rootless Podman Compose stack for Taiga with nginx front door, documented WSL2/Linux workflows, and optional backup/restore scripts.",
-  "longDescription": "Infrastructure defined in version control for running Taiga without a Docker daemon: Podman Compose definitions, nginx as the HTTP entry (port 8080 by default), and guidance for WSL2 versus native Linux rootless setups. Deployment flow: copy `.env.example`, create persistent data directories, run `podman compose up`, create Django superusers, and optionally load default templates. Shell scripts for backup and restore ship with the stack.",
+  "description": "Rootless Podman Compose stack for Taiga with nginx front door—secrets, volume layout, and TLS posture documented so multi-service PM software stays maintainable and minimally exposed.",
+  "longDescription": "Infrastructure defined in version control for running Taiga without a Docker daemon: Podman Compose definitions, nginx as the HTTP entry (port 8080 by default), and guidance for WSL2 versus native Linux rootless setups. The stack separates HTTP ingress, application workers, PostgreSQL, and RabbitMQ with explicit volume mounts so permissions and backups are predictable. Deployment flow: copy `.env.example`, create persistent data directories, run `podman compose up`, create Django superusers, and optionally load default templates. Shell scripts for backup and restore ship with the stack.",
   "technologies": [
     "Podman",
     "Podman Compose",
@@ -19,16 +19,17 @@
     "Optional backup.sh / restore.sh helpers",
     "Guidance to avoid /mnt/c performance traps on WSL2"
   ],
-  "url": "https://github.com/vunf1/Project-Manager-Backlogs",
-  "demo": "https://github.com/vunf1/Project-Manager-Backlogs",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/taiga-podman-rootless-compose.svg",
+  "period": "Jan 2026",
   "role": "Platform engineering / internal PM hosting",
   "teamSize": 1,
   "highlights": [
-    "Shows rootless container fluency for long-running collaboration software",
-    "Operational scripts for backup discipline"
+    "Rootless Podman fluency for long-running collaboration software—reduced daemon attack surface",
+    "Single nginx entry point simplifies TLS termination and access rules",
+    "Operational scripts for backup discipline and documented secret generation (SECRET_KEY, DB, RabbitMQ)"
   ],
   "challenges": "Taiga’s multi-service footprint is sensitive to volume permissions and async workers.",
   "solutions": "Document directory prep, env secrets (SECRET_KEY, DB passwords, Rabbit creds), and compose runbooks for first boot.",

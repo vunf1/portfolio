@@ -1,8 +1,8 @@
 {
   "id": "license-desktop-python-mongodb",
   "name": "License desktop manager (Python + MongoDB)",
-  "description": "CustomTkinter desktop app for generating, searching, and exporting licenses with MongoDB storage, CSV export, and Lisbon timezone handling.",
-  "longDescription": "A Python desktop utility for teams managing license records locally: create structured licenses, search and filter large sets, export to CSV, and keep MongoDB as the system of record with connection pooling. The UI emphasises form validation, randomised sample data for testing, and automatic conversion of timestamps to Europe/Lisbon for operational clarity.",
+  "description": "CustomTkinter desktop app for generating, searching, and exporting licenses with MongoDB storage—input validation at the UI, a clear persistence layer, and workstation-safe handling of connection secrets.",
+  "longDescription": "A Python desktop utility for teams managing license records locally: create structured licenses, search and filter large sets, export to CSV, and keep MongoDB as the system of record with connection pooling. The UI emphasises form validation before writes, randomised sample data for testing without touching production, and automatic conversion of timestamps to Europe/Lisbon for operational clarity. A dedicated manager abstraction keeps Mongo concerns out of widget code so the architecture stays testable and easier to harden.",
   "technologies": [
     "Python",
     "CustomTkinter",
@@ -10,23 +10,24 @@
     "pymongo"
   ],
   "features": [
-    "License generation and editing flows with validation",
-    "MongoDB-backed persistence layer",
+    "License generation and editing flows with validation before persistence",
+    "MongoDB-backed persistence layer with an explicit manager abstraction",
     "CSV export for reporting hand-offs",
     "Search and filter across license fields",
     "Random data generator for demos and QA"
   ],
-  "url": "https://github.com/vunf1/License-System",
-  "demo": "https://github.com/vunf1/License-System",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2023–2026",
+  "image": "./img/projects/license-desktop-python-mongodb.svg",
+  "period": "Jun 2025 – Dec 2025",
   "role": "Desktop tooling + data layer",
   "teamSize": 1,
   "highlights": [
-    "Pragmatic desktop UI without requiring a web deployment",
-    "Explicit Mongo models and manager abstraction",
-    "Timezone-aware display for Portuguese operations"
+    "Pragmatic desktop UI without requiring a web deployment—smaller attack surface than a public endpoint",
+    "Explicit Mongo models and manager abstraction—separation of concerns for data integrity",
+    "Timezone-aware display for Portuguese operations",
+    "CSV exports designed to avoid leaking internal DB identifiers when shared externally"
   ],
   "challenges": "Desktop apps must guard database credentials on workstations and avoid leaking connection strings through screenshots or logs.",
   "solutions": "Use .env templates, keep secrets out of version control, and document secure handling for MongoDB URIs on workstations.",

@@ -1,24 +1,25 @@
 {
   "id": "incident-response-scripts-toolkit",
   "name": "Scripts de segurança · Toolkit de resposta a incidentes (Windows + Linux)",
-  "description": "Scripts modulares PowerShell e Bash para contenção, investigação, erradicação e verificação após suspeita de compromisso.",
-  "longDescription": "Playbooks de resposta a incidentes em forma de código: em Windows, scripts cobrem contenção, investigação, erradicação e recuperação com parâmetros (hostname, utilizador, intervalo temporal, âmbito). Em Linux, scripts suportam caça em vários alvos. O conjunto privilegia execução repetível, registo estruturado e fases bem separadas para coordenação durante incidentes.",
+  "description": "Scripts modulares PowerShell e Bash para contenção, investigação, erradicação e verificação—IR faseado em código com registo, âmbito e consciência de cadeia de custódia.",
+  "longDescription": "Playbooks de resposta a incidentes em forma de código: em Windows, scripts cobrem contenção, investigação, erradicação e recuperação com parâmetros (hostname, utilizador, intervalo temporal, âmbito). Em Linux, scripts suportam caça em vários alvos. O conjunto privilegia execução repetível, registo estruturado e fases bem separadas para coordenação durante incidentes sem colapsar contenção e recolha de evidências num único passo opaco. As saídas são tratadas como produtos de inteligência sensíveis.",
   "technologies": [
     "PowerShell",
     "Bash",
     "Python helpers"
   ],
   "features": [
-    "Scripts de orquestração IR Windows com parâmetros de âmbito",
+    "Orquestração IR Windows com parâmetros de âmbito—reduz raio de explosão da automação",
     "Scripts de caça Linux para triagem multi-host",
-    "Layout de diretório documentado por fase",
-    "Snippets de arranque rápido para administradores"
+    "Layout de diretório documentado por fase IR (contenção vs forense vs recuperação)",
+    "Snippets de arranque rápido com pré-requisitos explícitos",
+    "Ganchos de registo estruturado para acções atribuíveis e auditáveis depois do facto"
   ],
-  "url": "https://github.com/vunf1/CyberS-Scripts",
-  "demo": "https://github.com/vunf1/CyberS-Scripts",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2023–2026",
+  "image": "./img/projects/incident-response-scripts-toolkit.svg",
+  "period": "agosto de 2025",
   "role": "Autor de automação de segurança",
   "teamSize": 1,
   "highlights": [
@@ -29,7 +30,9 @@
   "solutions": "Documentar pré-requisitos, flags de âmbito e orientação de dry-run; exigir intenção administrativa antes de fases destrutivas.",
   "security": [
     "Executar apenas em sistemas que possui ou está autorizado a investigar",
-    "Proteger saídas dos scripts — podem conter dados forenses sensíveis",
-    "Rever comandos antes da execução em ambientes regulados"
+    "Proteger saídas dos scripts—podem conter dados forenses e credenciais",
+    "Rever comandos antes da execução em ambientes regulados; preferir dry-runs quando suportado",
+    "Manter separação entre remediação destrutiva e preservação de evidências quando o processo legal o exige",
+    "Armazenar tooling e logs com controlos de acesso equivalentes a activos operacionais tier-0"
   ]
 }

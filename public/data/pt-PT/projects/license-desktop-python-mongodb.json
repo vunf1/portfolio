@@ -1,8 +1,8 @@
 {
   "id": "license-desktop-python-mongodb",
   "name": "Gestor desktop de licenças (Python + MongoDB)",
-  "description": "Aplicação desktop CustomTkinter para gerar, pesquisar e exportar licenças com armazenamento MongoDB, exportação CSV e conversão de timezone para Lisboa.",
-  "longDescription": "Utilitário Python para equipas que gerem registos de licença localmente: criação estruturada, pesquisa e filtragem de conjuntos grandes, exportação CSV e MongoDB como sistema de registo com pool de ligações. A UI enfatiza validação de formulários, dados aleatórios para testes e conversão automática de carimbos temporais para Europe/Lisboa.",
+  "description": "Aplicação desktop CustomTkinter para gerar, pesquisar e exportar licenças com MongoDB—validação na UI, camada de persistência clara e maneio cuidadoso de segredos nas estações de trabalho.",
+  "longDescription": "Utilitário Python para equipas que gerem registos de licença localmente: criação estruturada, pesquisa e filtragem de conjuntos grandes, exportação CSV e MongoDB como sistema de registo com pool de ligações. A UI enfatiza validação antes de escrita, dados aleatórios para testes sem tocar em produção e conversão automática de carimbos temporais para Europe/Lisboa. Uma camada de gestão dedicada mantém preocupações Mongo fora dos widgets, tornando a arquitectura mais testável e mais fácil de endurecer.",
   "technologies": [
     "Python",
     "CustomTkinter",
@@ -10,23 +10,24 @@
     "pymongo"
   ],
   "features": [
-    "Fluxos de geração e edição de licenças com validação",
-    "Persistência em MongoDB",
+    "Fluxos de geração e edição de licenças com validação antes da persistência",
+    "Persistência em MongoDB com camada de gestão explícita",
     "Exportação CSV para relatórios",
     "Pesquisa e filtro em todos os campos relevantes",
     "Gerador de dados aleatórios para demos e QA"
   ],
-  "url": "https://github.com/vunf1/License-System",
-  "demo": "https://github.com/vunf1/License-System",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2023–2026",
+  "image": "./img/projects/license-desktop-python-mongodb.svg",
+  "period": "junho de 2025 - dezembro de 2025",
   "role": "Ferramentas desktop + camada de dados",
   "teamSize": 1,
   "highlights": [
-    "UI desktop pragmática sem exigir deploy web",
-    "Modelos Mongo e camada de gestão explícitos",
-    "Apresentação com timezone para operações em Portugal"
+    "UI desktop pragmática sem deploy web—superfície de ataque menor do que um endpoint público",
+    "Modelos Mongo e gestor explícitos—separação de preocupações para integridade de dados",
+    "Apresentação com timezone para operações em Portugal",
+    "Exportações CSV pensadas para não vazar identificadores internos da BD ao partilhar fora"
   ],
   "challenges": "Apps desktop têm de proteger credenciais de BD nas estações de trabalho e evitar fugas em capturas de ecrã ou logs.",
   "solutions": "Usar templates .env, manter segredos fora do controlo de versões, e documentar manuseamento seguro de URIs Mongo nas estações de trabalho.",

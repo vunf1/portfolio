@@ -1,8 +1,8 @@
 {
   "id": "taiga-podman-rootless-compose",
   "name": "Taiga PM: Compose Podman rootless",
-  "description": "Stack Compose Podman rootless para Taiga com nginx à frente, fluxos documentados WSL2/Linux e scripts opcionais de backup/restauro.",
-  "longDescription": "Infraestrutura descrita em código-fonte para correr o Taiga sem daemon Docker: Podman Compose, nginx como entrada HTTP (porta 8080 por omissão) e orientação para WSL2 rootless face a Linux nativo. Fluxo típico: copiar `.env.example`, criar diretórios de dados persistentes, `podman compose up`, criar superutilizador Django e opcionalmente carregar templates por omissão. Inclui scripts shell de backup e restauro.",
+  "description": "Stack Compose Podman rootless para Taiga com nginx—segredos, volumes e postura TLS documentados para software de PM multi-serviço sustentável e minimamente exposto.",
+  "longDescription": "Infraestrutura descrita em código-fonte para correr o Taiga sem daemon Docker: Podman Compose, nginx como entrada HTTP (porta 8080 por omissão) e orientação para WSL2 rootless face a Linux nativo. A stack separa ingresso HTTP, workers da aplicação, PostgreSQL e RabbitMQ com volumes explícitos para permissões e backups previsíveis. Fluxo típico: copiar `.env.example`, criar diretórios de dados persistentes, `podman compose up`, criar superutilizador Django e opcionalmente carregar templates por omissão. Inclui scripts shell de backup e restauro.",
   "technologies": [
     "Podman",
     "Podman Compose",
@@ -19,16 +19,17 @@
     "Auxiliares opcionais backup.sh / restore.sh",
     "Orientação para evitar armadilhas de performance /mnt/c no WSL2"
   ],
-  "url": "https://github.com/vunf1/Project-Manager-Backlogs",
-  "demo": "https://github.com/vunf1/Project-Manager-Backlogs",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/taiga-podman-rootless-compose.svg",
+  "period": "janeiro de 2026",
   "role": "Engenharia de plataforma / hosting interno de PM",
   "teamSize": 1,
   "highlights": [
-    "Fluência em contentores rootless para software de colaboração de longa duração",
-    "Scripts operacionais para disciplina de backup"
+    "Podman rootless para colaboração de longa duração—menor superfície de daemon",
+    "Ponto único de entrada nginx simplifica TLS e regras de acesso",
+    "Scripts operacionais e geração documentada de segredos (SECRET_KEY, BD, RabbitMQ)"
   ],
   "challenges": "A pegada multi-serviço do Taiga é sensível a permissões de volumes e workers assíncronos.",
   "solutions": "Documentar preparação de diretórios, segredos de ambiente (SECRET_KEY, passwords BD, credenciais Rabbit) e runbooks de primeiro arranque.",

@@ -1,8 +1,8 @@
 {
   "id": "effigy-fiscal-rates-addon",
   "name": "Effigy fiscal data updater (PHP)",
-  "description": "Modular PHP 8.2 subsystem that fetches and caches European and Portuguese fiscal reference data (Euribor, tax tables, VAT, inflation) for integration with a credit-site stack.",
-  "longDescription": "Packaged as a public_html module with Docker support, the fiscal updater orchestrates HTTPS calls to official APIs (ECB, Eurostat, Portuguese AT-style sources per module docs), normalizes results, validates cache integrity, and feeds both JSON cache and legacy tax text files used by upstream simulators. A CLI entrypoint supports manual runs and tests; PHPUnit covers core components. Docker Compose enables local verification on a fixed port without touching production hosts.",
+  "description": "Modular PHP 8.2 subsystem that fetches and caches European and Portuguese fiscal reference data—designed with verified TLS, integrity-checked caches, and testable pipelines so upstream credit tooling never silently consumes bad numbers.",
+  "longDescription": "Packaged as a public_html module with Docker support, the fiscal updater orchestrates HTTPS calls to official APIs (ECB, Eurostat, Portuguese AT-style sources per module docs), normalizes results, validates cache integrity, and feeds both JSON cache and legacy tax text files used by upstream simulators. The architecture separates fetch clients, transformation, and persistence so failures are observable and retries do not corrupt prior good state. A CLI entrypoint supports manual runs and tests; PHPUnit covers core components. Docker Compose enables local verification on a fixed port without touching production hosts.",
   "technologies": [
     "PHP 8.2",
     "Docker",
@@ -17,23 +17,24 @@
     "Dockerfile and compose for repeatable local runs",
     "Separation between cache, logs, and public module code"
   ],
-  "url": "https://github.com/vunf1/client-add-on-euribor",
-  "demo": "https://github.com/vunf1/client-add-on-euribor",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2025",
+  "image": "./img/projects/effigy-fiscal-rates-addon.svg",
+  "period": "Oct 2025",
   "role": "Backend module + integration testing",
   "teamSize": 1,
   "highlights": [
-    "Deterministic pipeline from official APIs to simulator-facing artifacts",
-    "Test-backed PHP components for fiscal transformations",
-    "Containerized environment for local smoke testing and QA"
+    "Deterministic, test-backed pipeline from official APIs to simulator-facing artifacts",
+    "Integrity checks and structured logging reduce silent corruption risk in cached fiscal data",
+    "Containerized environment for local smoke testing and QA without touching production"
   ],
   "challenges": "Financial reference data must stay current, verifiable, and resilient to upstream API changes without silent corruption of cached files.",
   "solutions": "Central orchestrator class, explicit cache validation, structured logging discipline, and automated tests around the updater and API client.",
   "security": [
-    "HTTPS client with certificate verification enabled",
+    "HTTPS client with certificate verification enabled—no silent downgrade to insecure fetches",
     "Secrets supplied via environment templates—not hardcoded in module code",
-    "Least-privilege file layout for cache and logs"
+    "Least-privilege file layout for cache and logs; separation from executable web roots where documented",
+    "Upstream API errors and parse failures surfaced in logs rather than overwriting good cache blindly"
   ]
 }

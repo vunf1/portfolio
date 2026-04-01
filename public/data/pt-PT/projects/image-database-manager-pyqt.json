@@ -1,25 +1,25 @@
 {
   "id": "image-database-manager-pyqt",
   "name": "Gestor de base de dados de imagens (PyQt5)",
-  "description": "GUI PyQt5 que ingere registos JSON de imagens, constrói tabelas dinâmicas, resolve caminhos de pastas por várias convenções de nome e abre diretórios correspondentes.",
-  "longDescription": "Os utilizadores mantêm um catálogo de imagens em JSON; a aplicação mostra tabelas ordenáveis e filtráveis, constrói caminhos de pasta candidatos com várias convenções de nome (espaço, underscore, concatenado, só modelo), verifica existência e abre o gestor de ficheiros do sistema quando há correspondência. As definições guardam-se em `settings.json`; builds empacotados opcionais incluem ícones e fundos.",
+  "description": "GUI PyQt5 que ingere registos JSON de imagens, constrói tabelas dinâmicas e resolve caminhos—validação e higiene de caminhos antes de invocar o gestor de ficheiros do SO.",
+  "longDescription": "Os utilizadores mantêm um catálogo de imagens em JSON; a aplicação mostra tabelas ordenáveis e filtráveis, constrói caminhos de pasta candidatos com várias convenções de nome (espaço, underscore, concatenado, só modelo), verifica existência e abre o gestor de ficheiros do sistema quando há correspondência. As fontes JSON são validadas antes de operações no sistema de ficheiros; caminhos candidatos são verificados para reduzir surpresas de traversal com dados editados pelo utilizador. As definições guardam-se em `settings.json`; builds empacotados opcionais incluem ícones e fundos.",
   "technologies": [
     "Python",
     "PyQt5",
     "JSON"
   ],
   "features": [
-    "Ingestão JSON para tabelas dinâmicas",
-    "Várias estratégias de nomeação de pastas",
-    "Erros visíveis quando caminhos faltam",
+    "Ingestão JSON para tabelas dinâmicas com validação antes de acesso ao FS",
+    "Várias estratégias de nomeação de pastas para convenções confusas no disco",
+    "Erros visíveis quando caminhos faltam ou o JSON é inválido",
     "Ficheiro de definições configurável",
     "Script de build opcional com pacote de assets"
   ],
-  "url": "https://github.com/vunf1/Dynamic-Database",
-  "demo": "https://github.com/vunf1/Dynamic-Database",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2022–2026",
+  "image": "./img/projects/image-database-manager-pyqt.svg",
+  "period": "dezembro de 2024",
   "role": "Navegador desktop de dados",
   "teamSize": 1,
   "highlights": [
@@ -31,6 +31,8 @@
   "security": [
     "Nunca publicar passwords de desencriptação em documentação ou material promocional",
     "Validar fontes JSON antes de operações de sistema de ficheiros",
-    "Sanitizar caminhos para evitar surpresas de traversal"
+    "Sanitizar e normalizar caminhos para evitar traversal a partir de catálogos editados",
+    "Acções «abrir no gestor de ficheiros» só após verificação de existência—sem shelling a strings arbitrárias",
+    "Tratar catálogos JSON partilhados como input não confiável quando vêm de terceiros"
   ]
 }

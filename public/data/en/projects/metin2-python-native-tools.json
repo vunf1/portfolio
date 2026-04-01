@@ -1,8 +1,8 @@
 {
   "id": "metin2-python-native-tools",
   "name": "Game scripts · Metin2 Python native build helpers",
-  "description": "Small toolchain for compiling Python extension modules into native binaries for legacy Metin2 client automation workflows (Python 2.7 / 32-bit oriented).",
-  "longDescription": "Small toolchain for building C extensions with `setupdll.py` and `build_ext`, producing Windows-native binaries (`.pyd` outputs renamed to `.dll` where required by the client). Scope stays narrow: native helpers alongside client-side automation, not a full game engine. Uses a legacy Python 2.7 / 32-bit-oriented toolchain; automation should follow the game publisher’s terms of service.",
+  "description": "Small toolchain for compiling Python extension modules into native binaries for legacy Metin2 workflows—narrow C-extension boundary, reproducible build steps, and explicit trust posture around compiled artifacts.",
+  "longDescription": "Small toolchain for building C extensions with `setupdll.py` and `build_ext`, producing Windows-native binaries (`.pyd` outputs renamed to `.dll` where required by the client). Scope stays narrow: native helpers alongside client-side automation, not a full game engine—keeping the attack surface and maintenance burden bounded. Uses a legacy Python 2.7 / 32-bit-oriented toolchain; automation should follow the game publisher’s terms of service. Native code demands clear provenance: document compiler versions and avoid distributing unsigned binaries as trusted software.",
   "technologies": [
     "Python",
     "C extensions",
@@ -11,13 +11,14 @@
   "features": [
     "Documented build_ext flow for in-place native modules",
     "Guidance on renaming outputs for client-side loading expectations",
-    "Minimal surface area for maintainers"
+    "Minimal surface area for maintainers and security reviewers",
+    "Explicit toolchain pinning to reproduce bytecode/native artefacts across machines"
   ],
-  "url": "https://github.com/vunf1/Metin2-Scripts",
-  "demo": "https://github.com/vunf1/Metin2-Scripts",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2018–2024",
+  "image": "./img/projects/metin2-python-native-tools.svg",
+  "period": "May 2025 – Dec 2025",
   "role": "Native tooling for game automation experiments",
   "teamSize": 1,
   "highlights": [
@@ -27,7 +28,9 @@
   "challenges": "Legacy Python stacks are difficult to reproduce on current workstations.",
   "solutions": "Document the expected interpreter and keep build scripts isolated from unrelated dependencies.",
   "security": [
-    "Never distribute unsigned binaries as trusted software",
-    "Assume game automation may violate ToS—use only where permitted"
+    "Never distribute unsigned binaries as trusted software—code signing where appropriate",
+    "Native extensions are high-risk supply-chain targets; verify compiler and dependency provenance",
+    "Assume game automation may violate ToS—use only where permitted",
+    "Isolate build environments from production credentials"
   ]
 }

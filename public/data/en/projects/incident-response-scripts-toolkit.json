@@ -1,24 +1,25 @@
 {
   "id": "incident-response-scripts-toolkit",
   "name": "Security scripts · Incident response toolkit (Windows + Linux)",
-  "description": "Modular PowerShell and Bash scripts for endpoint containment, investigation, eradication, and verification after suspected compromise.",
-  "longDescription": "This toolkit packages incident-response playbooks as code: Windows paths cover containment, investigation, eradication, and recovery with parameterised entrypoints (hostname, user, timeframe, scope). Linux scripts support server hunting across multiple targets. The toolkit emphasises repeatable execution, structured logging, and separation of duties between phases so teams can coordinate during live incidents.",
+  "description": "Modular PowerShell and Bash scripts for endpoint containment, investigation, eradication, and verification—phased IR as code with logging, scoping, and chain-of-custody awareness.",
+  "longDescription": "This toolkit packages incident-response playbooks as code: Windows paths cover containment, investigation, eradication, and recovery with parameterised entrypoints (hostname, user, timeframe, scope). Linux scripts support server hunting across multiple targets. The toolkit emphasises repeatable execution, structured logging, and separation of duties between phases so teams can coordinate during live incidents without collapsing containment and evidence collection into a single opaque step. Outputs are treated as sensitive intelligence products.",
   "technologies": [
     "PowerShell",
     "Bash",
     "Python helpers"
   ],
   "features": [
-    "Windows IR orchestration scripts with scoped parameters",
+    "Windows IR orchestration scripts with scoped parameters—reduce blast radius of automation",
     "Linux hunt scripts for multi-host triage",
-    "Documented directory layout for each phase",
-    "Quick-start snippets for administrators"
+    "Documented directory layout for each IR phase (containment vs forensics vs recovery)",
+    "Quick-start snippets for administrators with prerequisites called out explicitly",
+    "Structured logging hooks so actions are attributable and reviewable after the fact"
   ],
-  "url": "https://github.com/vunf1/CyberS-Scripts",
-  "demo": "https://github.com/vunf1/CyberS-Scripts",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2023–2026",
+  "image": "./img/projects/incident-response-scripts-toolkit.svg",
+  "period": "Aug 2025",
   "role": "Security automation author",
   "teamSize": 1,
   "highlights": [
@@ -29,7 +30,9 @@
   "solutions": "Document prerequisites, scope flags, and dry-run guidance; require administrative intent before running destructive phases.",
   "security": [
     "Run only on systems you own or are authorised to investigate",
-    "Protect script outputs—they may contain sensitive forensic data",
-    "Review commands before execution in regulated environments"
+    "Protect script outputs—they may contain sensitive forensic data and credentials",
+    "Review commands before execution in regulated environments; prefer dry-runs where supported",
+    "Maintain separation between destructive remediation steps and evidence preservation where legal process requires",
+    "Store tooling and logs with access controls equivalent to tier-0 operational assets"
   ]
 }

@@ -1,8 +1,8 @@
 {
   "id": "nirvanamed-wordpress-operations",
   "name": "Nirvanamed.pt: Operações WordPress",
-  "description": "Árvore de site WordPress com trabalho de compatibilidade PHP 8.3, notas de desenvolvimento local e empacotamento de assets — foco em operações de alojamento sustentáveis.",
-  "longDescription": "Layout de deploy WordPress com estrutura da aplicação, temas e plugins em wp-content e ferramentas de suporte, mais notas técnicas para alinhamento PHP 8.3, depuração de layout e desenvolvimento local. O foco é manutenção prolongada, não um SPA novo: correcções rastreáveis, notas de verificação e fluxos reproduzíveis para a equipa que gere o site.",
+  "description": "Árvore de site WordPress com compatibilidade PHP 8.3 e operações disciplinadas—controlo de alterações, exposição mínima de credenciais e separação clara entre código, conteúdo e segredos.",
+  "longDescription": "Layout de deploy WordPress com estrutura da aplicação, temas e plugins em wp-content e ferramentas de suporte, mais notas técnicas para alinhamento PHP 8.3, depuração de layout e desenvolvimento local. O foco é manutenção prolongada, não um SPA novo: correcções rastreáveis, notas de verificação e fluxos reproduzíveis para a equipa que gere o site. A arquitectura é lida como mapa de superfície de ataque—wp-content, plugins e uploads entram na higiene de rotina; configuração que possa vazar BD ou SMTP não vive em árvores públicas.",
   "technologies": [
     "WordPress",
     "PHP 8.3",
@@ -13,25 +13,29 @@
   "features": [
     "Árvore de site versionada adequada a atualizações faseadas e auditorias",
     "Textos técnicos para compatibilidade e verificação de layout",
-    "Separação entre assets empacotados e diretórios de trabalho",
-    "Documentação de apoio à manutenção junto da aplicação PHP"
+    "Separação entre assets empacotados, diretórios de trabalho e segredos apenas no host",
+    "Documentação de apoio à manutenção junto da aplicação PHP",
+    "Mentalidade de checklist: actualizações, backups e rollback documentados quando relevante"
   ],
-  "url": "https://github.com/vunf1/Nirvanamed.pt-Website",
-  "demo": "https://github.com/vunf1/Nirvanamed.pt-Website",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/nirvanamed-wordpress-operations.svg",
+  "period": "janeiro de 2026 - março de 2026",
   "role": "Manutenção, upgrades PHP e higiene de deploy",
   "teamSize": 1,
   "highlights": [
-    "Ênfase em histórico de alterações rastreável para propriedade WordPress em produção",
-    "Material de suporte a migrações de versão PHP versionado com o projeto",
-    "Padrões práticos de empacotamento para backups e hand-offs"
+    "Histórico de alterações rastreável—operações tratadas como engenharia",
+    "Material de migração e verificação PHP 8.3 versionado com o projeto",
+    "Empacotamento para backups e hand-offs sem incorporar segredos nos artefactos",
+    "Manutenção consciente da segurança: temas/plugins como risco de cadeia de fornecimento e exposição"
   ],
   "challenges": "Instalações WordPress de longa duração acumulam deriva de temas/plugins e restrições de hosting; upgrades têm de ser verificáveis sem expor credenciais internas em documentação.",
   "solutions": "Manter notas operacionais e artefactos de verificação em controlo de versões, com segredos apenas na configuração do servidor; preferir checklists documentados a edições ad hoc em produção.",
   "security": [
-    "Credenciais e connection strings apenas na configuração do servidor, não em documentação pública",
-    "Tratar wp-content e módulos personalizados como superfície de ataque — atualizações e revisões são de primeira classe"
+    "Credenciais e connection strings apenas na configuração do servidor, não em documentação pública nem em VCS",
+    "Tratar wp-content e módulos personalizados como superfície de ataque—actualizações e revisões de primeira classe",
+    "Preferir contas admin com funções, autenticação forte e utilizadores de BD de menor privilégio em produção",
+    "Rever backups e exportações antes de partilhar para não incluir .env ou chaves privadas"
   ]
 }

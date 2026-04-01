@@ -1,21 +1,22 @@
 {
   "id": "msl-work-infoplus-gui",
   "name": "Windows utilities · Info+ GUI companion (multi_scripts_lib/work)",
-  "description": "GUI companion utilities adjacent to Info+_CLI within multi_scripts_lib/work/info+_GUI for Windows desktop workflows.",
-  "longDescription": "Graphical companion to the Info+ CLI in the same `multi_scripts_lib` monorepo (`work/info+_GUI`), aimed at Windows desktop workflows. Scope is intentionally narrow and paired with the CLI entry.",
+  "description": "GUI companion adjacent to Info+_CLI in multi_scripts_lib/work/info+_GUI—paired CLI/GUI architecture for Windows desktop workflows with a narrow, reviewable surface.",
+  "longDescription": "Graphical companion to the Info+ CLI in the same `multi_scripts_lib` monorepo (`work/info+_GUI`), aimed at Windows desktop workflows. Scope is intentionally narrow and paired with the CLI entry so shared logic and dependencies can be reasoned about together. Suitable for internal tooling where GUI ergonomics matter but the threat model still warrants dependency review before wide distribution.",
   "technologies": [
     "Python",
     "Windows desktop"
   ],
   "features": [
-    "Co-located with Info+ CLI under multi_scripts_lib/work",
-    "Focused surface for graphical workflows"
+    "Co-located with Info+ CLI under multi_scripts_lib/work for shared maintenance",
+    "Focused surface for graphical workflows—limits accidental feature creep",
+    "Paired architecture: reuse patterns between CLI and GUI where appropriate"
   ],
-  "url": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/info%2B_GUI",
-  "demo": "https://github.com/vunf1/multi_scripts_lib/tree/main/work/info%2B_GUI",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2023–2026",
+  "image": "./img/projects/msl-work-infoplus-gui.svg",
+  "period": "Dec 2024",
   "role": "Desktop utility companion",
   "teamSize": 1,
   "highlights": [
@@ -24,6 +25,8 @@
   "challenges": "Limited public documentation for this slice of the monorepo.",
   "solutions": "Keep the summary concise; the source link shows the full implementation context.",
   "security": [
-    "Review GUI dependencies for supply-chain risk before distribution"
+    "Review GUI dependencies for supply-chain risk before distribution",
+    "Sign binaries when leaving trusted networks; avoid auto-update from unverified sources",
+    "Keep user-data paths out of world-writable directories where possible"
   ]
 }

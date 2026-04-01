@@ -62,6 +62,10 @@
   "common": {
     "darkMode": "Modo escuro",
     "error": "Erro",
+    "errorDataMessage": "Não foi possível carregar os dados do portefólio. Verifique a ligação e tente novamente ou atualize a página.",
+    "errorDataTitle": "Não foi possível carregar o portefólio",
+    "errorDevDetails": "Detalhes técnicos (apenas em desenvolvimento)",
+    "errorUnexpectedTitle": "Algo interrompeu a experiência",
     "errorBoundaryMessage": "Pedimos desculpa, mas ocorreu algo inesperado. Por favor, tente atualizar a página.",
     "language": "Língua",
     "lightMode": "Modo de luz",
@@ -71,6 +75,7 @@
     "refreshPage": "Atualizar Página",
     "somethingWentWrong": "Algo correu mal",
     "theme": "Tema",
+    "tryAgain": "Tentar novamente",
     "tryRefreshing": "Tente atualizar a página."
   },
   "fab": {
@@ -162,7 +167,12 @@
     "overview": "Visão geral",
     "previewNote": "A pré-visualização incorporada só funciona quando o site em produção o permite. Muitos sites bloqueiam isso de propósito para proteger utilizadores. Se a área acima ficar vazia, abra o projecto num novo separador; o site completo carrega sempre aí.",
     "previewOpenExternally": "Este site está configurado para não ser mostrado dentro de outras páginas (uma medida de segurança frequente). Abre-se na sua própria janela para ver a mesma experiência de um visitante, sem contornar essa protecção.",
+    "framingProtectionLabel": "Protecção contra incorporação",
     "previewUnavailable": "Não há ligação pública de demonstração para esta entrada.",
+    "previewUnavailableTitle": "Sem demonstração em direto para este projeto",
+    "imagePreviewDialog": "Pré-visualização da imagem do projeto",
+    "openImageFullSize": "Ver imagem do projeto em tamanho completo",
+    "viewFullImage": "Tamanho completo",
     "resizePanel": "Arraste para redimensionar o painel de detalhes",
     "role": "Papel",
     "security": "Segurança e conformidade",

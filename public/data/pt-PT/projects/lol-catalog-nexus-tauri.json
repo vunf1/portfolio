@@ -1,8 +1,8 @@
 {
   "id": "lol-catalog-nexus-tauri",
   "name": "LoL Catalog Nexus (Tauri + Vite)",
-  "description": "Catálogo offline-first de cosméticos League of Legends: núcleo Tauri + Rust, UI Vite, esquema JSON empacotado, pipeline de prefetch para assets CDN, zero rede no arranque a frio.",
-  "longDescription": "Catálogo desktop para campeões, skins e cromas. Rust detém modelos de domínio, adaptadores de armazenamento, comandos Tauri e testes; o frontend usa Vite + TypeScript com tipos gerados a partir de `lol_localdb.schema.json`. Data Dragon e CommunityDragon alimentam scripts de prefetch que hidratam `frontend/public/lol-asset-cache/` para builds de produção arrancarem sem I/O de rede. O estado «owned» segue por entidade com migrações de esquema versão nos metadados.",
+  "description": "Catálogo offline-first de cosméticos LoL: núcleo Tauri + Rust, UI Vite, BD local versionada por esquema e prefetch verificado—IPC estrito e inputs de CDN tratados como não confiáveis.",
+  "longDescription": "Catálogo desktop para campeões, skins e cromas. Rust detém modelos de domínio, adaptadores de armazenamento e comandos Tauri; o frontend usa Vite + TypeScript com tipos gerados a partir de `lol_localdb.schema.json` para partilhar um contrato entre UI e persistência. Data Dragon e CommunityDragon alimentam scripts de prefetch que hidratam `frontend/public/lol-asset-cache/` para builds de produção arrancarem sem I/O de rede. O estado «owned» segue por entidade com migrações de esquema nos metadados. A arquitectura trata CDNs de terceiros como inputs não confiáveis: a verificação pertence ao prefetch, não se assume em runtime.",
   "technologies": [
     "Tauri",
     "Rust",
@@ -11,17 +11,18 @@
     "JSON Schema"
   ],
   "features": [
+    "Fronteira IPC Rust–Tauri com comandos explícitos em vez de acesso shell ad hoc",
     "Base de dados local empacotada com versionamento de esquema",
     "Fluxo de prefetch para metadados e arte de jogo",
     "Fronteira IPC entre UI e serviços Rust",
     "Uso opcional da API Riot para rotação (não central)",
     "Testes e fixtures para comportamento da BD local"
   ],
-  "url": "https://github.com/vunf1/LoL-Catalog-Nexus",
-  "demo": "https://github.com/vunf1/LoL-Catalog-Nexus",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/lol-catalog-nexus-tauri.svg",
+  "period": "janeiro de 2026",
   "role": "Produto desktop + pipeline de dados",
   "teamSize": 1,
   "highlights": [
@@ -32,8 +33,10 @@
   "challenges": "Catálogos de jogo grandes exigem prefetch disciplinado e invalidação de cache para evitar arte desatualizada ou bundles inchados.",
   "solutions": "Esquema versionado, prefetch scriptado, e separação explícita entre recursos empacotados e chamadas opcionais ao vivo.",
   "security": [
-    "Tratar CDNs de terceiros como não confiáveis — verificar downloads na ferramenta de prefetch",
+    "Tratar CDNs de terceiros como não confiáveis—verificar downloads na ferramenta de prefetch",
     "Evitar armazenar credenciais Riot no catálogo offline; API opcional é periférica",
-    "Distribuir sem dados pessoais de contas de jogadores"
+    "Distribuir sem dados pessoais de contas de jogadores",
+    "Migrações de esquema explícitas para evitar corrupção silenciosa entre upgrades",
+    "Minimização da superfície Tauri: expor apenas comandos que a UI realmente precisa"
   ]
 }

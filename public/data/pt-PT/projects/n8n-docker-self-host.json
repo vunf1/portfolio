@@ -1,8 +1,8 @@
 {
   "id": "n8n-docker-self-host",
   "name": "n8n: Stack Docker self-host",
-  "description": "Layout de automação n8n self-hosted com Docker Compose, scripts de backup, pastas orientadas a proxy inverso e assets de manutenção.",
-  "longDescription": "Automação de workflows self-hosted com Docker Compose: definições de serviços, contexto de contentor, scripts e assets estáticos de suporte para correr n8n em infraestrutura privada. Inclui auxiliares de backup e estrutura para deploy atrás de proxy, mantendo endpoints internos e credenciais em configuração privada. O layout privilegia operações repetíveis — arranque, paragem, backups, atualizações — em vez de incorporar lógica de negócio específica em ficheiros versionados.",
+  "description": "Layout n8n self-hosted com Docker Compose, backups e pastas para proxy—estrutura opinativa para segredos, exposição de rede e operações repetíveis em infraestrutura privada.",
+  "longDescription": "Automação de workflows self-hosted com Docker Compose: definições de serviços, contexto de contentor, scripts e assets estáticos de suporte para correr n8n em infraestrutura privada. Auxiliares de backup e estrutura para deploy atrás de proxy mantêm segredos, material TLS e endpoints internos fora de árvores públicas, carregados só a partir de configuração privada. O layout privilegia operações repetíveis—arranque, paragem, backups, actualizações—e mantém lógica de negócio específica fora de ficheiros versionados onde acoplava IP à infraestrutura.",
   "technologies": [
     "n8n",
     "Docker",
@@ -11,15 +11,16 @@
   ],
   "features": [
     "Layout compose-first para colocar automações online em ambiente controlado",
-    "Scaffolding de scripts para snapshots de base de dados",
+    "Scaffolding de scripts para snapshots de base de dados e disciplina de restore",
     "Pastas de suporte para material TLS de proxy e páginas de manutenção (preenchidas em deploy)",
-    "Separação entre volumes de runtime e configuração versionada"
+    "Separação entre volumes de runtime, configuração versionada e ficheiros .env com segredos",
+    "Postura de rede documentada: preferir proxy inverso + firewall a expor portas de nós de forma ampla"
   ],
-  "url": "https://github.com/vunf1/n8n-local",
-  "demo": "https://github.com/vunf1/n8n-local",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/n8n-docker-self-host.svg",
+  "period": "outubro de 2025",
   "role": "Infraestrutura de automação",
   "teamSize": 1,
   "highlights": [
@@ -30,8 +31,10 @@
   "challenges": "Automação self-hosted precisa de patches, backups e alcance apenas a redes confiáveis.",
   "solutions": "Usar Compose com volumes documentados, backups scriptados e TLS na borda; manter credenciais apenas em ficheiros de ambiente privados.",
   "security": [
-    "URLs de webhook, chaves API e passwords de BD apenas em ficheiros privados .env",
-    "Restringir portas administrativas com firewall ou VPN",
-    "Rodar credenciais de automação em calendário"
+    "URLs de webhook, chaves API e passwords de BD apenas em ficheiros .env privados—nunca em repositórios públicos",
+    "Restringir portas administrativas com firewall ou VPN; TLS na borda do proxy",
+    "Rodar credenciais de automação em calendário; rever actualizações de imagens n8n como higiene de cadeia de fornecimento",
+    "Backups de volumes encriptados em repouso quando armazenados fora do servidor",
+    "Menor privilégio para contas de serviço que acedem a webhooks e bases de dados"
   ]
 }

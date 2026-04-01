@@ -1,8 +1,8 @@
 {
   "id": "ecommerce-vendure-next",
   "name": "Headless commerce: Vendure + Next.js",
-  "description": "Headless e-commerce template with Vendure (GraphQL, Stripe, PostgreSQL, Redis) and a Next.js storefront, Docker/Podman deploys, and Caddy for production HTTPS.",
-  "longDescription": "A commerce reference implementation pairing Vendure on Node.js/TypeScript with a Next.js storefront. The commerce layer exposes GraphQL Shop and Admin APIs, supports Stripe (cards, MB WAY, Multibanco and related local payment methods where configured), EU VAT/B2B-oriented custom fields, and S3/MinIO-backed assets. The storefront uses SSR, Tailwind, shadcn/ui, TanStack Query, and Zustand. Deployment is container-first with compose files, Caddy as reverse proxy in production, and a Windows manage.ps1 console for common lifecycle tasks.",
+  "description": "Headless e-commerce template with Vendure (GraphQL, Stripe, PostgreSQL, Redis) and a Next.js storefront—structured for typed API contracts, secret hygiene, and reproducible container deploys with TLS at the edge.",
+  "longDescription": "A commerce reference implementation pairing Vendure on Node.js/TypeScript with a Next.js storefront. The commerce layer exposes GraphQL Shop and Admin APIs, supports Stripe (cards, MB WAY, Multibanco and related local payment methods where configured), EU VAT/B2B-oriented custom fields, and S3/MinIO-backed assets. Separation between the admin API, shop API, and storefront keeps permissions and caching strategies explicit. The storefront uses SSR, Tailwind, shadcn/ui, TanStack Query, and Zustand with a clear client–server boundary for data fetching. Deployment is container-first with compose files, health-checked services, Caddy as reverse proxy in production for automatic HTTPS, and a Windows manage.ps1 console for repeatable build and lifecycle tasks—reducing drift between environments.",
   "technologies": [
     "Vendure",
     "Next.js",
@@ -19,27 +19,30 @@
     "Multi-channel commerce core with orders, products, and admin API",
     "Next.js storefront with theme contract and Vendure GraphQL client",
     "Stripe payment flows and asset storage integration",
-    "Development and production compose stacks",
+    "GraphQL schema as the integration contract between storefront and commerce core",
+    "Development and production compose stacks with documented environment separation",
     "Caddy configuration for automatic HTTPS where a domain is available",
     "manage.ps1-driven workflows for build, deploy, and packaging"
   ],
-  "url": "https://github.com/vunf1/E-Commerce_Template",
-  "demo": "https://github.com/vunf1/E-Commerce_Template",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/ecommerce-vendure-next.svg",
+  "period": "Aug 2025 – Mar 2026",
   "role": "Full-stack commerce + DevOps templates",
   "teamSize": 1,
   "highlights": [
-    "End-to-end headless pattern from catalog to checkout integration",
-    "Operational scripts that mirror how Windows-based operators run containers",
-    "Documentation for observability and deployment variants shipped with the project"
+    "End-to-end headless pattern: typed GraphQL boundary from catalog through checkout",
+    "Defense in depth: TLS at the proxy, secrets only via env, webhook flows treated as privileged",
+    "Operational scripts and compose stacks that mirror how Windows-based teams run containers in practice"
   ],
   "challenges": "Headless commerce requires tight alignment between storefront UX, payment webhooks, and long-lived database migrations across Vendure upgrades.",
-  "solutions": "Keep vendure and storefront in one workspace with shared tooling, health-checked compose services, and documented environment separation for dev vs prod.",
+  "solutions": "Keep vendure and storefront in one workspace with shared tooling, health-checked compose services, documented environment separation for dev vs prod, and explicit notes on webhook verification and database migration discipline across upgrades.",
   "security": [
-    "Secrets and keys only via environment configuration",
-    "Reverse proxy and TLS termination documented for production shapes",
-    "Stripe and webhook configuration treated as sensitive operations"
+    "Secrets and keys only via environment configuration—never committed defaults",
+    "Reverse proxy and TLS termination documented for production shapes; minimise exposed admin surfaces",
+    "Stripe and webhook configuration treated as sensitive operations with rotation guidance",
+    "PostgreSQL and Redis network exposure limited to the compose network by default",
+    "Asset buckets (S3/MinIO) configured with least-privilege credentials where documented"
   ]
 }

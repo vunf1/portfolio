@@ -1,8 +1,8 @@
 {
   "id": "rust-license-platform-axum",
   "name": "Plataforma de licenças em Rust (Axum + React)",
-  "description": "Serviço de licenciamento contentorizado em Rust (Axum) com frontend React, persistência MongoDB, sessões JWT e cabeçalhos HMAC para verificação por máquina.",
-  "longDescription": "Esta stack entrega um serviço de licenciamento amigo de Podman/Docker: API Rust Axum com OpenAPI, MongoDB para persistência e SPA React para fluxos de utilizador. Utilizadores verificados gerem chaves via endpoints autenticados; a verificação por máquina usa assinaturas HMAC com carimbo temporal em cabeçalhos dedicados. Ficheiros compose de desenvolvimento e produção separam preocupações mantendo health checks e scripts de build/test reproduzíveis.",
+  "description": "Serviço de licenciamento contentorizado em Rust (Axum) com React, MongoDB, JWT e HMAC por máquina—camada de serviço memory-safe, limites criptográficos explícitos e OpenAPI como contrato de integração.",
+  "longDescription": "Esta stack entrega um serviço de licenciamento amigo de Podman/Docker: API Rust Axum com OpenAPI, MongoDB para persistência e SPA React para fluxos de utilizador. Utilizadores verificados gerem chaves via endpoints autenticados; a verificação por máquina usa assinaturas HMAC com carimbo temporal em cabeçalhos dedicados, separando modelos de confiança de browsers e clientes headless. Ficheiros compose de desenvolvimento e produção separam preocupações; endpoints de health, readiness e versão suportam orquestração; scripts de build e teste mantêm a fronteira Rust tipada reproduzível.",
   "technologies": [
     "Rust",
     "Axum",
@@ -15,6 +15,7 @@
     "Docker"
   ],
   "features": [
+    "Camada de serviço em Rust para segurança de memória em torno de criptografia e persistência",
     "Endpoints de health, readiness e versão para orquestração",
     "Registo, verificação de email, login e gestão de sessão",
     "Fluxos de emissão/verificação de licença com cabeçalhos de atestação de máquina",
@@ -22,24 +23,26 @@
     "Stacks compose dev/prod com portas documentadas",
     "Corredores de teste automatizados para frontend e backend incluídos no projeto"
   ],
-  "url": "https://github.com/vunf1/rust-web-license-sytem",
-  "demo": "https://github.com/vunf1/rust-web-license-sytem",
+  "url": "",
+  "demo": "",
   "embedInModal": false,
-  "image": "",
-  "period": "2024–2026",
+  "image": "./img/projects/rust-license-platform-axum.svg",
+  "period": "janeiro de 2026 - fevereiro de 2026",
   "role": "Backend + desenho de API + integração frontend",
   "teamSize": 1,
   "highlights": [
-    "Fronteira de serviço Rust fortemente tipada com papéis de assinatura explícitos",
-    "Separação clara entre sessões de browser e API de verificação por máquina",
+    "Fronteira Rust fortemente tipada com papéis distintos para JWT e atestação de máquina",
+    "Separação clara entre sessões de browser e verificação por API—menos confusão de tokens",
+    "OpenAPI servida para integradores; perfis compose para formas dev/prod reproduzíveis",
     "Checklist operacional centrada em contentores na documentação"
   ],
   "challenges": "Duas superfícies cliente (humanos vs máquinas) multiplicam casos-limite em autenticação, replay e deriva de relógio.",
   "solutions": "Documentar verificação HMAC com carimbo temporal, exigir segredos de produção para JWT e assinatura de máquina, e manter OpenAPI como contrato.",
   "security": [
-    "Segredo de assinatura JWT obrigatório em produção",
-    "Segredo dedicado para assinatura de máquina (X-Signature)",
+    "Segredo de assinatura JWT obrigatório em produção; tokens de curta duração onde configurado",
+    "Segredo dedicado para assinatura de máquina (X-Signature)—independente do JWT do browser",
     "Pepper de digest de licença configurável por ambiente",
+    "HMAC com carimbo temporal mitiga replay ingénuo dentro de janelas de deriva de relógio documentadas",
     "Orientação explícita: nunca commitar segredos; usar env ou segredos de orquestração"
   ]
 }
