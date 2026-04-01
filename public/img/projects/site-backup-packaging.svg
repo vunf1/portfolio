@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title-sitebackuppackaging">
+  <title id="title-sitebackuppackaging">Web snapshot backup packaging</title>
+  <defs>
+    <linearGradient id="g-sitebackuppackaging" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="hsl(222,57%,36%)"/>
+      <stop offset="100%" stop-color="hsl(264,60%,26%)"/>
+    </linearGradient>
+    <filter id="sh-sitebackuppackaging">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <rect width="640" height="360" rx="28" fill="url(#g-sitebackuppackaging)"/>
+  <g stroke="#fff" stroke-opacity="0.14" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M472 96c0-24 22-44 48-44s48 20 48 44v12H472V96z"/><path d="M496 52v24h48V52"/></g>
+  <text x="320" y="200" text-anchor="middle" font-family="ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif" font-size="108" font-weight="700" letter-spacing="-0.04em" fill="#fff" filter="url(#sh-sitebackuppackaging)">WS</text>
+  <text x="320" y="308" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="500" fill="#fff" fill-opacity="0.74" letter-spacing="0.04em">site · backup · packaging</text>
+</svg>

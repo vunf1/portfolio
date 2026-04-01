@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title-lolcatalognexustauri">
+  <title id="title-lolcatalognexustauri">LoL Catalog Nexus (Tauri + Vite)</title>
+  <defs>
+    <linearGradient id="g-lolcatalognexustauri" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="hsl(329,58%,36%)"/>
+      <stop offset="100%" stop-color="hsl(11,60%,26%)"/>
+    </linearGradient>
+    <filter id="sh-lolcatalognexustauri">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <rect width="640" height="360" rx="28" fill="url(#g-lolcatalognexustauri)"/>
+  <g stroke="#fff" stroke-opacity="0.12" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="468" y="56" width="28" height="28" rx="4"/><rect x="508" y="56" width="28" height="28" rx="4"/>
+      <rect x="468" y="96" width="28" height="28" rx="4"/><rect x="508" y="96" width="28" height="28" rx="4"/>
+    </g>
+  <text x="320" y="200" text-anchor="middle" font-family="ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif" font-size="108" font-weight="700" letter-spacing="-0.04em" fill="#fff" filter="url(#sh-lolcatalognexustauri)">LC</text>
+  <text x="320" y="308" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="500" fill="#fff" fill-opacity="0.74" letter-spacing="0.04em">lol · catalog · nexus · tauri</text>
+</svg>

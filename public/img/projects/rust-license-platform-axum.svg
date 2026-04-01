@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title-rustlicenseplatformaxum">
+  <title id="title-rustlicenseplatformaxum">Rust license platform (Axum + React)</title>
+  <defs>
+    <linearGradient id="g-rustlicenseplatformaxum" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="hsl(60,49%,36%)"/>
+      <stop offset="100%" stop-color="hsl(102,57%,26%)"/>
+    </linearGradient>
+    <filter id="sh-rustlicenseplatformaxum">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <rect width="640" height="360" rx="28" fill="url(#g-rustlicenseplatformaxum)"/>
+  <g stroke="#fff" stroke-opacity="0.14" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M468 44h104v76l-52 32-52-32V44z"/><path d="M520 84v36"/></g>
+  <text x="320" y="200" text-anchor="middle" font-family="ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif" font-size="108" font-weight="700" letter-spacing="-0.04em" fill="#fff" filter="url(#sh-rustlicenseplatformaxum)">RL</text>
+  <text x="320" y="308" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="500" fill="#fff" fill-opacity="0.74" letter-spacing="0.04em">rust · license · platform · axum</text>
+</svg>

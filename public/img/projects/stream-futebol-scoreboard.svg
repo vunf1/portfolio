@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title-streamfutebolscoreboard">
+  <title id="title-streamfutebolscoreboard">Streaming · Football scoreboard (Flask + Preact)</title>
+  <defs>
+    <linearGradient id="g-streamfutebolscoreboard" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="hsl(231,48%,36%)"/>
+      <stop offset="100%" stop-color="hsl(273,56%,26%)"/>
+    </linearGradient>
+    <filter id="sh-streamfutebolscoreboard">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <rect width="640" height="360" rx="28" fill="url(#g-streamfutebolscoreboard)"/>
+  <g stroke="#fff" stroke-opacity="0.14" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M28 232 Q128 172 228 232 T428 232" />
+      <path d="M52 264 Q156 204 260 264 T460 264" />
+    </g>
+  <text x="320" y="200" text-anchor="middle" font-family="ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif" font-size="108" font-weight="700" letter-spacing="-0.04em" fill="#fff" filter="url(#sh-streamfutebolscoreboard)">SF</text>
+  <text x="320" y="308" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="500" fill="#fff" fill-opacity="0.74" letter-spacing="0.04em">stream · futebol · scoreboard</text>
+</svg>
