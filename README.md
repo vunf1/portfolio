@@ -34,13 +34,15 @@ A modern, enterprise-grade professional website built with **Vite + Preact + Typ
 - ⚡ **Performance Optimized** - <60KB initial JS, lazy loading, code splitting
 - 🎯 **Scrollbar Management** - Single scroll container architecture preventing double scrollbars
 - 🎭 **Smooth Animations** - Intersection Observer-based scroll animations with reduced motion support
-- 💬 **Centralized Modal State** - Contact modal and sheets use a shared `scrollLock` helper to lock body scroll safely in JSDOM and browsers
-- 📂 **Case studies** - Project case study modal with structured content from JSON
+- 💬 **Centralized Modal State** - Contact modal and sheets use a shared `scrollLock` helper (restores scroll position on unlock to avoid page jump)
+- 📂 **Case studies** - Project case study modal with structured content from JSON; **landing and portfolio Projects section** only list projects marked **`on`** in **`public/data/projects-area.json`**
+- 🖼️ **Project marks** - Logos and SVG marks under **`public/img/projects/`** (tracked in git for GitHub Pages)
+- 🧯 **Error resilience** - `RootErrorBoundary` in `main.tsx` plus portfolio **`ErrorBoundary`** / **`PortfolioErrorFallback`** when data or render fails
 - ✂️ **About “read more”** - Expandable about copy (`AboutDescriptionSpoiler`) with reduced-motion–friendly behavior
 
 ### **Technical Excellence**
 - 🏗️ **Modern Architecture** - Vite + Preact + TypeScript with strict typing
-- 🧪 **Comprehensive Testing** - Vitest + Testing Library with 90%+ coverage including scrollbar behavior tests
+- 🧪 **Comprehensive Testing** - Vitest + Testing Library (including scrollbar, scroll lock, case study modal, error fallback, and `projectsArea` helpers)
 - ♿ **Accessibility** - WCAG 2.2 AA compliant with keyboard navigation
 - 🔍 **SEO Optimized** - Structured data, meta tags, and semantic HTML
 - 🚀 **CI/CD Ready** - Automated testing, security audits, and deployment
@@ -65,6 +67,8 @@ portfolio/
 │   │   ├── __tests__/       # Component tests
 │   │   ├── About.tsx        # About section
 │   │   ├── FloatingActionButton.tsx  # FAB component
+│   │   ├── ErrorBoundary.tsx         # Portfolio section error boundary
+│   │   ├── PortfolioErrorFallback.tsx # Full-page retry UI when portfolio errors
 │   │   └── ...              # Other sections
 │   ├── hooks/               # Custom React hooks
 │   │   ├── __tests__/       # Hook tests
@@ -102,6 +106,7 @@ portfolio/
 │   │   └── components/      # Component-specific styles
 │   │       ├── about.css    # About component styles
 │   │       ├── contact-modal-premium.css  # Contact modal styles
+│   │       ├── error-fallback.css  # Portfolio error fallback layout
 │   │       ├── hero.css     # Hero component styles
 │   │       └── ...          # Other component-specific styles
 │   ├── utils/               # Utility functions
@@ -109,25 +114,27 @@ portfolio/
 │   │   ├── validation.ts    # Form validation (E.164, email, name)
 │   │   ├── n8nClient.ts     # n8n webhook integration client
 │   │   ├── seo.ts           # SEO utilities and structured data
-│   │   ├── getDataUrl.ts    # Public data URL helpers
+│   │   ├── getDataUrl.ts    # Locale + shared data URLs (e.g. projects-area.json)
 │   │   └── preloadPortfolioChunks.ts  # Performance optimization
-│   ├── lib/                 # Small shared libraries (scrollLock, locale, utils, …)
+│   ├── lib/                 # scrollLock, locale, utils, projectsArea, projectInitials, projectPlaceholderImage, …
 │   ├── test/                # Test utilities
 │   │   ├── setup.ts         # Test setup
 │   │   └── test-utils.tsx   # Testing utilities
 │   ├── App.tsx              # Main app component
 │   ├── main.tsx             # Application entry point
 │   └── i18n.ts              # i18n configuration
-├── public/                   # Static assets
+├── public/                   # Static assets (copied to site root by Vite)
 │   ├── data/                # JSON data files
+│   │   ├── projects-area.json  # Shared map: which project ids appear on the landing grid (`on` / `off`)
 │   │   ├── en/              # English content (e.g. personal.json, ui.json)
 │   │   │   └── projects/    # One JSON per project + manifest.json (load order)
 │   │   └── pt-PT/           # Portuguese (pt-PT) content (same layout)
-│   ├── img/                 # Images and assets
+│   ├── img/                 # Favicons, profile, OG image, **img/projects/** logos (committed for deploy)
 │   └── _headers             # Security headers
 ├── scripts/                 # Build and utility scripts
 │   ├── copy-data.cjs        # Data copying script
 │   ├── manage.mjs           # Interactive CLI to edit portfolio JSON (dev)
+│   ├── generate-project-icons.mjs  # Optional: generate placeholder SVGs for projects
 │   ├── optimize-images.cjs  # Image optimization
 │   └── verify-dist.js       # Build verification script
 ├── manage.ps1               # Windows entry point for scripts/manage.mjs
@@ -257,7 +264,9 @@ This website contains personal information that should be customized for your ow
 - `public/data/pt-PT/social.json` - Portuguese social media links
 - `public/data/en/meta.json` - SEO metadata and Open Graph tags
 - `public/data/pt-PT/meta.json` - Portuguese SEO metadata
-- `public/data/en/projects/` and `public/data/pt-PT/projects/` - Case studies (`manifest.json` + one JSON per project)
+- `public/data/projects-area.json` - Which projects show on the **landing** projects grid (ids map to `"on"` or `"off"`)
+- `public/data/en/projects/` and `public/data/pt-PT/projects/` - Case studies (`manifest.json` + one JSON per project); optional `logo` paths (e.g. `/img/projects/<slug>.svg`)
+- `public/img/projects/` - Project logo / mark files referenced from JSON
 - `index.html` - Meta tags and page title
 - `vite.config.ts` - Dev server and build options (see `server` / `preview` for local URL)
 
@@ -279,13 +288,15 @@ The project implements a single scroll container architecture:
 - `body`, `#app`, and `.landing-page` have `overflow: hidden` to prevent double scrollbars
 - Horizontal overflow is prevented with `overflow-x: hidden` and `max-width: 100%` constraints
 - FAB and animated sections use `overflow: visible` to prevent scroll container creation
-- Comprehensive tests in `src/components/__tests__/ScrollbarBehavior.test.tsx`
+- **`scrollLock`** (`src/lib/scrollLock.ts`) saves/restores scroll position when opening/closing sheets and the contact modal so the page does not jump to the top
+- Comprehensive tests in `src/components/__tests__/ScrollbarBehavior.test.tsx` and `src/lib/__tests__/scrollLock.test.ts`
 
 ### **Internationalization**
 Update language files in `public/data/`:
 - `en/` - English content (JSON format), including `ui.json` for landing copy
 - `pt-PT/` - Portuguese (Portugal) content (JSON format)
 - **Projects** live under `public/data/<locale>/projects/` (manifest + per-project files), not a single `projects.json`
+- **Visibility** for the landing grid and the portfolio **Projects** section is controlled by **`public/data/projects-area.json`** (locale-agnostic); `usePortfolioData` merges `projectsArea` onto each `Project`
 
 ### **Design System**
 Customize design tokens in `src/css/tokens.css`:
@@ -324,7 +335,9 @@ npm run test -- ScrollbarBehavior
 
 #### **Content Management**
 - **Website Data**: Update JSON files in `public/data/en/` and `public/data/pt-PT/` (personal, ui, experience, education, etc.)
-- **Projects (case studies)**: Each locale uses `public/data/<locale>/projects/manifest.json` (array of filenames, in display order) and one file per project, e.g. `public/data/en/projects/my-project-slug.json`. `usePortfolioData` loads the manifest, then fetches each file in parallel.
+- **Projects visibility (landing + portfolio section)**: Edit **`public/data/projects-area.json`** so only desired project `id`s are `"on"`; both the landing showcase and the **`Projects`** block in the portfolio use this filtered list.
+- **Projects (case studies)**: Each locale uses `public/data/<locale>/projects/manifest.json` (array of filenames, in display order) and one file per project, e.g. `public/data/en/projects/my-project-slug.json`. `usePortfolioData` loads **`projects-area.json`** (shared), then the manifest, then each project file in parallel.
+- **Project icons**: Prefer assets under **`public/img/projects/`** (PNG/SVG). Optional: `node scripts/generate-project-icons.mjs` to scaffold SVG placeholders from project titles.
 - **Interactive editor (dev)**: From the repo root, run `node scripts/manage.mjs` or `.\manage.ps1` (Windows) for a guided CLI to edit JSON content (uses devDependencies `@clack/prompts`, `picocolors`).
 - **Styling**: Modify CSS files in `src/css/`
 - **Components**: Edit TypeScript files in `src/components/`
@@ -450,7 +463,9 @@ npm run test:ui
 - **Accessibility Tests**: WCAG 2.2 AA compliance
 - **Performance Tests**: Core Web Vitals monitoring
 - **Scrollbar Behavior Tests**: Comprehensive scrollbar architecture validation
-- **Modal Tests**: Contact modal state management and accessibility
+- **Scroll lock tests**: `scrollLock` save/restore behavior
+- **Modal Tests**: Contact modal, sheets, case study modal; error boundary / portfolio fallback
+- **Data helpers**: `getDataUrl`, `projectsArea`, project initials / placeholder image utilities
 - **Form Validation Tests**: E.164 phone, email, and name validation
 
 ### **Quality Assurance**
@@ -811,12 +826,14 @@ npm run build -- --debug
 ## 🔄 **Maintenance & Updates**
 
 ### **Recent Improvements**
-- ✅ **Projects data layout**: Manifest-driven `public/data/<locale>/projects/` (easier diffs and ordering than one large `projects.json`)
-- ✅ **Manage CLI**: `scripts/manage.mjs` / `manage.ps1` for editing portfolio JSON locally
-- ✅ **Dev server defaults**: Vite listens on **port 1234** with host `portfolio` (`allowedHosts`); map `portfolio` → `127.0.0.1` in your hosts file and open `http://portfolio:1234/`
-- ✅ **Scroll lock**: Shared `src/lib/scrollLock.ts` for sheets and contact modal (test-friendly `scrollTo` in Vitest setup)
-- ✅ **Landing UX**: Refreshed landing sections, **AboutDescriptionSpoiler**, **useMediaQuery**, case study modal updates
-- ✅ **Tests**: `ProjectCaseStudyModal`, `AboutDescriptionSpoiler`, `scrollLock`, `ui` key guards for landing about
+- ✅ **`projects-area.json`**: Shared on/off map so the landing projects grid only promotes selected case studies
+- ✅ **`public/img/` in git**: Favicons, profile, OG image, and **`public/img/projects/`** marks ship with GitHub Pages (no longer ignored)
+- ✅ **Projects data layout**: Manifest-driven `public/data/<locale>/projects/` plus per-project logos and metadata
+- ✅ **Error UX**: `RootErrorBoundary` in `main.tsx`; **PortfolioErrorFallback** with retry when portfolio data or render fails
+- ✅ **Scroll lock**: Position restore on modal/sheet close to prevent scroll jump
+- ✅ **Manage CLI**: `scripts/manage.mjs` / `manage.ps1`; optional **`scripts/generate-project-icons.mjs`** for SVG placeholders
+- ✅ **Dev server defaults**: Vite on **port 1234**, host `portfolio` (`allowedHosts`); hosts file → `http://portfolio:1234/`
+- ✅ **Tests**: Expanded coverage for case study modal, error boundaries, `projectsArea`, scroll lock, `getDataUrl`
 - ✅ **Repo hygiene**: `.ai/` ignored (local analysis/artifacts only)
 
 ### **Regular Maintenance**
@@ -876,7 +893,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📝 **Changelog**
 
-### **v3.2.0 - Data tooling, landing refresh, and dev server** (Latest — March 2026)
+### **v3.3.0 - Landing projects filter, static assets, error UX** (Latest — April 2026)
+- 🗂️ **`projects-area.json`**: Locale-agnostic visibility map (`on` / `off`) merged into each project; **`filterProjectsForProjectsArea`** drives the landing showcase and portfolio **Projects** section
+- 🖼️ **Static images**: `public/img/` committed (favicons, profile, OG, **`public/img/projects/`** SVG/PNG); `.gitignore` updated so assets deploy to GitHub Pages
+- 🎨 **Projects UI**: Grid and **ProjectCaseStudyModal** updates; **`projectInitials`**, **`projectPlaceholderImage`**, **`getSharedDataUrl`**
+- 🧯 **Errors**: **`RootErrorBoundary`** in **`main.tsx`**; **`ErrorBoundary`** + **`PortfolioErrorFallback`** + **`error-fallback.css`** + tests
+- 🔧 **Scroll lock**: Restore previous scroll position when unlocking body scroll (sheets / modals)
+- 🧪 **Tests**: `ErrorBoundary`, `PortfolioErrorFallback`, `projectsArea`, `projectInitials`, `projectPlaceholderImage`, expanded `getDataUrl` / case study / scroll lock coverage
+- 📜 **Tooling**: **`scripts/generate-project-icons.mjs`** for optional project SVG generation
+
+### **v3.2.0 - Data tooling, landing refresh, and dev server** (March 2026)
 - 📂 **Projects as multi-file data**: Removed monolithic `projects.json`; each locale uses `projects/manifest.json` plus one JSON file per project; `usePortfolioData` loads and merges in manifest order
 - 🛠️ **Content CLI**: Added `scripts/manage.mjs` and `manage.ps1` (Windows) with `@clack/prompts` / `picocolors` for interactive JSON edits
 - 🌐 **Vite dev/preview**: Default URL `http://portfolio:1234/` with `host: true`, `strictPort`, and `allowedHosts: ['portfolio']`; Lighthouse script targets the same origin
