@@ -1,23 +1,29 @@
 import { Component } from 'preact'
 import { useTranslation } from '../contexts/TranslationContext'
-import { Icon } from './ui/Icon'
-import { Button } from './ui/Button'
 import type { ErrorBoundaryProps, ErrorBoundaryState } from '../types'
+import { PortfolioErrorFallback } from './PortfolioErrorFallback'
 
-function ErrorBoundaryContent() {
+/**
+ * Catches synchronous render/lifecycle errors in descendants only.
+ * Does not catch: errors in the parent tree, async errors in effects, or handler throws that do not rethrow during render.
+ */
+function ErrorBoundaryFallback({
+  error,
+  onReset
+}: {
+  error: Error | null
+  onReset: () => void
+}) {
   const { t } = useTranslation()
   return (
-    <div className="error-boundary">
-      <div className="error-content">
-        <Icon name="exclamation-triangle" size={48} className="mb-4" />
-        <h2>{t('common.somethingWentWrong')}</h2>
-        <p>{t('common.errorBoundaryMessage')}</p>
-        <Button variant="primary" className="mt-4" onClick={() => window.location.reload()}>
-          <Icon name="refresh" size={18} className="mr-2" />
-          {t('common.refreshPage')}
-        </Button>
-      </div>
-    </div>
+    <PortfolioErrorFallback
+      variant="runtime"
+      title={t('common.errorUnexpectedTitle', 'Something interrupted the experience')}
+      message={t('common.errorBoundaryMessage', "We're sorry, but something unexpected happened. Please try refreshing the page.")}
+      onTryAgain={onReset}
+      devErrorMessage={error?.message}
+      withFab
+    />
   )
 }
 
@@ -40,9 +46,13 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     }
   }
 
+  private resetError = () => {
+    this.setState({ hasError: false, error: null })
+  }
+
   override render() {
     if (this.state.hasError) {
-      return <ErrorBoundaryContent />
+      return <ErrorBoundaryFallback error={this.state.error} onReset={this.resetError} />
     }
     return this.props.children
   }
