@@ -180,8 +180,8 @@ dist/
 /coverage
 coverage/
 
-# Build artifacts and generated files
-public/img/
+# Static assets under public/img/ (favicons, project icons) must be committed for deploys.
+# Do not ignore public/img/ — Vite serves public/ at site root (e.g. /img/projects/*.svg).
 
 # Backup and temporary files
 .backup/
