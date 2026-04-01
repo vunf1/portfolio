@@ -59,7 +59,7 @@ export function Sheet({
 
   /* Portal: escape page-transition overflow/transform contexts; z above FAB (~10k), below contact modal (~10002). */
   return createPortal(
-    <div id={sheetBaseId} className={cn('fixed inset-0 z-[10001] flex', className)}>
+    <div id={sheetBaseId} className={cn('fixed inset-0 z-[10001] flex', className)} data-scroll-lock-fixed>
       <button
         type="button"
         id={`${sheetBaseId}-backdrop`}
