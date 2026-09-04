@@ -68,23 +68,23 @@
       "Streaming automation: OBS/FFmpeg/NDI, RTMP/SRT, overlay control, health checks, failover."
     ],
     "company": "Freelance",
-    "description": "Deliver end-to-end solutions for small businesses and individual clients. Software: full SDLC from requirements and design through implementation, testing, containerization, CI/CD, observability, and secure-by-default deployments, favoring reproducible builds, infrastructure-as-code patterns, and well-documented runbooks.\n Networking: L1/L2/L3 design and configuration (routing/switching), VLAN segmentation, DHCP/DNS services, NAT and QoS policies, wireless planning, and secure remote access (site-to-site and remote-user VPNs) troubleshooting and incident response.\n Streaming: multi-camera live productions with encoder setup, RTMP/SRT ingest, NDI routing, audio mixing, and real-time overlays/scoreboards; redundancy planning, QoS tuning, and live monitoring to maintain stable feeds under varying network conditions. Across domains, I apply automation (Python, Bash, PowerShell, AI-assisted tooling) to standardize provisioning, configuration, documentation, and reporting, reducing toil, lowering MTTR, and improving reliability, performance, and security.",
+    "description": "Independent E2E software and professional IT delivery for businesses and individual clients. Product systems: full SDLC from requirements and design through implementation, testing, containerization, CI/CD, observability, and secure-by-default deployments (web platforms, APIs, and desktop tools with reproducible builds, infrastructure-as-code patterns, and documented runbooks).\n Professional IT: L1/L2/L3 design and configuration (routing/switching), VLAN segmentation, DHCP/DNS, NAT and QoS, wireless planning, secure remote access (site-to-site and remote-user VPNs), and incident response.\n Live systems: encoder setup, RTMP/SRT ingest, NDI routing, audio mixing, and real-time overlays where a production needs a stable feed; redundancy planning, QoS tuning, and live monitoring. Across domains I apply automation (Python, Bash, PowerShell, AI-assisted tooling) to standardize provisioning, configuration, documentation, and reporting.",
     "duration": "8+ years",
     "highlights": [
-      "End-to-end Software Engineering (SDLC, clean architecture, containers, CI/CD, IaC)",
-      "Reliability & Observability (structured logs, metrics, traces; SLO mindset)",
-      "Secure-by-Default Engineering (secrets management, dependency scanning, least privilege, audit)",
-      "Networking Engineering (L1–L3, routing/switching, VLANs, DNS/DHCP, NAT, QoS)",
-      "Edge Security & Remote Access (firewalls/IDS, OpenVPN/WireGuard)",
-      "Interface Performance Tuning (NIC bonding/teaming, 802.1Q, MTU/jumbo frames, policy-based routing)",
-      "Streaming Systems (OBS/encoders, RTMP/SRT, NDI, audio mixing, real-time overlays/scoreboards)",
-      "Automation & Tooling (Python/Bash/PowerShell, AI-assisted workflows, repeatable runbooks)"
+      "E2E product systems (web platforms, APIs, desktop tools, containers, CI/CD, IaC)",
+      "Reliability & observability (structured logs, metrics, traces; SLO mindset)",
+      "Secure-by-default delivery (secrets, dependency scanning, least privilege, audit)",
+      "Professional IT & networking (L1–L3, VLANs, DNS/DHCP, NAT, QoS, remote access)",
+      "Edge security (firewalls/IDS, OpenVPN/WireGuard)",
+      "Interface performance tuning (NIC bonding, 802.1Q, MTU, policy-based routing)",
+      "Live systems & broadcast tooling (OBS/encoders, RTMP/SRT, NDI, overlays)",
+      "Automation (Python/Bash/PowerShell, AI-assisted workflows, repeatable runbooks)"
     ],
     "impact": "Improved reliability, performance, and security across client networks and production systems; increased streaming stability and quality through redundancy planning and QoS tuning; reduced manual effort via automation; higher delivery quality for software projects with modern DevOps practices.",
     "location": "Portugal",
     "period": "July 2017 – Present",
     "technologies": [],
-    "title": "Freelance: Software & Networking Engineer, IT Consultant, Streaming Technician"
+    "title": "E2E Software & Professional IT Delivery"
   },
   {
     "achievements": [

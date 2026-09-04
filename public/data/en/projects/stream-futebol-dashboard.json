@@ -1,44 +1,44 @@
 {
   "id": "stream-futebol-dashboard",
-  "name": "Streaming · Football score dashboard (Python desktop)",
-  "description": "CustomTkinter desktop control surface for live football scores with MongoDB team data, OBS text exports, and PIN-gated admin—layered safeguards around destructive actions and credential handling.",
-  "longDescription": "Desktop-first control app for venue staff: increment and decrement scores per pitch, manage penalties, persist teams in MongoDB (including Atlas-compatible setups), export `.txt` files for OBS text sources, and run multiple independent instances. Architecture separates scorekeeping views from administrative mutations; encrypted environment handling reduces plaintext exposure of Atlas URIs on disk. Includes dark-mode UI, notifications, PIN-protected admin views, and PyInstaller packaging for distribution.",
+  "name": "Apito Final",
+  "description": "Professional live-sports broadcast platform: multi-sport scorekeeping, custom branded themes, and a unified web and desktop operator dashboard with real-time OBS overlays.",
+  "longDescription": "Apito Final is a live-sports streaming platform for broadcast operators who need dependable control across multiple disciplines. Operators manage fixtures from a web or desktop dashboard (Rust/Tauri + React) while lightweight overlay scenes render in OBS with sub-second synchronisation. Each deployment supports custom themes: colours, typography, sponsor placement, and sport-specific layouts: without rebuilding the core product. Team and competition metadata is cached in MongoDB for fast match-day workflows; sensitive venue configuration is encrypted locally and administrative actions are PIN-protected. Verified public releases distribute desktop builds and official asset bundles with integrity checks. Automated CI covers Windows and Linux with unit and integration tests across the control desk and overlay runtime.",
   "technologies": [
-    "Python",
-    "CustomTkinter",
+    "Rust",
+    "Tauri",
+    "React",
+    "Preact",
+    "TypeScript",
     "MongoDB",
-    "PyInstaller",
-    "cryptography",
-    "psutil"
+    "Socket.IO",
+    "Vite"
   ],
   "features": [
-    "Separation between operator scorekeeping UI and PIN-gated administrative actions",
-    "Multi-instance scoreboards for parallel pitches",
-    "Mongo-backed autocomplete for team metadata",
-    "Penalty shootout logic with safeguards against accidental edits",
-    "OBS-ready text exports",
-    "Optional licensing subsystem hooks where enabled",
-    "Auto-refreshing process-aware utilities where configured"
+    "Multi-sport live streaming with sport-aware scorekeeping and overlay scenes",
+    "Custom theme system for branded broadcasts: colours, layouts, and sponsor zones",
+    "Unified web and desktop operator dashboard with OBS-ready overlay consumers",
+    "Real-time synchronisation between control desk and broadcast overlays",
+    "MongoDB-backed team and competition cache with export paths for broadcast tools",
+    "Encrypted local configuration, PIN-gated admin actions, and verified release updates"
   ],
   "url": "",
-  "demo": "",
+  "demo": "https://github.com/vunf1/Stream_Futebol_Artifacts/releases",
   "embedInModal": false,
   "image": "./img/projects/apitofinal_logo.png",
-  "period": "Jul 2023 – Nov 2025",
-  "role": "Desktop broadcast tooling",
+  "period": "2023 – 2026",
+  "role": "Live sports broadcast platform engineering",
   "teamSize": 1,
   "highlights": [
-    "Connects venue scorekeeping to OBS through simple text file exports",
-    "Cloud-friendly Mongo tier with local backup considerations",
-    "Polished CustomTkinter UX for high-pressure match days"
+    "One platform spanning multiple sports, custom themes, and venue-ready packaging",
+    "Memory-safe Rust desktop core with a responsive web and desktop operator experience",
+    "Production-grade match-day reliability through signed releases and automated test coverage"
   ],
-  "challenges": "Live sports tooling must stay responsive during concurrent updates and network hiccups to MongoDB.",
-  "solutions": "Local caching patterns, edit locks where needed, and clear separation between admin and scoreboard views.",
+  "challenges": "Multi-sport broadcast tooling must stay consistent when overlays reload, themes change, and venue networks fluctuate.",
+  "solutions": "Sport-agnostic real-time contracts, theme-driven overlay composition, local persistence, encrypted configuration, and automated tests across dashboard and overlay surfaces.",
   "security": [
-    "Encrypt sensitive `.env` material with documented cryptography helpers",
-    "Protect MongoDB connection strings; never publish them in public documentation or screenshots",
-    "PIN gates for destructive team management actions",
-    "Least-privilege MongoDB users for venue kiosks where Atlas policies allow",
-    "Validate penalty and score mutations to reduce accidental double-application under load"
+    "Encrypted storage for sensitive local configuration",
+    "PIN protection for destructive administrative actions",
+    "Integrity-checked downloads before applying updates",
+    "Least-privilege database access for venue deployments"
   ]
 }

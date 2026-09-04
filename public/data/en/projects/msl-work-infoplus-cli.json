@@ -1,35 +1,40 @@
 {
   "id": "msl-work-infoplus-cli",
-  "name": "Windows utilities · Info+ CLI (multi_scripts_lib/work)",
-  "description": "PyInstaller-oriented CLI utility under multi_scripts_lib/work/Info+_CLI—reproducible Windows builds, version metadata embedded, and supply-chain-aware distribution guidance.",
-  "longDescription": "CLI utility within the `multi_scripts_lib` monorepo (`work/Info+_CLI`), built with PyInstaller (`--onefile`, icon, version resources) around `runScriptDecode.py`. The packaging recipe favours deterministic build flags and traceable version resources so operators can verify what they ship. Presented here as its own entry alongside other `work/` utilities rather than as the whole monorepo. Implementation lives under the monorepo’s `work` folder in source control.",
+  "name": "Windows utilities · Info+ CLI",
+  "description": "PowerShell workstation diagnostics CLI for refurb and QA: modular scripts merged into one bundle and compiled to a Windows executable with PS2EXE.",
+  "longDescription": "Info+ is a PowerShell-first Windows utility built for desktop refurbishment and field diagnostics. Dozens of focused .ps1 modules: system inventory, hardware tests, tweaks, and maintenance: are merged into a single script bundle, then compiled to infoplus.exe with PS2EXE, embedded version metadata, icon resources, and elevated-admin execution. Operators get an interactive console menu covering CPU, GPU, RAM, Windows activation and product keys, driver links, battery/camera/audio/screen checks, power and BitLocker tweaks, cache cleanup, and Windows Memory Diagnostic launch.",
   "technologies": [
-    "Python",
-    "PyInstaller",
+    "PowerShell",
+    "PS2EXE",
+    "WMI",
     "Windows"
   ],
   "features": [
-    "One-file executable packaging recipe with documented PyInstaller flags",
-    "Version resource and icon embedding for traceability and installer hygiene",
-    "Isolated subtree inside multi_scripts_lib/work—clear module boundary",
-    "Build reproducibility mindset: minimise implicit environment dependencies"
+    "Modular PowerShell scripts merged into one distributable bundle",
+    "Interactive CLI menus for system info, hardware tests, and maintenance",
+    "CPU, GPU, RAM, Windows version, activation, and product-key reporting",
+    "Driver links plus battery, camera, audio, and screen pixel diagnostics",
+    "System tweaks including power settings, activation helpers, and BitLocker unlock",
+    "PS2EXE build pipeline with version metadata, icon, and require-admin flags",
+    "Syntax validation on the merged script before packaging"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/msl-work-infoplus-cli.svg",
-  "period": "Dec 2024 – Dec 2025",
-  "role": "Packaged utility authoring",
+  "period": "2018",
+  "role": "PowerShell desktop diagnostics author",
   "teamSize": 1,
   "highlights": [
-    "Shipping Windows-friendly CLI binaries with embedded version metadata",
-    "Clear monorepo path for discoverability and ownership of dependencies",
-    "Security: code signing and secret-free frozen bundles for external distribution"
+    "PowerShell-native tooling tailored to Windows workstation QA workflows",
+    "Single merged bundle reduces on-site deployment friction for technicians",
+    "Packaged Windows executable with traceable version resources"
   ],
-  "challenges": "Small monorepo slices often ship with minimal documentation.",
-  "solutions": "Describe capabilities that match the code and build instructions; the source link points to the exact subtree.",
+  "challenges": "Field technicians need one portable tool that covers inventory, tests, and tweaks without juggling many separate scripts.",
+  "solutions": "Modular PowerShell design with a merge-and-compile pipeline, shared helpers, and a menu-driven CLI that keeps refurb workflows repeatable.",
   "security": [
-    "Sign binaries when distributing outside internal networks",
-    "Avoid embedding secrets inside frozen executables"
+    "Requires administrative privileges for hardware and system operations",
+    "Sign compiled executables when distributing outside trusted networks",
+    "Review merged script output before packaging; never embed secrets in builds"
   ]
 }

@@ -1,32 +1,34 @@
 {
   "id": "msl-work-infoplus-gui",
-  "name": "Windows utilities · Info+ GUI companion (multi_scripts_lib/work)",
-  "description": "GUI companion adjacent to Info+_CLI in multi_scripts_lib/work/info+_GUI—paired CLI/GUI architecture for Windows desktop workflows with a narrow, reviewable surface.",
-  "longDescription": "Graphical companion to the Info+ CLI in the same `multi_scripts_lib` monorepo (`work/info+_GUI`), aimed at Windows desktop workflows. Scope is intentionally narrow and paired with the CLI entry so shared logic and dependencies can be reasoned about together. Suitable for internal tooling where GUI ergonomics matter but the threat model still warrants dependency review before wide distribution.",
+  "name": "Windows utilities · Info+ GUI companion",
+  "description": "Graphical companion to the Info+ CLI: paired Windows desktop workflows with a narrow, reviewable surface inside a shared automation monorepo.",
+  "longDescription": "A lightweight GUI companion that sits alongside the Info+ CLI in the same monorepo. It targets Windows desktop operators who need visual workflows while sharing logic and dependencies with the CLI entry point. Scope stays intentionally small for dependency review before wider distribution.",
   "technologies": [
     "Python",
     "Windows desktop"
   ],
   "features": [
-    "Co-located with Info+ CLI under multi_scripts_lib/work for shared maintenance",
-    "Focused surface for graphical workflows—limits accidental feature creep",
-    "Paired architecture: reuse patterns between CLI and GUI where appropriate"
+    "Paired CLI and GUI architecture for shared maintenance",
+    "Focused graphical workflows without feature creep",
+    "Co-located packaging patterns with the CLI utility",
+    "Dependency review guidance before external distribution"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/msl-work-infoplus-gui.svg",
-  "period": "Dec 2024",
+  "period": "2024",
   "role": "Desktop utility companion",
   "teamSize": 1,
   "highlights": [
-    "Shows paired CLI/GUI packaging patterns inside one workspace"
+    "Demonstrates paired CLI and GUI packaging in one workspace",
+    "Small surface area suitable for internal tooling"
   ],
   "challenges": "Limited public documentation for this slice of the monorepo.",
-  "solutions": "Keep the summary concise; the source link shows the full implementation context.",
+  "solutions": "Keep the portfolio summary aligned with the actual code scope; source link provides full context.",
   "security": [
-    "Review GUI dependencies for supply-chain risk before distribution",
-    "Sign binaries when leaving trusted networks; avoid auto-update from unverified sources",
-    "Keep user-data paths out of world-writable directories where possible"
+    "Review GUI dependencies for supply-chain risk",
+    "Sign binaries when leaving trusted networks",
+    "Avoid world-writable paths for user data"
   ]
 }

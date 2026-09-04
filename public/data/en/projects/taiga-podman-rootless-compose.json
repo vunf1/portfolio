@@ -1,41 +1,40 @@
 {
   "id": "taiga-podman-rootless-compose",
   "name": "Taiga PM: rootless Podman Compose",
-  "description": "Rootless Podman Compose stack for Taiga with nginx front door—secrets, volume layout, and TLS posture documented so multi-service PM software stays maintainable and minimally exposed.",
-  "longDescription": "Infrastructure defined in version control for running Taiga without a Docker daemon: Podman Compose definitions, nginx as the HTTP entry (port 8080 by default), and guidance for WSL2 versus native Linux rootless setups. The stack separates HTTP ingress, application workers, PostgreSQL, and RabbitMQ with explicit volume mounts so permissions and backups are predictable. Deployment flow: copy `.env.example`, create persistent data directories, run `podman compose up`, create Django superusers, and optionally load default templates. Shell scripts for backup and restore ship with the stack.",
+  "description": "Rootless Podman Compose stack for Taiga project management: nginx entry point, documented secrets, volume layout, and backup scripts.",
+  "longDescription": "Infrastructure-as-code for running Taiga without a Docker daemon. Podman Compose defines nginx as the HTTP entry, application workers, PostgreSQL, and RabbitMQ with explicit volume mounts for predictable permissions and backups. Deployment flow covers environment templates, persistent data directories, first-boot admin setup, and optional template loading. Shell scripts support backup and restore. Documentation covers rootless setups on Linux and WSL.",
   "technologies": [
     "Podman",
     "Podman Compose",
     "nginx",
     "Taiga",
     "PostgreSQL",
-    "RabbitMQ",
-    "Shell"
+    "RabbitMQ"
   ],
   "features": [
     "Single HTTP entry via nginx reverse proxy",
-    "Rootless-first documentation for WSL2 and Linux servers",
-    "Data volume layout for postgres, media, static assets, and messaging",
-    "Optional backup.sh / restore.sh helpers",
-    "Guidance to avoid /mnt/c performance traps on WSL2"
+    "Rootless-first documentation for Linux and WSL",
+    "Volume layout for database, media, static assets, and messaging",
+    "Backup and restore helper scripts",
+    "Guidance for performant storage on WSL hosts"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/taiga-podman-rootless-compose.svg",
-  "period": "Jan 2026",
-  "role": "Platform engineering / internal PM hosting",
+  "period": "2026",
+  "role": "Platform engineering and internal PM hosting",
   "teamSize": 1,
   "highlights": [
-    "Rootless Podman fluency for long-running collaboration software—reduced daemon attack surface",
-    "Single nginx entry point simplifies TLS termination and access rules",
-    "Operational scripts for backup discipline and documented secret generation (SECRET_KEY, DB, RabbitMQ)"
+    "Rootless Podman reduces daemon attack surface for long-running collaboration software",
+    "Single nginx entry simplifies TLS and access rules",
+    "Operational scripts and documented secret generation for first boot"
   ],
-  "challenges": "Taiga’s multi-service footprint is sensitive to volume permissions and async workers.",
-  "solutions": "Document directory prep, env secrets (SECRET_KEY, DB passwords, Rabbit creds), and compose runbooks for first boot.",
+  "challenges": "Multi-service PM stacks are sensitive to volume permissions and async workers.",
+  "solutions": "Documented directory preparation, strong generated secrets, and compose runbooks for reliable first boot.",
   "security": [
-    "Generate strong secrets for SECRET_KEY, database, and RabbitMQ users",
-    "Do not expose port 8080 broadly without TLS termination",
-    "Run backups off-site with encryption"
+    "Generate strong secrets for application, database, and messaging services",
+    "Do not expose the HTTP port broadly without TLS termination",
+    "Store backups off-site with encryption"
   ]
 }

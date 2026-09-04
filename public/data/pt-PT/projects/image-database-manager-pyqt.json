@@ -1,38 +1,39 @@
 {
   "id": "image-database-manager-pyqt",
-  "name": "Gestor de base de dados de imagens (PyQt5)",
-  "description": "GUI PyQt5 que ingere registos JSON de imagens, constrói tabelas dinâmicas e resolve caminhos—validação e higiene de caminhos antes de invocar o gestor de ficheiros do SO.",
-  "longDescription": "Os utilizadores mantêm um catálogo de imagens em JSON; a aplicação mostra tabelas ordenáveis e filtráveis, constrói caminhos de pasta candidatos com várias convenções de nome (espaço, underscore, concatenado, só modelo), verifica existência e abre o gestor de ficheiros do sistema quando há correspondência. As fontes JSON são validadas antes de operações no sistema de ficheiros; caminhos candidatos são verificados para reduzir surpresas de traversal com dados editados pelo utilizador. As definições guardam-se em `settings.json`; builds empacotados opcionais incluem ícones e fundos.",
+  "name": "Image Database Manager (PyQt5)",
+  "description": "Catálogo offline PyQt5 de imagens Windows e SO no servidor PXE: pesquisar, filtrar e abrir de imediato a pasta de imagem correta.",
+  "longDescription": "Ferramenta desktop local para equipas de recondicionamento que gerem imagens de SO numa partilha PXE. Os técnicos mantêm um catálogo JSON offline com perfis de hardware: marca, modelo, formato e versão Windows: e estado de prontidão da imagem. A app apresenta uma tabela ordenável e filtrável, resolve pastas em disco com várias estratégias de nomes e abre o caminho correspondente no explorador de ficheiros para acesso rápido durante fluxos de imaging. Edições protegidas por PIN, definições persistentes e validação de caminhos mantêm o catálogo fiável quando os layouts da partilha variam entre lotes.",
   "technologies": [
     "Python",
     "PyQt5",
     "JSON"
   ],
   "features": [
-    "Ingestão JSON para tabelas dinâmicas com validação antes de acesso ao FS",
-    "Várias estratégias de nomeação de pastas para convenções confusas no disco",
-    "Erros visíveis quando caminhos faltam ou o JSON é inválido",
-    "Ficheiro de definições configurável",
-    "Script de build opcional com pacote de assets"
+    "Catálogo JSON offline de registos de imagens Windows/SO alojadas no PXE",
+    "Campos de marca, modelo, formato, versão Windows e estado da imagem",
+    "Tabela ordenável e filtrável para consulta rápida em fluxos de recondicionamento",
+    "Várias estratégias de nomes de pasta para layouts inconsistentes na partilha",
+    "Duplo clique para abrir a pasta de imagem resolvida no explorador de ficheiros",
+    "Adicionar, editar e eliminar entradas do catálogo com alterações protegidas por PIN",
+    "Marcas, tipos de dispositivo, versões Windows e localizações de partilha configuráveis"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/image-database-manager-pyqt.svg",
-  "period": "dezembro de 2024",
-  "role": "Navegador desktop de dados",
+  "period": "2023",
+  "role": "Ferramentas de catálogo de imagens SO PXE",
   "teamSize": 1,
   "highlights": [
-    "Resolve convenções de nomeação confusas no disco com estratégias explícitas",
-    "Mensagens de validação e erro claras quando dados ou caminhos falham"
+    "Dá aos técnicos um índice offline de cada imagem de SO na partilha PXE",
+    "Tolera convenções de pastas reais e desorganizadas com correspondência explícita de padrões"
   ],
-  "challenges": "Pressupostos de sistema de ficheiros partem-se quando assets se movem entre volumes ou locales de SO.",
-  "solutions": "Definições configuráveis, verificações de caminho resilientes e erros claros antes de invocar Explorer/Finder.",
+  "challenges": "As partilhas de imagens PXE crescem rapidamente e os nomes de pasta raramente seguem uma convenção, tornando a pesquisa manual lenta em recondicionamento de alto volume.",
+  "solutions": "Catálogo offline estruturado com resolução flexível de caminhos, validação antes de aceder ao sistema de ficheiros e UI desktop otimizada para rapidez em armazém.",
   "security": [
-    "Nunca publicar passwords de desencriptação em documentação ou material promocional",
-    "Validar fontes JSON antes de operações de sistema de ficheiros",
-    "Sanitizar e normalizar caminhos para evitar traversal a partir de catálogos editados",
-    "Acções «abrir no gestor de ficheiros» só após verificação de existência—sem shelling a strings arbitrárias",
-    "Tratar catálogos JSON partilhados como input não confiável quando vêm de terceiros"
+    "Validar JSON e caminhos antes de aceder ao sistema de ficheiros",
+    "Normalizar caminhos para reduzir risco de traversal em catálogos não confiáveis",
+    "Abrir gestores externos apenas após verificação de existência",
+    "Proteger edições do catálogo com acesso protegido por PIN"
   ]
 }

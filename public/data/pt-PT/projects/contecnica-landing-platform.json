@@ -1,15 +1,13 @@
 {
   "id": "contecnica-landing-platform",
   "name": "Contecnica: Plataforma de landing",
-  "description": "Monorepo de produção com FastAPI, PostgreSQL, Redis e Next.js App Router—coerência de cache orientada a eventos, APIs tipadas e empacotamento operacional para um site público robusto.",
-  "longDescription": "A stack de marketing da Contecnica é um monorepo orientado a produção: backend FastAPI assíncrono (SQLAlchemy 2, PostgreSQL, Redis, Alembic) e frontend Next.js App Router (TypeScript, shadcn/ui, Motion). As alterações de conteúdo passam primeiro pela API; o sistema difunde invalidação tipada por WebSocket para a app pública voltar a ir buscar JSON autoritativo—evitando bundles estáticos desatualizados sem acoplar o editor à implementação da cache de borda. Migrações Alembic tornam a evolução do esquema rastreável; Redis cumpre o fan-out com responsabilidade estreita. Fluxos Docker/Podman, documentação de ambientes e pacotes de release (incluindo variantes GHCR) suportam deploys repetíveis e reduzem deriva de configuração.",
+  "description": "Monorepo de marketing e comércio em produção: FastAPI, PostgreSQL, Redis, Next.js, coerência de cache orientada a eventos e implementação com contentores.",
+  "longDescription": "Monorepo de produção que combina API async FastAPI com site público Next.js. Conteúdo e catálogo em PostgreSQL; Redis coordena invalidação de cache para que visitantes recebam JSON atualizado após edições admin. Checkout de convidado integra pagamentos e fiscalidade com reserva de stock e estado de encomenda via webhooks. Alterações de esquema versionadas por migrações. Entrega com Docker Compose, imagens em registo e promoção documentada de staging para produção.",
   "technologies": [
     "FastAPI",
     "Python",
     "PostgreSQL",
     "Redis",
-    "SQLAlchemy 2",
-    "Alembic",
     "Next.js",
     "TypeScript",
     "WebSocket",
@@ -17,33 +15,32 @@
     "Podman"
   ],
   "features": [
-    "API REST com SQLAlchemy assíncrono e migrações Alembic—alterações de esquema versionadas, não manuais",
-    "Site público Next.js com limites servidor/cliente e refetch tipado após invalidação",
-    "Redis no percurso de notificação para fan-out de mudanças de conteúdo",
-    "Canal WebSocket com verificação de Origin e orientação TLS em produção",
-    "Docker Compose para stacks locais e com forma de produção",
-    "Scripts de empacotamento de release para build no servidor e pulls de imagens GHCR",
-    "manage.ps1 Windows / TUI Node para operações frequentes"
+    "Modelo de conteúdo database-first com refresh do site público em tempo real",
+    "Carrinho e checkout de convidado com webhooks de pagamento e integração fiscal",
+    "Gestão administrativa de comércio e catálogo no cliente moderno",
+    "Fan-out Redis para invalidação de cache coerente",
+    "Stacks Compose para local, integração e ambientes tipo produção",
+    "Imagens em registo com validação CI antes de publicar",
+    "Métricas operacionais em caminhos críticos de checkout"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/contecnica-logo.png",
-  "period": "março de 2026",
-  "role": "Full-stack (API + frontend + ferramentas de deploy)",
+  "period": "2026",
+  "role": "Full-stack (API, cliente, implementação)",
   "teamSize": 1,
   "highlights": [
-    "Fonte de verdade em PostgreSQL com invalidação de cache explícita orientada a eventos",
-    "Arquitectura resistente a conteúdo obsoleto: escritas na BD primeiro, fan-out Redis, refetch do cliente em sinais tipados",
-    "Separação clara entre superfície Next.js pública e preocupações admin/documentação na FastAPI",
-    "Scripts operacionais e pacotes orientados a GHCR alinhados com hosting centrado em contentores"
+    "Arquitetura orientada a eventos que evita conteúdo público desatualizado",
+    "Comércio adicionado sem quebrar a separação CMS e API",
+    "Implementações repetíveis com imagens em registo e CI de integração"
   ],
-  "challenges": "Sites de marketing com fluxos tipo CMS e performance estática exigem semântica de cache consistente e atualizações em tempo real sem JSON público desatualizado.",
-  "solutions": "Escritas primeiro na BD, Redis para fan-out, e cliente que refetch após invalidação, com configuração WebSocket e de origem documentada junto aos ficheiros compose.",
+  "challenges": "Sites de marketing com CMS e e-commerce precisam de comportamento de cache consistente sob carga.",
+  "solutions": "API write-through, notificações Redis, refetch tipado no cliente e testes de integração automáticos no pipeline.",
   "security": [
-    "Uso de WebSocket com âmbito de Origin documentado para dev vs produção",
-    "Separação de preocupações públicas vs admin na API—menor raio de explosão para credenciais",
-    "Segredos apenas nos alvos de deploy; no código-fonte ficam templates .env sem valores reais",
-    "TLS e proxy documentados junto do compose para transporte encriptado como postura por omissão"
+    "Superfícies API públicas e admin separadas",
+    "CSRF e rate limiting em endpoints sensíveis de checkout",
+    "Segredos apenas nos alvos de implementação, nunca no repositório",
+    "Terminação TLS documentada para proxies reversos de produção"
   ]
 }

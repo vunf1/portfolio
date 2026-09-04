@@ -68,23 +68,23 @@
       "Automatização do streaming: OBS/FFmpeg/NDI, RTMP/SRT, controlo de sobreposição, verificações de saúde, failover."
     ],
     "company": "Freelance",
-    "description": "Fornecer soluções de ponta a ponta para pequenas empresas e clientes individuais. Software: SDLC completo, desde os requisitos e o design até à implementação, testes, contentorização, CI/CD, observabilidade e implementações seguras por predefinição - privilegiando compilações reproduzíveis, padrões de infraestrutura como código e manuais de execução bem documentados.\n Redes: Conceção e configuração de L1/L2/L3 (encaminhamento/comutação), segmentação de VLAN, serviços DHCP/DNS, políticas NAT e QoS, planeamento sem fios e resolução de problemas e resposta a incidentes de acesso remoto seguro (VPNs site-to-site e utilizador remoto).\n Streaming: produções em direto com várias câmaras, com configuração de codificador, ingestão RTMP/SRT, encaminhamento NDI, mistura de áudio e sobreposições/quadros de pontuação em tempo real; planeamento de redundância, afinação de QoS e monitorização em direto para manter as transmissões estáveis em condições de rede variáveis. Em todos os domínios, aplico automação (Python, Bash, PowerShell, ferramentas assistidas por IA) para padronizar o provisionamento, a configuração, a documentação e os relatórios - reduzindo o trabalho, diminuindo o MTTR e melhorando a confiabilidade, o desempenho e a segurança.",
+    "description": "Entrega independente de software E2E e TI profissional para empresas e clientes individuais. Sistemas de produto: SDLC completo, desde os requisitos e o desenho até à implementação, testes, contentorização, CI/CD, observabilidade e implementações seguras por predefinição (plataformas web, APIs e ferramentas de ambiente de trabalho, com compilações reproduzíveis, padrões de infraestrutura como código e manuais bem documentados).\n TI profissional: conceção e configuração L1/L2/L3 (encaminhamento/comutação), segmentação VLAN, DHCP/DNS, NAT e QoS, planeamento sem fios, acesso remoto seguro (VPN sítio-a-sítio e utilizador remoto) e resposta a incidentes.\n Sistemas em direto: configuração de codificador, ingestão RTMP/SRT, encaminhamento NDI, mistura de áudio e sobreposições quando a produção precisa de um feed estável; planeamento de redundância, afinação de QoS e monitorização em direto. Em todos os domínios aplico automação (Python, Bash, PowerShell, ferramentas assistidas por IA) para padronizar o provisionamento, a configuração, a documentação e os relatórios.",
     "duration": "Mais de 8 anos",
     "highlights": [
-      "Engenharia de software de ponta a ponta (SDLC, arquitetura limpa, contentores, CI/CD, IaC)",
+      "Sistemas de produto E2E (plataformas web, APIs, ferramentas de ambiente de trabalho, contentores, CI/CD, IaC)",
       "Fiabilidade e observabilidade (registos estruturados, métricas, rastreios; mentalidade SLO)",
-      "Engenharia de segurança por defeito (gestão de segredos, controlo de dependências, privilégios mínimos, auditoria)",
-      "Engenharia de redes (L1-L3, encaminhamento/comutação, VLANs, DNS/DHCP, NAT, QoS)",
-      "Segurança de extremidade e acesso remoto (firewalls/IDS, OpenVPN/WireGuard)",
-      "Afinação do desempenho da interface (ligação/teaming de NIC, 802.1Q, MTU/jumbo frames, encaminhamento baseado em políticas)",
-      "Sistemas de transmissão em fluxo contínuo (OBS/codificadores, RTMP/SRT, NDI, mistura de áudio, sobreposições em tempo real/painéis de avaliação)",
-      "Automatização e ferramentas (Python/Bash/PowerShell, fluxos de trabalho assistidos por IA, cadernos de execução repetíveis)"
+      "Entrega segura por defeito (segredos, verificação de dependências, privilégio mínimo, auditoria)",
+      "TI profissional e redes (L1–L3, VLANs, DNS/DHCP, NAT, QoS, acesso remoto)",
+      "Segurança de extremidade (firewalls/IDS, OpenVPN/WireGuard)",
+      "Afinação do desempenho da interface (bonding de NIC, 802.1Q, MTU, encaminhamento por políticas)",
+      "Sistemas em direto e ferramentas de emissão (OBS/codificadores, RTMP/SRT, NDI, sobreposições)",
+      "Automatização (Python/Bash/PowerShell, fluxos assistidos por IA, manuais repetíveis)"
     ],
     "impact": "Maior fiabilidade, desempenho e segurança em redes de clientes e sistemas de produção; maior estabilidade e qualidade de streaming através do planeamento de redundância e afinação de QoS; redução do esforço manual através da automatização; maior qualidade de entrega para projectos de software com práticas modernas de DevOps.",
     "location": "Portugal",
     "period": "julho de 2017 - Presente",
     "technologies": [],
-    "title": "Freelance - Engenheiro de Software e Redes, Consultor de TI, Técnico de Streaming"
+    "title": "Entrega E2E de software e TI profissional"
   },
   {
     "achievements": [

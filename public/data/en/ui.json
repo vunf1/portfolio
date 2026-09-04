@@ -18,7 +18,7 @@
     "impact": "Impact",
     "issuer": "Issuer",
     "subtitle": "Honors and distinctions",
-    "title": "Awards & Recognition"
+    "title": "Awards"
   },
   "certifications": {
     "credentialId": "Credential ID",
@@ -115,7 +115,7 @@
     "slideProgress": "{{current}} of {{total}}",
     "subtitle": "My journey in technology and operations",
     "technologies": "Stack & tools",
-    "title": "Professional Experience"
+    "title": "Experience"
   },
   "hero": {
     "cta": "View Portfolio",
@@ -124,6 +124,26 @@
     "subtitle": "Back-end Ops • Network • OOP",
     "tagline": "Always learning. Building with purpose.",
     "title": "Full-Stack Engineer"
+  },
+  "portfolio": {
+    "explore": "Explore sections",
+    "featuredProjects": "Featured projects",
+    "location": "Based in",
+    "roles": "Roles",
+    "skillAreas": "Skill areas",
+    "statsLabel": "Profile highlights",
+    "valuesLabel": "Core principles",
+    "yearsBuilding": "Years building",
+    "sections": {
+      "experience": "Experience",
+      "education": "Education",
+      "skills": "Skills",
+      "projects": "Projects",
+      "certifications": "Certifications",
+      "testimonials": "Testimonials",
+      "interests": "Interests",
+      "awards": "Awards"
+    }
   },
   "interests": {
     "lifestyle": "Lifestyle & Wellness",
@@ -137,7 +157,7 @@
     "awards": "Awards",
     "backToHome": "Back to Home",
     "backToLanding": "Back to Landing Page",
-    "brand": "IT and Technology Solutions",
+    "brand": "João Maia",
     "certifications": "Certifications",
     "education": "Education",
     "experience": "Experience",
@@ -178,9 +198,12 @@
     "security": "Security & compliance",
     "solutions": "Solutions",
     "subtitle": "Selected work",
+    "viewCase": "View case",
+    "viewCaseAria": "Open case study: {{name}}",
+    "embedsBlockedShort": "The live site blocks embedding. Open it in a new window.",
     "teamSize": "Team Size",
     "technologies": "Technologies",
-    "title": "Featured Projects"
+    "title": "Projects"
   },
   "skills": {
     "description": "Description",
@@ -189,7 +212,7 @@
     "proficiencyLevels": "Proficiency Levels",
     "projects": "Projects",
     "soft": "Soft Skills",
-    "subtitle": "Technologies and competencies",
+    "subtitle": "Depth bands mapped to systems I ship and operate",
     "technical": "Technical Skills",
     "title": "Skills",
     "levelNames": {
@@ -220,6 +243,8 @@
   },
   "contact": {
     "title": "Contact Me",
+    "lede": "A short note is enough. I read every message and reply when I can take the work on.",
+    "organisation": "Organisation",
     "close": "Close",
     "cancel": "Cancel",
     "submit": "Send Message",
@@ -265,13 +290,15 @@
       "badge": "JMSIT: IT Services & Software",
       "summary": "Specialist in software development, automation, and technology solutions. I offer comprehensive services from full-stack development and AI integration to computer repair, server rack installation, and IT consulting. I work with businesses and individuals to create practical solutions that solve real problems and improve operational efficiency.",
       "ctaContact": "Contact",
-      "ctaGroupLabel": "Contact and quick navigation",
+      "ctaGroupLabel": "Contact, portfolio, and services",
+      "ctaPortfolio": "View portfolio",
       "ctaServices": "Services",
       "ctaAbout": "About",
       "logoSubtitle": "Security | Intelligence | Technology"
     },
     "footer": {
       "navigation": "Navigation",
+      "portfolio": "Portfolio",
       "about": "About",
       "services": "Services",
       "experience": "Experience",
@@ -298,7 +325,7 @@
       "location": "Location",
       "availability": "Availability",
       "remoteWork": "Remote Work",
-      "ctaSkills": "View Skills & Experience",
+      "ctaSkills": "View portfolio",
       "readMore": "Read more",
       "readLess": "Show less",
       "quickFacts": "Quick facts",

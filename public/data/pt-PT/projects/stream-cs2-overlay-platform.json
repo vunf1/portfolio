@@ -1,44 +1,43 @@
 {
   "id": "stream-cs2-overlay-platform",
   "name": "Streaming · Plataforma de overlay de torneios CS2",
-  "description": "Backend Rust com ingestão GSI do CS2, fan-out WebSocket, dashboard React e overlays OBS—estado autoritativo único, GSI autenticável e overrides de operador auditáveis.",
-  "longDescription": "Stack de overlay de torneios ponta a ponta: serviço Rust aceita payloads GSI (token opcional), mantém estado autoritativo da partida e difunde atualizações por WebSocket para um dashboard React e cenas HTML de overlay otimizadas para OBS Browser Source. A arquitectura torna explícitos ingestão, transições de estado e difusão para que dessincronizações e dados obsoletos sejam detectáveis, não silenciosos. O dashboard oferece CRUD de equipas e jogadores, overrides manuais com histórico de auditoria, deteção de obsolescência quando o GSI deixa de enviar dados, importação/exportação JSON e proteção PIN opcional em rotas mutáveis. Podman Compose cobre ambientes de desenvolvimento e produção; Tauri pode empacotar uma build desktop quando necessário.",
+  "description": "Pilha de overlay para torneios Counter-Strike 2: servidor Rust, painel React, overlays OBS e estado de jogo autoritativo com substituições auditáveis.",
+  "longDescription": "Sistema de broadcast de ponta a ponta para torneios CS2. Serviço Rust ingere estado do jogo, mantém um modelo de jogo autoritativo e transmite actualizações a um painel React e a cenas HTML para OBS. Operadores gerem equipas, jogadores, temas e substituições manuais com histórico de auditoria. Autenticação opcional protege ingestão e rotas de escrita. Implementação com Compose de contentores; consola desktop opcional para eventos em recinto. Testes de integração validam estado e comportamento de overlay.",
   "technologies": [
     "Rust",
     "React",
     "TypeScript",
     "WebSocket",
     "Tauri",
-    "TOML",
     "Podman"
   ],
   "features": [
-    "Núcleo Rust como fonte única de verdade consumida pelo dashboard e pelos overlays",
-    "Ingestão HTTP GSI com deteção de heartbeat/obsolescência",
-    "Dashboard para controlo de partida, assets, tema e overrides",
-    "Vários layouts de overlay (marcador, economia, veto, lower thirds, etc.)",
-    "Anular manualmente com pilha de undo e registo de auditoria",
-    "Importação/exportação JSON de torneios",
-    "manage.ps1 / TUI Node para ergonomia de desenvolvimento"
+    "Fonte única de verdade para estado partilhado pelo painel e pelos overlays",
+    "Ingestão de estado com heartbeat e deteção de dados obsoletos",
+    "Vários layouts de overlay para marcador, economia, veto e lower thirds",
+    "Substituições manuais com pilha de anulação e registo de auditoria",
+    "Importação e exportação de torneios em JSON estruturado",
+    "Implementação com contentores para desenvolvimento e ambientes tipo produção",
+    "Testes de integração automáticos para contratos de estado e overlay"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/stream-cs2-overlay-platform.svg",
-  "period": "março de 2026",
-  "role": "Sistemas em tempo real + UX de transmissão",
+  "period": "2026",
+  "role": "Sistemas em tempo real e UX de broadcast",
   "teamSize": 1,
   "highlights": [
-    "Fonte única de verdade a alimentar dashboard e overlays",
-    "Ferramentas operacionais com padrão manage.ps1",
-    "Shell desktop opcional via Tauri para uso no local do evento"
+    "Um modelo de estado alimenta painel de controlo e cenas OBS",
+    "Ferramentas operacionais para implementações repetíveis em recinto",
+    "Empacotamento desktop opcional para torneios no local"
   ],
-  "challenges": "Overlays de esports ao vivo têm de sincronizar em milissegundos enquanto toleram crashes do jogo e payloads GSI parciais.",
-  "solutions": "Máquina de estados central em Rust, entrega WebSocket, indicadores de obsolescência e ferramentas de override auditáveis.",
+  "challenges": "Overlays de esports em directo devem manter-se sincronizados com falhas do jogo e cargas úteis parciais.",
+  "solutions": "Serviço de estado central, entrega WebSocket, indicadores de obsolescência e ferramentas de substituição com auditoria.",
   "security": [
-    "Suporte a token de autenticação GSI opcional para reduzir ingestão falsificada em LANs partilhadas",
-    "Rotas de escrita do dashboard protegidas por PIN quando ativado; trilho de auditoria em overrides manuais",
-    "Não expor APIs de escrita do dashboard a redes não confiáveis sem TLS e controlo de acesso",
-    "Tratar URLs de overlay como legíveis na transmissão—evitar segredos de operador em browser sources"
+    "Autenticação opcional de ingestão para reduzir updates falsificados",
+    "Rotas de escrita protegidas por PIN quando ativado",
+    "Não expor APIs de controlo a redes não confiáveis sem TLS e controlo de acesso",
+    "Tratar URLs de overlay como legíveis em broadcast sem segredos de operador"
   ]
 }

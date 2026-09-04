@@ -1,8 +1,8 @@
 {
   "id": "php-version-manager-tauri",
-  "name": "Gestor de versões PHP (Tauri + Rust + React)",
-  "description": "GUI multiplataforma para instalar, alternar e remover runtimes PHP—downloads com verificação de integridade, operações atómicas com rollback e núcleo Rust memory-safe por detrás da UI React.",
-  "longDescription": "O phpvm dirige-se a programadores que alternam várias versões PHP: um shell Tauri aloja UI React que lista versões instaladas e disponíveis, gere cache de download com verificação de checksum, alterna versões ativas com atualizações de PATH e remove builds não usados. Rust no backend garante operações de ficheiro memory-safe com rollback para recuperar instalações parciais; a interface expõe progresso e definições para mirrors e cache. O desenho trata binários de runtime como inputs de cadeia de fornecimento a verificar antes da execução.",
+  "name": "PHP Version Manager (Tauri + Rust + React)",
+  "description": "App desktop multiplataforma para instalar, alternar e remover runtimes PHP: downloads verificados por checksum, atualizações seguras ao sistema de ficheiros e núcleo Rust com UI React.",
+  "longDescription": "Ferramenta para programadores que gerem várias versões PHP na mesma máquina. Consola Tauri com interface React para explorar publicações, descarregar compilados verificados, activar versões e limpar cache. Rust trata alterações ao sistema de ficheiros com suporte a reversão para que instalações falhadas não deixem o ambiente inconsistente. Compilações e testes automáticos validam metadados de empacotamento e pré-requisitos de plataforma antes da publicação.",
   "technologies": [
     "Rust",
     "Tauri",
@@ -10,33 +10,31 @@
     "TypeScript"
   ],
   "features": [
-    "Download e instalação de builds PHP oficiais com verificações de integridade",
-    "Ativação num clique com atualizações automáticas do PATH",
-    "Gestão e limpeza de cache",
-    "UI com separadores para instaladas, disponíveis, cache e definições",
-    "Relatório de progresso para downloads longos",
-    "Alvos multiplataforma (Windows e Linux destacados no README)"
+    "Instalar, ativar e remover versões PHP com feedback claro na UI",
+    "Verificação de checksum antes de ativar runtimes descarregados",
+    "Operações atómicas ao sistema de ficheiros com rollback em falha",
+    "Gestão de cache e progresso em downloads longos",
+    "Suporte multiplataforma focado em Windows e Linux",
+    "Pipeline automático de build e testes para releases"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
-  "image": "./img/projects/php-version-manager-tauri.svg",
-  "period": "janeiro de 2026",
-  "role": "Ferramentas de sistemas + UX desktop",
+  "image": "./img/projects/php-version-manager-tauri.png",
+  "period": "2026",
+  "role": "Ferramentas de sistema e UX desktop",
   "teamSize": 1,
   "highlights": [
-    "Mutações do sistema de ficheiros com rollback em Rust—menos consolas partidas por árvores a meio",
-    "Foco operacional: tarballs verificados por checksum antes da activação",
-    "Fluxos com separadores e UX explícita em torno de acções destrutivas",
-    "Separação entre estado da UI e motor de instalação para auditoria mais simples"
+    "Motor de instalação memory-safe separado da camada UI",
+    "Downloads com consciência de supply chain e verificação de integridade",
+    "Fluxos orientados ao operador para ações destrutivas"
   ],
-  "challenges": "Mutações do sistema de ficheiros e PATH são arriscadas nas máquinas dos utilizadores; erros partem consolas ou deixam instalações a meio.",
-  "solutions": "Operações atómicas com rollback, pipeline de checksum verificado, e UX explícita em torno de ações destrutivas.",
+  "challenges": "Alterações a PATH e sistema de ficheiros podem partir ambientes de desenvolvimento.",
+  "solutions": "Downloads verificados, atualizações atómicas com rollback e consentimento explícito antes de alterações globais.",
   "security": [
-    "Verificar checksums de download antes da instalação; preferir mirrors oficiais",
-    "Evitar executar a GUI com privilégios elevados salvo necessidade",
-    "Armazenar definições sem embutir segredos ou tokens de API",
-    "Caminhos de instalação atómicos evitam upgrades inconsistentes observáveis por outras ferramentas",
-    "Mutações de PATH explícitas na UX para evitar alterações silenciosas em todo o sistema sem consentimento"
+    "Verificar checksums de fontes oficiais antes da instalação",
+    "Evitar privilégios elevados salvo necessidade estrita",
+    "Sem segredos armazenados em definições locais",
+    "UX clara ao modificar variáveis PATH do utilizador"
   ]
 }

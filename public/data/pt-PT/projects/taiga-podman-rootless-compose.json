@@ -1,41 +1,40 @@
 {
   "id": "taiga-podman-rootless-compose",
-  "name": "Taiga PM: Compose Podman rootless",
-  "description": "Stack Compose Podman rootless para Taiga com nginx—segredos, volumes e postura TLS documentados para software de PM multi-serviço sustentável e minimamente exposto.",
-  "longDescription": "Infraestrutura descrita em código-fonte para correr o Taiga sem daemon Docker: Podman Compose, nginx como entrada HTTP (porta 8080 por omissão) e orientação para WSL2 rootless face a Linux nativo. A stack separa ingresso HTTP, workers da aplicação, PostgreSQL e RabbitMQ com volumes explícitos para permissões e backups previsíveis. Fluxo típico: copiar `.env.example`, criar diretórios de dados persistentes, `podman compose up`, criar superutilizador Django e opcionalmente carregar templates por omissão. Inclui scripts shell de backup e restauro.",
+  "name": "Taiga PM: Podman Compose rootless",
+  "description": "Pilha Podman Compose sem privilégios de root para gestão de projectos Taiga: entrada nginx, segredos documentados, disposição de volumes e scripts de cópia de segurança.",
+  "longDescription": "Infraestrutura como código para correr Taiga sem daemon Docker. Podman Compose define nginx como entrada HTTP, processos de aplicação, PostgreSQL e RabbitMQ com montagens de volume explícitas para permissões e cópias de segurança previsíveis. O fluxo de implementação cobre modelos de ambiente, directórios de dados persistentes, configuração de administração no primeiro arranque e carregamento opcional de modelos. Scripts de consola suportam cópia de segurança e restauro. A documentação cobre instalações sem privilégios de root em Linux e WSL.",
   "technologies": [
     "Podman",
     "Podman Compose",
     "nginx",
     "Taiga",
     "PostgreSQL",
-    "RabbitMQ",
-    "Shell"
+    "RabbitMQ"
   ],
   "features": [
-    "Entrada HTTP única via proxy inverso nginx",
-    "Documentação rootless-first para WSL2 e servidores Linux",
-    "Layout de volumes para postgres, media, estáticos e mensagens",
-    "Auxiliares opcionais backup.sh / restore.sh",
-    "Orientação para evitar armadilhas de performance /mnt/c no WSL2"
+    "Entrada HTTP única via proxy reverso nginx",
+    "Documentação com prioridade a execução sem privilégios de root em Linux e WSL",
+    "Disposição de volumes para base de dados, media, recursos estáticos e mensagens",
+    "Scripts auxiliares de cópia de segurança e restauro",
+    "Orientação para armazenamento performante em anfitriões WSL"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/taiga-podman-rootless-compose.svg",
-  "period": "janeiro de 2026",
-  "role": "Engenharia de plataforma / hosting interno de PM",
+  "period": "2026",
+  "role": "Engenharia de plataforma e alojamento de gestão de projectos interno",
   "teamSize": 1,
   "highlights": [
-    "Podman rootless para colaboração de longa duração—menor superfície de daemon",
-    "Ponto único de entrada nginx simplifica TLS e regras de acesso",
-    "Scripts operacionais e geração documentada de segredos (SECRET_KEY, BD, RabbitMQ)"
+    "Podman rootless reduz superfície de ataque do daemon para software de colaboração",
+    "Entrada nginx única simplifica TLS e regras de acesso",
+    "Scripts operacionais e geração documentada de segredos no primeiro boot"
   ],
-  "challenges": "A pegada multi-serviço do Taiga é sensível a permissões de volumes e workers assíncronos.",
-  "solutions": "Documentar preparação de diretórios, segredos de ambiente (SECRET_KEY, passwords BD, credenciais Rabbit) e runbooks de primeiro arranque.",
+  "challenges": "Stacks PM multi-serviço são sensíveis a permissões de volume e workers assíncronos.",
+  "solutions": "Preparação de directórios documentada, segredos fortes gerados e manuais Compose para primeiro arranque fiável.",
   "security": [
-    "Gerar segredos fortes para SECRET_KEY, base de dados e utilizadores RabbitMQ",
-    "Não expor a porta 8080 amplamente sem terminação TLS",
-    "Executar backups off-site com cifra"
+    "Gerar segredos fortes para aplicação, base de dados e messaging",
+    "Não expor porta HTTP amplamente sem terminação TLS",
+    "Armazenar cópias de segurança fora do sítio com encriptação"
   ]
 }

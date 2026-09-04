@@ -1,46 +1,47 @@
 {
   "id": "wisdom-jobs-tracking",
-  "name": "Wisdom: Multi-tenant jobs tracking platform",
-  "description": "FastAPI + MongoDB backend, React + TypeScript SPA, optional Tauri desktop shell, Podman/Docker-first ops, and extensive security/deployment documentation.",
-  "longDescription": "Wisdom is a multi-tenant job-tracking product: a secure FastAPI API on MongoDB (JWT auth, company-scoped data, rich domain flows described in backend documentation) and a Vite-powered React frontend with TypeScript. Tenant isolation and RBAC are documented as part of the architecture—not as an afterthought—alongside metrics, reporting, and webhooks. The stack runs under Podman or Docker Compose variants (development, Gunicorn, Nuitka-hardened builds, registry-based pulls). A Tauri desktop wrapper reuses the web UI with its own security guidance. Documentation covers security architecture, environment variables, and incident response—operations are treated as a first-class concern equal to product features.",
+  "name": "Wisdom - Work Intelligence & Secure Data Operations Manager",
+  "description": "Multi-tenant, theme-based SaaS for work intelligence and secure data operations: mortgage and job tracking with FastAPI, MongoDB, React SPA, per-tenant branding, and container-first deployment.",
+  "longDescription": "Wisdom (Work Intelligence & Secure Data Operations Manager) is a multi-tenant, theme-based platform for tracking client jobs, banks, documents, and teams with strict company-level data boundaries and per-tenant UI theming. A FastAPI backend on MongoDB exposes a documented REST API with JWT authentication and role-based access. A React SPA delivers the main product experience with company-scoped theme configuration; an optional Tauri desktop client reuses the same API. Background workers process mortgage document extraction with Redis-backed job queues for reliable, scalable workloads. Deployed with Docker or Podman Compose, container registry images, and CI pipelines that build and verify releases.",
   "technologies": [
     "FastAPI",
-    "Python 3.12",
+    "Python",
     "MongoDB",
     "React",
     "TypeScript",
-    "Vite",
+    "Redis",
     "Tauri",
-    "Podman",
     "Docker",
+    "Podman",
     "JWT"
   ],
   "features": [
-    "Multi-tenant REST API with documented flows and company-scoped data boundaries (auth, jobs, clients, processos, companies, branding)",
-    "React SPA with shared environment configuration and production build pipeline",
-    "Multiple compose topologies for dev, scaled API workers, and compiled backend options",
-    "Tauri desktop packaging with security-focused documentation",
-    "Windows and shell manage menus for repeatable deployments",
-    "Deep documentation index for security architecture and data protection"
+    "Multi-tenant API with company-scoped data, RBAC, and per-tenant theme configuration",
+    "React SPA with production build and environment-aware configuration",
+    "Document intelligence pipeline for regulated mortgage paperwork",
+    "Redis-backed worker queues with scaling and recovery patterns",
+    "Optional Tauri desktop client sharing the web API contract",
+    "Compose-based dev, staging, and production topologies",
+    "CI release images and operational runbooks for deployment"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/wisdom_logo.png",
-  "period": "Sep 2025 – Mar 2026",
-  "role": "Full-stack platform + hardening + deployment automation",
+  "period": "2025 – 2026",
+  "role": "Full-stack platform and deployment",
   "teamSize": 1,
   "highlights": [
-    "Security and operations treated as parallel tracks to feature work",
-    "Container-native workflows with GHCR and EasyPanel-oriented notes",
-    "Desktop and web clients sharing one API contract"
+    "Tenant-safe architecture with document intelligence alongside core CRM flows",
+    "Container-native delivery with repeatable registry-based deploys",
+    "Web and desktop clients on one stable API contract"
   ],
-  "challenges": "Multi-tenant SaaS-style systems need consistent RBAC stories, safe secret distribution across compose files, and observable production paths.",
-  "solutions": "Centralise documentation for env vars, provide hardened deployment profiles (Gunicorn/Nuitka), and document websocket, metrics, and webhook flows explicitly.",
+  "challenges": "Multi-tenant products need clear access control, observable workers, and safe secret handling across environments.",
+  "solutions": "Documented security model, separated compose profiles, health and metrics endpoints, and automated CI builds before promotion to production.",
   "security": [
-    "JWT-based API authentication with documented rotation practices",
-    "Dedicated security architecture and incident response documentation",
-    "Separation of platform superadmin vs tenant-safe RBAC described in backend feature docs",
-    "Guidance for Podman rootless and secret handling in deployment docs"
+    "JWT authentication with tenant-scoped authorization",
+    "Documented security architecture and incident response practices",
+    "Secrets managed outside source control in deployment environments",
+    "Rootless container guidance for production hosts"
   ]
 }

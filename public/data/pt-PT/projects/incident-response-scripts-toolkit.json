@@ -1,38 +1,38 @@
 {
   "id": "incident-response-scripts-toolkit",
-  "name": "Scripts de segurança · Toolkit de resposta a incidentes (Windows + Linux)",
-  "description": "Scripts modulares PowerShell e Bash para contenção, investigação, erradicação e verificação—IR faseado em código com registo, âmbito e consciência de cadeia de custódia.",
-  "longDescription": "Playbooks de resposta a incidentes em forma de código: em Windows, scripts cobrem contenção, investigação, erradicação e recuperação com parâmetros (hostname, utilizador, intervalo temporal, âmbito). Em Linux, scripts suportam caça em vários alvos. O conjunto privilegia execução repetível, registo estruturado e fases bem separadas para coordenação durante incidentes sem colapsar contenção e recolha de evidências num único passo opaco. As saídas são tratadas como produtos de inteligência sensíveis.",
+  "name": "Scripts de segurança · Conjunto de resposta a incidentes (Windows + Linux)",
+  "description": "Playbooks modulares PowerShell e Bash para contenção, investigação, erradicação e verificação em endpoints: resposta a incidentes faseada como código.",
+  "longDescription": "Conjunto de ferramentas que empacota fluxos de resposta a incidentes como scripts repetíveis para postos Windows e servidores Linux. Cada fase: contenção, investigação, erradicação, recuperação: tem pontos de entrada com parâmetros de anfitrião, utilizador, período e âmbito. Registo estruturado suporta revisão pós-incidente. Os ficheiros de saída são tratados como material forense sensível, adequado a ambientes regulados.",
   "technologies": [
     "PowerShell",
     "Bash",
-    "Python helpers"
+    "Python"
   ],
   "features": [
-    "Orquestração IR Windows com parâmetros de âmbito—reduz raio de explosão da automação",
+    "Scripts IR Windows faseados com parâmetros de âmbito",
     "Scripts de caça Linux para triagem multi-host",
-    "Layout de diretório documentado por fase IR (contenção vs forense vs recuperação)",
-    "Snippets de arranque rápido com pré-requisitos explícitos",
-    "Ganchos de registo estruturado para acções atribuíveis e auditáveis depois do facto"
+    "Layout documentado por fase de IR",
+    "Orientação de arranque rápido com pré-requisitos explícitos",
+    "Logging estruturado para ações atribuíveis",
+    "Separação entre contenção e recolha de evidências"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/incident-response-scripts-toolkit.svg",
-  "period": "agosto de 2025",
+  "period": "2018",
   "role": "Autor de automação de segurança",
   "teamSize": 1,
   "highlights": [
-    "Liga fluxos de resposta em endpoint Windows e servidores Linux",
-    "Enfatiza IR faseado em vez de comandos manuais únicos"
+    "Liga fluxos de resposta em endpoints Windows e servidores Linux",
+    "Abordagem faseada em vez de comandos manuais pontuais"
   ],
-  "challenges": "Scripts de incidente são poderosos; uso incorreto destrói evidências ou causa indisponibilidade.",
-  "solutions": "Documentar pré-requisitos, flags de âmbito e orientação de dry-run; exigir intenção administrativa antes de fases destrutivas.",
+  "challenges": "Automação IR é poderosa; uso indevido pode destruir evidências ou causar indisponibilidade.",
+  "solutions": "Pré-requisitos documentados, flags de âmbito, orientação de dry-run e separação explícita entre remediação destrutiva e preservação.",
   "security": [
-    "Executar apenas em sistemas que possui ou está autorizado a investigar",
-    "Proteger saídas dos scripts—podem conter dados forenses e credenciais",
-    "Rever comandos antes da execução em ambientes regulados; preferir dry-runs quando suportado",
-    "Manter separação entre remediação destrutiva e preservação de evidências quando o processo legal o exige",
-    "Armazenar tooling e logs com controlos de acesso equivalentes a activos operacionais tier-0"
+    "Executar apenas em sistemas autorizados",
+    "Proteger os ficheiros de saída: podem conter dados forenses sensíveis",
+    "Rever comandos antes da execução em ambientes regulados",
+    "Armazenar ferramentas e registos com controlos de acesso de nível crítico"
   ]
 }

@@ -1,32 +1,34 @@
 {
   "id": "msl-work-infoplus-gui",
-  "name": "Utilitários Windows · Info+ GUI (multi_scripts_lib/work)",
-  "description": "GUI companheira de Info+_CLI em multi_scripts_lib/work/info+_GUI—arquitectura CLI/GUI emparelhada e superfície estreita para revisão de dependências.",
-  "longDescription": "Interface gráfica complementar ao Info+ CLI no mesmo monorepo `multi_scripts_lib` (`work/info+_GUI`), para fluxos desktop em Windows. Âmbito reduzido e emparelhado com a entrada CLI para raciocinar em conjunto sobre lógica e dependências partilhadas. Adequada a tooling interno onde a ergonomia GUI importa mas o modelo de ameaça ainda exige revisão de dependências antes de distribuição alargada.",
+  "name": "Utilitários Windows · Interface gráfica Info+",
+  "description": "Interface gráfica do Info+ CLI: fluxos desktop Windows em par, com superfície estreita e fácil de rever num monorepo de automação partilhado.",
+  "longDescription": "Interface gráfica leve junto do Info+ CLI no mesmo monorepo. Destina-se a operadores Windows que precisam de fluxos visuais e partilham lógica e dependências com a entrada de linha de comandos. O âmbito mantém-se intencionalmente pequeno para revisão de dependências antes de uma distribuição mais ampla.",
   "technologies": [
     "Python",
-    "Windows desktop"
+    "Desktop Windows"
   ],
   "features": [
-    "Co-localizada com Info+ CLI sob multi_scripts_lib/work para manutenção conjunta",
-    "Superfície focada em fluxos gráficos—limita creep acidental de funcionalidades",
-    "Arquitectura emparelhada: reutilização de padrões entre CLI e GUI quando faz sentido"
+    "Arquitectura CLI e GUI em par para manutenção partilhada",
+    "Fluxos gráficos focados, sem alargar o âmbito",
+    "Padrões de empacotamento no mesmo sítio que o utilitário CLI",
+    "Orientação de revisão de dependências antes de distribuição externa"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/msl-work-infoplus-gui.svg",
-  "period": "dezembro de 2024",
-  "role": "Companheira desktop do utilitário",
+  "period": "2024",
+  "role": "Interface gráfica do utilitário desktop",
   "teamSize": 1,
   "highlights": [
-    "Mostra padrões de empacotamento CLI/GUI emparelhados num workspace"
+    "Mostra empacotamento CLI e GUI em par no mesmo espaço de trabalho",
+    "Superfície pequena, adequada a ferramentas internas"
   ],
   "challenges": "Documentação pública limitada para esta fatia do monorepo.",
-  "solutions": "Resumo breve; o código na ligação fornece o contexto completo.",
+  "solutions": "Manter o resumo do portefólio alinhado com o âmbito real do código; a ligação ao código-fonte dá o contexto completo.",
   "security": [
-    "Rever dependências da GUI para risco de cadeia de fornecimento antes da distribuição",
-    "Assinar binários ao sair de redes confiáveis; evitar auto-update de origens não verificadas",
-    "Manter caminhos de dados de utilizador fora de directórios world-writable quando possível"
+    "Rever dependências da GUI quanto a risco da cadeia de fornecimento",
+    "Assinar binários ao sair de redes de confiança",
+    "Evitar caminhos graváveis por todos para dados de utilizador"
   ]
 }

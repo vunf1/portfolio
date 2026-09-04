@@ -1,30 +1,31 @@
 {
   "id": "msl-work-report",
-  "name": "Utilitários Windows · Auxiliares de relatório (multi_scripts_lib/work/report)",
-  "description": "Auxiliares de relatório em multi_scripts_lib/work/report—saídas estruturadas e orientação de sanitização antes de partilha externa.",
-  "longDescription": "Auxiliares em `multi_scripts_lib/work/report` para montar ou formatar relatórios operacionais no Windows. Dados recolhidos de anfitriões podem incluir identificadores sensíveis; as saídas devem ser revistas ou redigidas antes de sair de limites confiáveis. Resumo de alto nível aqui; detalhe na árvore de código ligada.",
+  "name": "Utilitários Windows · Relatórios",
+  "description": "Scripts de geração de relatórios para operações Windows: ficheiros de saída estruturados, com orientação de sanitização antes de partilha externa.",
+  "longDescription": "Scripts para montar ou formatar relatórios operacionais no Windows. Destinam-se a automação repetível em que os dados recolhidos dos anfitriões podem incluir identificadores sensíveis; os ficheiros de saída devem ser revistos ou redigidos antes de saírem de fronteiras de confiança.",
   "technologies": [
     "Python",
     "Windows"
   ],
   "features": [
-    "Localizada em multi_scripts_lib/work/report",
     "Automação de relatórios repetível com localizações de saída previsíveis",
-    "Consciência de dados: campos operacionais podem exigir redacção em relatórios partilhados"
+    "Consciência de que campos operacionais podem exigir redacção em relatórios partilhados",
+    "Utilitários com âmbito num monorepo de automação partilhado"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/msl-work-report.svg",
-  "period": "março de 2025 - abril de 2025",
-  "role": "Scripting de automação",
+  "period": "2025",
+  "role": "Automatização por script",
   "teamSize": 1,
   "highlights": [
-    "Ilustra a amplitude do workbench multi_scripts_lib"
+    "Ilustra a amplitude do conjunto de scripts de operações"
   ],
-  "challenges": "Documentação reduzida face ao tamanho do código.",
-  "solutions": "Tratar a árvore de código como referência; alargar documentação se o utilitário evoluir para produto autónomo.",
+  "challenges": "Documentação leve relativamente ao tamanho do código.",
+  "solutions": "O código-fonte serve de referência; alargar a documentação se a ferramenta crescer para produto autónomo.",
   "security": [
-    "Sanitizar dados antes de incorporar em relatórios partilhados externamente"
+    "Sanitizar dados antes de incorporar em relatórios partilhados externamente",
+    "Tratar a saída de inventário do anfitrião como sensível em sistemas multi-inquilino"
   ]
 }

@@ -1,13 +1,13 @@
 {
   "proficiencyLevels": {
-    "Foundational": "Delivers well-scoped tasks with mentorship and code reviews, follows standards/runbooks, and supports incremental fixes and maintenance.",
-    "Proficient": "Plans and ships features end-to-end, makes informed trade-offs, writes testable/maintainable code, and communicates risks and timelines clearly.",
-    "Advanced": "Leads the design of services or subsystems, drives performance/reliability/security improvements, mentors teammates, and elevates engineering practices.",
-    "Expert": "Sets technical direction and standards, leads complex multi-team initiatives, manages ambiguity and risk, and delivers long-term architectural outcomes."
+    "Foundational": "I can apply this in a real task, following an existing pattern. I do not design or operate the system on it.",
+    "Proficient": "I ship a complete path: implement, test, deploy, and hand over. Typical of a feature, integration, or service.",
+    "Advanced": "I own this in production: APIs, security, live operations, and recovery. A client does not need a second specialist.",
+    "Expert": "I set the architecture and the operating model. This is how I run products end-to-end: web, desktop, broadcast, and servers."
   },
   "soft": [
     {
-      "description": "Clear written and verbal communication; keeps teams aligned",
+      "description": "Writes and speaks so a client, operator, or engineer can act without a follow-up call",
       "level": "Advanced",
       "name": "Effective communication"
     },
@@ -17,7 +17,7 @@
       "name": "Teamwork"
     },
     {
-      "description": "Prioritizes stakeholder needs and satisfaction",
+      "description": "Scopes to the outcome the client actually needs, not the largest build",
       "level": "Advanced",
       "name": "Client focus"
     },
@@ -51,75 +51,104 @@
     {
       "category": "Key Competencies",
       "skills": [
-        { "name": "End-to-end Software Delivery (SDLC, Clean Architecture)", "level": "Expert", "description": "Full lifecycle delivery with clean architecture, testing, and maintainable code." },
-        { "name": "DevOps & CI/CD (Containers, IaC)", "level": "Proficient", "description": "Containers, pipelines, and infrastructure-as-code for reliable deployments." },
-        { "name": "Networking Engineering (L1/L2/L3, VLAN/VPN, QoS)", "level": "Proficient", "description": "Design and operate networks with VLANs, VPNs, and traffic prioritization." },
-        { "name": "Security & Hardening (Firewalls/IDS, VPNs, Secrets)", "level": "Advanced", "description": "Firewalls, intrusion detection, VPNs, and secrets management." },
-        { "name": "Observability & Reliability (Logs/Metrics/Traces, SLOs)", "level": "Proficient", "description": "Monitoring, alerting, and SLO-driven reliability practices." },
-        { "name": "Automation & Scripting (Python/Bash/PowerShell, AI-assisted)", "level": "Advanced", "description": "Scripting and automation with AI-assisted tooling where appropriate." },
-        { "name": "Systems Design, Process Optimization & Runbooks", "level": "Expert", "description": "Architecture, process improvement, and operational runbooks." },
-        { "name": "Streaming Operations (OBS, RTMP/SRT, NDI, Overlays)", "level": "Advanced", "description": "Live streaming stacks: OBS, protocols, and overlay pipelines." }
+        { "name": "End-to-end product delivery", "level": "Expert", "description": "I take a product from contract to production: API, UI, tests, and a deploy you can run again." },
+        { "name": "DevOps & CI/CD (containers, VPS, Coolify)", "level": "Expert", "description": "27-phase VPS runbook: harden the host, install Coolify, wire Traefik/CrowdSec, and leave a stack someone else can operate." },
+        { "name": "Networking (VLAN, VPN, Tailscale, LAN services)", "level": "Proficient", "description": "I stand up and operate site networks: Tailscale/SSH, LAN-exposed services, and traffic boundaries." },
+        { "name": "Security & hardening", "level": "Advanced", "description": "SSH, UFW, CrowdSec, Falco, AppArmor, and secrets policy on the same VPS that hosts the apps." },
+        { "name": "Observability & reliability", "level": "Advanced", "description": "Prometheus, Grafana, Loki, Tempo, and Alertmanager on the host. Not a SaaS checkbox." },
+        { "name": "Automation (Python, Bash, PowerShell, n8n)", "level": "Advanced", "description": "Operator tooling and workflows that remove manual steps from deploy, IR, and day-to-day ops." },
+        { "name": "Systems design & runbooks", "level": "Expert", "description": "I design the moving parts and write the operating model so someone else can run the box." },
+        { "name": "Live streaming operations", "level": "Expert", "description": "Match-day stacks: OBS, NDI, RTMP/SRT, real-time overlays, and operator dashboards." }
+      ]
+    },
+    {
+      "category": "Product systems",
+      "skills": [
+        { "name": "Software licensing", "level": "Expert", "description": "Issue, bind, and verify licenses across desktop, PHP, and Rust APIs: machine attestation and payments." },
+        { "name": "Real-time operator systems", "level": "Expert", "description": "WebSocket and CS2 GSI pipelines that keep a control desk and OBS overlays on the same live state." },
+        { "name": "Multi-tenant SaaS", "level": "Advanced", "description": "Company-scoped data, RBAC, and per-tenant branding on one API: job tracking and CRM." },
+        { "name": "Headless commerce", "level": "Advanced", "description": "Storefront plus commerce core: Next.js, GraphQL, PostgreSQL, Redis, Stripe." },
+        { "name": "Fiscal / credit-rate systems", "level": "Advanced", "description": "Official rate feeds (Euribor and related) for credit and tax workflows, with TLS and cache." }
       ]
     },
     {
       "category": "Programming Languages",
       "skills": [
-        { "name": "Python", "level": "Advanced", "description": "Full-stack, automation, streaming tooling, GUIs.", "frontend": ["PySide6", "PyQt5", "CustomTkinter"], "backend": ["FastAPI", "Flask", "SQLAlchemy", "Celery", "pymongo"], "security": ["passlib", "bcrypt", "python-jose", "cryptography"] },
-        { "name": "TypeScript", "level": "Advanced", "description": "Type-safe JavaScript, strict mode, tooling (tsc, esbuild).", "frontend": ["React", "Preact", "Next.js", "Vite", "TanStack Query", "Tailwind", "Electron", "Tauri", "Vitest"], "backend": ["Node.js", "Deno", "tsx", "Express"], "security": ["JWT", "CORS", "CSRF handling", "input validation", "XSS sanitization"] },
-        { "name": "JavaScript (ES6+)", "level": "Advanced", "description": "Modern JS, async, modules", "frontend": ["React", "Vue", "Svelte", "Socket.io"], "backend": ["Node.js", "Express"] },
-        { "name": "Rust", "level": "Proficient", "description": "Systems, CLI, web backends", "frontend": ["Tauri"], "backend": ["Axum", "Tokio", "reqwest"], "security": ["argon2", "jsonwebtoken", "hmac", "sha2", "TOTP", "governor"] },
-        { "name": "Java", "level": "Advanced", "description": "JVM, enterprise apps", "frontend": [], "backend": ["Spring Boot", "Maven", "Gradle"] },
-        { "name": "C#", "level": "Advanced", "description": ".NET ecosystem", "frontend": ["Blazor"], "backend": ["ASP.NET", ".NET Core"] },
-        { "name": "C", "level": "Advanced", "description": "Systems, embedded", "frontend": [], "backend": [] },
-        { "name": "C++", "level": "Advanced", "description": "Performance-critical systems", "frontend": [], "backend": ["Qt", "CMake"] },
-        { "name": "VB.NET / VBA", "level": "Advanced", "description": "Windows, Office automation", "frontend": [], "backend": [] },
-        { "name": "PHP", "level": "Advanced", "description": "Web backend", "frontend": [], "backend": ["Laravel", "Composer", "MongoDB"], "security": ["Argon2id", "SHA-256 token", "CSRF", "CORS", "rate limiting", "HttpOnly/Secure/SameSite", "session binding", "HTTPS enforcement", "input validation", "path sanitization"] },
-        { "name": "Lua", "level": "Advanced", "description": "Scripting, OBS plugins", "frontend": [], "backend": [] },
-        { "name": "Bash / Shell", "level": "Advanced", "description": "CLI, DevOps, deployment, incident response", "frontend": ["TUI", "colored output"], "backend": ["podman", "docker", "pg_dump", "psql", "cron", ".env parsing"], "security": ["IR scripts", "threat hunting", "backup encryption"] },
-        { "name": "PowerShell", "level": "Advanced", "description": "Windows automation, system info, DevOps tooling", "frontend": ["WinForms", "TUI (Terminal UI)", "system tray"], "backend": ["WMI/CIM", "Chocolatey", "Winget", "pyenv", "Registry", "DISM", "powercfg", "PS2EXE"], "security": ["IR containment", "hardening", "playbooks", "self-elevation", "cert generation"] },
-        { "name": "SQL", "level": "Advanced", "description": "Structured queries, schema design, ACID", "frontend": [], "databases": ["PostgreSQL", "MySQL", "SQLite", "indexes", "transactions", "migrations", "prepared statements"] },
-        { "name": "NoSQL", "level": "Proficient", "description": "Document and key-value stores", "frontend": [], "databases": ["MongoDB", "Redis", "document model", "aggregation", "key-value", "pub/sub"] }
+        { "name": "Python", "level": "Expert", "description": "Product backends, desktop operators, and automation: FastAPI, workers, and native GUIs.", "frontend": ["PySide6", "PyQt5", "CustomTkinter"], "backend": ["FastAPI", "Flask", "Flask-SocketIO", "SQLAlchemy", "Celery", "pymongo", "PyInstaller", "Nuitka"], "security": ["passlib", "bcrypt", "python-jose", "cryptography"] },
+        { "name": "TypeScript", "level": "Advanced", "description": "Typed UI and tooling for web and desktop shells (strict TS, Vite, Next.js).", "frontend": ["React", "Preact", "Next.js", "Vite", "TanStack Query", "Tailwind", "Tauri", "Vitest", "Playwright"], "backend": ["Node.js", "tsx", "Express"], "security": ["JWT", "CORS", "CSRF handling", "input validation", "XSS sanitization"] },
+        { "name": "JavaScript (ES6+)", "level": "Advanced", "description": "Runtime for overlays, dashboards, and Node services.", "frontend": ["React", "Preact", "Socket.io"], "backend": ["Node.js", "Express"] },
+        { "name": "Rust", "level": "Advanced", "description": "Desktop cores and license APIs: Tauri, Axum, Tokio.", "frontend": ["Tauri"], "backend": ["Axum", "Tokio", "reqwest"], "security": ["argon2", "jsonwebtoken", "hmac", "sha2", "TOTP", "governor"] },
+        { "name": "Java", "level": "Proficient", "description": "JVM services when the contract asks for them.", "frontend": [], "backend": ["Spring Boot", "Maven", "Gradle"] },
+        { "name": "C#", "level": "Proficient", "description": ".NET services and Windows-adjacent tooling.", "frontend": ["Blazor"], "backend": ["ASP.NET", ".NET Core"] },
+        { "name": "C", "level": "Proficient", "description": "Systems-level work and native interop when required.", "frontend": [], "backend": [] },
+        { "name": "C++", "level": "Proficient", "description": "Performance-sensitive native components.", "frontend": [], "backend": ["Qt", "CMake"] },
+        { "name": "VB.NET / VBA", "level": "Proficient", "description": "Windows and Office automation on existing estates.", "frontend": [], "backend": [] },
+        { "name": "PHP", "level": "Advanced", "description": "License, fiscal, and web backends with session and token hardening.", "frontend": [], "backend": ["Composer", "MongoDB", "Stripe"], "security": ["Argon2id", "SHA-256 token", "CSRF", "CORS", "rate limiting", "HttpOnly/Secure/SameSite", "session binding", "HTTPS enforcement", "input validation", "path sanitization"] },
+        { "name": "Lua", "level": "Advanced", "description": "OBS and broadcast-side scripting.", "frontend": [], "backend": [] },
+        { "name": "Bash / Shell", "level": "Expert", "description": "The VPS-Setup controller: 27 phases, multi-host SSH, Coolify, Traefik, and Linux IR.", "frontend": ["TUI"], "backend": ["podman", "docker", "ufw", "crowdsec", "traefik", "coolify", "cron", ".env parsing"], "security": ["SSH hardening", "IR scripts", "encrypted backups"] },
+        { "name": "PowerShell", "level": "Advanced", "description": "Windows IR, hardening, and operator tooling.", "frontend": ["WinForms", "TUI", "system tray"], "backend": ["WMI/CIM", "Chocolatey", "Winget", "Registry", "DISM"], "security": ["IR containment", "hardening", "playbooks", "self-elevation", "cert generation"] },
+        { "name": "SQL", "level": "Advanced", "description": "Schemas, transactions, and migrations for operational data.", "frontend": [], "databases": ["PostgreSQL", "MySQL", "SQLite", "indexes", "transactions", "migrations", "prepared statements"] },
+        { "name": "NoSQL", "level": "Advanced", "description": "Document stores and queues behind live products.", "frontend": [], "databases": ["MongoDB", "Redis", "document model", "aggregation", "key-value", "pub/sub"] }
       ]
     },
     {
       "category": "AI & Machine Learning",
       "skills": [
-        { "name": "LLMs", "level": "Advanced" },
-        { "name": "RAG pipelines", "level": "Proficient" },
-        { "name": "Embeddings & Vector Databases", "level": "Proficient" },
-        { "name": "Agents", "level": "Advanced" },
-        { "name": "Prompt Engineering", "level": "Advanced" }
+        { "name": "Local LLMs (Ollama)", "level": "Advanced", "description": "Self-hosted inference on Windows/GPU, LAN-exposed, token-gated." },
+        { "name": "RAG pipelines", "level": "Proficient", "description": "Retrieve-then-generate over private documents, not a demo notebook." },
+        { "name": "Embeddings & vector stores", "level": "Proficient", "description": "Index and query embeddings for product search and assistants." },
+        { "name": "Agents & tool calling", "level": "Advanced", "description": "Local agent runtimes (OpenClaw, MCP) wired to real tools and existing services." },
+        { "name": "Prompt design", "level": "Advanced", "description": "Constrained prompts with evals. Not one-off chat tricks." }
       ]
     },
     {
       "category": "Cybersecurity",
       "skills": [
-        { "name": "Firewall/IDS", "level": "Proficient" },
-        { "name": "Encryption (AES, RSA, ECC, Hashing algorithms)", "level": "Advanced" },
-        { "name": "Log Analysis & Threat Hunting", "level": "Advanced" },
-        { "name": "Zero Trust Concepts", "level": "Advanced" },
-        { "name": "Web App Security (CSRF, XSS, session hardening)", "level": "Advanced" }
+        { "name": "UFW", "level": "Advanced", "description": "Default-deny host firewall plus DOCKER-USER rules so published containers do not bypass the policy." },
+        { "name": "CrowdSec", "level": "Advanced", "description": "SSH and Traefik collections, iptables bouncer, escalating bans, and a /cs-admin console behind Authelia." },
+        { "name": "Falco", "level": "Advanced", "description": "Runtime syscall rules with the modern eBPF driver on the Coolify host." },
+        { "name": "AppArmor", "level": "Proficient", "description": "Mandatory access profiles enabled as part of the VPS runtime-security phase." },
+        { "name": "Trivy", "level": "Proficient", "description": "Critical CVE scans of the host filesystem before the box goes live." },
+        { "name": "Authelia", "level": "Advanced", "description": "ForwardAuth in front of Grafana, CrowdSec UI, and Coolify paths: custom /auth portal, not a default login." },
+        { "name": "SSH hardening", "level": "Advanced", "description": "Key-only admin, inventory-driven host keys, and a multi-device SSH controller. Not password SSH." },
+        { "name": "Applied cryptography", "level": "Advanced", "description": "Hashing, JWT, Argon2, HMAC, and encrypted local config in shipped products." },
+        { "name": "Log analysis & threat hunting", "level": "Advanced", "description": "Windows/Linux IR scripts: contain, collect, hunt, verify." },
+        { "name": "Zero Trust (practical)", "level": "Advanced", "description": "Least privilege, PIN/admin gates, machine attestation, scoped tokens." },
+        { "name": "Web app security", "level": "Advanced", "description": "CSRF, XSS, session cookies, rate limits, path sanitisation." }
       ]
     },
     {
       "category": "Tooling & Platforms",
       "skills": [
-        { "name": "Linux / Windows", "level": "Expert" },
-        { "name": "Docker", "level": "Proficient" },
-        { "name": "CI/CD", "level": "Proficient" },
-        { "name": "Git", "level": "Advanced" },
-        { "name": "OBS Studio / Streamstar ", "level": "Advanced" },
-        { "name": "Encoders / Custom GUIs", "level": "Advanced" }
+        { "name": "Linux / Windows", "level": "Expert", "description": "Daily operator OS for servers, IR, and desktop products." },
+        { "name": "Docker / Podman", "level": "Advanced", "description": "Rootless and Compose stacks for app, worker, and registry deploys." },
+        { "name": "CI/CD", "level": "Advanced", "description": "Build, test, and promote images: Windows and Linux." },
+        { "name": "Git", "level": "Advanced", "description": "History, review, and release tags as the product contract." },
+        { "name": "OBS Studio / NDI / Streamstar", "level": "Expert", "description": "Live graphics, NDI hops, and operator control for broadcast." },
+        { "name": "Tauri / desktop shells", "level": "Advanced", "description": "Same API, Windows/Linux desktop packaging with a Rust core." },
+        { "name": "n8n", "level": "Advanced", "description": "Self-hosted workflows for ops, leads, and internal automation." },
+        { "name": "Coolify", "level": "Expert", "description": "Install, proxy, realtime WS ports, and HTTPS cutover: the PaaS I put on a hardened VPS, not a one-click panel." },
+        { "name": "Traefik / Let's Encrypt", "level": "Expert", "description": "Coolify UI, overlays, Grafana /metrics, CrowdSec middleware, and Authelia ForwardAuth on one TLS edge." },
+        { "name": "Prometheus / Grafana / Loki", "level": "Advanced", "description": "Host and container metrics, Traefik access logs via Promtail, dashboards provisioned with the VPS." },
+        { "name": "Tempo / OpenTelemetry", "level": "Advanced", "description": "OTLP collector on the Coolify network into Tempo; TraceQL back to Prometheus." },
+        { "name": "Pyroscope / Alloy", "level": "Proficient", "description": "Continuous CPU profiles from eBPF on Docker workloads." },
+        { "name": "Alertmanager", "level": "Advanced", "description": "Prometheus rules to Discord. No silent red dashboards." },
+        { "name": "GHCR / Docker registry", "level": "Advanced", "description": "Authenticated pulls on the VPS; socket and network isolation around the daemon." },
+        { "name": "VPS backups", "level": "Advanced", "description": "Encrypted host archives and a credentials/ops cache per device. Not an unencrypted zip on disk." },
+        { "name": "GitHub Actions / Releases", "level": "Advanced", "description": "CI images plus signed desktop and asset channels for operators." },
+        { "name": "Stripe", "level": "Advanced", "description": "Checkout and license state, including PT methods where the product needs them." }
       ]
     },
     {
       "category": "Software Engineering",
       "skills": [
-        { "name": "Systems Design", "level": "Expert" },
-        { "name": "Design Patterns", "level": "Advanced" },
-        { "name": "OOP", "level": "Advanced" },
-        { "name": "MVC Architecture", "level": "Expert" },
-        { "name": "RESTful APIs", "level": "Advanced" }
+        { "name": "Systems design", "level": "Expert", "description": "Split web, desktop, workers, and overlays without a tangle." },
+        { "name": "Design patterns", "level": "Advanced", "description": "Used where they reduce risk. Not as decoration." },
+        { "name": "OOP", "level": "Advanced", "description": "Clear module boundaries in Python, TS, PHP, and Rust." },
+        { "name": "MVC / layered architecture", "level": "Expert", "description": "UI, domain, and persistence stay replaceable." },
+        { "name": "REST APIs", "level": "Advanced", "description": "Versioned HTTP contracts, OpenAPI, JWT, and machine clients." },
+        { "name": "Real-time contracts", "level": "Advanced", "description": "WebSocket and GSI schemas shared by dashboard, overlay, and ingest." },
+        { "name": "Automated testing", "level": "Advanced", "description": "pytest, Vitest, and Playwright on the paths that break a live product." }
       ]
     }
   ]

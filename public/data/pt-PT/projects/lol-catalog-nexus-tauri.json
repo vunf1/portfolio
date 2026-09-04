@@ -1,8 +1,8 @@
 {
   "id": "lol-catalog-nexus-tauri",
   "name": "LoL Catalog Nexus (Tauri + Vite)",
-  "description": "Catálogo offline-first de cosméticos LoL: núcleo Tauri + Rust, UI Vite, BD local versionada por esquema e prefetch verificado—IPC estrito e inputs de CDN tratados como não confiáveis.",
-  "longDescription": "Catálogo desktop para campeões, skins e cromas. Rust detém modelos de domínio, adaptadores de armazenamento e comandos Tauri; o frontend usa Vite + TypeScript com tipos gerados a partir de `lol_localdb.schema.json` para partilhar um contrato entre UI e persistência. Data Dragon e CommunityDragon alimentam scripts de prefetch que hidratam `frontend/public/lol-asset-cache/` para builds de produção arrancarem sem I/O de rede. O estado «owned» segue por entidade com migrações de esquema nos metadados. A arquitectura trata CDNs de terceiros como inputs não confiáveis: a verificação pertence ao prefetch, não se assume em runtime.",
+  "description": "Catálogo desktop de cosméticos League of Legends: aplicação Tauri com funcionamento offline prioritário, integração opcional com o cliente do jogo em execução, dados locais versionados por esquema e pré-carregamento de recursos.",
+  "longDescription": "Catálogo desktop de campeões, skins e chromas que arranca rapidamente a partir de base de dados local e recursos incluídos. Rust gere lógica de domínio, armazenamento e integração opcional só de leitura com o cliente do jogo; interface Vite e TypeScript com pesquisa, estado de sincronização e pré-visualização 3D de skins. Dados públicos do jogo são pré-carregados na compilação para evitar dependência de CDN em execução. Versionamento de esquema mantém interface e armazenamento alinhados entre actualizações. Testes automáticos cobrem base de dados local e adaptadores.",
   "technologies": [
     "Tauri",
     "Rust",
@@ -11,32 +11,31 @@
     "JSON Schema"
   ],
   "features": [
-    "Fronteira IPC Rust–Tauri com comandos explícitos em vez de acesso shell ad hoc",
-    "Base de dados local empacotada com versionamento de esquema",
-    "Fluxo de prefetch para metadados e arte de jogo",
-    "Fronteira IPC entre UI e serviços Rust",
-    "Uso opcional da API Riot para rotação (não central)",
-    "Testes e fixtures para comportamento da BD local"
+    "Catálogo com funcionamento offline prioritário e modo opcional só de leitura do cliente do jogo em execução",
+    "Base de dados local versionada por esquema e tipos TypeScript gerados",
+    "Pré-carregamento de recursos na compilação para arranque rápido e previsível",
+    "Pré-visualização 3D de skins e shell modular da app",
+    "Fronteira API desktop explícita em vez de acesso direto ao shell",
+    "Testes unitários para armazenamento e lógica de adaptadores"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/lol-catalog-nexus-tauri.svg",
-  "period": "janeiro de 2026",
-  "role": "Produto desktop + pipeline de dados",
+  "period": "2026",
+  "role": "Produto desktop e pipeline de dados",
   "teamSize": 1,
   "highlights": [
-    "Regra offline-first estrita: sem chamadas de rede quando existe BD local",
-    "Geração TypeScript orientada ao esquema",
-    "Protocolo de assets em cache para imagens"
+    "Experiência offline rápida com enriquecimento opcional a partir do cliente em execução",
+    "Contrato de esquema único entre armazenamento Rust e UI TypeScript",
+    "Pipeline de build que valida e inclui metadados públicos do jogo"
   ],
-  "challenges": "Catálogos de jogo grandes exigem prefetch disciplinado e invalidação de cache para evitar arte desatualizada ou bundles inchados.",
-  "solutions": "Esquema versionado, prefetch scriptado, e separação explícita entre recursos empacotados e chamadas opcionais ao vivo.",
+  "challenges": "Catálogos grandes exigem cache disciplinado sem pacotes obsoletos ou excessivos.",
+  "solutions": "Esquema versionado, pré-carregamento por script e separação entre dados incluídos e chamadas opcionais ao cliente em execução.",
   "security": [
-    "Tratar CDNs de terceiros como não confiáveis—verificar downloads na ferramenta de prefetch",
-    "Evitar armazenar credenciais Riot no catálogo offline; API opcional é periférica",
-    "Distribuir sem dados pessoais de contas de jogadores",
-    "Migrações de esquema explícitas para evitar corrupção silenciosa entre upgrades",
-    "Minimização da superfície Tauri: expor apenas comandos que a UI realmente precisa"
+    "Integração com o cliente do jogo apenas local e só de leitura",
+    "Sem credenciais de jogador no catálogo offline",
+    "Transferências de terceiros verificadas durante o pré-carregamento",
+    "Superfície API desktop minimizada"
   ]
 }

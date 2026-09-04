@@ -1,52 +1,46 @@
 {
   "id": "effigy-credit-brokerage",
   "name": "Effigy: Plataforma de intermediação de crédito",
-  "description": "Site público e simuladores de crédito para um intermediário de crédito em Portugal, com API JSON em PHP em camadas, superfície de administração reforçada e SPA React—arquitectura assente em validação, persistência atómica e middleware de segurança explícito.",
-  "longDescription": "Entrega de ponta a ponta para a Effigy: SPA Vite + React 18 com páginas de produto, simuladores configuráveis (habitação, pessoal, automóvel, transferência de crédito, obras), secções de equipa e parceiros alimentadas por uma API REST unificada em /api/, e fluxos de contacto / simulação persistidos num backend PHP 8 com armazenamento JSON em ficheiro e registo auditável. O backend está organizado como uma cadeia de middleware explícita (CORS, CSRF, autenticação, imposição de HTTPS na administração) para que políticas transversais de segurança e transporte fiquem centralizadas em vez de espalhadas pelos handlers. Rotas de administração protegem operações de CMS sobre taxas (integrações ECB/BdP/AT), equipa, parceiros e imagens de marca/redes sociais. As submissões usam ficheiros JSON por IP, locks exclusivos no registo partilhado de contactos e escrita atómica (ficheiro temporário + rename). No simulador público, o envio automático é debounced, com timeout de 15s no cliente, repetição em falhas transitórias 5xx/rede e deduplicação de payload idêntico em 60s, de modo que «guardado» só corresponde a resposta OK da API. Constantes partilhadas em shared/ mantêm o SPA e os contratos PHP alinhados em build. A stack visa cPanel e Docker (PHP-FPM + Nginx).",
+  "description": "Site público e simuladores de crédito para uma intermediária portuguesa: SPA React, API TypeScript com atualizações em tempo real e CMS administrativo alimentado por fontes oficiais de taxas.",
+  "longDescription": "Entrega full-stack para uma marca de intermediação de crédito: aplicação React com páginas de produto, simuladores, equipa e parceiros, mais fluxos de contacto e simulação com validação no servidor. Uma API TypeScript moderna sincroniza conteúdo em tempo real; mantém-se um caminho de alojamento PHP clássico quando necessário. O CMS administrativo gere taxas de fontes oficiais (BCE, Banco de Portugal, Autoridade Tributária), perfis de equipa e activos de marca. Implementação com contentores e alojamento tradicional, com verificações automáticas no pipeline de publicação.",
   "technologies": [
-    "React 18",
+    "React",
     "TypeScript",
     "Vite",
-    "React Router",
-    "Axios",
-    "Tailwind CSS",
-    "PHP 8",
-    "REST / JSON",
-    "Nginx",
-    "Docker"
+    "Node.js",
+    "WebSocket",
+    "PHP",
+    "REST",
+    "Docker",
+    "Nginx"
   ],
   "features": [
-    "Middleware PHP em camadas para política de transporte, autenticação e CSRF—mantém os handlers focados na lógica de domínio",
-    "Simuladores de crédito configuráveis com taxas em tempo real via /api/taxas",
-    "Secções de parceiros e equipa com imagens servidas por /api/assets",
-    "Submissões de contacto e simulação com validação no servidor; simulador no cliente: envio debounced, timeout 15s, repetições em 5xx/rede, deduplicação a 60s",
-    "Armazenamento de submissões: JSON por IP em data/submissions-by-ip, flock no ficheiro de contactos, writeJsonFile com sobrescrita atómica (tmp + rename)",
-    "CMS de administração: taxas, equipa, parceiros, imagens de marca/ícones/redes",
-    "Fluxos de obtenção de taxas ECB / BdP / AT e metadados de elegibilidade",
-    "Banner de cookies, páginas legais e modais alinhados com o marketing",
-    "Build PHP orientado a cPanel com data/.htaccess a bloquear acesso HTTP direto"
+    "Simuladores de crédito configuráveis com taxas oficiais em tempo real",
+    "API unificada para site público e CMS admin",
+    "Sincronização em tempo real entre edições admin e site público",
+    "Layouts de marketing responsivos e navegação acessível",
+    "Autenticação admin segura, proteção CSRF e rate limiting",
+    "Opções de implementação com Docker e alojamento partilhado",
+    "Lint, verificação de tipos e testes automáticos antes do release"
   ],
   "url": "https://effigy.pt/",
   "demo": "https://effigy.pt/",
   "embedInModal": false,
   "image": "https://effigy.pt/api/assets/images/brand/navbar-logo.svg",
-  "period": "dezembro de 2025 - março de 2026",
-  "role": "Full-stack (frontend + API + segurança)",
+  "period": "2025 – 2026",
+  "role": "Full-stack (cliente, API, segurança)",
   "teamSize": 2,
   "highlights": [
-    "Superfície /api única para consumidores públicos e admin com envelope de segurança consistente",
-    "Persistência segura para concorrência: flock, escrita atómica e pasta data/ fora de HTTP directo",
-    "Modelo de sessão + CSRF para todas as operações de escrita na administração; segredos e chaves de assinatura apenas via ambiente"
+    "Superfície única para simuladores, CMS e marketing público",
+    "UX de simulador fiável com submissões validadas e API resiliente",
+    "Segurança e implementação prontas para produção em alojamento moderno e clássico"
   ],
-  "challenges": "Sites financeiros exigem simuladores corretos, taxas editáveis sem redeploy e proteção rigorosa da administração e dos dados de submissão em alojamento partilhado.",
-  "solutions": "Router PHP com middleware explícito (CORS, CSRF, autenticação, HTTPS na admin), registos JSON para taxas e assets, e admin React que segue os mesmos contratos da app pública. Submissões com leitura–modificação–escrita bloqueada no índice de contactos e nos ficheiros por IP, escrita atómica de ficheiro completo, e pasta data/ fora do alcance HTTP direto. A camada do simulador alinha UX com fiabilidade: POSTs debounced, espera limitada, repetições controladas e supressão de duplicados sem marcar sucesso até a API responder OK.",
+  "challenges": "Sites financeiros exigem simuladores precisos e proteção de dados admin em infraestrutura partilhada.",
+  "solutions": "Segurança em camadas na API, taxas editáveis sem nova implementação, contratos tipados entre cliente e servidor, e verificações automáticas antes de cada publicação.",
   "security": [
-    "Autenticação de administrador: credencial no servidor definida por configuração de ambiente, verificada com SHA-256 em comparação em tempo constante; cookie de sessão com HttpOnly, Secure (produção) e SameSite; timeout por inatividade e invalidação de sessão ao reiniciar a aplicação",
-    "Protecção contra falsificação de pedidos entre sites (CSRF): token sincronizador obrigatório em operações que alteram estado, validado a partir de um cabeçalho HTTP dedicado",
-    "Rate limiting no login; lista CORS configurável",
-    "Middleware de imposição de HTTPS para admin em produção",
-    "Validação de uploads: categorias MIME permitidas, tamanho máximo, caminhos em whitelist na entrega de assets (verificação a path traversal)",
-    "Chave de assinatura de sessão e restantes segredos apenas via configuração de ambiente, excluídos do controlo de versões",
-    "Locks exclusivos (flock) em JSON de contactos / por IP; .htaccess Apache bloqueia acesso HTTP direto a data/"
+    "Área admin autenticada com sessão reforçada e CSRF em mutações",
+    "Segredos e chaves de assinatura apenas em configuração segura",
+    "Dados de submissão fora do alcance HTTP público direto",
+    "HTTPS e validação de uploads obrigatórios em produção"
   ]
 }

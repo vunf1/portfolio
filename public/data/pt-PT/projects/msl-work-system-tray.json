@@ -1,30 +1,31 @@
 {
   "id": "msl-work-system-tray",
-  "name": "Utilitários Windows · Ferramentas de tabuleiro (multi_scripts_lib/work)",
-  "description": "Utilitários no tabuleiro do sistema em multi_scripts_lib/work/system tray—processos de longa duração onde menor privilégio, assinatura e degradação graciosa importam.",
-  "longDescription": "Utilitários ligeiros em `multi_scripts_lib/work/system tray` para tarefas em segundo plano acessíveis a partir do tabuleiro do sistema Windows, sem janela principal completa. Código residente no tabuleiro é altamente visível no endpoint: falhas devem ser discretas mas observáveis, e privilégios devem permanecer mínimos salvo necessidade explícita de elevação.",
+  "name": "Utilitários Windows · Ferramentas de system tray",
+  "description": "Utilitários de system tray para tarefas Windows em background: privilégios mínimos, assinatura e degradação graciosa quando o estado de sessão muda.",
+  "longDescription": "Utilitários leves para tarefas em background acessíveis a partir do system tray Windows sem janela de aplicação completa. Código residente no tray é tratado como alta visibilidade no endpoint: falhas devem ser silenciosas mas observáveis, e privilégios devem manter-se mínimos salvo necessidade explícita de elevação.",
   "technologies": [
     "Python",
     "Windows"
   ],
   "features": [
-    "Padrões de interação com o tabuleiro sem janelas de primeiro plano desnecessárias",
-    "Âmbito em multi_scripts_lib/work/system tray",
-    "Tratamento defensivo quando APIs do tabuleiro ou estado de sessão estão indisponíveis"
+    "Padrões de interação com system tray sem janelas foreground desnecessárias",
+    "Tratamento defensivo quando APIs de tray ou estado de sessão estão indisponíveis",
+    "Utilitários com âmbito num monorepo de automação partilhado"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/msl-work-system-tray.svg",
-  "period": "dezembro de 2025",
+  "period": "2025",
   "role": "Integração com shell Windows",
   "teamSize": 1,
   "highlights": [
-    "Ferramentas sempre acessíveis a partir do tabuleiro do sistema"
+    "Utilitários sempre disponíveis a partir da área de notificação"
   ],
-  "challenges": "Apps de tabuleiro têm de degradar graciosamente quando permissões ou estado de sessão mudam.",
-  "solutions": "Documentar requisitos de arranque e falhar de forma defensiva em código quando APIs do tabuleiro faltam.",
+  "challenges": "Apps de tray devem falhar graciosamente quando permissões ou estado de sessão mudam.",
+  "solutions": "Documentar requisitos de arranque e tratar APIs de tray em falta de forma defensiva.",
   "security": [
-    "Apps de tabuleiro são alvos visíveis — assinar binários e minimizar privilégios"
+    "Assinar binários e minimizar privilégios para código residente no tray",
+    "Evitar armazenar segredos em configuração acessível pelo tray"
   ]
 }

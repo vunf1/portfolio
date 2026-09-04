@@ -1,36 +1,37 @@
 {
   "id": "metin2-python-native-tools",
   "name": "Game scripts · Metin2 Python native build helpers",
-  "description": "Small toolchain for compiling Python extension modules into native binaries for legacy Metin2 workflows—narrow C-extension boundary, reproducible build steps, and explicit trust posture around compiled artifacts.",
-  "longDescription": "Small toolchain for building C extensions with `setupdll.py` and `build_ext`, producing Windows-native binaries (`.pyd` outputs renamed to `.dll` where required by the client). Scope stays narrow: native helpers alongside client-side automation, not a full game engine—keeping the attack surface and maintenance burden bounded. Uses a legacy Python 2.7 / 32-bit-oriented toolchain; automation should follow the game publisher’s terms of service. Native code demands clear provenance: document compiler versions and avoid distributing unsigned binaries as trusted software.",
+  "description": "Focused toolchain for compiling Python extension modules into native Windows binaries for legacy Metin2 client workflows.",
+  "longDescription": "A small, bounded toolkit for building native extension modules used alongside legacy Metin2 client automation. Build scripts produce Windows-native binaries with reproducible steps and a narrow C-extension boundary. Companion utilities cover backup and archive tasks. The scope stays limited to native helpers. Not a full game engine: and targets a legacy Python toolchain documented for maintainers.",
   "technologies": [
     "Python",
     "C extensions",
-    "Windows builds"
+    "Windows"
   ],
   "features": [
-    "Documented build_ext flow for in-place native modules",
-    "Guidance on renaming outputs for client-side loading expectations",
-    "Minimal surface area for maintainers and security reviewers",
-    "Explicit toolchain pinning to reproduce bytecode/native artefacts across machines"
+    "Reproducible native build steps for client-side extensions",
+    "Guidance on output formats expected by the legacy client",
+    "Minimal surface area for review and maintenance",
+    "Companion backup and utility scripts with clear scope",
+    "Pinned toolchain expectations documented for rebuilds"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/metin2-python-native-tools.svg",
-  "period": "May 2025 – Dec 2025",
+  "period": "2016",
   "role": "Native tooling for game automation experiments",
   "teamSize": 1,
   "highlights": [
-    "Demonstrates low-level Windows native build steps for game client extensions",
-    "Small, clearly bounded scope"
+    "Demonstrates low-level Windows native build workflows",
+    "Small, clearly bounded scope for security review"
   ],
-  "challenges": "Legacy Python stacks are difficult to reproduce on current workstations.",
-  "solutions": "Document the expected interpreter and keep build scripts isolated from unrelated dependencies.",
+  "challenges": "Legacy Python stacks are hard to reproduce on modern workstations.",
+  "solutions": "Isolated build scripts, documented interpreter expectations, and separation from unrelated dependencies.",
   "security": [
-    "Never distribute unsigned binaries as trusted software—code signing where appropriate",
-    "Native extensions are high-risk supply-chain targets; verify compiler and dependency provenance",
-    "Assume game automation may violate ToS—use only where permitted",
+    "Treat compiled binaries as high-risk supply-chain artifacts",
+    "Code-sign when distributing outside trusted environments",
+    "Use only where permitted by game terms of service",
     "Isolate build environments from production credentials"
   ]
 }

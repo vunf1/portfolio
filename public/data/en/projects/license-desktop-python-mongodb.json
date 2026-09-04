@@ -1,39 +1,43 @@
 {
   "id": "license-desktop-python-mongodb",
   "name": "License desktop manager (Python + MongoDB)",
-  "description": "CustomTkinter desktop app for generating, searching, and exporting licenses with MongoDB storage—input validation at the UI, a clear persistence layer, and workstation-safe handling of connection secrets.",
-  "longDescription": "A Python desktop utility for teams managing license records locally: create structured licenses, search and filter large sets, export to CSV, and keep MongoDB as the system of record with connection pooling. The UI emphasises form validation before writes, randomised sample data for testing without touching production, and automatic conversion of timestamps to Europe/Lisbon for operational clarity. A dedicated manager abstraction keeps Mongo concerns out of widget code so the architecture stays testable and easier to harden.",
+  "description": "Desktop license SCRUD client for MongoDB Atlas: search, create, read, update, and delete software license records from a PySide6 operator UI.",
+  "longDescription": "A Python desktop application for managing a central license database hosted on MongoDB Atlas. Operators connect via environment-configured Atlas credentials and perform full SCRUD workflows: search and filter licenses, generate structured keys, view records in paginated tables, update status/expiry/device limits, and delete entries with confirmation. A dedicated data layer wraps PyMongo with connection pooling, indexes, typed models, and curated Atlas connectivity errors. CSV export, device HWID tracking, timezone-aware timestamps, and packaged Windows builds support day-to-day licensing operations without exposing a public admin API.",
   "technologies": [
     "Python",
-    "CustomTkinter",
-    "MongoDB",
-    "pymongo"
+    "PySide6",
+    "PyMongo",
+    "MongoDB Atlas"
   ],
   "features": [
-    "License generation and editing flows with validation before persistence",
-    "MongoDB-backed persistence layer with an explicit manager abstraction",
-    "CSV export for reporting hand-offs",
-    "Search and filter across license fields",
-    "Random data generator for demos and QA"
+    "License SCRUD: search, create, read, update, and delete against MongoDB Atlas",
+    "Structured license records with status, type, expiry, product, and customer fields",
+    "License key generation with validation before persistence",
+    "Paginated, sortable table UI with multi-field search and filters",
+    "Device HWID registration and max-device enforcement",
+    "PyMongo data layer with connection pooling, indexes, and typed models",
+    "Environment-based Atlas URI configuration (no secrets in source control)",
+    "CSV export and operator tooling for reporting and hand-offs",
+    "Curated connection diagnostics for Atlas DNS and network failures"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/license-desktop-python-mongodb.svg",
-  "period": "Jun 2025 – Dec 2025",
-  "role": "Desktop tooling + data layer",
+  "period": "2025 – 2026",
+  "role": "License SCRUD desktop client",
   "teamSize": 1,
   "highlights": [
-    "Pragmatic desktop UI without requiring a web deployment—smaller attack surface than a public endpoint",
-    "Explicit Mongo models and manager abstraction—separation of concerns for data integrity",
-    "Timezone-aware display for Portuguese operations",
-    "CSV exports designed to avoid leaking internal DB identifiers when shared externally"
+    "Central Atlas-backed license database managed from a secure desktop client",
+    "Clear separation between PySide6 UI and MongoDB data-access layer",
+    "Search-first SCRUD workflows for high-volume license operations"
   ],
-  "challenges": "Desktop apps must guard database credentials on workstations and avoid leaking connection strings through screenshots or logs.",
-  "solutions": "Use .env templates, keep secrets out of version control, and document secure handling for MongoDB URIs on workstations.",
+  "challenges": "Licensing data is sensitive and Atlas connectivity must stay reliable on variable operator networks.",
+  "solutions": "Environment-gated credentials, validated writes, indexed queries, and user-facing Atlas error guidance before any destructive action.",
   "security": [
-    "Secrets loaded from environment files—not committed defaults",
-    "Validate inputs at the UI layer before persistence",
-    "Export flows should exclude internal database identifiers when sharing CSVs externally"
+    "MongoDB Atlas credentials loaded from environment or encrypted local config, never committed",
+    "Input validation before every create and update operation",
+    "Parameterized PyMongo access with least-privilege Atlas database users",
+    "Exports omit internal identifiers when shared outside the operations team"
   ]
 }

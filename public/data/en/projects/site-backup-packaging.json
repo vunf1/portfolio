@@ -1,34 +1,35 @@
 {
   "id": "site-backup-packaging",
-  "name": "Web snapshot backup packaging",
-  "description": "Packaged snapshots of a public site tree plus dated archives for hand-offs—data-governance aware: reproducible artifacts, explicit exclusion guidance, and no credential leakage in shared bundles.",
-  "longDescription": "Versioned zip archives alongside a public_html-style tree so teams can compare, restore, or audit static and PHP deployments. The layout supports disciplined packaging, `.gitignore`-style thinking for large binaries, and clear separation from credentials and internal server paths—treating backups as a security object, not only a recovery object.",
+  "name": "Web backup archives",
+  "description": "Versioned ZIP archives of a published site directory, plus dated packages for operational handover: reproducible artefacts, documented exclusions, and no credentials in the archive.",
+  "longDescription": "Dated ZIP archives stored next to a published static or PHP site directory so teams can compare, restore, or audit deployments. Packaging follows exclusion rules for large binaries and keeps credentials and internal server paths out of the archive. Backups are treated as a security object, not only a recovery object.",
   "technologies": [
     "ZIP archives",
-    "Static/PHP site tree"
+    "Published static and PHP site directory"
   ],
   "features": [
-    "Dated archive artifacts for point-in-time recovery discussions",
-    "Co-located site tree for comparison with packaged outputs",
-    ".gitignore patterns for large binaries where appropriate"
+    "Dated archive artefacts for point-in-time recovery",
+    "Site directory kept beside archives for comparison",
+    "Exclusion patterns for large binaries where appropriate",
+    "Guidance on what must never enter a shared archive"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/site-backup-packaging.svg",
-  "period": "Dec 2025",
-  "role": "Backup hygiene and release artifacts",
+  "period": "2025",
+  "role": "Backup hygiene and release artefacts",
   "teamSize": 1,
   "highlights": [
-    "Operational maturity around site snapshots and verifiable point-in-time artifacts",
-    "Useful for migration, compliance, and audit conversations with stakeholders",
-    "Security-conscious packaging: know what must never enter a shared archive"
+    "Operational maturity around verifiable point-in-time site archives",
+    "Useful for migration, compliance, and audit conversations",
+    "Security-conscious packaging with documented exclusion rules"
   ],
-  "challenges": "Backups can accidentally include secrets if entire trees are archived without exclusion rules.",
-  "solutions": "Document what to exclude (.env, private keys), prefer sanitized exports for sharing, and never publish archive passwords.",
+  "challenges": "Backups can accidentally include secrets if entire directories are archived without rules.",
+  "solutions": "Document exclusions for environment files and private keys; prefer sanitized exports for sharing.",
   "security": [
     "Scan archives before sharing externally",
-    "Keep credentials out of packaged trees",
-    "Encrypt offline backups when stored on removable media"
+    "Keep credentials out of packaged directories",
+    "Encrypt offline backups on removable media"
   ]
 }

@@ -1,40 +1,39 @@
 {
   "id": "effigy-fiscal-rates-addon",
   "name": "Effigy fiscal data updater (PHP)",
-  "description": "Modular PHP 8.2 subsystem that fetches and caches European and Portuguese fiscal reference data—designed with verified TLS, integrity-checked caches, and testable pipelines so upstream credit tooling never silently consumes bad numbers.",
-  "longDescription": "Packaged as a public_html module with Docker support, the fiscal updater orchestrates HTTPS calls to official APIs (ECB, Eurostat, Portuguese AT-style sources per module docs), normalizes results, validates cache integrity, and feeds both JSON cache and legacy tax text files used by upstream simulators. The architecture separates fetch clients, transformation, and persistence so failures are observable and retries do not corrupt prior good state. A CLI entrypoint supports manual runs and tests; PHPUnit covers core components. Docker Compose enables local verification on a fixed port without touching production hosts.",
+  "description": "PHP module that fetches and caches European and Portuguese fiscal reference data: verified TLS, integrity-checked caches, and tested pipelines for upstream simulators.",
+  "longDescription": "Modular fiscal updater that orchestrates HTTPS calls to official APIs, normalizes results, validates cache integrity, and feeds JSON cache and legacy tax files used by credit simulators. Fetch, transformation, and persistence are separated so failures are observable and retries do not corrupt prior good state. A CLI supports manual runs; automated tests cover core components. Docker Compose enables local verification without touching production hosts.",
   "technologies": [
-    "PHP 8.2",
+    "PHP",
     "Docker",
-    "PHPUnit",
-    "REST / JSON",
-    "OpenSSL"
+    "REST",
+    "JSON"
   ],
   "features": [
-    "Orchestrated fiscal data fetch with dedicated API client and SSL verification",
+    "Orchestrated fiscal data fetch with TLS verification",
     "JSON cache with integrity checks and backup handling",
-    "CLI tooling for operators and automated test suites",
-    "Dockerfile and compose for repeatable local runs",
+    "CLI tooling and automated test suites",
+    "Docker compose for repeatable local runs",
     "Separation between cache, logs, and public module code"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/effigy-fiscal-rates-addon.svg",
-  "period": "Oct 2025",
-  "role": "Backend module + integration testing",
+  "period": "2025",
+  "role": "Backend module and integration testing",
   "teamSize": 1,
   "highlights": [
-    "Deterministic, test-backed pipeline from official APIs to simulator-facing artifacts",
-    "Integrity checks and structured logging reduce silent corruption risk in cached fiscal data",
-    "Containerized environment for local smoke testing and QA without touching production"
+    "Test-backed pipeline from official APIs to simulator-facing data",
+    "Integrity checks reduce silent corruption risk in cached fiscal data",
+    "Containerized local smoke testing without production impact"
   ],
-  "challenges": "Financial reference data must stay current, verifiable, and resilient to upstream API changes without silent corruption of cached files.",
-  "solutions": "Central orchestrator class, explicit cache validation, structured logging discipline, and automated tests around the updater and API client.",
+  "challenges": "Financial reference data must stay current and resilient to upstream API changes.",
+  "solutions": "Central orchestrator, explicit cache validation, structured logging, and automated tests around fetch and transform logic.",
   "security": [
-    "HTTPS client with certificate verification enabled—no silent downgrade to insecure fetches",
-    "Secrets supplied via environment templates—not hardcoded in module code",
-    "Least-privilege file layout for cache and logs; separation from executable web roots where documented",
-    "Upstream API errors and parse failures surfaced in logs rather than overwriting good cache blindly"
+    "HTTPS client with certificate verification enabled",
+    "Secrets supplied via environment templates only",
+    "Least-privilege layout for cache and logs",
+    "Upstream errors surfaced in logs rather than overwriting good cache blindly"
   ]
 }

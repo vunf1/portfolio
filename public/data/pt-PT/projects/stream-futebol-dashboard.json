@@ -1,44 +1,44 @@
 {
   "id": "stream-futebol-dashboard",
-  "name": "Streaming · Painel de marcador de futebol (desktop Python)",
-  "description": "Superfície desktop CustomTkinter para marcadores ao vivo com MongoDB e exportação OBS—salvaguardas em torno de acções destrutivas e maneio de credenciais.",
-  "longDescription": "Aplicação desktop-first para equipas em recintos desportivos: incrementar e decrementar marcadores por campo, gerir penáltis, persistir equipas em MongoDB (incluindo compatibilidade com Atlas), exportar ficheiros `.txt` para fontes de texto OBS, e executar várias instâncias independentes. A arquitectura separa vistas de marcação de mutações administrativas; o tratamento criptográfico de `.env` reduz exposição em claro de URIs Atlas em disco. Inclui UI em modo escuro, notificações, vistas admin protegidas por PIN e empacotamento PyInstaller para distribuição.",
+  "name": "Apito Final",
+  "description": "Plataforma profissional de transmissão desportiva em directo: marcador multi-desporto, temas personalizados e painel unificado web e desktop com overlays OBS em tempo real.",
+  "longDescription": "O Apito Final é uma plataforma de transmissão desportiva em directo para operadores de broadcast que precisam de controlo fiável em várias modalidades. Os operadores gerem encontros a partir de um painel web ou desktop (Rust/Tauri + React), enquanto cenas de overlay leves são renderizadas no OBS com sincronização em subsegundos. Cada implementação suporta temas personalizados: cores, tipografia, zonas de patrocinadores e layouts por modalidade. Sem reconstruir o produto base. Metadados de equipas e competições ficam em cache MongoDB para fluxos rápidos em dia de jogo; a configuração sensível do recinto é encriptada localmente e as acções administrativas estão protegidas por PIN. Publicações verificadas distribuem compilações desktop e pacotes oficiais de recursos com verificação de integridade. CI automático em Windows e Linux com testes unitários e de integração no painel de controlo e no runtime de overlay.",
   "technologies": [
-    "Python",
-    "CustomTkinter",
+    "Rust",
+    "Tauri",
+    "React",
+    "Preact",
+    "TypeScript",
     "MongoDB",
-    "PyInstaller",
-    "cryptography",
-    "psutil"
+    "Socket.IO",
+    "Vite"
   ],
   "features": [
-    "Separação entre UI de marcação e acções administrativas protegidas por PIN",
-    "Marcadores multi-instância para vários relvados",
-    "Autocomplete de metadados de equipas com Mongo",
-    "Lógica de grandes penalidades com salvaguardas contra edições acidentais",
-    "Exportações de texto prontas para OBS",
-    "Ganchos opcionais de subsistema de licenciamento quando ativados",
-    "Utilitários com atualização automática e consciência de processos onde configurado"
+    "Transmissão em directo multi-desporto com marcador e overlays adaptados à modalidade",
+    "Sistema de temas personalizados para broadcasts com identidade: cores, layouts e zonas de patrocinadores",
+    "Painel unificado web e desktop para operadores com consumidores de overlay prontos para OBS",
+    "Sincronização em tempo real entre painel de controlo e overlays de broadcast",
+    "Cache de equipas e competições em MongoDB com exportação para ferramentas de broadcast",
+    "Configuração local encriptada, ações admin com PIN e atualizações de release verificadas"
   ],
   "url": "",
-  "demo": "",
+  "demo": "https://github.com/vunf1/Stream_Futebol_Artifacts/releases",
   "embedInModal": false,
   "image": "./img/projects/apitofinal_logo.png",
-  "period": "julho de 2023 - novembro de 2025",
-  "role": "Ferramentas desktop de transmissão",
+  "period": "2023 – 2026",
+  "role": "Engenharia de plataforma de broadcast desportivo em directo",
   "teamSize": 1,
   "highlights": [
-    "Liga marcação no recinto ao OBS através de ficheiros de texto simples",
-    "Camada Mongo amiga da cloud com considerações de backup local",
-    "UX CustomTkinter cuidada para dias de jogo de alta pressão"
+    "Uma plataforma para várias modalidades, temas personalizados e empacotamento pronto para recinto",
+    "Núcleo desktop Rust memory-safe com experiência de operador web e desktop responsiva",
+    "Fiabilidade em dia de jogo com releases assinados e cobertura de testes automática"
   ],
-  "challenges": "Ferramentas de desporto ao vivo têm de permanecer responsivas com atualizações concorrentes e falhas transitórias de rede para o MongoDB.",
-  "solutions": "Padrões de cache local, locks de edição onde necessário, e separação clara entre vistas admin e marcador.",
+  "challenges": "Ferramentas de broadcast multi-desporto devem manter-se consistentes quando overlays recarregam, temas mudam e a rede do recinto oscila.",
+  "solutions": "Contratos em tempo real agnósticos à modalidade, composição de overlays orientada por tema, persistência local, configuração encriptada e testes automáticos no painel e nas superfícies de overlay.",
   "security": [
-    "Cifrar material `.env` sensível com auxiliares documentados em criptografia",
-    "Proteger connection strings MongoDB; nunca publicá-las em documentação pública ou capturas de ecrã",
-    "PIN em ações destrutivas de gestão de equipas",
-    "Utilizadores MongoDB de menor privilégio em quiosques quando as políticas Atlas o permitem",
-    "Validação de mutações de penáltis/marcador para reduzir dupla aplicação acidental sob carga"
+    "Armazenamento encriptado para configuração local sensível",
+    "Proteção por PIN para ações administrativas destrutivas",
+    "Downloads com verificação de integridade antes de aplicar atualizações",
+    "Acesso à base de dados com privilégios mínimos em recintos"
   ]
 }

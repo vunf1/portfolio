@@ -1,39 +1,39 @@
 {
   "id": "image-database-manager-pyqt",
   "name": "Image Database Manager (PyQt5)",
-  "description": "PyQt5 GUI that ingests JSON image records, builds dynamic tables, resolves folder paths across naming conventions, and opens matching directories—with validation and path hygiene before shelling out to the OS file manager.",
-  "longDescription": "Users maintain a JSON-defined image catalog; the app renders sortable, filterable tables, builds candidate folder paths using several naming strategies (space, underscore, concatenated, model-only), checks that paths exist, and opens the system file manager when a match is found. JSON sources are validated before filesystem operations; candidate paths are checked to reduce traversal surprises when data is messy or user-edited. Settings persist in `settings.json`; optional packaged builds bundle icons and backgrounds.",
+  "description": "Offline PyQt5 catalog for Windows and OS deployment images stored on the PXE server: search, filter, and jump straight to the right image folder.",
+  "longDescription": "A local desktop tool for refurbishment teams managing OS images on a PXE file share. Technicians maintain an offline JSON catalog of hardware profiles: brand, model, form factor, and Windows version: with image readiness status. The app renders a sortable, filterable table, resolves on-disk folders using multiple naming-pattern strategies, and opens the matching path in the file explorer for fast access during imaging workflows. PIN-gated edits, persistent settings, and path validation keep the catalog reliable when share layouts vary between batches.",
   "technologies": [
     "Python",
     "PyQt5",
     "JSON"
   ],
   "features": [
-    "JSON ingestion to dynamic tables with validation before FS access",
-    "Multiple folder naming strategies for messy on-disk conventions",
-    "Error surfacing when paths are missing or JSON is malformed",
-    "Configurable settings file",
-    "Optional build script with asset bundling",
-    "Defensive normalisation of user-provided path components"
+    "Offline JSON catalog of PXE-hosted Windows/OS image records",
+    "Brand, model, form factor, Windows version, and image-status fields",
+    "Sortable, filterable table for quick lookup during refurb workflows",
+    "Multiple folder naming strategies to match inconsistent share layouts",
+    "Double-click to open the resolved image folder in the file explorer",
+    "Add, edit, and delete catalog entries with PIN-protected changes",
+    "Configurable brands, device types, Windows versions, and share locations"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/image-database-manager-pyqt.svg",
-  "period": "Dec 2024",
-  "role": "Desktop data navigator",
+  "period": "2023",
+  "role": "PXE OS image catalog tooling",
   "teamSize": 1,
   "highlights": [
-    "Solves messy on-disk naming conventions with explicit strategies",
-    "Clear validation messages when paths or data are invalid"
+    "Gives technicians one offline index of every OS image on the PXE share",
+    "Tolerates messy real-world folder naming with explicit pattern matching"
   ],
-  "challenges": "Filesystem assumptions break when assets move between drives or OS locales.",
-  "solutions": "Configurable settings, resilient path checks, and clear errors before shelling out to Explorer/Finder.",
+  "challenges": "PXE image shares grow quickly and folder names rarely follow one convention, making manual lookup slow during high-volume refurb.",
+  "solutions": "Structured offline catalog with flexible path resolution, validation before filesystem access, and a desktop UI tuned for warehouse-floor speed.",
   "security": [
-    "Never publish decryption passwords in public documentation or marketing material",
-    "Validate JSON sources before executing filesystem operations",
-    "Sanitize and normalise paths to avoid traversal surprises from untrusted catalog edits",
-    "Open-in-FM actions only after existence checks—no blind shelling to arbitrary strings",
-    "Treat shared JSON catalogs as untrusted input when they originate from third parties"
+    "Validate JSON and paths before filesystem access",
+    "Normalise paths to reduce traversal risk from untrusted catalog edits",
+    "Open external file managers only after existence checks",
+    "Protect catalog edits with PIN-gated access"
   ]
 }

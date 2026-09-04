@@ -1,8 +1,8 @@
 {
   "id": "ecommerce-vendure-next",
   "name": "Comércio headless: Vendure + Next.js",
-  "description": "Template de e-commerce headless com Vendure (GraphQL, Stripe, PostgreSQL, Redis) e montra Next.js—estruturado para contratos API tipados, higiene de segredos e deploy reproduzível em contentores com TLS na periferia.",
-  "longDescription": "Implementação de referência que junta Vendure em Node.js/TypeScript a uma montra Next.js. A camada de comércio expõe APIs GraphQL Shop e Admin, suporta Stripe (cartões, MB WAY, Multibanco e métodos locais afins quando configurados), campos B2B/IVA UE, e assets em S3/MinIO. A separação entre Admin API, Shop API e montra torna explícitas permissões e estratégias de cache. A montra usa SSR, Tailwind, shadcn/ui, TanStack Query e Zustand, com fronteira cliente–servidor clara na obtenção de dados. O deploy é centrado em contentores com serviços com health checks, Caddy como proxy inverso em produção para HTTPS automático, e consola manage.ps1 no Windows para tarefas de ciclo de vida repetíveis—reduzindo deriva entre ambientes.",
+  "description": "Modelo de comércio electrónico desacoplado com Vendure, loja Next.js, Stripe, PostgreSQL, Redis e implementação orientada a contentores com TLS na borda.",
+  "longDescription": "Implementação de referência de comércio que combina Vendure em Node.js com loja Next.js. APIs GraphQL Shop e Admin suportam pagamentos Stripe, campos personalizados orientados a IVA UE e armazenamento de objectos para recursos. A loja usa SSR, componentes de interface modernos e fronteira cliente-servidor clara para obtenção de dados. Implementação orientada a contentores com ficheiros Compose, serviços com verificações de saúde, proxy reverso para HTTPS automático e fluxos de compilação repetíveis. A separação de ambientes mantém as formas de desenvolvimento e produção explícitas.",
   "technologies": [
     "Vendure",
     "Next.js",
@@ -12,37 +12,36 @@
     "Redis",
     "Stripe",
     "Docker",
-    "Podman",
-    "Caddy"
+    "Podman"
   ],
   "features": [
-    "Núcleo multi-canal com encomendas, produtos e Admin API",
-    "Montra Next.js com contrato de tema e cliente GraphQL Vendure",
-    "Integração de pagamentos Stripe e armazenamento de assets",
-    "Schema GraphQL como contrato de integração entre montra e núcleo de comércio",
-    "Stacks compose para desenvolvimento e produção com separação documentada de ambientes",
-    "Configuração Caddy para HTTPS automático com domínio",
-    "Fluxos manage.ps1 para build, deploy e empacotamento"
+    "Núcleo de comércio multi-canal com encomendas, produtos e API admin",
+    "Storefront Next.js com contrato de tema e cliente GraphQL",
+    "Fluxos de pagamento Stripe e integração de armazenamento de recursos",
+    "Esquema GraphQL como contrato de integração entre storefront e núcleo",
+    "Stacks Compose de desenvolvimento e produção",
+    "Configuração de proxy reverso para HTTPS automático",
+    "Fluxos repetíveis de compilação e ciclo de vida para implementação com contentores"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/ecommerce-vendure-next.svg",
-  "period": "agosto de 2025 - março de 2026",
-  "role": "Engenharia full-stack de comércio + templates DevOps",
+  "period": "2025 – 2026",
+  "role": "Comércio full-stack e templates DevOps",
   "teamSize": 1,
   "highlights": [
-    "Padrão headless: fronteira GraphQL tipada do catálogo ao checkout",
-    "Defesa em profundidade: TLS no proxy, segredos só via ambiente, webhooks como superfície privilegiada",
-    "Scripts operacionais e stacks compose alinhados com equipas Windows na prática"
+    "Padrão headless end-to-end do catálogo ao checkout",
+    "TLS no proxy com segredos apenas via configuração de ambiente",
+    "Stacks compose operacionais que espelham workflows práticos com contentores"
   ],
-  "challenges": "O comércio headless exige alinhamento forte entre UX da montra, webhooks de pagamento e migrações de BD ao longo de upgrades Vendure.",
-  "solutions": "Manter vendure e montra num workspace com tooling partilhado, serviços compose com health checks, separação documentada dev vs prod, e notas explícitas sobre verificação de webhooks e disciplina de migrações de BD em upgrades.",
+  "challenges": "Comércio headless exige alinhamento entre UX de storefront, webhooks de pagamento e migrações de base de dados.",
+  "solutions": "Ferramentas de espaço de trabalho partilhado, serviços Compose com verificações de saúde, separação de ambientes documentada e disciplina de verificação de webhooks.",
   "security": [
-    "Chaves e segredos apenas via configuração de ambiente—nunca valores por omissão em repositório",
-    "Proxy inverso e terminação TLS documentados para produção; minimizar superfícies admin expostas",
-    "Configuração Stripe e webhooks como operação sensível com orientação de rotação",
-    "PostgreSQL e Redis com exposição de rede limitada à rede compose por omissão",
-    "Buckets de assets (S3/MinIO) com credenciais de menor privilégio onde documentado"
+    "Segredos e chaves apenas via configuração de ambiente",
+    "Proxy reverso e terminação TLS para formas de produção",
+    "Configuração Stripe e webhook tratada como operação sensível",
+    "Exposição de rede de base de dados e cache limitada à rede compose",
+    "Armazenamento de objetos com credenciais de privilégios mínimos"
   ]
 }

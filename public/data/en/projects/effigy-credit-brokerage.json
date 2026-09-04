@@ -1,52 +1,46 @@
 {
   "id": "effigy-credit-brokerage",
   "name": "Effigy: Credit brokerage platform",
-  "description": "Public marketing site and credit simulators for a Portuguese credit intermediary, with a layered PHP JSON API, hardened admin surface, and a React SPA—architecture built around validation, atomic persistence, and explicit security middleware.",
-  "longDescription": "End-to-end delivery for Effigy (intermediação de crédito): a Vite + React 18 SPA for product pages, config-driven simulators (housing, personal, car, credit transfer, works), team and trusted-partners sections fed from a unified REST API under /api/, and contact / simulation flows persisted via a PHP 8 backend with file-based JSON storage and audited logging. The backend is organised as an explicit middleware chain (CORS, CSRF, auth, HTTPS enforcement for admin) so cross-cutting security and transport policy stay centralised rather than scattered through handlers. Admin routes protect CMS operations for taxas (rates, ECB/BdP/AT integrations), equipa, parceiros, and brand/social assets. Submissions use per-IP JSON files, exclusive locks on the shared contacts registry, and atomic writes (temp file + rename). The public simulator path debounces auto-submit, uses a 15s client timeout, retries transient 5xx/network failures, and deduplicates identical payloads within 60s so “saved” only reflects a successful API response. Shared constants in shared/ keep the SPA and PHP contracts aligned at build time. The stack targets cPanel and Docker (PHP-FPM + Nginx).",
+  "description": "Public marketing site and credit simulators for a Portuguese credit intermediary: React SPA, TypeScript API with live updates, and a hardened admin CMS backed by official rate sources.",
+  "longDescription": "Full-stack delivery for a credit brokerage brand: a React single-page app for product pages, simulators, team and partner content, plus contact and simulation flows with server-side validation. A modern TypeScript API powers live content sync; a classic PHP hosting path remains for shared hosting when needed. An admin CMS manages rates from official sources (ECB, Banco de Portugal, Tax Authority), team profiles, and brand assets. Deployments use container builds and traditional hosting with automated quality checks in the release pipeline.",
   "technologies": [
-    "React 18",
+    "React",
     "TypeScript",
     "Vite",
-    "React Router",
-    "Axios",
-    "Tailwind CSS",
-    "PHP 8",
-    "REST / JSON",
-    "Nginx",
-    "Docker"
+    "Node.js",
+    "WebSocket",
+    "PHP",
+    "REST",
+    "Docker",
+    "Nginx"
   ],
   "features": [
-    "Layered PHP middleware for transport policy, authentication, and CSRF—keeps handlers focused on domain logic",
-    "Config-driven credit simulators with live rates from /api/taxas",
-    "Partners and team sections with image assets from /api/assets",
-    "Contact and simulator submissions with server-side validation; simulator client: debounced submit, 15s timeout, retries on 5xx/network, 60s deduplication",
-    "Submission storage: per-IP JSON under data/submissions-by-ip, flock on contacts file, writeJsonFile atomic overwrite (tmp + rename)",
-    "Admin CMS: rates, team, partners, brand/icons/social images",
-    "ECB / BdP / AT rate fetch workflows and eligibility metadata",
-    "Cookie banner, legal pages, and WhatsApp / modals aligned with marketing UX",
-    "cPanel-oriented PHP build with data/.htaccess denying direct file access"
+    "Config-driven credit simulators fed by live official rate data",
+    "Unified API for public site and admin CMS",
+    "Real-time content sync between admin edits and the public site",
+    "Responsive marketing layouts and accessible navigation",
+    "Secure admin authentication, CSRF protection, and rate limiting",
+    "Docker and shared-hosting deployment options",
+    "Automated lint, type-check, and test stages before release"
   ],
   "url": "https://effigy.pt/",
   "demo": "https://effigy.pt/",
   "embedInModal": false,
   "image": "https://effigy.pt/api/assets/images/brand/navbar-logo.svg",
-  "period": "Dec 2025 – Mar 2026",
-  "role": "Full-stack (frontend + API + security hardening)",
+  "period": "2025 – 2026",
+  "role": "Full-stack (frontend, API, security)",
   "teamSize": 2,
   "highlights": [
-    "Single /api surface for public and admin consumers with a consistent security envelope",
-    "Concurrency-safe persistence: flock, atomic writes, and data/ kept off direct HTTP",
-    "Session + CSRF model for all mutating admin operations; secrets and signing keys only from environment"
+    "Single product surface for simulators, CMS, and public marketing",
+    "Reliable simulator UX with validated submissions and resilient API behaviour",
+    "Production-ready security and deployment split across modern and classic hosting"
   ],
-  "challenges": "Financial marketing sites need accurate simulator behaviour, editable rates without redeploys, and strict protection of admin and submission data on shared hosting.",
-  "solutions": "Implemented a thin PHP router with explicit middleware (CORS, CSRF, auth, HTTPS for admin), JSON registries for taxas and assets, and a React admin that mirrors the same contracts as the public app. Submissions use locked read–modify–write on the contacts index and per-IP files, atomic full-file writes, and data/ kept out of direct HTTP reach. The simulator layer aligns UX with reliability: debounced POSTs, bounded wait, controlled retries, and duplicate suppression without claiming success until the API responds OK.",
+  "challenges": "Financial sites must keep simulators accurate while protecting admin data on shared infrastructure.",
+  "solutions": "Layered API security, editable rates without redeploys, typed contracts between frontend and backend, and automated checks before each release.",
   "security": [
-    "Administrator authentication: server-side credential from environment configuration, verified with SHA-256 using a constant-time comparison; session cookie with HttpOnly, Secure (production), and SameSite; idle timeout and session invalidation on application restart",
-    "Cross-site request forgery (CSRF) protection: synchroniser token required on state-changing requests, validated from a custom HTTP request header",
-    "Rate limiting on login; configurable CORS allowlist",
-    "HTTPS enforcement middleware for admin in production",
-    "Upload validation: allowed MIME categories, max size, whitelist paths for asset serving (path traversal checks)",
-    "Session signing key and other secrets supplied only via environment configuration, excluded from version control",
-    "Exclusive file locks (flock) on contacts / per-IP JSON; Apache .htaccess blocks direct HTTP access to data/"
+    "Authenticated admin area with session hardening and CSRF on mutations",
+    "Secrets and signing keys only from secure environment configuration",
+    "Submission data stored outside direct public web access",
+    "HTTPS and upload validation enforced in production"
   ]
 }

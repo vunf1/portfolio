@@ -1,34 +1,35 @@
 {
   "id": "site-backup-packaging",
-  "name": "Empacotamento de snapshots de site",
-  "description": "Snapshots empacotados da árvore pública e ficheiros datados para hand-offs—governação de dados: artefactos reproduzíveis, exclusões explícitas e sem fugas de credenciais em pacotes partilhados.",
-  "longDescription": "Ficheiros zip datados junto a uma árvore tipo public_html para comparar, restaurar ou auditar deploys estáticos e PHP. O conjunto suporta empacotamento disciplinado, mentalidade tipo .gitignore para binários grandes e separação clara de credenciais e caminhos internos—tratando backups como objecto de segurança, não só de recuperação.",
+  "name": "Arquivos de cópia de segurança web",
+  "description": "Arquivos ZIP versionados do directório de um site publicado, mais pacotes datados para entrega operacional: artefactos reproduzíveis, exclusões documentadas e sem credenciais no arquivo.",
+  "longDescription": "Arquivos ZIP datados junto do directório de um site estático ou PHP publicado, para comparar, restaurar ou auditar implementações. O empacotamento segue regras de exclusão para binários grandes e mantém credenciais e caminhos internos do servidor fora do arquivo. As cópias de segurança são tratadas como objecto de segurança, não só de recuperação.",
   "technologies": [
-    "ZIP archives",
-    "Static/PHP site tree"
+    "Arquivos ZIP",
+    "Directório de site estático e PHP publicado"
   ],
   "features": [
-    "Artefactos de arquivo datados para conversas de restauro pontual",
-    "Árvore de site co-localizada para comparação com saídas empacotadas",
-    "Padrões .gitignore para binários grandes quando apropriado"
+    "Artefactos de arquivo datados para recuperação pontual",
+    "Directório do site junto dos arquivos para comparação",
+    "Padrões de exclusão para binários grandes quando apropriado",
+    "Orientação sobre o que nunca deve entrar num arquivo partilhado"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/site-backup-packaging.svg",
-  "period": "dezembro de 2025",
-  "role": "Higiene de backup e artefactos de release",
+  "period": "2025",
+  "role": "Higiene de cópias de segurança e artefactos de publicação",
   "teamSize": 1,
   "highlights": [
-    "Maturidade operacional em snapshots de site e artefactos pontuais verificáveis",
-    "Útil para migração, conformidade e auditoria com stakeholders",
-    "Empacotamento consciente da segurança: saber o que nunca pode entrar num arquivo partilhado"
+    "Maturidade operacional em arquivos de site verificáveis e pontuais",
+    "Útil para migração, conformidade e auditoria",
+    "Empacotamento consciente de segurança com regras de exclusão documentadas"
   ],
-  "challenges": "Backups podem incluir acidentalmente segredos se árvores inteiras forem arquivadas sem regras de exclusão.",
-  "solutions": "Documentar o que excluir (.env, chaves privadas), preferir exportações sanitizadas para partilha, e nunca publicar passwords de arquivo.",
+  "challenges": "As cópias de segurança podem incluir credenciais se o directório completo for arquivado sem regras.",
+  "solutions": "Documentar exclusões para ficheiros de ambiente e chaves privadas; preferir exportações sanitizadas para partilha.",
   "security": [
-    "Analisar ficheiros antes de partilhar externamente",
-    "Manter credenciais fora das árvores empacotadas",
-    "Cifrar backups offline em suportes removíveis"
+    "Analisar arquivos antes de partilhar externamente",
+    "Manter credenciais fora dos directórios empacotados",
+    "Encriptar cópias de segurança offline em suportes amovíveis"
   ]
 }

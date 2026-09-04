@@ -1,46 +1,47 @@
 {
   "id": "wisdom-jobs-tracking",
-  "name": "Wisdom: Plataforma multi-inquilino de acompanhamento de trabalhos",
-  "description": "Backend FastAPI + MongoDB, SPA React + TypeScript, shell desktop Tauri opcional, operações Podman/Docker-first e documentação extensa de segurança e deploy.",
-  "longDescription": "O Wisdom é um produto multi-inquilino de acompanhamento de trabalhos: API FastAPI segura sobre MongoDB (JWT, dados por empresa, fluxos de domínio descritos na documentação de backend) e frontend React com Vite e TypeScript. O isolamento entre inquilinos e o RBAC fazem parte da arquitectura documentada—não são notas tardias—junto com métricas, relatórios e webhooks. A stack corre sob Podman ou Docker Compose (desenvolvimento, Gunicorn, builds Nuitka endurecidos, pulls a partir de registry). Um invólucro desktop Tauri reutiliza a UI web com orientação de segurança própria. A documentação cobre arquitectura de segurança, variáveis de ambiente e resposta a incidentes—operação e segurança têm o mesmo peso que as funcionalidades de produto.",
+  "name": "Wisdom - Work Intelligence & Secure Data Operations Manager",
+  "description": "SaaS multi-inquilino e orientado a temas para inteligência de trabalho e operações de dados seguras: acompanhamento de crédito e processos com FastAPI, MongoDB, SPA React, identidade visual por inquilino e implementação orientada a contentores.",
+  "longDescription": "Wisdom (Work Intelligence & Secure Data Operations Manager) é uma plataforma multi-inquilino e orientada a temas para acompanhar processos de clientes, bancos, documentos e equipas, com limites rigorosos por empresa e temas de interface por inquilino. Servidor FastAPI em MongoDB com API REST documentada, autenticação JWT e controlo de acesso por perfis. A SPA React entrega a experiência principal com configuração de tema por empresa; um cliente desktop Tauri opcional reutiliza a mesma API. Processos em segundo plano extraem documentos de crédito com filas Redis para cargas fiáveis e escaláveis. Implementação com Docker ou Podman Compose, imagens em registo de contentores e pipelines CI que constroem e validam publicações.",
   "technologies": [
     "FastAPI",
-    "Python 3.12",
+    "Python",
     "MongoDB",
     "React",
     "TypeScript",
-    "Vite",
+    "Redis",
     "Tauri",
-    "Podman",
     "Docker",
+    "Podman",
     "JWT"
   ],
   "features": [
-    "API REST multi-inquilino com fluxos documentados e limites de dados por empresa (auth, trabalhos, clientes, processos, empresas, branding)",
-    "SPA React com configuração de ambiente partilhada e pipeline de build de produção",
-    "Várias topologias compose para dev, workers API escalados e opções de backend compiladas",
-    "Empacotamento desktop Tauri com documentação focada em segurança",
-    "Menus manage Windows/shell para deploys repetíveis",
-    "Índice profundo de documentação para arquitetura de segurança e proteção de dados"
+    "API multi-inquilino com dados por empresa, RBAC e configuração de tema por inquilino",
+    "SPA React com build de produção e configuração por ambiente",
+    "Pipeline de inteligência documental para papelada regulada de crédito",
+    "Filas de workers com Redis, escalabilidade e padrões de recuperação",
+    "Cliente desktop Tauri opcional com o mesmo contrato de API",
+    "Topologias Compose para dev, staging e produção",
+    "Imagens CI em registo e manuais operacionais de implementação"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/wisdom_logo.png",
-  "period": "setembro de 2025 - março de 2026",
-  "role": "Plataforma full-stack + endurecimento + automação de deploy",
+  "period": "2025 – 2026",
+  "role": "Plataforma full-stack e implementação",
   "teamSize": 1,
   "highlights": [
-    "Segurança e operações como faixas paralelas ao trabalho de funcionalidades",
-    "Fluxos nativos de contentores com notas GHCR e EasyPanel",
-    "Clientes desktop e web a partilhar o mesmo contrato de API"
+    "Arquitetura segura por inquilino com inteligência documental e CRM",
+    "Entrega orientada a contentores com implementações repetíveis via registo",
+    "Clientes web e desktop num contrato de API estável"
   ],
-  "challenges": "Sistemas estilo SaaS multi-inquilino precisam de histórias RBAC consistentes, distribuição segura de segredos nos compose e caminhos observáveis em produção.",
-  "solutions": "Centralizar documentação de variáveis de ambiente, oferecer perfis de deploy endurecidos (Gunicorn/Nuitka), e documentar explicitamente websockets, métricas e webhooks.",
+  "challenges": "Produtos multi-inquilino exigem controlo de acesso claro, workers observáveis e gestão segura de segredos.",
+  "solutions": "Modelo de segurança documentado, perfis Compose separados, endpoints de saúde e métricas, e builds CI automáticos antes de promoção a produção.",
   "security": [
-    "Autenticação API baseada em JWT com práticas documentadas de rotação",
-    "Documentação dedicada de arquitetura de segurança e resposta a incidentes",
-    "Separação entre superadmin da plataforma e RBAC seguro por inquilino descrita na documentação de funcionalidades de backend",
-    "Orientação para Podman rootless e gestão de segredos na documentação de deploy"
+    "Autenticação JWT com autorização por inquilino",
+    "Arquitetura de segurança e resposta a incidentes documentadas",
+    "Segredos geridos fora do controlo de versões nos ambientes de implementação",
+    "Orientação para contentores rootless em hosts de produção"
   ]
 }

@@ -1,8 +1,8 @@
 {
   "id": "stream-futebol-scoreboard",
   "name": "Streaming · Marcador de futebol (Flask + Preact)",
-  "description": "Marcador de futebol em tempo real: Flask + Socket.IO, Preact + TypeScript, salas com WebSocket e contratos de eventos documentados—resiliência quando o OBS recarrega fontes.",
-  "longDescription": "Sistema duplo: Python Flask com Socket.IO gere salas, observadores de ficheiros e gestão de assets, enquanto SPA Preact renderiza cenas de overlay responsivas para software de streaming. Inclui multi-campo, temporizadores, rotação de patrocinadores, quadros de penáltis, sequências de intro e componentes modulares. A arquitectura separada mantém transporte (salas, reconexões, formas de payload) documentado para recuperação previsível quando o OBS ou a mesa de controlo reiniciam. Ferramentas PyInstaller acompanham o backend para quem precisa de executáveis autónomos.",
+  "description": "Marcador de futebol em tempo real para broadcast: servidor Flask e Socket.IO, cliente Preact, arquitectura multi-sala e contratos WebSocket testados.",
+  "longDescription": "Marcador de dois runtimes para transmissão: servidor Python Flask com Socket.IO gere salas, temporizadores e recursos; SPA Preact renderiza cenas de overlay para OBS. Suporta vários campos, rotação de patrocinadores, quadros de penáltis e sequências de introdução. Painel de operador separado do painel técnico para fluxos mais claros em dia de jogo. Hooks WebSocket modulares e conjuntos de teste partilhados mantêm servidor e cliente alinhados. Empacotamento opcional produz executáveis autónomos para recintos.",
   "technologies": [
     "Python",
     "Flask",
@@ -12,31 +12,31 @@
     "WebSocket"
   ],
   "features": [
-    "Payloads de eventos Socket.IO documentados para estabilidade do contrato mesa ↔ overlay",
-    "Arquitetura multi-sala Socket.IO",
-    "Observadores de ficheiros a ligar ferramentas de controlo ao estado web",
-    "Componentes Preact para marcador, patrocinadores, intros e penáltis",
-    "Auxiliares PyInstaller para builds distribuíveis",
-    "Predefinições de layout orientadas a OBS/Streamlabs"
+    "Arquitetura realtime multi-sala para jogos paralelos",
+    "Componentes de overlay responsivos para marcador, patrocinadores e penáltis",
+    "Barra de patrocinadores ligada com rotação dinâmica",
+    "Layouts separados de painel de operador e painel técnico",
+    "Camada WebSocket modular com testes automáticos de overlay",
+    "Scripts de empacotamento para compilações distribuíveis em recinto",
+    "Layouts por defeito orientados a OBS e Streamlabs"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/stream-futebol-scoreboard.svg",
-  "period": "julho de 2025 - março de 2026",
-  "role": "Engenharia de overlay de transmissão",
+  "period": "2025 – 2026",
+  "role": "Engenharia de overlay de broadcast",
   "teamSize": 1,
   "highlights": [
-    "Separação clara entre servidor em tempo real e UI Preact leve—resiliência operacional sob reloads",
-    "Concebido para recintos com vários campos em paralelo",
-    "Caminho de empacotamento para equipas que preferem binários autónomos",
-    "Postura de segurança assume LANs de transmissão confiáveis salvo autenticação em endpoints de controlo"
+    "Separação clara entre servidor realtime e UI de overlay leve",
+    "Desenhado para recintos multi-jogo com campos paralelos",
+    "Cobertura de testes em comportamento de overlay e contratos socket"
   ],
-  "challenges": "Stacks híbridas Python + JS têm de alinhar evolução de esquema e comportamento de reconexão quando o OBS recarrega browser sources.",
-  "solutions": "Salas Socket.IO, payloads de eventos documentados e arranque resiliente no cliente Preact.",
+  "challenges": "Stacks Python e JavaScript devem concordar na evolução de esquema quando OBS recarrega browser sources.",
+  "solutions": "Salas Socket.IO, payloads de eventos documentados, bootstrapping resiliente no cliente e fixtures de teste partilhados.",
   "security": [
-    "Executar Flask atrás de TLS em LANs de produção",
-    "Autenticar endpoints de controlo se expostos fora de redes confiáveis",
-    "Sanitizar assets de patrocinadores carregados"
+    "Executar servidor atrás de TLS em redes de produção",
+    "Autenticar endpoints de controlo se expostos fora de LANs confiáveis",
+    "Sanitizar recursos de patrocinadores carregados"
   ]
 }

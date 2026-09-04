@@ -1,35 +1,40 @@
 {
   "id": "msl-work-infoplus-cli",
-  "name": "Utilitários Windows · Info+ CLI (multi_scripts_lib/work)",
-  "description": "Utilitário CLI PyInstaller em multi_scripts_lib/work/Info+_CLI—builds Windows reproduzíveis, metadados de versão embutidos e orientação de distribuição consciente da cadeia de fornecimento.",
-  "longDescription": "Utilitário CLI no monorepo `multi_scripts_lib` (`work/Info+_CLI`), empacotado com PyInstaller (`--onefile`, ícone, recursos de versão) em torno de `runScriptDecode.py`. A receita privilegia flags determinísticas e recursos de versão rastreáveis para verificar o que se distribui. Apresentado como projeto separado de outros utilitários em `work/` em vez do monorepo completo. O código-fonte vive na subárvore `work` do monorepo.",
+  "name": "Utilitários Windows · Info+ CLI",
+  "description": "CLI PowerShell de diagnóstico de estações de trabalho para recondicionamento e QA: scripts modulares fundidos num pacote e compilados para executável Windows com PS2EXE.",
+  "longDescription": "O Info+ é um utilitário Windows orientado a PowerShell, criado para recondicionamento de desktops e diagnóstico em campo. Dezenas de módulos .ps1 focados: inventário de sistema, testes de hardware, ajustes e manutenção: são fundidos num único pacote de script e depois compilados para infoplus.exe com PS2EXE, metadados de versão incorporados, recursos de ícone e execução com privilégios elevados. Os operadores obtêm um menu interactivo na consola com CPU, GPU, RAM, activação Windows e chaves de produto, ligações a controladores, testes de bateria/câmara/áudio/ecrã, ajustes de energia e BitLocker, limpeza de cache e arranque do Diagnóstico de Memória do Windows.",
   "technologies": [
-    "Python",
-    "PyInstaller",
+    "PowerShell",
+    "PS2EXE",
+    "WMI",
     "Windows"
   ],
   "features": [
-    "Receita de executável one-file com flags PyInstaller documentadas",
-    "Recurso de versão e ícone para rastreabilidade e higiene de instaladores",
-    "Subárvore isolada em multi_scripts_lib/work—limite de módulo claro",
-    "Mentalidade de build reproduzível: minimizar dependências implícitas do ambiente"
+    "Scripts PowerShell modulares fundidos num pacote distribuível",
+    "Menus CLI interactivos para informação de sistema, testes de hardware e manutenção",
+    "Relatórios de CPU, GPU, RAM, versão Windows, activação e chaves de produto",
+    "Ligações a controladores e diagnósticos de bateria, câmara, áudio e pixéis do ecrã",
+    "Ajustes de sistema incluindo energia, utilitários de activação e desbloqueio BitLocker",
+    "Pipeline de compilação PS2EXE com metadados de versão, ícone e flags require-admin",
+    "Validação de sintaxe no script fundido antes do empacotamento"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/msl-work-infoplus-cli.svg",
-  "period": "dezembro de 2024 - dezembro de 2025",
-  "role": "Autoria de utilitário empacotado",
+  "period": "2018",
+  "role": "Autor de diagnósticos desktop em PowerShell",
   "teamSize": 1,
   "highlights": [
-    "Entrega de binários CLI Windows com metadados de versão embutidos",
-    "Caminho explícito no monorepo e propriedade das dependências",
-    "Segurança: assinatura de código e bundles congelados sem segredos para distribuição externa"
+    "Ferramentas nativas PowerShell adaptadas a fluxos de QA em estações Windows",
+    "Pacote único fundido reduz fricção de implementação em campo para técnicos",
+    "Executável Windows empacotado com recursos de versão rastreáveis"
   ],
-  "challenges": "Fatias pequenas de monorepo costumam ter documentação limitada.",
-  "solutions": "Alinhar a descrição ao que o código e as instruções de build mostram; a ligação aponta para a subárvore exata.",
+  "challenges": "Técnicos em campo precisam de uma ferramenta portátil que cubra inventário, testes e ajustes sem gerir muitos scripts separados.",
+  "solutions": "Desenho PowerShell modular com pipeline de fusão e compilação, utilitários partilhados e CLI orientada a menus que mantém fluxos de recondicionamento repetíveis.",
   "security": [
-    "Assinar binários ao distribuir fora de redes internas",
-    "Evitar embutir segredos em executáveis congelados"
+    "Requer privilégios administrativos para operações de hardware e sistema",
+    "Assinar executáveis compilados ao distribuir fora de redes de confiança",
+    "Rever o ficheiro de saída do script fundido antes do empacotamento; nunca incorporar segredos nas compilações"
   ]
 }

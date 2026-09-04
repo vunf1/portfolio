@@ -1,30 +1,31 @@
 {
   "id": "msl-work-touchscreen",
-  "name": "Utilitários Windows · Auxiliares touch (multi_scripts_lib/work)",
-  "description": "Utilitários touch em multi_scripts_lib/work/touchscreen para quiosques ou campo—UX e endurecimento para dispositivos desacompanhados.",
-  "longDescription": "Utilitários em `multi_scripts_lib/work/touchscreen` para cenários Windows com interação primária por toque (quiosques, equipamento de campo). Implementações quiosque implicam modelo de ameaça mais rigoroso: acesso físico, sessões partilhadas e fugas acidentais de ecrã completo. Resumo breve; pormenores na árvore de código ligada.",
+  "name": "Utilitários Windows · Ecrã táctil",
+  "description": "Utilitários de ecrã táctil para hardware Windows em quiosque ou no terreno: interacção centrada no toque e endurecimento para dispositivos sem supervisão.",
+  "longDescription": "Utilitários para instalações Windows centradas no toque, como quiosques ou dispositivos de campo. As implementações em quiosque implicam um modelo de ameaça mais estrito: acesso físico, sessões partilhadas e saída acidental de shells em ecrã inteiro. Âmbito estreito num monorepo de automação maior; o detalhe completo está no código-fonte ligado.",
   "technologies": [
     "Python",
     "Windows"
   ],
   "features": [
-    "Localizada em multi_scripts_lib/work/touchscreen",
-    "Alvo a restrições touch-first (tamanhos de alvo, escala)",
-    "Orientação quiosque: minimizar atalhos privilegiados e fugas quando exigido"
+    "Restrições de interacção centrada no toque, incluindo tamanhos de alvo e escala",
+    "Orientação de quiosque para reduzir atalhos de saída quando necessário",
+    "Scripts junto do hardware para implementações de campo"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/msl-work-touchscreen.svg",
-  "period": "dezembro de 2024",
-  "role": "Scripting adjacente a hardware",
+  "period": "2024",
+  "role": "Scripts junto do hardware",
   "teamSize": 1,
   "highlights": [
-    "Experiência para além do teclado/rato tradicional"
+    "Experiência para além da UX desktop tradicional com teclado e rato"
   ],
-  "challenges": "Alvos táteis e escala de visualização variam por dispositivo.",
-  "solutions": "Testar em hardware representativo; documentar resoluções mínimas quando relevante.",
+  "challenges": "Alvos tácteis e escala de ecrã variam por dispositivo.",
+  "solutions": "Testar em hardware representativo e documentar resoluções mínimas quando for relevante.",
   "security": [
-    "Implementações quiosque precisam de endurecimento — desativar fugas onde exigido"
+    "Implementações em quiosque precisam de endurecimento: desactivar atalhos de saída quando necessário",
+    "Executar com privilégios mínimos em dispositivos partilhados ou públicos"
   ]
 }

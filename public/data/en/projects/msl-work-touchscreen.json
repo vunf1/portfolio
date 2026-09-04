@@ -1,30 +1,31 @@
 {
   "id": "msl-work-touchscreen",
-  "name": "Windows utilities · Touchscreen helpers (multi_scripts_lib/work)",
-  "description": "Touchscreen utilities under multi_scripts_lib/work/touchscreen for kiosk or field hardware—UX and hardening considerations for unattended devices.",
-  "longDescription": "Utilities under `multi_scripts_lib/work/touchscreen` for touch-first Windows setups such as kiosks or field devices. Kiosk deployments imply a stricter threat model: physical access, shared sessions, and accidental escape from full-screen shells. Short summary; full detail in the linked source.",
+  "name": "Windows utilities · Touchscreen helpers",
+  "description": "Touchscreen utilities for kiosk or field Windows hardware: touch-first UX and hardening considerations for unattended devices.",
+  "longDescription": "Utilities for touch-first Windows setups such as kiosks or field devices. Kiosk deployments imply a stricter threat model: physical access, shared sessions, and accidental escape from full-screen shells. Scope stays narrow within a larger automation monorepo; full detail is available in the linked source.",
   "technologies": [
     "Python",
     "Windows"
   ],
   "features": [
-    "Located under multi_scripts_lib/work/touchscreen",
-    "Targets touch-first interaction constraints (target sizes, scaling)",
-    "Kiosk-oriented guidance: minimise escape hatches and privileged shortcuts where required"
+    "Touch-first interaction constraints including target sizes and scaling",
+    "Kiosk-oriented guidance to minimise escape hatches where required",
+    "Hardware-adjacent scripting for field deployments"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/msl-work-touchscreen.svg",
-  "period": "Dec 2024",
+  "period": "2024",
   "role": "Hardware-adjacent scripting",
   "teamSize": 1,
   "highlights": [
-    "Shows experience beyond traditional keyboard/mouse UX"
+    "Experience beyond traditional keyboard and mouse desktop UX"
   ],
   "challenges": "Touch targets and display scaling vary per device.",
-  "solutions": "Test on representative hardware; document minimum resolutions where relevant.",
+  "solutions": "Test on representative hardware and document minimum resolutions where relevant.",
   "security": [
-    "Kiosk deployments need hardening—disable escape hatches where required"
+    "Kiosk deployments need hardening: disable escape hatches where required",
+    "Run with least privilege on shared or public devices"
   ]
 }

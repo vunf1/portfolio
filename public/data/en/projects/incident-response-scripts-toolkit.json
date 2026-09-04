@@ -1,38 +1,38 @@
 {
   "id": "incident-response-scripts-toolkit",
   "name": "Security scripts · Incident response toolkit (Windows + Linux)",
-  "description": "Modular PowerShell and Bash scripts for endpoint containment, investigation, eradication, and verification—phased IR as code with logging, scoping, and chain-of-custody awareness.",
-  "longDescription": "This toolkit packages incident-response playbooks as code: Windows paths cover containment, investigation, eradication, and recovery with parameterised entrypoints (hostname, user, timeframe, scope). Linux scripts support server hunting across multiple targets. The toolkit emphasises repeatable execution, structured logging, and separation of duties between phases so teams can coordinate during live incidents without collapsing containment and evidence collection into a single opaque step. Outputs are treated as sensitive intelligence products.",
+  "description": "Modular PowerShell and Bash playbooks for endpoint containment, investigation, eradication, and verification: phased incident response as code.",
+  "longDescription": "A toolkit that packages incident-response workflows as repeatable scripts for Windows endpoints and Linux servers. Each phase: containment, investigation, eradication, recovery: has scoped entry points with parameters for host, user, timeframe, and scope. Structured logging supports post-incident review. Outputs are treated as sensitive forensic material suitable for regulated environments.",
   "technologies": [
     "PowerShell",
     "Bash",
-    "Python helpers"
+    "Python"
   ],
   "features": [
-    "Windows IR orchestration scripts with scoped parameters—reduce blast radius of automation",
+    "Phased Windows IR scripts with scoped parameters",
     "Linux hunt scripts for multi-host triage",
-    "Documented directory layout for each IR phase (containment vs forensics vs recovery)",
-    "Quick-start snippets for administrators with prerequisites called out explicitly",
-    "Structured logging hooks so actions are attributable and reviewable after the fact"
+    "Documented layout per IR phase",
+    "Quick-start guidance with prerequisites called out",
+    "Structured logging for attributable actions",
+    "Separation between containment and evidence collection steps"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/incident-response-scripts-toolkit.svg",
-  "period": "Aug 2025",
+  "period": "2018",
   "role": "Security automation author",
   "teamSize": 1,
   "highlights": [
     "Bridges Windows endpoint and Linux server response workflows",
-    "Emphasises phased IR over one-off manual commands"
+    "Phased approach instead of one-off manual commands"
   ],
-  "challenges": "Incident scripts are powerful; misuse can destroy evidence or cause downtime.",
-  "solutions": "Document prerequisites, scope flags, and dry-run guidance; require administrative intent before running destructive phases.",
+  "challenges": "IR automation is powerful; misuse can destroy evidence or cause downtime.",
+  "solutions": "Documented prerequisites, scope flags, dry-run guidance, and explicit separation of destructive remediation from preservation steps.",
   "security": [
-    "Run only on systems you own or are authorised to investigate",
-    "Protect script outputs—they may contain sensitive forensic data and credentials",
-    "Review commands before execution in regulated environments; prefer dry-runs where supported",
-    "Maintain separation between destructive remediation steps and evidence preservation where legal process requires",
-    "Store tooling and logs with access controls equivalent to tier-0 operational assets"
+    "Run only on authorised systems",
+    "Protect outputs: they may contain sensitive forensic data",
+    "Review commands before execution in regulated environments",
+    "Store tooling and logs with tier-0 access controls"
   ]
 }

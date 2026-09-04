@@ -1,30 +1,31 @@
 {
   "id": "msl-work-system-tray",
-  "name": "Windows utilities · System tray tools (multi_scripts_lib/work)",
-  "description": "System tray utilities under multi_scripts_lib/work/system tray—long-lived Windows helpers where least privilege, signing, and graceful degradation matter.",
-  "longDescription": "Lightweight utilities under `multi_scripts_lib/work/system tray` for background tasks reachable from the Windows system tray without a full application window. Tray-resident code is treated as high visibility on the endpoint: failures should be quiet but observable, and privileges should stay minimal unless a feature explicitly requires elevation.",
+  "name": "Windows utilities · System tray tools",
+  "description": "System tray utilities for long-lived Windows background tasks: least privilege, signing, and graceful degradation when session state changes.",
+  "longDescription": "Lightweight utilities for background tasks reachable from the Windows system tray without a full application window. Tray-resident code is treated as high visibility on the endpoint: failures should be quiet but observable, and privileges should stay minimal unless a feature explicitly requires elevation.",
   "technologies": [
     "Python",
     "Windows"
   ],
   "features": [
-    "Targets system tray interaction patterns without unnecessary foreground windows",
-    "Scoped to multi_scripts_lib/work/system tray",
-    "Defensive handling when tray APIs or session state are unavailable"
+    "System tray interaction patterns without unnecessary foreground windows",
+    "Defensive handling when tray APIs or session state are unavailable",
+    "Scoped utilities within a shared automation monorepo"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/msl-work-system-tray.svg",
-  "period": "Dec 2025",
+  "period": "2025",
   "role": "Windows shell integration",
   "teamSize": 1,
   "highlights": [
     "Always-available helpers from the system tray"
   ],
   "challenges": "Tray apps must fail gracefully when permissions or session state changes.",
-  "solutions": "Document startup requirements and handle missing tray APIs defensively in code.",
+  "solutions": "Document startup requirements and handle missing tray APIs defensively.",
   "security": [
-    "Tray apps are high-visibility targets—sign binaries and minimise privileges"
+    "Sign binaries and minimise privileges for tray-resident code",
+    "Avoid storing secrets in tray-accessible configuration"
   ]
 }

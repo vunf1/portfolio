@@ -1,40 +1,39 @@
 {
   "id": "n8n-docker-self-host",
-  "name": "n8n: Stack Docker self-host",
-  "description": "Layout n8n self-hosted com Docker Compose, backups e pastas para proxy—estrutura opinativa para segredos, exposição de rede e operações repetíveis em infraestrutura privada.",
-  "longDescription": "Automação de workflows self-hosted com Docker Compose: definições de serviços, contexto de contentor, scripts e assets estáticos de suporte para correr n8n em infraestrutura privada. Auxiliares de backup e estrutura para deploy atrás de proxy mantêm segredos, material TLS e endpoints internos fora de árvores públicas, carregados só a partir de configuração privada. O layout privilegia operações repetíveis—arranque, paragem, backups, actualizações—e mantém lógica de negócio específica fora de ficheiros versionados onde acoplava IP à infraestrutura.",
+  "name": "n8n: stack auto-alojada com Docker",
+  "description": "Automação n8n auto-alojada com Docker Compose, scripts de cópia de segurança e disposição orientada ao proxy para segredos, exposição de rede e operações repetíveis.",
+  "longDescription": "Automação de fluxos de trabalho auto-alojada com Docker Compose: definições de serviço, scripts e recursos de suporte para correr n8n em infraestrutura privada. Scripts de cópia de segurança e directórios de implementação mantêm segredos, material TLS e pontos internos fora do código publicado. A disposição privilegia arranque, paragem, cópia de segurança e actualização repetíveis, e separa a lógica de negócio do código de infraestrutura.",
   "technologies": [
     "n8n",
     "Docker",
-    "Docker Compose",
-    "Shell"
+    "Docker Compose"
   ],
   "features": [
-    "Layout compose-first para colocar automações online em ambiente controlado",
-    "Scaffolding de scripts para snapshots de base de dados e disciplina de restore",
-    "Pastas de suporte para material TLS de proxy e páginas de manutenção (preenchidas em deploy)",
-    "Separação entre volumes de runtime, configuração versionada e ficheiros .env com segredos",
-    "Postura de rede documentada: preferir proxy inverso + firewall a expor portas de nós de forma ampla"
+    "Disposição centrada no Compose para alojamento controlado da automação",
+    "Esqueleto de scripts de cópia de segurança para instantâneos da base de dados",
+    "Separação entre volumes de execução, configuração versionada e ficheiros env secretos",
+    "Pastas de proxy e TLS preenchidas por operador",
+    "Postura de rede documentada: proxy reverso e firewall em vez de exposição ampla de portas"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/n8n-docker-self-host.svg",
-  "period": "outubro de 2025",
+  "period": "2025",
   "role": "Infraestrutura de automação",
   "teamSize": 1,
   "highlights": [
-    "Mantém automação workflow no seu próprio runtime Docker",
-    "Scripts operacionais para disciplina de backup",
-    "Hostnames sensíveis e segredos ficam em configuração privada, não em texto público"
+    "Mantém a automação de fluxos no próprio ambiente de contentores",
+    "Scripts operacionais para disciplina de cópia de segurança",
+    "Segredos e nomes de anfitrião apenas em configuração privada"
   ],
-  "challenges": "Automação self-hosted precisa de patches, backups e alcance apenas a redes confiáveis.",
-  "solutions": "Usar Compose com volumes documentados, backups scriptados e TLS na borda; manter credenciais apenas em ficheiros de ambiente privados.",
+  "challenges": "A automação auto-alojada tem de se manter actualizada, com cópia de segurança, e acessível só a redes de confiança.",
+  "solutions": "Compose com volumes documentados, cópias de segurança por script e terminação TLS no proxy de bordo.",
   "security": [
-    "URLs de webhook, chaves API e passwords de BD apenas em ficheiros .env privados—nunca em repositórios públicos",
-    "Restringir portas administrativas com firewall ou VPN; TLS na borda do proxy",
-    "Rodar credenciais de automação em calendário; rever actualizações de imagens n8n como higiene de cadeia de fornecimento",
-    "Backups de volumes encriptados em repouso quando armazenados fora do servidor",
-    "Menor privilégio para contas de serviço que acedem a webhooks e bases de dados"
+    "Armazenar URLs de webhook, chaves de API e palavras-passe da BD apenas em ficheiros env privados",
+    "Restringir portas administrativas via firewall ou VPN",
+    "Renovar credenciais de automação periodicamente",
+    "Encriptar cópias de segurança de volume guardadas fora do servidor",
+    "Privilégios mínimos para contas de serviço que acedem a webhooks e bases de dados"
   ]
 }

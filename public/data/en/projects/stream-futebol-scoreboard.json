@@ -1,8 +1,8 @@
 {
   "id": "stream-futebol-scoreboard",
   "name": "Streaming · Football scoreboard (Flask + Preact)",
-  "description": "Real-time football scoreboard for broadcast: Flask + Socket.IO backend, Preact + TypeScript frontend, and room-scoped realtime—clear event contracts and LAN-oriented hardening guidance.",
-  "longDescription": "A dual-runtime scoreboard system: Python Flask with Socket.IO powers rooms, file watchers, and asset management, while a Preact SPA renders responsive overlay scenes for streaming software. Features include multi-field support, timers, sponsor rotation, penalty boards, intro sequences, and modular components for customization. The split backend/frontend architecture keeps transport concerns (rooms, reconnects, payload shapes) documented so OBS reloads and control-desk restarts recover predictably. PyInstaller tooling lives alongside the backend for packaging when operators need executables.",
+  "description": "Real-time football scoreboard for broadcast: Flask and Socket.IO backend, Preact overlay frontend, multi-room architecture, and tested WebSocket contracts.",
+  "longDescription": "Dual-runtime scoreboard for streaming: a Python Flask server with Socket.IO handles rooms, timers, and assets; a Preact SPA renders overlay scenes for OBS. Supports multiple fields, sponsor rotation, penalty boards, and intro sequences. The operator dashboard is separated from the technical panel for clearer match-day workflows. Modular WebSocket hooks and shared test fixtures keep backend and frontend aligned. Optional packaging produces standalone executables for venue operators.",
   "technologies": [
     "Python",
     "Flask",
@@ -12,31 +12,31 @@
     "WebSocket"
   ],
   "features": [
-    "Documented Socket.IO event payloads for control desk ↔ overlay contract stability",
-    "Multi-room Socket.IO architecture",
-    "File watchers to bridge control-desk tools and web state",
-    "Preact components for scoreboard, sponsors, intros, and penalties",
-    "PyInstaller helpers for distributable builds",
-    "OBS/Streamlabs-oriented layout defaults"
+    "Multi-room realtime architecture for parallel matches",
+    "Responsive overlay components for scoreboard, sponsors, and penalties",
+    "Connected sponsor bar with dynamic rotation",
+    "Split operator dashboard and technical panel layouts",
+    "Modular WebSocket layer with automated overlay tests",
+    "Packaging helpers for distributable venue builds",
+    "OBS and Streamlabs oriented layout defaults"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/stream-futebol-scoreboard.svg",
-  "period": "Jul 2025 – Mar 2026",
+  "period": "2025 – 2026",
   "role": "Broadcast overlay engineering",
   "teamSize": 1,
   "highlights": [
-    "Clear split between realtime server and lightweight Preact UI—operational resilience under reloads",
+    "Clear split between realtime server and lightweight overlay UI",
     "Designed for multi-match venues with parallel fields",
-    "Packaging path for teams that prefer standalone binaries",
-    "Security posture assumes trusted broadcast LANs unless control endpoints are authenticated"
+    "Test coverage on overlay behaviour and socket contracts"
   ],
-  "challenges": "Hybrid Python + JS stacks must agree on schema evolution and reconnect behaviour when OBS reloads browser sources.",
-  "solutions": "Socket.IO rooms, documented event payloads, and resilient client bootstrapping on the Preact side.",
+  "challenges": "Python and JavaScript stacks must agree on schema evolution when OBS reloads browser sources.",
+  "solutions": "Socket.IO rooms, documented event payloads, resilient client bootstrapping, and shared test fixtures.",
   "security": [
-    "Run Flask behind TLS in production LANs",
-    "Authenticate control endpoints if exposed outside trusted networks",
+    "Run the server behind TLS on production networks",
+    "Authenticate control endpoints if exposed outside trusted LANs",
     "Sanitize uploaded sponsor assets"
   ]
 }

@@ -1,8 +1,8 @@
 {
   "id": "rust-license-platform-axum",
-  "name": "Plataforma de licenças em Rust (Axum + React)",
-  "description": "Serviço de licenciamento contentorizado em Rust (Axum) com React, MongoDB, JWT e HMAC por máquina—camada de serviço memory-safe, limites criptográficos explícitos e OpenAPI como contrato de integração.",
-  "longDescription": "Esta stack entrega um serviço de licenciamento amigo de Podman/Docker: API Rust Axum com OpenAPI, MongoDB para persistência e SPA React para fluxos de utilizador. Utilizadores verificados gerem chaves via endpoints autenticados; a verificação por máquina usa assinaturas HMAC com carimbo temporal em cabeçalhos dedicados, separando modelos de confiança de browsers e clientes headless. Ficheiros compose de desenvolvimento e produção separam preocupações; endpoints de health, readiness e versão suportam orquestração; scripts de build e teste mantêm a fronteira Rust tipada reproduzível.",
+  "name": "Plataforma de licenças Rust (Axum + React)",
+  "description": "API de licenciamento em Rust com cliente React, MongoDB, sessões JWT, verificação de máquinas e OpenAPI para integradores.",
+  "longDescription": "Serviço de licenciamento desenhado para implementação com contentores: API Rust com documentação OpenAPI, persistência MongoDB e SPA React para fluxos de utilizador. Utilizadores do navegador gerem licenças via sessões autenticadas; clientes máquina usam cabeçalhos assinados com regras de confiança separadas. Pilhas Compose separam desenvolvimento e produção; pontos de saúde e versão suportam orquestração. Executores de testes automáticos cobrem cliente e servidor. Scripts de verificação de ambiente mantêm a configuração de implementação consistente.",
   "technologies": [
     "Rust",
     "Axum",
@@ -11,38 +11,37 @@
     "TypeScript",
     "JWT",
     "OpenAPI",
-    "Podman",
-    "Docker"
+    "Docker",
+    "Podman"
   ],
   "features": [
-    "Camada de serviço em Rust para segurança de memória em torno de criptografia e persistência",
-    "Endpoints de health, readiness e versão para orquestração",
+    "Camada de serviço Rust memory-safe em torno de crypto e persistência",
     "Registo, verificação de email, login e gestão de sessão",
-    "Fluxos de emissão/verificação de licença com cabeçalhos de atestação de máquina",
-    "Documento OpenAPI servido para integradores",
-    "Stacks compose dev/prod com portas documentadas",
-    "Corredores de teste automatizados para frontend e backend incluídos no projeto"
+    "Fluxos de emissão e verificação de licenças com atestação de máquina",
+    "Documento OpenAPI para integradores terceiros",
+    "Diagnósticos, definições e métricas para operadores",
+    "Stacks Compose para dev e produção",
+    "Suites de testes automáticos no cliente e no servidor"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/rust-license-platform-axum.svg",
-  "period": "janeiro de 2026 - fevereiro de 2026",
-  "role": "Backend + desenho de API + integração frontend",
+  "period": "2026",
+  "role": "Desenho de API de servidor e integração de cliente",
   "teamSize": 1,
   "highlights": [
-    "Fronteira Rust fortemente tipada com papéis distintos para JWT e atestação de máquina",
-    "Separação clara entre sessões de browser e verificação por API—menos confusão de tokens",
-    "OpenAPI servida para integradores; perfis compose para formas dev/prod reproduzíveis",
-    "Checklist operacional centrada em contentores na documentação"
+    "Separação clara entre sessões browser e verificação API de máquina",
+    "OpenAPI como contrato de integração com operações orientadas a contentores",
+    "Perfis Compose reproduzíveis para dev e produção"
   ],
-  "challenges": "Duas superfícies cliente (humanos vs máquinas) multiplicam casos-limite em autenticação, replay e deriva de relógio.",
-  "solutions": "Documentar verificação HMAC com carimbo temporal, exigir segredos de produção para JWT e assinatura de máquina, e manter OpenAPI como contrato.",
+  "challenges": "Browsers humanos e clientes headless multiplicam casos limite de autenticação e replay.",
+  "solutions": "Verificação assinada documentada, segredos apenas em produção e OpenAPI como superfície de integração estável.",
   "security": [
-    "Segredo de assinatura JWT obrigatório em produção; tokens de curta duração onde configurado",
-    "Segredo dedicado para assinatura de máquina (X-Signature)—independente do JWT do browser",
+    "Segredos de assinatura JWT obrigatórios em produção",
+    "Segredo de assinatura de máquina separado de tokens de sessão browser",
     "Pepper de digest de licença configurável por ambiente",
-    "HMAC com carimbo temporal mitiga replay ingénuo dentro de janelas de deriva de relógio documentadas",
-    "Orientação explícita: nunca commitar segredos; usar env ou segredos de orquestração"
+    "Assinaturas com timestamp para limitar replay em janelas documentadas",
+    "Segredos apenas via configuração de ambiente, nunca no repositório"
   ]
 }

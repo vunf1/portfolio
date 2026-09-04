@@ -1,8 +1,8 @@
 {
   "id": "lol-catalog-nexus-tauri",
   "name": "LoL Catalog Nexus (Tauri + Vite)",
-  "description": "Offline-first League of Legends cosmetics catalog: Tauri + Rust core, Vite UI, schema-versioned local DB, and a verified prefetch pipeline—strict IPC and supply-chain aware asset handling.",
-  "longDescription": "Desktop catalog for champions, skins, and chromas. Rust owns domain models, storage adapters, and Tauri commands; the frontend uses Vite + TypeScript with generated types from `lol_localdb.schema.json` so UI and persistence share one contract. Data Dragon and CommunityDragon feed prefetch scripts that hydrate `frontend/public/lol-asset-cache/` so production builds can boot without network I/O. Owned state is tracked per entity with schema migrations versioned in metadata. The architecture treats third-party CDNs as untrusted inputs: verification belongs in the prefetch tooling, not assumed at runtime.",
+  "description": "Desktop League of Legends cosmetics catalog: offline-first Tauri app, optional live client integration, schema-versioned local data, and bundled asset prefetch.",
+  "longDescription": "A desktop catalog for champions, skins, and chromas that boots quickly from a local database and bundled assets. Rust owns domain logic, storage, and optional read-only integration with the game client; a Vite and TypeScript UI provides search, sync status, and 3D skin preview. Public game data is prefetched at build time to avoid runtime CDN dependency. Schema versioning keeps UI and storage aligned across upgrades. Automated tests cover local database and adapter behaviour.",
   "technologies": [
     "Tauri",
     "Rust",
@@ -11,32 +11,31 @@
     "JSON Schema"
   ],
   "features": [
-    "Rust–Tauri IPC boundary with explicit commands instead of ad-hoc shell access",
-    "Bundled local database with schema versioning",
-    "Prefetch workflow for metadata and art assets",
-    "IPC boundary between UI and Rust services",
-    "Optional Riot API usage for rotation (non-core)",
-    "Tests and fixtures for local DB behaviour"
+    "Offline-first catalog with optional live client read-only mode",
+    "Schema-versioned local database and generated TypeScript types",
+    "Build-time asset prefetch for fast, predictable startup",
+    "3D skin preview and modular app shell",
+    "Explicit desktop API boundary instead of direct shell access",
+    "Unit tests for storage and client adapter logic"
   ],
   "url": "",
   "demo": "",
   "embedInModal": false,
   "image": "./img/projects/lol-catalog-nexus-tauri.svg",
-  "period": "Jan 2026",
-  "role": "Desktop product + data pipeline",
+  "period": "2026",
+  "role": "Desktop product and data pipeline",
   "teamSize": 1,
   "highlights": [
-    "Strict offline-first rule: no network calls when local DB exists",
-    "Schema-driven TypeScript generation",
-    "Asset protocol bridging for cached imagery"
+    "Fast offline experience with optional live enrichment",
+    "Single schema contract across Rust storage and TypeScript UI",
+    "Build pipeline that validates and bundles public game metadata"
   ],
-  "challenges": "Large game catalogs require disciplined prefetch and cache invalidation to avoid stale art or bloated bundles.",
-  "solutions": "Versioned schema, scripted prefetch, and explicit separation between bundled resources and optional live calls.",
+  "challenges": "Large catalogs need disciplined caching without stale or oversized bundles.",
+  "solutions": "Versioned schema, scripted prefetch, and separation between bundled data and optional live calls.",
   "security": [
-    "Treat third-party CDNs as untrusted—verify downloads in prefetch tooling",
-    "Avoid storing Riot credentials in the offline catalog; optional API is peripheral",
-    "Ship without embedding personal player account data",
-    "Schema migrations are explicit to prevent silent data corruption across upgrades",
-    "Tauri surface minimisation: only expose commands the UI truly needs"
+    "Live client integration is local-only and read-only",
+    "No player credentials stored in the offline catalog",
+    "Third-party downloads verified during prefetch",
+    "Minimal exposed desktop API surface"
   ]
 }
