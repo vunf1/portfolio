@@ -41,17 +41,6 @@ if (fs.existsSync(srcImgDir)) {
   });
 }
 
-// Create .nojekyll file for GitHub Pages
-const distDir = path.join(__dirname, '..', 'dist');
-const nojekyllDest = path.join(distDir, '.nojekyll');
-const nojekyllContent = '# This file tells GitHub Pages to not process files with Jekyll\n# It\'s needed for SPAs and other non-Jekyll sites\n';
-
-// Ensure dist directory exists
-if (!fs.existsSync(distDir)) {
-  fs.mkdirSync(distDir, { recursive: true });
-  console.log('Created dist directory');
-}
-
 // Copy HTML error pages from src to public
 const srcHtmlDir = path.join(__dirname, '..', 'src');
 const publicHtmlDir = path.join(__dirname, '..', 'public');
@@ -67,10 +56,6 @@ if (fs.existsSync(srcHtmlDir)) {
     }
   });
 }
-
-// Always create the .nojekyll file directly
-fs.writeFileSync(nojekyllDest, nojekyllContent);
-console.log('Created .nojekyll in dist/');
 
 console.log('Data, image, and HTML files copied successfully!');
 
