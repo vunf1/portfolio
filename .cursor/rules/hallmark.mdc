@@ -1,0 +1,23 @@
+---
+description: Hallmark is the default anti-slop design skill. Read SKILL.md + references; do not paste the full pack into every turn.
+alwaysApply: true
+---
+
+# Hallmark (default)
+
+Official skill: [nutlope/hallmark](https://github.com/nutlope/hallmark) v1.1. Install: `npx skills add nutlope/hallmark` ([docs](https://www.usehallmark.com/#install)).
+
+**Read** `.cursor/skills/hallmark/SKILL.md` (fallback `.agents/skills/hallmark/SKILL.md` or `~/.cursor/skills/hallmark/SKILL.md`) when building, auditing, redesigning, or studying UI. Load `references/` only for the active verb (slop-test, structure, study, custom-theme).
+
+## Verbs
+
+| Invocation | Action |
+|---|---|
+| default | Design flow: theme + macrostructure + slop test. Fit the existing portfolio system unless the user asks for a full rebuild. |
+| `hallmark audit <target>` | Punch list only. No edits. |
+| `hallmark redesign <target>` | New visual structure inside existing routes/components. Confirm before deleting files. |
+| `hallmark study <screenshot\|URL>` | Extract DNA. Never pixel-clone. |
+
+Implementation safety from upstream: in-place edits; state files before changing; deletions need explicit confirmation.
+
+On this repo, pair with Taste + Impeccable (see `design-stack-default.mdc`).

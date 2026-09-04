@@ -71,6 +71,7 @@ const SECTIONS = {
       { value: '31', label: 'Optimize images', hint: 'npm run optimize:images' },
       { value: '32', label: 'Generate OG image', hint: 'npm run generate:og-image' },
       { value: '33', label: 'Test n8n request', hint: 'npm run test:n8n' },
+      { value: '34', label: 'Install design skills (Hallmark, Taste, Impeccable)', hint: 'npm run install:design-skills' },
     ],
   },
   clean: {
@@ -118,6 +119,7 @@ function runAction(key) {
     '31': () => runShell(ROOT, 'npm run optimize:images'),
     '32': () => runShell(ROOT, 'npm run generate:og-image'),
     '33': () => runShell(ROOT, 'npm run test:n8n'),
+    '34': () => runShell(ROOT, 'npm run install:design-skills'),
     '40': () => runShell(ROOT, 'npm run clean'),
     '41': () => runShell(ROOT, 'npm run clean:all'),
     '42': () => runShell(ROOT, 'npm run reinstall'),

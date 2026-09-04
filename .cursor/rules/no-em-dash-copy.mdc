@@ -1,0 +1,41 @@
+---
+description: No Unicode em dash (U+2014) in portfolio copy; replace with correct punctuation, not a blind hyphen.
+globs: public/data/**/*,src/**/*.{ts,tsx,css},docs/**/*,*.md
+alwaysApply: false
+---
+
+# No em dash (U+2014) in product copy
+
+## Ban
+
+Do not use the Unicode em dash (U+2014) in visitor-facing or maintainer copy:
+
+- `public/data/**` (EN and pt-PT JSON: personal, experience, projects, skills, ui, meta)
+- `src/**` user-visible strings (TS/TSX/CSS content, not vendor comments)
+- `docs/**` and repo Markdown we edit
+
+Treat an existing em dash as a **punctuation mistake**. **Do not** mechanically replace every `—` with ASCII `-`.
+
+Skip skill packs (`.cursor/skills`, `.agents/skills`, `.claude/skills`): those are upstream.
+
+## Choose the correct replacement
+
+| Role of the (wrong) em dash | Prefer | Portfolio example |
+|---|-----|---|
+| Name then gloss / stack | colon | `Wisdom: multi-tenant job tracking` |
+| Label then detail | colon | `Professional IT: L1/L2/L3 design` |
+| Title then subtitle | colon | `# Experience: E2E delivery` |
+| Aside / cross-ref | parentheses | `OBS overlays (RTMP/SRT ingest)` |
+| Two related clauses | semicolon | `I ship the API; the SPA consumes it.` |
+| New thought | period | `This is not a panel. It is a hardened VPS.` |
+| Empty / N/A cell | ASCII hyphen alone | `\| - \|` |
+
+ASCII `-` is correct for **hyphenated words** (`full-stack`, `pt-PT`), **CLI flags**, and **numeric ranges** (`1-10`). It is usually **wrong** as a clause separator.
+
+En dash (U+2013) is different. Existing CV periods may keep `June 2010 – Present`. For new ranges, ASCII `2010-Present` is fine.
+
+## Workflow
+
+- When you **edit** a file that still contains U+2014, fix each hit in that file in the same change.
+- Do not scrub the whole repo just to burn down em dashes.
+- Check: `npm run lint:em-dash` (`scripts/check-no-em-dash.mjs`). Not part of `npm run lint` until copy is clean.

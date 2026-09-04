@@ -1,0 +1,30 @@
+---
+description: Default design stack is Hallmark + Taste + Impeccable (agent skills).
+alwaysApply: true
+---
+
+# Default design stack (Hallmark, Taste, Impeccable)
+
+These three are the **default** frontend design tools. Load the matching skill before inventing layout, type, color, or marketing copy. Do not substitute a generic "make it pretty" pass.
+
+| Tool | Role | When to read |
+|---|---|---|
+| **Hallmark** (v1.1) | Anti-slop design: build / `audit` / `redesign` / `study`. 57 slop-test gates. | New pages, landing, visual-led UI, or user says hallmark / audit / redesign / study |
+| **Taste** (`design-taste-frontend`) | TasteSkill anti-slop for landings/portfolios/redesigns | Same marketing/visual-led surfaces |
+| **Impeccable** | Craft + Persuade / Experience / Read; optional `impeccable detect` | Any UI edit |
+
+## This portfolio
+
+Landing, CV sections, project case studies, and contact/privacy-gate chrome are **Persuade** + **Experience** surfaces.
+
+- Honor existing tokens, CSS architecture (`base`, `landing`, `fab`), bilingual EN/PT copy, and privacy-gate behaviour.
+- Do not invent metrics, testimonials, or case-study counts.
+- TasteSkill applies here (portfolio / landing). Do not treat this site as CRM Operate chrome.
+- Hallmark `audit` / `redesign` / default build are all in-scope when the user asks for visual work. Redesign stays inside existing routes and components unless the user confirms a rebuild.
+
+## Agent vs CI
+
+- Agent skills are advisory. Do not invent originality scores. Do not enable Impeccable edit hooks.
+- Refresh packs with `npm run install:design-skills`.
+
+Skill paths: `.cursor/skills/{hallmark,design-taste-frontend,impeccable}/SKILL.md` (also `.agents/skills/` from `npx skills add`). User copies live under `~/.cursor/skills/`.

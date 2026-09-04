@@ -1,0 +1,20 @@
+---
+description: Taste + Hallmark + Impeccable on landing, portfolio, and visual-led UI
+globs:
+  - src/**/*.{tsx,css}
+  - src/components/landing/**
+  - index.html
+  - public/**
+alwaysApply: false
+---
+
+# Design taste (agent-time)
+
+When editing **landing, portfolio, or visual-led** UI:
+
+1. Read **Hallmark** (`.cursor/skills/hallmark/SKILL.md`) and run the matching verb (default build, or audit/redesign/study).
+2. Read **Taste** (`.cursor/skills/design-taste-frontend/SKILL.md`).
+3. Use **Impeccable** Persuade or Experience mode (this site is not Operate CRM chrome).
+4. Keep feedback short. Honor existing tokens, bilingual copy, and privacy-gate behaviour.
+
+This is not a CI gate. Do not enable Impeccable edit hooks.

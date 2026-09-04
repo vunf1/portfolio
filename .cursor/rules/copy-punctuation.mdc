@@ -1,0 +1,34 @@
+---
+description: EN and PT-PT punctuation and clause marks for portfolio JSON and UI copy.
+globs: public/data/**/*.json,src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Copy punctuation (EN + pt-PT)
+
+Applies when editing `public/data/en/**`, `public/data/pt-PT/**`, and hardcoded UI strings. Pair with `no-em-dash-copy.mdc`.
+
+## Shared (both locales)
+
+- No em dash (U+2014). Pick colon, semicolon, period, or parentheses (see that rule).
+- One ellipsis style per namespace: prefer `...` in JSON we already use, or `…` (U+2026) if that file already uses it. Do not mix in the same object.
+- No space before `?` `!` `;` `:` (not French spacing).
+- Oxford comma in EN when a list would misread; pt-PT has no Oxford-comma habit (use `e` before the last item).
+- Keep ` · ` (middot) only where the UI already uses it (hero subtitle, experience progress). Do not invent em-dash bullets.
+
+## English
+
+- Sentence case for body; title case only for existing headings/nav.
+- Ampersand `&` only in short labels already in the system (`Skills & Experience` style titles). Prefer `and` in sentences.
+
+## Portuguese (Portugal)
+
+- **pt-PT** only: accents required (`informação`, `contentorização`). No Brazilianisms (`usuário` → `utilizador`, `aplicativo` → `aplicação`, `registro` → `registo`, `carteira` for portfolio → `portefólio`).
+- Prefer **projecto / projectos** in new pt-PT copy; do not flip a whole file's existing `projeto` spelling in an unrelated edit.
+- Neutral/formal address: infinitive or você-less (`Contacte-me`, `Ver o portefólio`).
+- Compounds: `e-mail`, `pré-`, `pós-` where standard.
+
+## When editing
+
+- Translate from the English key's **intent**, not word-for-word.
+- After a copy pass, scan the touched strings for leftover `—` and for ASCII-only PT typos (`nao`, `informacao`).

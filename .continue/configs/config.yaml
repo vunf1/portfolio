@@ -1,0 +1,190 @@
+# Continue: codebase + documentation awareness
+# https://docs.continue.dev/guides/codebase-documentation-awareness
+#
+# Semantic index: a model with roles: [embed] (below) powers @Codebase retrieval.
+# Structure: tree + code context providers (repo-map omitted — known path issues with Apply on Windows/WSL).
+# Project facts + doc links: .continue/rules/*.md (loaded automatically with this workspace).
+#
+name: WSL2 Ollama Stable Local Agent
+version: 1.0.0
+schema: v1
+
+models:
+  # Main reasoning, planning, architecture, debugging, agent/chat work
+  - name: Qwen 3.6 35B - Agent Plan Reasoning
+    provider: ollama
+    model: qwen3.6:35b
+    apiBase: http://127.0.0.1:11434
+    roles:
+      - chat
+      - edit
+      - apply
+    capabilities:
+      - tool_use
+    defaultCompletionOptions:
+      contextLength: 16384
+      maxTokens: 4096
+      temperature: 0.15
+      topP: 0.85
+      topK: 30
+      reasoning: true
+      keepAlive: 1800
+    requestOptions:
+      timeout: 600000
+      extraBodyProperties:
+        think: true
+
+  # Best model for real code changes, refactors, fixes, and apply mode
+  - name: Qwen2.5 Coder 32B - Stable Code Edit
+    provider: ollama
+    model: qwen2.5-coder:32b
+    apiBase: http://127.0.0.1:11434
+    roles:
+      - edit
+      - apply
+      - chat
+    defaultCompletionOptions:
+      contextLength: 8192
+      maxTokens: 4096
+      temperature: 0.12
+      topP: 0.80
+      topK: 30
+      keepAlive: 1800
+    requestOptions:
+      timeout: 600000
+
+  # Fast inline suggestions only
+  - name: Qwen2.5 Coder 1.5B - Stable Autocomplete
+    provider: ollama
+    model: qwen2.5-coder:1.5B
+    apiBase: http://127.0.0.1:11434
+    roles:
+      - autocomplete
+    defaultCompletionOptions:
+      contextLength: 4096
+      maxTokens: 192
+      temperature: 0.03
+      topP: 0.70
+      topK: 20
+      keepAlive: 86400
+    autocompleteOptions:
+      debounceDelay: 350
+      maxPromptTokens: 2048
+      onlyMyCode: true
+    requestOptions:
+      timeout: 120000
+      extraBodyProperties:
+        think: false
+
+  # Codebase indexing / semantic search
+  - name: Nomic Embed Text - Codebase Index
+    provider: ollama
+    model: nomic-embed-text:latest
+    apiBase: http://127.0.0.1:11434
+    roles:
+      - embed
+    embedOptions:
+      maxChunkSize: 512
+      maxBatchSize: 64
+    requestOptions:
+      timeout: 300000
+
+rules:
+  # Core behavior
+  - Treat correctness, safety, security, and reliability as higher priority than speed or creativity.
+  - Do not invent project details, APIs, files, dependencies, versions, logs, errors, or command outputs.
+  - When context is incomplete, clearly state what is missing and continue with the safest reasonable assumption.
+  - Prefer deterministic, simple, maintainable solutions over clever or complex ones.
+  - Keep responses direct, technical, and actionable.
+
+  # Reasoning and accuracy
+  - Before proposing changes, inspect the relevant files, current code flow, existing patterns, and project conventions.
+  - Explain the intended change before editing when the change affects architecture, security, data, auth, payments, deployment, or persistence.
+  - Separate facts from assumptions. Mark assumptions clearly.
+  - Do not claim a fix is verified unless tests, commands, logs, or code inspection actually support it.
+  - Avoid broad rewrites unless explicitly requested or required to fix the issue safely.
+
+  # Code editing safety
+  - Make the smallest safe change that solves the problem.
+  - Preserve existing behavior unless the user explicitly requests a behavior change.
+  - Reuse existing utilities, components, types, services, validation schemas, logging helpers, and config patterns before creating new ones.
+  - Do not duplicate logic. If duplication is found, prefer extracting a shared helper or module.
+  - Keep files readable and maintainable. If a file is becoming too large or mixed-purpose, suggest a clean split.
+  - Maintain strict typing. Do not silence type errors with unsafe casts, broad any types, or ignored errors unless there is a clear justification.
+  - Do not remove tests, validation, logging, error handling, security checks, or access control to make code pass.
+
+  # Security baseline
+  - Never print, expose, log, commit, or hardcode secrets, tokens, private keys, passwords, cookies, API keys, recovery codes, or credentials.
+  - Never weaken authentication, authorization, CSRF protection, CORS restrictions, cookie flags, CSP, HSTS, rate limits, input validation, output escaping, audit logs, or encryption.
+  - Treat all user input, external API responses, file uploads, headers, query params, cookies, and environment variables as untrusted.
+  - Validate data at trust boundaries using the project’s existing validation pattern.
+  - Use least privilege for roles, permissions, tokens, file access, network access, and database queries.
+  - For admin, billing, licensing, payment, identity, or tenant-scoped code, verify server-side authorization explicitly.
+  - Avoid unsafe shell execution, dynamic evaluation, SQL/NoSQL injection risks, path traversal, insecure deserialization, and open redirects.
+  - Do not add dependencies unless necessary. If adding one, justify why the existing stack is insufficient.
+
+  # Reliability and stability
+  - Prefer explicit error handling over silent failure.
+  - Keep failures observable with structured logs, but never log sensitive data.
+  - Preserve backwards compatibility for public APIs, database schemas, config files, and environment variables unless the user requests a breaking change.
+  - For migrations or data changes, provide a rollback-safe approach.
+  - For async, UI, or server code, avoid blocking the main/UI/event loop.
+  - Avoid race conditions, uncontrolled retries, infinite loops, memory leaks, and unbounded concurrency.
+  - Use timeouts, cancellation, and bounded resource usage where appropriate.
+
+  # Efficiency and performance
+  - Optimize for fast load, smooth UI, low memory usage, and predictable runtime behavior.
+  - Do not introduce unnecessary network calls, repeated expensive computations, large bundle growth, or excessive re-renders.
+  - Prefer lazy loading, caching, batching, pagination, streaming, or debouncing when they clearly improve reliability or performance.
+  - Keep autocomplete and small tasks on small/fast models; keep heavy reasoning and architecture tasks on the reasoning model.
+
+  # Testing and verification
+  - For every meaningful code change, suggest or add the most relevant tests.
+  - Prefer unit tests for pure logic, integration tests for service boundaries, and end-to-end tests for critical user flows.
+  - When fixing a bug, first identify the failing behavior, then make the smallest fix, then verify the corrected behavior.
+  - If tests cannot be run, state exactly what should be run manually.
+
+  # Terminal and destructive action safety
+  - Do not run or recommend destructive commands such as rm -rf, reset --hard, clean -fdx, database drops, volume deletion, credential deletion, or production deploys unless explicitly requested.
+  - Before suggesting destructive or irreversible commands, explain the impact and provide a safer backup/preview command first.
+  - Prefer dry-run, status, diff, list, inspect, or read-only commands before mutation commands.
+  - Never push, publish, deploy, rotate secrets, delete data, or modify production resources unless explicitly requested.
+
+  # Git and repo hygiene
+  - Do not change branches, rewrite history, rebase, squash, reset, or push unless explicitly requested.
+  - Keep unrelated changes separate.
+  - Do not include generated artifacts, caches, secrets, local IDE files, or temporary files unless explicitly required.
+  - Use clear conventional commit suggestions when commits are requested.
+
+  # Communication style
+  - Start with the practical answer.
+  - Use concise steps, commands, and file paths.
+  - When there is risk, call it out clearly.
+  - When multiple options exist, recommend the safest default.
+
+context:
+  # Embeddings-backed similarity search over the workspace (requires embed role model above).
+  - provider: codebase
+  # Workspace file tree for quick structural context.
+  - provider: tree
+  # Jump to symbols (functions/classes) via @-menu.
+  - provider: code
+  - provider: file
+  - provider: currentFile
+  - provider: diff
+  - provider: terminal
+  - provider: folder
+  - provider: search
+    params:
+      maxResults: 80
+
+# MCP: Agent mode only. See https://docs.continue.dev/customize/deep-dives/mcp
+# Context7 — version-aware public library docs (https://github.com/upstash/context7).
+# Requires Node/npx. Optional: set CONTEXT7_API_KEY in env for higher rate limits (https://context7.com/).
+mcpServers:
+  - name: Context7
+    type: stdio
+    command: npx
+    args:
+      - '-y'
+      - '@upstash/context7-mcp@latest'

@@ -1,0 +1,28 @@
+---
+description: Portfolio project allow/block registry — never add excluded repos as case studies
+alwaysApply: true
+---
+
+# Portfolio projects registry
+
+Before adding, syncing, or promoting any GitHub repo into `public/data/*/projects/`:
+
+1. Read **`public/data/projects-registry.json`**.
+2. **Never** create manifest entries, `projects-area.json` keys, or locale JSON files for ids in **`blockedProjectIds`** or folders in **`blockedLocalRepoFolders`**.
+3. **Never** add a standalone portfolio case study for a repo listed only under **`attachedReleaseRepos`** — those are release/asset channels for an existing project (e.g. `Stream_Futebol_Artifacts` → `stream-futebol-dashboard` only).
+4. After any project manifest or `projects-area.json` change, run **`npm run validate:projects`**.
+
+## Current exclusions (do not portfolio)
+
+| Blocked | Reason |
+|---------|--------|
+| `saas-contract-builder` / `SaaS_Contract_Builder` | Maintainer exclusion — not for public portfolio |
+| `nirvanamed-wordpress-operations` | Maintainer exclusion — not for public portfolio |
+
+## Attached release repos (not separate projects)
+
+| Parent project id | Public releases repo |
+|-------------------|----------------------|
+| `stream-futebol-dashboard` | [vunf1/Stream_Futebol_Artifacts](https://github.com/vunf1/Stream_Futebol_Artifacts/releases) |
+
+Update copy inside the parent project JSON (`demo`, `features`, `longDescription`) — do not add a second manifest entry.
