@@ -15,6 +15,7 @@
 
 import emailjs, { EmailJSResponseStatus } from '@emailjs/browser'
 import { getEmailJsConfig } from '../config/env'
+import { BRAND_LOGO_PUBLIC_PATH } from '../config/brand'
 import type { ContactFormData } from '../types/n8n'
 
 const DEFAULT_RECIPIENT_EMAIL = 'joaomaia@jmsit.cloud'
@@ -54,7 +55,7 @@ export async function sendContactEmail(data: ContactFormData): Promise<void> {
     (envLogoUrl?.length ?? 0) > 0
       ? envLogoUrl!
       : websiteUrl
-        ? `${websiteUrl}/img/logo.png`
+        ? `${websiteUrl}/${BRAND_LOGO_PUBLIC_PATH}`
         : ''
 
   const templateParams: Record<string, string> = {

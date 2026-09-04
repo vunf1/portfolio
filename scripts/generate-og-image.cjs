@@ -21,7 +21,7 @@ const personal = {
 };
 
 // Logo path
-const logoPath = path.join(__dirname, '../public/img/logo.png');
+const logoPath = path.join(__dirname, '../public/img/brand/logo_landscape_circle.png');
 
 // Escape XML entities
 function escapeXML(str) {

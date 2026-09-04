@@ -14,6 +14,7 @@ import type {
   SupportedLocale
 } from '../types/seo'
 import type { Personal, Social, PortfolioData } from '../types/portfolio'
+import { BRAND_LOGO_PUBLIC_PATH } from '../config/brand'
 
 // Constants
 const BRAND_NAME = 'JMSIT'
@@ -286,7 +287,7 @@ function createOrganizationSchema(
     },
     logo: {
       '@type': 'ImageObject',
-      url: `${baseUrl}/img/logo.png`
+      url: `${baseUrl}/${BRAND_LOGO_PUBLIC_PATH}`
     },
     founder: {
       '@type': 'Person',
