@@ -16,6 +16,7 @@ const PNG_BY_ID = {
   'stream-futebol-dashboard': './img/projects/apitofinal_logo.png',
   'contecnica-landing-platform': './img/projects/contecnica-logo.png',
   'wisdom-jobs-tracking': './img/projects/wisdom_logo.png',
+  'php-version-manager-tauri': './img/projects/php-version-manager-tauri.png',
 }
 
 const REMOTE_IMAGE_BY_ID = {
