@@ -172,7 +172,14 @@ node_modules/
 
 
 dist/
-/.cursor
+# Cursor: commit rules + skills; ignore local session artifacts
+.cursor/plans/
+.cursor/debug.log
+.cursor/worktrees.json
+.cursor/hooks.json
+.hallmark/
+.github/hooks/
+.github/skills/
 # Local AI / change-analysis artifacts (not for version control)
 .ai/
 
@@ -185,3 +192,4 @@ coverage/
 
 # Backup and temporary files
 .backup/
+.aider*
