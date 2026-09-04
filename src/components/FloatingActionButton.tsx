@@ -2,6 +2,7 @@ import { useState, useEffect } from 'preact/hooks'
 import { useTranslation } from '../contexts/TranslationContext'
 import { useDarkReader } from '../hooks/useDarkReader'
 import { Icon } from './ui/Icon'
+import { LanguageFlagIcon } from './ui/LanguageFlagIcon'
 
 interface FloatingActionButtonProps {
   className?: string
@@ -37,8 +38,6 @@ export function FloatingActionButton({ className = '', onContactClick, hideConta
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
-
-  const languageFlag = currentLanguage === 'pt-PT' ? '🇵🇹' : '🇬🇧'
 
   const fabItems: FABItem[] = [
     ...(!hideContact
@@ -89,7 +88,7 @@ export function FloatingActionButton({ className = '', onContactClick, hideConta
             type="button"
           >
             {item.id === 'language' ? (
-              <span className="fab-flag-icon" aria-hidden="true" role="img">{languageFlag}</span>
+              <LanguageFlagIcon language={currentLanguage} />
             ) : (
               <Icon name={item.icon} size={22} />
             )}

@@ -4,68 +4,52 @@ import type { AwardsProps } from '../types'
 
 export function Awards({ awards }: AwardsProps) {
   const { t } = useTranslation()
-  
+
   return (
-    <Section 
-      id="awards" 
-      data-section="awards"
-      title={String(t('awards.title'))} 
-      subtitle={String(t('awards.subtitle'))}
-    >
-        <div id="awards-content" className="awards-grid">
-          {awards.map((award, index) => (
-            <div key={index} className="award-item">
-              <div className="award-content">
-                <div className="award-header">
-                  <div className="award-icon">
-                    <Icon name="trophy" size={20} />
-                  </div>
-                  <h3 className="award-title">{award.title}</h3>
-                </div>
-                
-                <div className="award-meta">
-                  <span className="award-issuer">{award.issuer}</span>
-                  {award.date && (
-                    <span className="award-date">• {award.date}</span>
-                  )}
-                </div>
-                
-                {award.description && (
-                  <p className="award-description">{award.description}</p>
-                )}
-                
-                {award.criteria && (
-                  <div className="award-criteria">
-                    <strong>Criteria:</strong>
-                    <p>{award.criteria}</p>
-                  </div>
-                )}
-                
-                {award.impact && (
-                  <div className="award-impact">
-                    <strong>Impact:</strong>
-                    <p>{award.impact}</p>
-                  </div>
-                )}
-                
-                {award.certificateUrl && (
-                  <div className="award-actions">
-                    <Button
-                      href={award.certificateUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      variant="outline"
-                      size="sm"
-                    >
-                      <Icon name="certificate" size={14} className="mr-1" />
-                      View Certificate
-                    </Button>
-                  </div>
-                )}
+    <Section id="awards" data-section="awards" title={String(t('awards.title'))} subtitle={String(t('awards.subtitle'))}>
+      <div id="awards-content" className="cv-card-grid">
+        {awards.map((award, index) => (
+          <article key={index} className="cv-panel cv-panel--award">
+            <header className="cv-panel__head cv-panel__head--row">
+              <span className="cv-panel__icon" aria-hidden>
+                <Icon name="trophy" size={20} />
+              </span>
+              <div>
+                <h3 className="cv-panel__title">{award.title}</h3>
+                <p className="cv-panel__meta">
+                  <span className="cv-panel__company">{award.issuer}</span>
+                  {award.date ? <span className="cv-panel__location"> · {award.date}</span> : null}
+                </p>
               </div>
-            </div>
-          ))}
-        </div>
+            </header>
+
+            {award.description ? <p className="cv-panel__text">{award.description}</p> : null}
+
+            {award.criteria ? (
+              <div className="cv-panel__block">
+                <p className="cv-panel__block-label">Criteria</p>
+                <p className="cv-panel__text">{award.criteria}</p>
+              </div>
+            ) : null}
+
+            {award.impact ? (
+              <div className="cv-panel__callout">
+                <p className="cv-panel__callout-label">Impact</p>
+                <p className="cv-panel__callout-text">{award.impact}</p>
+              </div>
+            ) : null}
+
+            {award.certificateUrl ? (
+              <div className="cv-panel__actions">
+                <Button href={award.certificateUrl} target="_blank" rel="noopener noreferrer" variant="outline" size="sm">
+                  <Icon name="certificate" size={14} className="mr-1" />
+                  View Certificate
+                </Button>
+              </div>
+            ) : null}
+          </article>
+        ))}
+      </div>
     </Section>
   )
 }

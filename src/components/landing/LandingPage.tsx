@@ -38,8 +38,8 @@ export function LandingPage({ portfolioData, onNavigateToPortfolio, onWarmPortfo
     
     // Setup scroll animations for sections
     const observerOptions = {
-      threshold: [0.1, 0.3, 0.5],
-      rootMargin: '-10% 0px -10% 0px'
+      threshold: 0.12,
+      rootMargin: '0px 0px -8% 0px'
     }
 
     const observer = new IntersectionObserver((entries) => {
@@ -50,8 +50,7 @@ export function LandingPage({ portfolioData, onNavigateToPortfolio, onWarmPortfo
       })
     }, observerOptions)
 
-    // Observe all landing sections
-    const sections = document.querySelectorAll('.landing-section')
+    const sections = document.querySelectorAll('.landing-section:not(.landing-hero)')
     sections.forEach(section => observer.observe(section))
 
     return () => {
@@ -75,7 +74,12 @@ export function LandingPage({ portfolioData, onNavigateToPortfolio, onWarmPortfo
 
   return (
     <div className={`landing-page ${className}`}>
-      <LandingHero personal={personal} onContactClick={handleContactClick} />
+      <LandingHero
+        personal={personal}
+        onContactClick={handleContactClick}
+        onNavigateToPortfolio={handleNavigateToPortfolio}
+        onWarmPortfolio={onWarmPortfolio}
+      />
       <LandingFeatures personal={personal} />
       <LandingAbout 
         personal={personal} 

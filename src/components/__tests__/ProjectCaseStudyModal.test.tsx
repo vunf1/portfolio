@@ -9,12 +9,14 @@ vi.mock('../../contexts/TranslationContext', () => ({
     t: (key: string, defaultValue?: string) => {
       const map: Record<string, string> = {
         'projects.openSite': 'Open site',
+        'projects.caseStudy': 'Case study',
         'projects.closeModal': 'Close',
         'projects.livePreview': 'Live preview',
         'projects.liveSiteHeading': 'Live site',
         'projects.previewNote': 'Preview note',
         'projects.openLiveExperience': 'Open in new window',
         'projects.previewOpenExternally': 'Open externally copy',
+        'projects.embedsBlockedShort': 'The live site blocks embedding.',
         'projects.framingProtectionLabel': 'Framing protection',
         'projects.previewUnavailable': 'No demo',
         'projects.previewUnavailableTitle': 'No live demo title',
@@ -68,6 +70,7 @@ describe('ProjectCaseStudyModal', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     resetScrollLockForTests()
+    document.body.classList.remove('project-modal-open')
   })
 
   it('renders nothing when closed', () => {

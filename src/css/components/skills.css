@@ -608,7 +608,7 @@ img.skill-language-icon {
 /* Proficiency Level Icon Colors (legend + Key Competencies) – distinct per level */
 .skill-proficiency-icon.skill-proficiency-foundational,
 .legend-icon.skill-proficiency-foundational {
-  color: #b45309;
+  color: var(--skill-foundational);
 }
 .skill-proficiency-icon.skill-proficiency-foundational svg,
 .legend-icon.skill-proficiency-foundational svg {
@@ -617,7 +617,7 @@ img.skill-language-icon {
 
 .skill-proficiency-icon.skill-proficiency-proficient,
 .legend-icon.skill-proficiency-proficient {
-  color: #0369a1;
+  color: var(--skill-proficient);
 }
 .skill-proficiency-icon.skill-proficiency-proficient svg,
 .legend-icon.skill-proficiency-proficient svg {
@@ -626,7 +626,7 @@ img.skill-language-icon {
 
 .skill-proficiency-icon.skill-proficiency-advanced,
 .legend-icon.skill-proficiency-advanced {
-  color: #15803d;
+  color: var(--skill-advanced);
 }
 .skill-proficiency-icon.skill-proficiency-advanced svg,
 .legend-icon.skill-proficiency-advanced svg {
@@ -635,7 +635,7 @@ img.skill-language-icon {
 
 .skill-proficiency-icon.skill-proficiency-expert,
 .legend-icon.skill-proficiency-expert {
-  color: #7c3aed;
+  color: var(--skill-expert);
 }
 .skill-proficiency-icon.skill-proficiency-expert svg,
 .legend-icon.skill-proficiency-expert svg {

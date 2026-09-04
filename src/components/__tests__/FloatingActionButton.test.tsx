@@ -64,6 +64,8 @@ describe('FloatingActionButton', () => {
     const languageButton = screen.getByRole('button', { name: /language/i })
     expect(languageButton).toBeInTheDocument()
     expect(languageButton).toHaveClass('fab-item-language')
+    expect(languageButton.querySelector('img.fab-flag-icon')).toBeInTheDocument()
+    expect(languageButton.textContent).not.toMatch(/GB|PT/)
   })
 
   it('shows language toggle button', () => {
@@ -83,7 +85,7 @@ describe('FloatingActionButton', () => {
     expect(mockChangeLanguage).toHaveBeenCalledWith('pt-PT')
   })
 
-  it('shows correct language labels', () => {
+  it('shows Portuguese flag SVG when current language is pt-PT', () => {
     mockUseTranslation.mockReturnValue({
       t: (key: string, defaultValue?: string) => defaultValue || key,
       currentLanguage: 'pt-PT' as const,
@@ -97,6 +99,8 @@ describe('FloatingActionButton', () => {
     
     const languageButton = screen.getByRole('button', { name: /language/i })
     expect(languageButton).toBeInTheDocument()
+    expect(languageButton.querySelector('img.fab-flag-icon')).toBeInTheDocument()
+    expect(languageButton.textContent).not.toMatch(/GB|PT/)
   })
 
   it('applies custom className', () => {

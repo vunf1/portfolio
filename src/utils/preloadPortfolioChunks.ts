@@ -7,7 +7,6 @@ export function preloadPortfolioChunks(): Promise<void> {
 
   const imports = [
     import('../components/Experience'),
-    import('../components/Education'),
     import('../components/Skills'),
     import('../components/Projects'),
     import('../components/Certifications'),

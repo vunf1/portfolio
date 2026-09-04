@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'preact/hooks'
 import { useTranslation } from '../../contexts/TranslationContext'
 import { Badge } from '../ui/Badge'
 import { Button } from '../ui/Button'
@@ -14,21 +13,26 @@ import { Icon } from '../ui/Icon'
 import { Separator } from '../ui/Separator'
 import type { Personal } from '../../types/portfolio'
 import { cn } from '../../lib/utils'
-import logoUrl from '@/img/logo.png'
+import { BRAND_LOGO_SRC } from '../../config/brand'
+import { toFullPath } from '../../config/routes'
+import { handleInternalPathClick } from '../../lib/openInternalPath'
 
 interface LandingHeroProps {
   personal: Personal
   className?: string
   onContactClick?: () => void
+  onNavigateToPortfolio?: () => void
+  onWarmPortfolio?: () => void
 }
 
-export function LandingHero({ personal, className = '', onContactClick }: LandingHeroProps) {
-  const [isVisible, setIsVisible] = useState(false)
+export function LandingHero({
+  personal,
+  className = '',
+  onContactClick,
+  onNavigateToPortfolio,
+  onWarmPortfolio
+}: LandingHeroProps) {
   const { t } = useTranslation()
-
-  useEffect(() => {
-    setIsVisible(true)
-  }, [])
 
   const showMeta = Boolean(personal?.location || personal?.availability)
 
@@ -48,11 +52,7 @@ export function LandingHero({ personal, className = '', onContactClick }: Landin
       >
         <div
           id="landing-hero-copy"
-          className={cn(
-            'landing-hero__copy order-2 flex min-w-0 flex-col lg:order-1',
-            'motion-safe:transition-[opacity,transform] motion-safe:duration-700 motion-safe:ease-[cubic-bezier(0.4,0,0.2,1)]',
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
-          )}
+          className="landing-hero__copy order-2 flex min-w-0 flex-col lg:order-1"
         >
           <Card
             id="landing-hero-card-main"
@@ -182,6 +182,21 @@ export function LandingHero({ personal, className = '', onContactClick }: Landin
                   {t('landing.hero.ctaContact')}
                 </Button>
                 <Button
+                  id="landing-hero-cta-portfolio"
+                  variant="outlineElevated"
+                  size="lg"
+                  href={toFullPath('/portfolio')}
+                  className="hero-cta-portfolio hero-cta-secondary w-full min-h-12 min-w-0 rounded-full px-7 sm:flex-1 sm:min-w-[9rem]"
+                  onMouseEnter={onWarmPortfolio}
+                  onFocus={onWarmPortfolio}
+                  onTouchStart={onWarmPortfolio}
+                  onClick={(e) => {
+                    handleInternalPathClick(e, () => onNavigateToPortfolio?.())
+                  }}
+                >
+                  {t('landing.hero.ctaPortfolio')}
+                </Button>
+                <Button
                   id="landing-hero-cta-services"
                   variant="outlineElevated"
                   size="lg"
@@ -189,15 +204,6 @@ export function LandingHero({ personal, className = '', onContactClick }: Landin
                   onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
                 >
                   {t('landing.hero.ctaServices')}
-                </Button>
-                <Button
-                  id="landing-hero-cta-about"
-                  variant="outlineElevated"
-                  size="lg"
-                  className="hero-cta-about hero-cta-secondary w-full min-h-12 min-w-0 rounded-full px-7 sm:flex-1 sm:min-w-[9rem]"
-                  onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                  {t('landing.hero.ctaAbout')}
                 </Button>
               </div>
             </CardFooter>
@@ -207,8 +213,7 @@ export function LandingHero({ personal, className = '', onContactClick }: Landin
         <div
           id="landing-hero-visual"
           className={cn(
-            'hero-visual order-1 w-full min-w-0 max-w-full lg:order-2',
-            isVisible && 'hero-visual-visible'
+            'hero-visual hero-visual-visible order-1 w-full min-w-0 max-w-full lg:order-2'
           )}
         >
           <Card
@@ -231,7 +236,7 @@ export function LandingHero({ personal, className = '', onContactClick }: Landin
                 >
                   <img
                     id="landing-hero-logo"
-                    src={logoUrl}
+                    src={BRAND_LOGO_SRC}
                     alt={`${personal?.name || 'Portfolio'} - Portfolio Logo`}
                     className="hero-logo-image box-border mx-auto block h-auto w-auto max-h-[min(320px,40vh)] max-w-[min(100%,560px)] object-contain sm:max-h-[min(400px,48vh)] sm:max-w-[min(100%,560px)]"
                     width={560}

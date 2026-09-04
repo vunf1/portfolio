@@ -12,25 +12,25 @@ export function Section({
   'data-section': dataSection
 }: SectionProps) {
   const sectionId = useDebugId('ui-section', id)
+
   return (
     <section
       className={cn(
-        'section',
-        'py-16',
-        variant === 'alternate' && 'bg-gray-50',
-        variant === 'highlighted' && 'bg-primary/5',
+        'cv-section',
+        variant === 'alternate' && 'cv-section--alt',
+        variant === 'highlighted' && 'cv-section--accent',
         className
       )}
       id={sectionId}
       data-section={dataSection}
     >
       {(title || subtitle) && (
-        <div className="text-center mb-12">
-          {title && <h2 className="text-4xl font-bold text-gray-900 mb-4">{title}</h2>}
-          {subtitle && <p className="section-subtitle text-center text-lg text-gray-600 max-w-[600px] mx-auto">{subtitle}</p>}
-        </div>
+        <header className="cv-section__head">
+          {title ? <h2 className="cv-section__title">{title}</h2> : null}
+          {subtitle ? <p className="cv-section__subtitle">{subtitle}</p> : null}
+        </header>
       )}
-      {children}
+      <div className="cv-section__body">{children}</div>
     </section>
   )
 }

@@ -1,7 +1,7 @@
 import { useTranslation } from '../contexts/TranslationContext'
 import { Section, Icon } from './ui'
 import type { SkillsProps } from '../types/components'
-import type { SkillLevel } from '../types/portfolio'
+import type { Skill, SkillLevel } from '../types/portfolio'
 import pythonIcon from 'devicon/icons/python/python-original.svg'
 import typescriptIcon from 'devicon/icons/typescript/typescript-original.svg'
 import javascriptIcon from 'devicon/icons/javascript/javascript-original.svg'
@@ -29,10 +29,11 @@ export function Skills({ skills }: SkillsProps) {
   // Handle the new skills data structure
   if (!skills || typeof skills !== 'object') {
     return (
-      <Section 
-        id="skills" 
+      <Section
+        id="skills"
         data-section="skills"
-        title={String(t('skills.title'))} 
+        className="cv-skills"
+        title={String(t('skills.title'))}
         subtitle={String(t('skills.subtitle'))}
       >
         <p>Skills data not available.</p>
@@ -82,7 +83,14 @@ export function Skills({ skills }: SkillsProps) {
   }
 
   const getSkillIcon = (skillName: string, categoryName?: string): string | undefined => {
-    const noIconCategories = ['Key Competencies', 'Competências-chave', 'AI & Machine Learning', 'IA e aprendizagem automática']
+    const noIconCategories = [
+      'Key Competencies',
+      'Competências-chave',
+      'Product systems',
+      'Sistemas de produto',
+      'AI & Machine Learning',
+      'IA e aprendizagem automática'
+    ]
     if (categoryName && noIconCategories.includes(categoryName)) {
       return undefined
     }
@@ -145,151 +153,124 @@ export function Skills({ skills }: SkillsProps) {
     return level
   }
 
+  const renderSkillRow = (skill: Skill, skillIndex: number, categoryName?: string) => {
+    const levelClass = getProficiencyLevelClass(skill.level)
+    const levelName = getTranslatedLevelName(skill.level)
+    const iconSrc = categoryName ? getSkillIcon(skill.name, categoryName) : undefined
+
+    return (
+      <article
+        key={skillIndex}
+        className={`cv-skill-row skill-proficiency-${levelClass}`}
+        aria-label={`${skill.name}, ${levelName}`}
+        title={`${skill.name}: ${levelName}`}
+      >
+        <div className="cv-skill-body">
+          <div className="cv-skill-head">
+            {renderSkillIcon(iconSrc, skill.name)}
+            <h4 className="cv-skill-name">{skill.name}</h4>
+          </div>
+          {skill.description && (
+            <p className="cv-skill-description">{skill.description}</p>
+          )}
+          {(skill.frontend?.length ?? 0) > 0 && (
+            <p className="cv-skill-tech">
+              <span className="cv-skill-tech-label">{t('skills.frontend')}</span>
+              <span>{skill.frontend!.join(', ')}</span>
+            </p>
+          )}
+          {(skill.backend?.length ?? 0) > 0 && (
+            <p className="cv-skill-tech">
+              <span className="cv-skill-tech-label">{t('skills.backend')}</span>
+              <span>{skill.backend!.join(', ')}</span>
+            </p>
+          )}
+          {(skill.databases?.length ?? 0) > 0 && (
+            <p className="cv-skill-tech">
+              <span className="cv-skill-tech-label">{t('skills.databases')}</span>
+              <span>{skill.databases!.join(', ')}</span>
+            </p>
+          )}
+          {(skill.security?.length ?? 0) > 0 && (
+            <p className="cv-skill-tech">
+              <span className="cv-skill-tech-label">{t('skills.security')}</span>
+              <span>{skill.security!.join(', ')}</span>
+            </p>
+          )}
+          {(skill.experience || (typeof skill.projects === 'number' && skill.projects > 0)) && (
+            <p className="cv-skill-meta">
+              {skill.experience && (
+                <span>
+                  <Icon name="clock" size={12} />
+                  {skill.experience}
+                </span>
+              )}
+              {typeof skill.projects === 'number' && skill.projects > 0 && (
+                <span>
+                  <Icon name="folder" size={12} />
+                  {skill.projects} {t(skill.projects === 1 ? 'skills.projectSingular' : 'skills.projectPlural')}
+                </span>
+              )}
+            </p>
+          )}
+        </div>
+      </article>
+    )
+  }
+
   return (
-    <Section 
-      id="skills" 
+    <Section
+      id="skills"
       data-section="skills"
-      title={String(t('skills.title'))} 
+      className="cv-skills"
+      title={String(t('skills.title'))}
       subtitle={String(t('skills.subtitle'))}
     >
-
-        {/* Proficiency Legend */}
-        <div className="proficiency-legend">
-          <h4 className="legend-title">{t('skills.proficiencyLevels')}</h4>
-          <div className="legend-grid">
-            {(['Foundational', 'Proficient', 'Advanced', 'Expert'] as SkillLevel[]).map((level) => (
-              <div key={level} className="legend-item">
-                <div className={`legend-icon skill-proficiency-icon skill-proficiency-${getProficiencyLevelClass(level)}`}>
-                  <Icon name={getProficiencyIcon(level)} size={16} />
-                </div>
-                <div className="legend-content">
-                  <div className="legend-level">{getTranslatedLevelName(level)}</div>
-                  <div className="legend-description">{typedProficiencyLevels[level] || ''}</div>
-                </div>
-              </div>
-            ))}
+      <div className="cv-skills-shell">
+        <aside className="cv-skills-rail" aria-label={String(t('skills.proficiencyLevels'))}>
+          <div className="proficiency-legend">
+            <h3 className="legend-title">{t('skills.proficiencyLevels')}</h3>
+            <ol className="legend-grid">
+              {(['Foundational', 'Proficient', 'Advanced', 'Expert'] as SkillLevel[]).map((level) => (
+                <li key={level} className={`legend-item legend-item--${getProficiencyLevelClass(level)}`}>
+                  <div className={`legend-icon skill-proficiency-icon skill-proficiency-${getProficiencyLevelClass(level)}`}>
+                    <Icon name={getProficiencyIcon(level)} size={16} />
+                  </div>
+                  <div className="legend-content">
+                    <div className="legend-level">{getTranslatedLevelName(level)}</div>
+                    <div className="legend-description">{typedProficiencyLevels[level] || ''}</div>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
-        </div>
+        </aside>
 
-        <div id="skills-content">
-          {/* Technical Skills – premium card layout for all categories */}
+        <div id="skills-content" className="cv-skills-main">
           {technical.map((skillGroup, index) => (
             <div
               key={index}
-              className={`skills-category ${skillGroup.category === 'Programming Languages' || skillGroup.category === 'Linguagens de Programação' || skillGroup.category === 'Linguagens de programação' ? 'skills-category--programming-languages' : ''}`}
+              className="skills-category"
             >
               <h3 className="skills-category-title">{skillGroup.category}</h3>
-              <div className="key-competencies-premium">
-                {skillGroup.skills.map((skill, skillIndex) => {
-                  const iconSrc = getSkillIcon(skill.name, skillGroup.category)
-                  const hasIcon = !!iconSrc
-                  const badge = (
-                    <span className={`key-competency-badge skill-proficiency-${getProficiencyLevelClass(skill.level)}`}>
-                      <span className="key-competency-badge-icon">
-                        <Icon name={getProficiencyIcon(skill.level)} size={14} />
-                      </span>
-                      <span className="key-competency-badge-label">{getTranslatedLevelName(skill.level)}</span>
-                    </span>
-                  )
-                  return (
-                  <article key={skillIndex} className={`key-competency-card skill-proficiency-${getProficiencyLevelClass(skill.level)} ${hasIcon ? 'key-competency-card--with-icon' : ''}`} title={skill.name}>
-                    <div className="key-competency-header">
-                      {hasIcon ? (
-                        <div className="key-competency-icon-block">
-                          {renderSkillIcon(iconSrc, skill.name)}
-                          {badge}
-                        </div>
-                      ) : (
-                        <>
-                          <div className="key-competency-name-wrap">
-                            <h4 className="key-competency-name">{skill.name}</h4>
-                          </div>
-                          {badge}
-                        </>
-                      )}
-                    </div>
-                    {skill.description && (
-                      <p className="key-competency-description">{skill.description}</p>
-                    )}
-                    {(skill.frontend?.length ?? 0) > 0 && (
-                      <div className="key-competency-tech">
-                        <span className="key-competency-tech-label">{t('skills.frontend')}:</span>
-                        <span className="key-competency-tech-list">{skill.frontend!.join(', ')}</span>
-                      </div>
-                    )}
-                    {(skill.backend?.length ?? 0) > 0 && (
-                      <div className="key-competency-tech">
-                        <span className="key-competency-tech-label">{t('skills.backend')}:</span>
-                        <span className="key-competency-tech-list">{skill.backend!.join(', ')}</span>
-                      </div>
-                    )}
-                    {(skill.databases?.length ?? 0) > 0 && (
-                      <div className="key-competency-tech">
-                        <span className="key-competency-tech-label">{t('skills.databases')}:</span>
-                        <span className="key-competency-tech-list">{skill.databases!.join(', ')}</span>
-                      </div>
-                    )}
-                    {(skill.security?.length ?? 0) > 0 && (
-                      <div className="key-competency-tech">
-                        <span className="key-competency-tech-label">{t('skills.security')}:</span>
-                        <span className="key-competency-tech-list">{skill.security!.join(', ')}</span>
-                      </div>
-                    )}
-                    {(skill.experience || (typeof skill.projects === 'number' && skill.projects > 0)) && (
-                      <div className="key-competency-meta">
-                        {skill.experience && (
-                          <span className="key-competency-meta-item">
-                            <Icon name="clock" size={12} />
-                            {skill.experience}
-                          </span>
-                        )}
-                        {typeof skill.projects === 'number' && skill.projects > 0 && (
-                          <span className="key-competency-meta-item">
-                            <Icon name="folder" size={12} />
-                            {skill.projects} {t(skill.projects === 1 ? 'skills.projectSingular' : 'skills.projectPlural')}
-                          </span>
-                        )}
-                      </div>
-                    )}
-                  </article>
-                  )
-                })}
+              <div className="cv-skill-list motion-stagger">
+                {skillGroup.skills.map((skill, skillIndex) =>
+                  renderSkillRow(skill, skillIndex, skillGroup.category)
+                )}
               </div>
             </div>
           ))}
 
-          {/* Soft Skills – same design as technical skills */}
           {soft.length > 0 && (
             <div className="skills-category">
               <h3 className="skills-category-title">{t('skills.soft')}</h3>
-              <div className="key-competencies-premium">
-                {soft.map((skill, skillIndex) => {
-                  const badge = (
-                    <span className={`key-competency-badge skill-proficiency-${getProficiencyLevelClass(skill.level)}`}>
-                      <span className="key-competency-badge-icon">
-                        <Icon name={getProficiencyIcon(skill.level)} size={14} />
-                      </span>
-                      <span className="key-competency-badge-label">{getTranslatedLevelName(skill.level)}</span>
-                    </span>
-                  )
-                  return (
-                    <article key={skillIndex} className={`key-competency-card skill-proficiency-${getProficiencyLevelClass(skill.level)}`} title={skill.name}>
-                      <div className="key-competency-header">
-                        <div className="key-competency-name-wrap">
-                          <h4 className="key-competency-name">{skill.name}</h4>
-                        </div>
-                        {badge}
-                      </div>
-                      {skill.description && (
-                        <p className="key-competency-description">{skill.description}</p>
-                      )}
-                    </article>
-                  )
-                })}
+              <div className="cv-skill-list motion-stagger">
+                {soft.map((skill, skillIndex) => renderSkillRow(skill, skillIndex))}
               </div>
             </div>
           )}
         </div>
+      </div>
     </Section>
   )
 }

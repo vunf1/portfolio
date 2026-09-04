@@ -4,9 +4,42 @@ import { Section } from './ui'
 import { ProjectCaseStudyModal } from './ProjectCaseStudyModal'
 import { cn } from '../lib/utils'
 import { projectInitials } from '../lib/projectInitials'
+import { getShowcaseTechnologyDisplay, techTagClassName } from '../lib/projectShowcaseTechnologies'
+import { getProjectShowcaseTitle } from '../lib/projectShowcaseTitle'
 import { publicAssetUrl } from '../utils/getDataUrl'
 import type { ProjectsProps } from '../types'
 import type { Project } from '../types/portfolio'
+
+const SHOWCASE_TECH_LIMIT = 5
+
+function ProjectShowcaseTechnologies({
+  technologies,
+  label,
+}: {
+  technologies: string[]
+  label: string
+}) {
+  if (!technologies.length) {
+    return null
+  }
+
+  const { visible, overflow } = getShowcaseTechnologyDisplay(technologies, SHOWCASE_TECH_LIMIT)
+
+  return (
+    <span className="cv-tags cv-tags--compact" aria-label={label}>
+      {visible.map((tech, index) => (
+        <span key={`${tech}-${index}`} className={techTagClassName(tech)}>
+          {tech}
+        </span>
+      ))}
+      {overflow > 0 ? (
+        <span className="cv-tag cv-tag--more">
+          +{overflow}
+        </span>
+      ) : null}
+    </span>
+  )
+}
 
 export function Projects({ projects }: ProjectsProps) {
   const { t } = useTranslation()
@@ -38,40 +71,54 @@ export function Projects({ projects }: ProjectsProps) {
       title={String(t('projects.title'))}
       subtitle={String(t('projects.subtitle'))}
     >
-      <div id="projects-content" className="projects-showcase-grid">
+      <div id="projects-content" className="cv-project-grid">
         {projects.map((project, index) => (
           <button
             key={project.id || index}
             type="button"
-            className={cn('project-showcase-card', 'text-left')}
+            className={cn('cv-project-card', 'text-left')}
             onClick={(e) => openCaseStudy(project, e.currentTarget)}
             aria-haspopup="dialog"
             aria-expanded={openId === project.id}
+            aria-label={String(
+              t('projects.viewCaseAria', 'Open case study: {{name}}', {
+                name: getProjectShowcaseTitle(project.name)
+              })
+            )}
           >
-            <span className="project-showcase-card__inner">
-              <span className="project-showcase-media">
+            <span className="cv-project-card__inner">
+              <span className="cv-project-card__media">
                 {project.image ? (
                   <img
                     src={publicAssetUrl(project.image)}
                     alt=""
-                    className="project-showcase-media__img"
+                    className="cv-project-card__img"
                     loading="lazy"
                     decoding="async"
                   />
                 ) : (
-                  <span className="project-showcase-media__initials" aria-hidden>
-                    {projectInitials(project.name)}
+                  <span className="cv-project-card__initials" aria-hidden>
+                    {projectInitials(getProjectShowcaseTitle(project.name))}
                   </span>
                 )}
               </span>
 
-              <span className="project-showcase-body">
-                <span className="project-showcase-title">{project.name}</span>
-                <span className="project-showcase-meta">
-                  <span className="project-showcase-period">{project.period}</span>
-                  {project.role ? <span className="project-showcase-role"> · {project.role}</span> : null}
+              <span className="cv-project-card__body">
+                <span className="cv-project-card__title">{getProjectShowcaseTitle(project.name)}</span>
+                <span className="cv-project-card__meta">
+                  <span className="cv-project-card__period">{project.period}</span>
+                  {project.role ? <span className="cv-project-card__role">{project.role}</span> : null}
                 </span>
-                <span className="project-showcase-desc">{project.description}</span>
+                {project.description ? (
+                  <span className="cv-project-card__excerpt">{project.description}</span>
+                ) : null}
+                <ProjectShowcaseTechnologies
+                  technologies={project.technologies ?? []}
+                  label={String(t('projects.technologies'))}
+                />
+                <span className="cv-project-card__cta" aria-hidden>
+                  {t('projects.viewCase', 'View case')}
+                </span>
               </span>
             </span>
           </button>

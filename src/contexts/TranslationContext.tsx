@@ -45,7 +45,7 @@ export function useTranslation() {
         // Notify all listeners
         translationListeners.forEach(listener => listener())
       }
-    } catch (error) {
+    } catch {
       globalTranslations = {}
     }
   }, [])
@@ -169,7 +169,7 @@ export async function preloadTranslations(lang: 'en' | 'pt-PT' = 'en'): Promise<
       // Notify all listeners
       translationListeners.forEach(listener => listener())
     }
-  } catch (error) {
+  } catch {
     globalTranslations = {}
   }
 }

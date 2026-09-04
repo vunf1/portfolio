@@ -1,4 +1,4 @@
-/* Premium page transition: landing fades out fully, then portfolio fades in. */
+/* Premium page transition: fade + short rise. */
 
 .page-transition-wrapper {
   position: relative;
@@ -8,16 +8,17 @@
 }
 
 .page-transition {
-  transition: opacity var(--page-fadeout-duration) var(--page-transition-easing);
+  transition:
+    opacity var(--page-fadeout-duration) var(--page-transition-easing),
+    transform var(--page-fadeout-duration) var(--page-transition-easing);
 }
 
-/* Exiting page: fades to transparent, no interaction */
 .page-fade-out {
   opacity: 0;
   pointer-events: none;
+  transform: translateY(calc(var(--page-travel) * -0.5));
 }
 
-/* When portfolio is showing, keep landing behind (no layout, no interaction) */
 .page-transition-behind {
   position: absolute;
   inset: 0;
@@ -25,7 +26,6 @@
   z-index: 0;
 }
 
-/* Incoming page: fades in smoothly when mounted (delay handled in JS) */
 .page-fade-in {
   position: relative;
   z-index: 1;
@@ -33,35 +33,26 @@
   animation: page-fade-in var(--page-fadein-duration) var(--page-transition-easing) forwards;
 }
 
-/* Direct load to portfolio: show immediately, no animation */
 .page-visible {
   position: relative;
   z-index: 1;
   opacity: 1;
 }
 
-/* Fixed navbar sits outside document flow; reserve space so content is not hidden under it */
 .page-transition-portfolio {
   padding-top: var(--navbar-height);
-}
-
-@keyframes page-fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .page-transition,
   .page-fade-out {
     transition: none;
+    transform: none;
   }
   .page-fade-in,
   .page-visible {
     animation: none;
     opacity: 1;
+    transform: none;
   }
 }

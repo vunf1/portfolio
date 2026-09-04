@@ -1,5 +1,6 @@
 import { useTranslation } from '../../contexts/TranslationContext'
 import { toFullPath } from '../../config/routes'
+import { handleInternalPathClick } from '../../lib/openInternalPath'
 import { Icon } from '../ui/Icon'
 import type { Personal, Social } from '../../types/portfolio'
 
@@ -64,6 +65,18 @@ export function LandingFooter({
               <h4 className="footer-section-title">{t('landing.footer.navigation')}</h4>
               <ul className="footer-list">
                 <li>
+                  <a
+                    href={toFullPath('/portfolio')}
+                    onMouseEnter={onWarmPortfolio}
+                    onFocus={onWarmPortfolio}
+                    onClick={(e) => {
+                      handleInternalPathClick(e, () => dispatchNavigateToPortfolio())
+                    }}
+                  >
+                    {t('landing.footer.portfolio')}
+                  </a>
+                </li>
+                <li>
                   <a href="#features" onClick={(e) => scrollToLandingSection('features', e)}>
                     {t('landing.footer.services')}
                   </a>
@@ -88,8 +101,7 @@ export function LandingFooter({
                     onMouseEnter={onWarmPortfolio}
                     onFocus={onWarmPortfolio}
                     onClick={(e) => {
-                      e.preventDefault()
-                      dispatchNavigateToPortfolio('experience')
+                      handleInternalPathClick(e, () => dispatchNavigateToPortfolio('experience'))
                     }}
                   >
                     {t('landing.footer.experience')}
@@ -101,10 +113,9 @@ export function LandingFooter({
                       href={toFullPath('/portfolio')}
                       onMouseEnter={onWarmPortfolio}
                       onFocus={onWarmPortfolio}
-                      onClick={(e) => {
-                        e.preventDefault()
-                        dispatchNavigateToPortfolio('projects')
-                      }}
+                    onClick={(e) => {
+                      handleInternalPathClick(e, () => dispatchNavigateToPortfolio('projects'))
+                    }}
                     >
                       {t('landing.footer.projects')}
                     </a>

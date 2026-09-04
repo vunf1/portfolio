@@ -81,10 +81,17 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   
-  /* Transitions */
-  --transition-fast: 150ms ease-in-out;
-  --transition-base: 250ms ease-in-out;
-  --transition-slow: 350ms ease-in-out;
+  /* Transitions: Impeccable animate + Taste MOTION 5 (developer portfolio) */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-exit: cubic-bezier(0.4, 0, 1, 1);
+  --motion-instant: 120ms;
+  --motion-fast: 180ms;
+  --motion-base: 320ms;
+  --motion-slow: 560ms;
+  --motion-stagger: 40ms;
+  --transition-fast: 180ms var(--ease-out-expo);
+  --transition-base: 320ms var(--ease-out-expo);
+  --transition-slow: 560ms var(--ease-out-expo);
   
   /* Z-Index */
   --z-dropdown: 1000;
@@ -111,6 +118,11 @@
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   :root {
+    --motion-instant: 0ms;
+    --motion-fast: 0ms;
+    --motion-base: 0ms;
+    --motion-slow: 0ms;
+    --motion-stagger: 0ms;
     --transition-fast: 0ms;
     --transition-base: 0ms;
     --transition-slow: 0ms;

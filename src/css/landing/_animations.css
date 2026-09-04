@@ -1,12 +1,7 @@
-/* Landing Page Scroll Animations */
+/* Hallmark · pre-emit critique: P4 H4 E5 S4 R5 V4 */
+/* Landing scroll motion: hero is first-paint visible; below-fold sections differ. */
 
-/* ===== SCROLL ANIMATIONS ===== */
-/* CRITICAL: Ensure no scrollbars on any landing section */
 .landing-section {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: visible !important;
   overflow-x: clip !important;
   overflow-y: visible !important;
@@ -17,23 +12,57 @@
   max-height: none !important;
 }
 
-.landing-section.section-visible {
+.landing-hero.landing-section,
+.landing-hero.landing-section.section-visible {
   opacity: 1;
-  transform: translateY(0);
-  /* Ensure section-visible doesn't create scrollbars */
-  overflow: visible !important;
-  overflow-x: clip !important;
-  overflow-y: visible !important;
-  height: auto !important;
-  max-height: none !important;
+  transform: none;
+  filter: none;
+  clip-path: none;
 }
 
-/* Footer: skip scroll-reveal (opacity 0 + translateY); at end-of-page it causes flicker,
- * perceived layout jump, and fights IO timing (rootMargin) vs scroll position. */
+.landing-features.landing-section {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .landing-features.landing-section:not(.section-visible) .features-header,
+  .landing-features.landing-section:not(.section-visible) .features-grid {
+    opacity: 0.28;
+    transform: translateY(16px);
+    filter: blur(4px);
+    transition:
+      opacity var(--motion-slow) var(--ease-out-expo),
+      transform var(--motion-slow) var(--ease-out-expo),
+      filter var(--motion-slow) var(--ease-out-expo);
+  }
+
+  .landing-features.landing-section.section-visible .features-header,
+  .landing-features.landing-section.section-visible .features-grid {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .landing-about.landing-section:not(.section-visible) {
+    opacity: 0.35;
+    clip-path: inset(0 0 12% 0);
+    transition:
+      opacity var(--motion-slow) var(--ease-out-expo),
+      clip-path var(--motion-slow) var(--ease-out-expo);
+  }
+
+  .landing-about.landing-section.section-visible {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
 .landing-footer.landing-section,
 .landing-footer.landing-section.section-visible {
   opacity: 1;
   transform: none;
+  filter: none;
+  clip-path: none;
   transition: none;
 }
-

@@ -5,6 +5,8 @@ import { Button } from '../ui/Button'
 import { Card } from '../ui/Card'
 import { Icon } from '../ui/Icon'
 import type { Personal, Social } from '../../types/portfolio'
+import { toFullPath } from '../../config/routes'
+import { handleInternalPathClick } from '../../lib/openInternalPath'
 import profileUrl from '@/img/profile.jpg'
 
 interface LandingAboutProps {
@@ -18,7 +20,7 @@ interface LandingAboutProps {
 export function LandingAbout({ personal, social, className = '', onNavigateToPortfolio, onWarmPortfolio }: LandingAboutProps) {
   const { t } = useTranslation()
   const [isVisible, setIsVisible] = useState(false)
-  const ctaRef = useRef<HTMLButtonElement | null>(null)
+  const ctaRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const sectionObserver = new IntersectionObserver(
@@ -194,13 +196,13 @@ export function LandingAbout({ personal, social, className = '', onNavigateToPor
               </Card>
             </div>
 
-            <div className="about-sidebar-cta about-actions">
+            <div className="about-sidebar-cta about-actions" ref={ctaRef}>
               <Button
-                ref={ctaRef}
                 variant="primaryElevated"
                 size="lg"
                 className="about-cta-primary"
-                onClick={onNavigateToPortfolio}
+                href={toFullPath('/portfolio')}
+                onClick={(e) => handleInternalPathClick(e, onNavigateToPortfolio)}
                 onMouseEnter={handleWarmIntent}
                 onFocus={handleWarmIntent}
                 onTouchStart={handleWarmIntent}

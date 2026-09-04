@@ -20,9 +20,8 @@
 .features-header {
   text-align: center;
   margin-bottom: var(--space-16);
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
+  transform: none;
 }
 
 .features-header-visible {
@@ -67,13 +66,15 @@
 
 .feature-card {
   background: #f6f7f8;
-  border: 2px solid var(--color-gray-200);
+  border: 1px solid var(--color-gray-200);
   border-radius: var(--radius-xl);
   padding: var(--space-6);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-  transform: translateY(30px);
-  animation: featureCardEnter 0.6s cubic-bezier(0.4, 0, 0.2, 1) var(--delay, 0s) both;
+  transition:
+    border-color var(--motion-base) var(--ease-out-expo),
+    box-shadow var(--motion-base) var(--ease-out-expo),
+    transform var(--motion-base) var(--ease-out-expo);
+  opacity: 1;
+  transform: none;
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -103,8 +104,8 @@
 
 .feature-card-active {
   border-color: var(--service-color, var(--color-primary));
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .feature-card-inner {
@@ -277,14 +278,4 @@
   font-size: var(--font-size-base);
 }
 
-@keyframes featureCardEnter {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 

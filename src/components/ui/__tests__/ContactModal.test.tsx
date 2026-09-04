@@ -11,6 +11,8 @@ vi.mock('../../../contexts/TranslationContext', () => ({
     t: (key: string, defaultValue?: string) => {
       const translations: Record<string, string> = {
         'contact.title': 'Contact Me',
+        'contact.lede': 'A short note is enough.',
+        'contact.organisation': 'Organisation',
         'contact.close': 'Close',
         'contact.cancel': 'Cancel',
         'contact.submit': 'Send Message',
@@ -210,7 +212,7 @@ describe('ContactModal Component', () => {
     }, { timeout: 3000 })
   })
 
-  it('submits form when submit button (in header) is clicked', async () => {
+  it('submits form when send control is clicked', async () => {
     const mockOnSuccess = vi.fn()
     const props = { ...defaultProps, isOpen: true, onSuccess: mockOnSuccess }
     render(<ContactModal {...props} />)

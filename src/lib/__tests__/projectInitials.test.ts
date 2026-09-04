@@ -2,12 +2,12 @@ import { describe, it, expect } from 'vitest'
 import { projectInitials } from '../projectInitials'
 
 describe('projectInitials', () => {
-  it('uses first two letter words, ignoring middle dots', () => {
-    expect(projectInitials('Streaming · Football score dashboard')).toBe('SF')
+  it('uses first two letter words for product names', () => {
+    expect(projectInitials('Apito Final')).toBe('AF')
   })
 
-  it('uses first two words before en dash subtitle', () => {
-    expect(projectInitials('Alpha Beta — production')).toBe('AB')
+  it('uses first two words before colon subtitle', () => {
+    expect(projectInitials('Alpha Beta: production')).toBe('AB')
   })
 
   it('strips subtitle after colon then takes two words', () => {

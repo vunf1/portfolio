@@ -42,6 +42,12 @@ body:has(#contact-modal) .fab-items-static {
   z-index: 10050 !important;
 }
 
+body.project-modal-open .fab-items-static {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 /* FAB Item Wrapper - prevents layout shifts when buttons scale */
 /* Best practice: Fixed size wrapper to prevent layout shifts */
 .fab-item-wrapper {
@@ -69,7 +75,7 @@ body:has(#contact-modal) .fab-items-static {
 }
 
 /* Desktop: sit left of a classic vertical scrollbar (~15–17px). When scroll lock hides it,
- * use plain 24px — do not blend measured width with a hardcoded 17px (causes FAB jump). */
+ * use plain 24px: do not blend measured width with a hardcoded 17px (causes FAB jump). */
 @media (min-width: 768px) {
   .fab-items-static {
     right: calc(24px + 17px);
@@ -157,35 +163,20 @@ body:has(#contact-modal) .fab-items-static {
   display: none;
 }
 
-/* Flag Icon Styling - Using flag-icons library */
+/* Flag icon (language FAB) - circular, full-bleed, no frame background */
 .fab-item-static .fab-flag-icon {
-  display: inline-block;
-  width: 3rem;
-  height: 3rem;
-  line-height: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
   flex-shrink: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 2px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
   box-shadow: none;
+  padding: 0;
+  object-fit: cover;
+  object-position: center;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.fab-item-static .fab-flag-icon.fi {
-  width: 3rem;
-  height: 2.25rem;
-  border-radius: 2px;
-}
-
-/* Flag emoji (language FAB) - size to fit button */
-.fab-item-language .fab-flag-icon {
-  font-size: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
 }
 
 /* Icon Styling */
@@ -279,41 +270,32 @@ body:has(#contact-modal) .fab-items-static {
 
 /* ===== LANGUAGE BUTTON ===== */
 .fab-item-language {
-  /* Make language FAB visually just the flag, with no visible circular background */
-  background: transparent;
+  background: var(--color-white);
   color: inherit;
-  border: none;
-  /* Remove shadow completely - override base shadow with !important */
-  box-shadow: none !important;
-  /* Smooth transitions for hover scale */
-  transition: 
-    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: none;
+  padding: 0;
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: center center;
-  /* Prevent affecting other buttons */
   will-change: transform;
 }
 
 .fab-item-language:hover {
-  /* Smooth scale animation on hover */
-  background: transparent;
-  /* No shadow on hover either - override base hover shadow */
-  box-shadow: none !important;
-  transform: scale(1.15);
-  /* Keep original width/height to prevent layout shift and scrollbars */
+  background: var(--color-white);
+  box-shadow: none;
+  transform: translateY(-2px) scale(1.08);
   width: 56px;
   height: 56px;
-  /* CRITICAL: Ensure no scrollbar appears on hover */
-  overflow: visible !important;
 }
 
 .fab-item-language:active {
-  transform: scale(1.05);
+  transform: translateY(0) scale(1.02);
 }
 
-/* Flag icon scale on hover */
 .fab-item-language:hover .fab-flag-icon {
-  transform: scale(1.15);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: none;
 }
 
 /* ===== DARK MODE TOGGLE ===== */
@@ -416,6 +398,12 @@ body:has(#contact-modal) .fab-items-static {
   /* Hide scrollbars if they somehow appear */
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
+}
+
+/* Language FAB: clip flag art to circular button */
+.fab-item-static.fab-item-language,
+.fab-item-static.fab-item-language .fab-flag-icon {
+  overflow: hidden !important;
 }
 
 /* Hide scrollbars in webkit for FAB elements */

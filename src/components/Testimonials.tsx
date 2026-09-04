@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'preact/hooks'
 import { useTranslation } from '../contexts/TranslationContext'
-import { Icon } from './ui/Icon'
+import { Section, Icon } from './ui'
 import type { TestimonialsProps } from '../types'
 
 export function Testimonials({ testimonials }: TestimonialsProps) {
@@ -9,7 +9,9 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
   useEffect(() => {
-    if (!isAutoPlaying) {return}
+    if (!isAutoPlaying) {
+      return
+    }
 
     const interval = setInterval(() => {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
@@ -21,8 +23,6 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
   const goToTestimonial = (index: number) => {
     setCurrentTestimonial(index)
     setIsAutoPlaying(false)
-    
-    // Resume auto-play after 10 seconds of manual navigation
     setTimeout(() => setIsAutoPlaying(true), 10000)
   }
 
@@ -42,122 +42,74 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
     return null
   }
 
+  const active = testimonials[currentTestimonial]
+
   return (
-    <section
+    <Section
       id="testimonials"
       data-section="testimonials"
-      className="section testimonials-container"
+      className="cv-testimonials"
+      title={String(t('testimonials.title'))}
+      subtitle={String(t('testimonials.subtitle'))}
     >
-      <div className="testimonials-carousel">
-        {/* Main Testimonial Display */}
-        <div className="testimonial-main">
-          <div className="testimonial-card premium-card">
-            <div className="testimonial-content">
-              <div className="quote-icon">
-                <Icon name="quote-left" size={24} />
-              </div>
-              
-              <blockquote className="testimonial-text">
-                "{testimonials[currentTestimonial]?.content}"
-              </blockquote>
-              
-              <div className="testimonial-author">
-                <div className="author-info">
-                  <h4 className="author-name">
-                    {testimonials[currentTestimonial]?.name}
-                  </h4>
-                  <p className="author-position">
-                    {testimonials[currentTestimonial]?.position}
-                  </p>
-                  <p className="author-company">
-                    {testimonials[currentTestimonial]?.company}
-                  </p>
-                </div>
-                
-                <div className="testimonial-rating">
-                  {[...Array(testimonials[currentTestimonial]?.rating || 0)].map((_, index) => (
-                    <Icon key={index} name="star" size={16} className="text-warning" />
-                  ))}
-                </div>
-              </div>
+      <div className="cv-testimonials__layout">
+        <article className="cv-panel cv-panel--quote">
+          <Icon name="quote-left" size={22} className="cv-panel__quote-icon" aria-hidden />
+          <blockquote className="cv-panel__quote">"{active?.content}"</blockquote>
+          <footer className="cv-panel__quote-footer">
+            <div>
+              <p className="cv-panel__title">{active?.name}</p>
+              <p className="cv-panel__meta">
+                {active?.position}
+                {active?.company ? ` · ${active.company}` : ''}
+              </p>
             </div>
-          </div>
-        </div>
-        
-        {/* Navigation Controls */}
-        <div className="testimonial-controls">
-          <button 
-            className="control-btn prev-btn"
-            onClick={prevTestimonial}
-            aria-label={t('testimonials.prevAria')}
-          >
+            <div className="cv-testimonials__stars" aria-label={String(t('testimonials.rating'))}>
+              {[...Array(active?.rating || 0)].map((_, index) => (
+                <Icon key={index} name="star" size={16} className="text-warning" />
+              ))}
+            </div>
+          </footer>
+        </article>
+
+        <div className="cv-testimonials__controls">
+          <button type="button" className="cv-icon-btn" onClick={prevTestimonial} aria-label={String(t('testimonials.prevAria'))}>
             <Icon name="chevron-left" size={20} />
           </button>
-          
-          <div className="testimonial-indicators">
+          <div className="cv-testimonials__dots">
             {testimonials.map((_, index) => (
               <button
                 key={index}
-                className={`indicator ${index === currentTestimonial ? 'active' : ''}`}
+                type="button"
+                className={`cv-dot ${index === currentTestimonial ? 'cv-dot--active' : ''}`}
                 onClick={() => goToTestimonial(index)}
-                aria-label={t('testimonials.goToAria', undefined, { n: String(index + 1) })}
+                aria-label={String(t('testimonials.goToAria', undefined, { n: String(index + 1) }))}
+                aria-current={index === currentTestimonial ? 'true' : undefined}
               />
             ))}
           </div>
-          
-          <button 
-            className="control-btn next-btn"
-            onClick={nextTestimonial}
-            aria-label={t('testimonials.nextAria')}
-          >
+          <button type="button" className="cv-icon-btn" onClick={nextTestimonial} aria-label={String(t('testimonials.nextAria'))}>
             <Icon name="chevron-right" size={20} />
           </button>
         </div>
-        
-        {/* Testimonial List */}
-        <div className="testimonials-list">
-          <div className="list-header">
-            <h3>{t('testimonials.sectionTitle')}</h3>
-            <p>{t('testimonials.sectionSubtitle')}</p>
-          </div>
-          
-          <div className="testimonial-items">
-            {testimonials.map((testimonial, index) => (
-              <div 
-                key={testimonial.id}
-                className={`testimonial-item ${index === currentTestimonial ? 'active' : ''}`}
-                onClick={() => goToTestimonial(index)}
-              >
-                <div className="item-content">
-                  <div className="item-header">
-                    <h4 className="item-name">{testimonial.name}</h4>
-                    <div className="item-rating">
-                      {[...Array(testimonial.rating)].map((_, starIndex) => (
-                        <Icon key={starIndex} name="star" size={16} className="text-warning" />
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <p className="item-position">
-                    {testimonial.position} at {testimonial.company}
-                  </p>
-                  
-                  <p className="item-excerpt">
-                    "{testimonial.content.substring(0, 100)}..."
-                  </p>
-                  
-                  <div className="item-date">
-                    {new Date(testimonial.date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long'
-                    })}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+
+        <div className="cv-testimonials__list">
+          {testimonials.map((testimonial, index) => (
+            <button
+              key={testimonial.id}
+              type="button"
+              className={`cv-panel cv-panel--testimonial-pick ${index === currentTestimonial ? 'cv-panel--active' : ''}`}
+              onClick={() => goToTestimonial(index)}
+            >
+              <p className="cv-panel__title">{testimonial.name}</p>
+              <p className="cv-panel__meta">
+                {testimonial.position} · {testimonial.company}
+              </p>
+              <p className="cv-panel__text cv-panel__text--clamp">"{testimonial.content}"</p>
+            </button>
+          ))}
         </div>
       </div>
-    </section>
+    </Section>
   )
 }

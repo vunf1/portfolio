@@ -81,9 +81,26 @@ async function loadProjectsMerged(language: SupportedLanguage): Promise<Project[
   const files = manifest as string[]
   const areaMap = parseProjectsAreaMap(areaRaw)
 
-  const projects = await Promise.all(
+  const results = await Promise.allSettled(
     files.map((file) => loadJsonFile<Project>(getDataUrl(language, `projects/${file}`)))
   )
+
+  const projects: Project[] = []
+  results.forEach((result, index) => {
+    if (result.status === 'fulfilled') {
+      projects.push(result.value)
+      return
+    }
+    const file = files[index]
+    const message = result.reason instanceof Error ? result.reason.message : String(result.reason)
+    if (import.meta.env.DEV) {
+      console.warn(`[portfolio] Skipping project file ${file}: ${message}`)
+    }
+  })
+
+  if (projects.length === 0 && files.length > 0) {
+    throw new Error(`No projects loaded for ${language} (check projects/*.json and manifest)`)
+  }
 
   return projects.map((p) => ({
     ...p,
@@ -354,48 +371,6 @@ export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): Use
     void loadCriticalSections(signal)
   }, [loadCriticalSections])
 
-  useEffect(() => {
-    if (loading || !portfolioData) {
-      return
-    }
-
-    let cancelled = false
-
-    const runPrefetches = async () => {
-      const secondaryLanguage: SupportedLanguage = currentLanguage === 'en' ? 'pt-PT' : 'en'
-
-      if (!nonCriticalPrefetched[currentLanguage]) {
-        const success = await scheduleIdleLoad(currentLanguage, NON_CRITICAL_SECTIONS)
-        if (!success) {
-          nonCriticalPrefetched[currentLanguage] = false
-        } else {
-          nonCriticalPrefetched[currentLanguage] = true
-          if (!cancelled) {
-            markSectionsLoaded(currentLanguage, NON_CRITICAL_SECTIONS)
-          }
-        }
-      }
-
-      if (!criticalPrefetched[secondaryLanguage]) {
-        const success = await scheduleIdleLoad(secondaryLanguage, CRITICAL_SECTIONS)
-        if (!success) {
-          criticalPrefetched[secondaryLanguage] = false
-        } else {
-          criticalPrefetched[secondaryLanguage] = true
-          if (!cancelled) {
-            markSectionsLoaded(secondaryLanguage, CRITICAL_SECTIONS)
-          }
-        }
-      }
-    }
-
-    void runPrefetches()
-
-    return () => {
-      cancelled = true
-    }
-  }, [currentLanguage, loading, markSectionsLoaded, portfolioData])
-
   const updateSectionFromCache = useCallback((language: SupportedLanguage, section: string) => {
     const languageData = dataCache.get(language)
     if (!languageData) {
@@ -418,6 +393,49 @@ export function usePortfolioData(currentLanguage: SupportedLanguage = 'en'): Use
       }
     })
   }, [])
+
+  useEffect(() => {
+    if (loading || !portfolioData) {
+      return
+    }
+
+    let cancelled = false
+
+    const runPrefetches = async () => {
+      const secondaryLanguage: SupportedLanguage = currentLanguage === 'en' ? 'pt-PT' : 'en'
+
+      if (!nonCriticalPrefetched[currentLanguage]) {
+        const success = await scheduleIdleLoad(currentLanguage, NON_CRITICAL_SECTIONS)
+        if (!success) {
+          nonCriticalPrefetched[currentLanguage] = false
+        } else {
+          nonCriticalPrefetched[currentLanguage] = true
+          if (!cancelled) {
+            markSectionsLoaded(currentLanguage, NON_CRITICAL_SECTIONS)
+            NON_CRITICAL_SECTIONS.forEach((section) => updateSectionFromCache(currentLanguage, section))
+          }
+        }
+      }
+
+      if (!criticalPrefetched[secondaryLanguage]) {
+        const success = await scheduleIdleLoad(secondaryLanguage, CRITICAL_SECTIONS)
+        if (!success) {
+          criticalPrefetched[secondaryLanguage] = false
+        } else {
+          criticalPrefetched[secondaryLanguage] = true
+          if (!cancelled) {
+            markSectionsLoaded(secondaryLanguage, CRITICAL_SECTIONS)
+          }
+        }
+      }
+    }
+
+    void runPrefetches()
+
+    return () => {
+      cancelled = true
+    }
+  }, [currentLanguage, loading, markSectionsLoaded, portfolioData, updateSectionFromCache])
 
   const loadSection = useCallback(async (section: string) => {
     const language = currentLanguage

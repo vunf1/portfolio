@@ -2,7 +2,8 @@ import { useState, useRef, useLayoutEffect } from 'preact/hooks'
 import type { JSX } from 'preact'
 import { useTranslation } from '../contexts/TranslationContext'
 import { cn } from '../lib/utils'
-import { Section, Icon, Button } from './ui'
+import { techTagClassName } from '../lib/projectShowcaseTechnologies'
+import { Section, Icon } from './ui'
 import type { ExperienceProps } from '../types'
 
 export function Experience({ experiences, className = '', id }: ExperienceProps) {
@@ -19,8 +20,8 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
     return null
   }
 
-  const minSwipeDistance = 50
   const slideCount = experiences.length
+  const minSwipeDistance = 50
 
   useLayoutEffect(() => {
     const measure = () => {
@@ -31,7 +32,6 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
       const cs = getComputedStyle(node)
       const pl = Number.parseFloat(cs.paddingLeft) || 0
       const pr = Number.parseFloat(cs.paddingRight) || 0
-      /* clientWidth includes padding; slides must match the *content* box only */
       const contentWidth = node.clientWidth - pl - pr
       setViewportWidth(Math.max(0, Math.round(contentWidth)))
     }
@@ -48,6 +48,24 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
     return () => ro.disconnect()
   }, [slideCount])
 
+  const goToSlide = (index: number) => {
+    setIsDragging(false)
+    setDragOffset(0)
+    setCurrentIndex(index)
+  }
+
+  const nextSlide = () => {
+    setIsDragging(false)
+    setDragOffset(0)
+    setCurrentIndex((prev) => (prev + 1) % slideCount)
+  }
+
+  const prevSlide = () => {
+    setIsDragging(false)
+    setDragOffset(0)
+    setCurrentIndex((prev) => (prev - 1 + slideCount) % slideCount)
+  }
+
   const onCarouselKeyDown = (e: JSX.TargetedKeyboardEvent<HTMLDivElement>) => {
     if (slideCount <= 1) {
       return
@@ -60,24 +78,14 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
       e.preventDefault()
       nextSlide()
     }
-  }
-
-  const goToSlide = (index: number) => {
-    setIsDragging(false)
-    setDragOffset(0)
-    setCurrentIndex(index)
-  }
-
-  const nextSlide = () => {
-    setIsDragging(false)
-    setDragOffset(0)
-    setCurrentIndex((prev) => (prev + 1) % experiences.length)
-  }
-
-  const prevSlide = () => {
-    setIsDragging(false)
-    setDragOffset(0)
-    setCurrentIndex((prev) => (prev - 1 + experiences.length) % experiences.length)
+    if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      prevSlide()
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      nextSlide()
+    }
   }
 
   const onTouchStart = (e: JSX.TargetedTouchEvent<HTMLDivElement>) => {
@@ -104,17 +112,13 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
     }
 
     const distance = touchStart - touchEnd
-    const isLeftSwipe = distance > minSwipeDistance
-    const isRightSwipe = distance < -minSwipeDistance
-
     setDragOffset(0)
     setIsDragging(false)
 
     requestAnimationFrame(() => {
-      if (isLeftSwipe) {
+      if (distance > minSwipeDistance) {
         nextSlide()
-      }
-      if (isRightSwipe) {
+      } else if (distance < -minSwipeDistance) {
         prevSlide()
       }
     })
@@ -124,254 +128,176 @@ export function Experience({ experiences, className = '', id }: ExperienceProps)
     viewportWidth > 0 ? -currentIndex * viewportWidth + (isDragging ? dragOffset : 0) : 0
   const trackWidthPx = viewportWidth > 0 ? viewportWidth * slideCount : undefined
 
+  const progressLabel =
+    slideCount > 1
+      ? t('experience.slideProgress', undefined, {
+          current: String(currentIndex + 1),
+          total: String(slideCount),
+        })
+      : ''
+
   const renderTechnologies = (technologies: string[]) => {
-    if (!technologies || technologies.length === 0) {
+    if (!technologies?.length) {
       return null
     }
 
     return (
-      <section className="experience-card__block card-technologies" aria-label={String(t('experience.technologies'))}>
-        <h4 className="experience-card__block-label">{t('experience.technologies')}</h4>
-        <div className="tech-tags">
+      <div className="cv-tags" aria-label={String(t('experience.technologies'))}>
+        <p className="cv-tags__label">{t('experience.technologies')}</p>
+        <div className="cv-tags__list">
           {technologies.map((tech, techIndex) => {
             if (tech.startsWith('---') && tech.endsWith('---')) {
-              const title = tech.slice(3, -3).trim()
               return (
-                <div key={techIndex} className="tech-section-title">
-                  {title}
-                </div>
+                <span key={techIndex} className="cv-tags__group">
+                  {tech.slice(3, -3).trim()}
+                </span>
               )
             }
-
             return (
-              <span key={techIndex} className="tech-tag">
+              <span key={techIndex} className={techTagClassName(tech)}>
                 {tech}
               </span>
             )
           })}
         </div>
-      </section>
-    )
-  }
-
-  const renderHighlights = (highlights: string[]) => {
-    if (!highlights || highlights.length === 0) {
-      return null
-    }
-
-    return (
-      <section className="experience-card__block card-highlights" aria-label={String(t('experience.highlights'))}>
-        <div className="highlights-header experience-card__block-head">
-          <div className="highlights-icon-wrapper" aria-hidden>
-            <Icon name="star" size={18} />
-          </div>
-          <h4 className="highlight-title experience-card__block-title">{t('experience.highlights')}</h4>
-        </div>
-        <ul className="highlights-list experience-card__list">
-          {highlights.map((highlight, highlightIndex) => (
-            <li key={highlightIndex} className="highlight-item">
-              <Icon name="arrow-right" size={14} className="highlight-arrow" aria-hidden />
-              <span className="highlight-text">{highlight}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
+      </div>
     )
   }
 
   const renderExperienceCard = (exp: (typeof experiences)[0], index: number) => {
-    const titleId = `experience-card-title-${index}`
+    const titleId = `experience-${index}-title`
+
     return (
-      <article
-        className={cn('experience-card', 'premium-card', 'experience-card--structured')}
-        aria-labelledby={titleId}
-      >
-        <header className="experience-card__header card-header">
-          <div className="experience-card__meta">
-            {exp.period ? (
-              <span className="experience-card__period">{exp.period}</span>
-            ) : null}
-            {slideCount > 1 ? (
-              <span className="experience-card__index" aria-hidden>
-                {index + 1}/{slideCount}
-              </span>
-            ) : null}
-          </div>
-          <h3 id={titleId} className="card-title">
+      <article className="cv-panel cv-panel--experience" aria-labelledby={titleId}>
+        <header className="cv-panel__head">
+          {exp.period ? <span className="cv-panel__badge">{exp.period}</span> : null}
+          <h3 id={titleId} className="cv-panel__title">
             {exp.title}
           </h3>
-          <p className="experience-card__org">
-            <span className="experience-card__company">{exp.company}</span>
-            {exp.location ? (
-              <span className="experience-card__location">
-                <span className="experience-card__sep" aria-hidden>
-                  {' '}
-                  ·{' '}
-                </span>
-                {exp.location}
-              </span>
-            ) : null}
+          <p className="cv-panel__meta">
+            <span className="cv-panel__company">{exp.company}</span>
+            {exp.location ? <span className="cv-panel__location"> · {exp.location}</span> : null}
           </p>
         </header>
 
-        <div className="experience-card__body card-body">
-          <section className="experience-card__block experience-card__overview" aria-label={String(t('experience.overview'))}>
-            <p className="card-description experience-card__description">{exp.description}</p>
-          </section>
+        <div className="cv-panel__body">
+          <p className="cv-panel__text">{exp.description}</p>
 
           {exp.impact ? (
-            <section className="experience-card__block card-impact" aria-label={String(t('experience.impact'))}>
-              <div className="impact-header experience-card__block-head">
-                <div className="impact-icon-wrapper" aria-hidden>
-                  <Icon name="chart-line" size={18} />
-                </div>
-                <h4 className="impact-title experience-card__block-title">{t('experience.impact')}</h4>
-              </div>
-              <p className="impact-text">{exp.impact}</p>
-            </section>
+            <div className="cv-panel__callout">
+              <p className="cv-panel__callout-label">
+                <Icon name="chart-line" size={16} aria-hidden />
+                {t('experience.impact')}
+              </p>
+              <p className="cv-panel__callout-text">{exp.impact}</p>
+            </div>
           ) : null}
 
-          {exp.highlights && exp.highlights.length > 0 ? renderHighlights(exp.highlights) : null}
-
-          {exp.achievements && exp.achievements.length > 0 ? (
-            <section className="experience-card__block card-achievements" aria-label={String(t('experience.achievements'))}>
-              <div className="achievements-header experience-card__block-head">
-                <div className="achievements-icon-wrapper" aria-hidden>
-                  <Icon name="trophy" size={18} />
-                </div>
-                <h4 className="achievements-title experience-card__block-title">{t('experience.achievements')}</h4>
-              </div>
-              <ul className="achievements-list experience-card__list">
-                {exp.achievements.map((achievement, achievementIndex) => (
-                  <li key={achievementIndex} className="achievement-item">
-                    <span className="achievement-icon" aria-hidden>
-                      <Icon name="check" size={14} />
-                    </span>
-                    <span className="achievement-text">{achievement}</span>
-                  </li>
+          {exp.highlights && exp.highlights.length > 0 ? (
+            <div className="cv-panel__block">
+              <p className="cv-panel__block-label">{t('experience.highlights')}</p>
+              <ul className="cv-list">
+                {exp.highlights.map((highlight, highlightIndex) => (
+                  <li key={highlightIndex}>{highlight}</li>
                 ))}
               </ul>
-            </section>
+            </div>
           ) : null}
 
-          {exp.technologies && exp.technologies.length > 0 ? renderTechnologies(exp.technologies) : null}
+          {exp.achievements && exp.achievements.length > 0 ? (
+            <div className="cv-panel__block">
+              <p className="cv-panel__block-label">{t('experience.achievements')}</p>
+              <ul className="cv-list cv-list--check">
+                {exp.achievements.map((achievement, achievementIndex) => (
+                  <li key={achievementIndex}>{achievement}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          {exp.technologies?.length ? renderTechnologies(exp.technologies) : null}
         </div>
       </article>
     )
   }
 
-  const progressLabel =
-    slideCount > 1
-      ? t('experience.slideProgress', undefined, {
-          current: String(currentIndex + 1),
-          total: String(slideCount)
-        })
-      : ''
-
   return (
     <Section
       id={id || 'experience'}
       data-section="experience"
-      className={cn('experience-section', className)}
+      className={cn('cv-experience', className)}
       title={String(t('experience.title'))}
       subtitle={String(t('experience.subtitle'))}
     >
-      <div className="experience-section__inner">
+      {slideCount > 1 ? (
+        <p className="cv-experience__progress" aria-live="polite" aria-atomic="true">
+          {progressLabel}
+          <span className="cv-experience__progress-role"> · {experiences[currentIndex]?.title}</span>
+        </p>
+      ) : null}
+
+      <div className="cv-experience-shell">
         {slideCount > 1 ? (
-          <div className="experience-toolbar">
-            <p className="experience-toolbar__progress" aria-live="polite" aria-atomic="true">
-              {progressLabel}
-            </p>
-            <p className="experience-toolbar__current">
-              <span className="experience-toolbar__role-title">{experiences[currentIndex]?.title}</span>
-            </p>
-          </div>
+          <nav className="cv-experience-rail" aria-label={String(t('experience.carouselAria'))}>
+            <ol className="cv-experience-rail__list">
+              {experiences.map((exp, index) => (
+                <li key={`${exp.title}-${index}`} className="cv-experience-rail__item">
+                  <button
+                    type="button"
+                    className={cn(
+                      'cv-experience-rail__dot',
+                      index === currentIndex && 'cv-experience-rail__dot--active'
+                    )}
+                    onClick={() => goToSlide(index)}
+                    aria-label={String(
+                      t('experience.goToAria', undefined, { n: String(index + 1) })
+                    )}
+                    aria-current={index === currentIndex ? 'step' : undefined}
+                  >
+                    <span className="cv-experience-rail__dot-core" aria-hidden />
+                  </button>
+                </li>
+              ))}
+            </ol>
+          </nav>
         ) : null}
 
-        <div className="experience-carousel-wrapper">
-          <div className="experience-carousel-chrome">
-            {slideCount > 1 ? (
-              <>
-                <div className="experience-carousel-nav-wrap experience-carousel-nav-wrap--prev">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    className="experience-carousel-nav-inner"
-                    onClick={prevSlide}
-                    aria-label={String(t('experience.prevAria'))}
-                  >
-                    <Icon name="chevron-left" size={18} aria-hidden />
-                  </Button>
-                </div>
-                <div className="experience-carousel-nav-wrap experience-carousel-nav-wrap--next">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    className="experience-carousel-nav-inner"
-                    onClick={nextSlide}
-                    aria-label={String(t('experience.nextAria'))}
-                  >
-                    <Icon name="chevron-right" size={18} aria-hidden />
-                  </Button>
-                </div>
-              </>
-            ) : null}
-
-            <div
-              ref={carouselRef}
-              className="experience-carousel-viewport"
-              onTouchStart={onTouchStart}
-              onTouchMove={onTouchMove}
-              onTouchEnd={onTouchEnd}
-              onKeyDown={onCarouselKeyDown}
-              tabIndex={0}
-              role="region"
-              aria-roledescription="carousel"
-              aria-label={String(t('experience.carouselAria'))}
-            >
+        <div
+          ref={carouselRef}
+          className="cv-experience-stage"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          onKeyDown={onCarouselKeyDown}
+          tabIndex={slideCount > 1 ? 0 : undefined}
+          role="region"
+          aria-roledescription="carousel"
+          aria-label={String(t('experience.carouselAria'))}
+        >
+          <div
+            className={cn('cv-experience-track', isDragging && 'cv-experience-track--dragging')}
+            style={
+              {
+                width: trackWidthPx !== undefined ? `${trackWidthPx}px` : undefined,
+                transform: `translateX(${trackTranslatePx}px)`,
+              } as JSX.CSSProperties
+            }
+          >
+            {experiences.map((exp, index) => (
               <div
-                className={cn('experience-carousel-track', isDragging && 'no-transition')}
+                key={`${exp.title}-${exp.company}-${index}`}
+                className="cv-experience-slide"
                 style={
-                  {
-                    width: trackWidthPx !== undefined ? `${trackWidthPx}px` : undefined,
-                    transform: `translateX(${trackTranslatePx}px)`
-                  } as JSX.CSSProperties
+                  viewportWidth > 0
+                    ? ({ width: `${viewportWidth}px`, flex: '0 0 auto' } as JSX.CSSProperties)
+                    : undefined
                 }
+                aria-hidden={index !== currentIndex}
               >
-                {experiences.map((exp, index) => (
-                  <div
-                    key={index}
-                    className="experience-carousel-slide"
-                    style={
-                      viewportWidth > 0
-                        ? ({ width: `${viewportWidth}px`, flex: '0 0 auto' } as JSX.CSSProperties)
-                        : undefined
-                    }
-                    aria-hidden={index !== currentIndex}
-                  >
-                    {renderExperienceCard(exp, index)}
-                  </div>
-                ))}
+                {renderExperienceCard(exp, index)}
               </div>
-            </div>
+            ))}
           </div>
-
-          {slideCount > 1 ? (
-            <div className="experience-carousel-dots">
-              {experiences.map((_, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  className={cn('experience-carousel-dot', index === currentIndex && 'active')}
-                  onClick={() => goToSlide(index)}
-                  aria-label={String(t('experience.goToAria', undefined, { n: String(index + 1) }))}
-                  aria-current={index === currentIndex ? 'true' : undefined}
-                />
-              ))}
-            </div>
-          ) : null}
         </div>
       </div>
     </Section>

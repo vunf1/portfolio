@@ -1,3 +1,15 @@
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ===== BASE LAYOUT STYLES ===== */
 
 /* Reset and Base Styles */
@@ -72,32 +84,19 @@ p,
   text-align: center !important;
 }
 
-/* Portfolio Container - Main Layout (85% of viewport width) */
-.portfolio-container {
+/* Portfolio layout shell (visuals in portfolio-page.css) */
+.portfolio-container,
+.cv-layout {
   width: 100%;
-  max-width: 85vw;
   margin: 0 auto;
-  padding: var(--space-16) var(--space-6) 0;
   position: relative;
   z-index: 1;
-  /* Use theme-aware background */
-  background-color: var(--neutral-50);
   transition: background-color var(--transition-base);
 }
 
-/* Portfolio Sections */
-.portfolio-section {
-  width: 100%;
-  max-width: 100%;
-  padding: var(--space-16) 0;
-  position: relative;
-  /* Use theme-aware background */
-  background-color: var(--neutral-50);
-  transition: background-color var(--transition-base);
-}
-
-/* Section Scroll Offset - Ensure sections appear below navbar */
-.section {
+/* Legacy section helpers: CV page uses cv-section in portfolio-page.css */
+.section,
+.cv-section {
   scroll-margin-top: calc(var(--navbar-height) + var(--space-4));
 }
 
@@ -136,20 +135,8 @@ p,
   text-align: center;
 }
 
-/* Responsive Container Adjustments (keep 85vw) */
-@media (max-width: 1200px) {
-  .portfolio-container {
-    max-width: 85vw;
-    padding: var(--space-12) var(--space-5) 0;
-  }
-}
-
+/* Responsive section typography */
 @media (max-width: 992px) {
-  .portfolio-container {
-    max-width: 85vw;
-    padding: var(--space-10) var(--space-4) 0;
-  }
-  
   .section-title {
     font-size: var(--font-size-3xl);
   }
@@ -160,28 +147,6 @@ p,
 }
 
 @media (max-width: 768px) {
-  .portfolio-container {
-    max-width: 85vw;
-    padding: var(--space-8) var(--space-4) 0;
-  }
-  
-  .portfolio-section {
-    padding: var(--space-12) 0;
-  }
-  
-  /* Ensure sections appear below navbar on mobile */
-  .section,
-  #experience {
-    scroll-margin-top: calc(var(--navbar-height) + var(--space-3));
-  }
-  
-  /* Add padding-top to experience section to prevent navbar overlap on mobile */
-  /* Account for portfolio-container padding-top (var(--space-8)) */
-  #experience {
-    padding-top: calc(var(--navbar-height) - var(--space-8) + var(--space-4));
-    margin-top: 0;
-  }
-  
   .section-header {
     margin-bottom: var(--space-8);
     padding: 0 var(--space-3);
@@ -198,27 +163,6 @@ p,
 }
 
 @media (max-width: 480px) {
-  .portfolio-container {
-    padding: var(--space-6) var(--space-3) 0;
-  }
-  
-  .portfolio-section {
-    padding: var(--space-8) 0;
-  }
-  
-  /* Ensure sections appear below navbar on small mobile */
-  .section,
-  #experience {
-    scroll-margin-top: calc(var(--navbar-height) + var(--space-2));
-  }
-  
-  /* Add padding-top to experience section to prevent navbar overlap on small mobile */
-  /* Account for portfolio-container padding-top (var(--space-6)) */
-  #experience {
-    padding-top: calc(var(--navbar-height) - var(--space-6) + var(--space-3));
-    margin-top: 0;
-  }
-  
   .section-header {
     margin-bottom: var(--space-6);
   }

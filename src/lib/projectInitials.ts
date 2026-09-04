@@ -1,6 +1,6 @@
 /**
  * Two-letter mark for project cards when no image URL is set.
- * Strips subtitle after en dash, em dash, hyphen run, or colon; then uses the first two letter/digit word tokens (handles middots and punctuation between words).
+ * Strips subtitle after en dash, hyphen run, or colon; then uses the first two letter/digit word tokens (handles middots and punctuation between words).
  */
 export function projectInitials(name: string): string {
   const beforeSep = name.replace(/[\u2013\u2014\-:].*$/, '').trim()

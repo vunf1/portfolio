@@ -1,3 +1,4 @@
+import type { ComponentChildren } from 'preact'
 import { useState, useEffect, useRef } from 'preact/hooks'
 import { useTranslation } from '../../contexts/TranslationContext'
 import { sendContactEmail } from '../../utils/emailSender'
@@ -9,6 +10,49 @@ import { Button } from './Button'
 import { Icon } from './Icon'
 import type { ContactFormData } from '../../types/n8n'
 import type { ContactModalProps } from '../../types'
+
+function ContactField({
+  id,
+  label,
+  required = false,
+  optionalLabel,
+  error,
+  hint,
+  hintId,
+  children
+}: {
+  id: string
+  label: string
+  required?: boolean
+  optionalLabel?: string
+  error?: string
+  hint?: string
+  hintId?: string
+  children: ComponentChildren
+}) {
+  const errorId = `${id}-error`
+  const resolvedHintId = hintId ?? `${id}-hint`
+  return (
+    <div className={cn('contact-field', error && 'is-error')}>
+      <label htmlFor={id} className="contact-field__label">
+        {label}
+        {required ? <span className="contact-field__req" aria-hidden="true">·</span> : null}
+        {optionalLabel ? <span className="contact-field__opt">{optionalLabel}</span> : null}
+      </label>
+      {children}
+      {hint ? (
+        <p id={resolvedHintId} className={cn('contact-field__hint', error && 'is-error')}>
+          {hint}
+        </p>
+      ) : null}
+      {error ? (
+        <p id={errorId} className="contact-field__error" role="alert">
+          {error}
+        </p>
+      ) : null}
+    </div>
+  )
+}
 
 /**
  * Contact Modal Component
@@ -521,20 +565,8 @@ export function ContactModal({
     }
   }
 
-  const renderActionButtons = () => (
-    <Button
-      type="submit"
-      form="contact-form"
-      variant="ghost"
-      size="md"
-      className="min-w-[120px] no-underline bg-transparent border-0 shadow-none text-white hover:opacity-80 hover:scale-100"
-      disabled={isSubmitting}
-      loading={isSubmitting}
-      aria-label={t('contact.submit', 'Send Message')}
-    >
-      {isSubmitting ? t('contact.submitting', 'Sending...') : t('contact.submit', 'Send Message')}
-    </Button>
-  )
+  const fieldClass = (invalid: boolean) =>
+    cn('contact-field__control', invalid && 'is-invalid')
 
   if (!isOpen) {
     return null
@@ -543,65 +575,72 @@ export function ContactModal({
   return (
     <div
       id="contact-modal"
-      className={`contact-modal-premium fade show d-block ${className}`}
+      className={cn('contact-modal-premium', className)}
       ref={modalRef}
       onClick={handleOverlayClick}
       role="dialog"
       aria-modal="true"
       aria-labelledby="contact-modal-title"
     >
-      <div id="contact-modal-dialog" className="contact-modal-dialog modal-mobile">
-        <div id="contact-modal-content" className="contact-modal-content flex flex-col max-w-2xl">
-          <div className="modal-header flex items-center justify-between gap-4 px-6 py-5 rounded-t-2xl">
-            <h2 className="modal-title text-xl font-semibold text-white text-left" id="contact-modal-title">
+      <div id="contact-modal-dialog" className="contact-modal-dialog">
+        <div id="contact-modal-content" className="contact-modal-content contact-letter">
+          <header className="contact-letter__mast">
+            <h2 className="contact-letter__title" id="contact-modal-title">
               {t('contact.title', 'Contact Me')}
             </h2>
-            {!submitSuccess && (
-              <div className="modal-header-actions flex items-center gap-2 shrink-0">
-                {renderActionButtons()}
-              </div>
-            )}
-          </div>
+            <button
+              type="button"
+              className="contact-letter__close"
+              onClick={() => {
+                if (!isSubmitting) {
+                  onClose()
+                }
+              }}
+              disabled={isSubmitting}
+              aria-label={t('contact.close', 'Close')}
+            >
+              <Icon name="x" size={18} aria-hidden />
+            </button>
+          </header>
 
-          <form 
+          <form
             id="contact-form"
-            name="contact-form" 
+            name="contact-form"
             onSubmit={handleSubmit}
             data-form-type="contact"
             autoComplete="off"
             data-lpignore="true"
             role="form"
             aria-label={t('contact.title', 'Contact form')}
+            data-state={isSubmitting ? 'loading' : submitSuccess ? 'success' : submitError ? 'error' : 'default'}
           >
-            {/* Hidden honeypot password field to prevent password manager interference */}
             <input
               type="password"
               name="password-honeypot"
               autoComplete="new-password"
               tabIndex={-1}
               aria-hidden="true"
-              style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
+              className="contact-letter__honeypot"
             />
-            <div className="modal-body px-6 py-6 space-y-5 overflow-y-auto">
+
+            <div className="contact-letter__body">
               {submitSuccess ? (
-                <div className="flex items-center gap-3 rounded-xl bg-emerald-50 border border-emerald-200 px-5 py-4 text-emerald-800" role="alert">
-                  <Icon name="check-circle" size={24} className="shrink-0 text-emerald-600" aria-hidden />
-                  <p className="text-base font-medium">{t('contact.success', 'Thank you! Your message has been sent successfully.')}</p>
+                <div className="contact-letter__sent" role="alert">
+                  <p className="contact-letter__sent-line">{t('contact.success', 'Thank you! Your message has been sent successfully.')}</p>
                 </div>
               ) : (
                 <>
-                  {submitError && (
-                    <div className="flex items-center gap-3 rounded-xl bg-red-50 border border-red-200 px-5 py-4 text-red-800" role="alert">
-                      <Icon name="exclamation-circle" size={24} className="shrink-0 text-red-600" aria-hidden />
-                      <p className="text-sm font-medium">{submitError}</p>
-                    </div>
-                  )}
+                  <p className="contact-letter__lede">{t('contact.lede', 'A short note is enough. I read every message and reply when I can take the work on.')}</p>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <label htmlFor="contact-name" className="block text-sm font-medium text-gray-700">
-                        {t('contact.fields.name', 'Name')} <span className="text-red-500">*</span>
-                      </label>
+                  {submitError ? (
+                    <div className="contact-letter__banner is-error" role="alert">
+                      <Icon name="exclamation-circle" size={20} aria-hidden />
+                      <p>{submitError}</p>
+                    </div>
+                  ) : null}
+
+                  <div className="contact-letter__row">
+                    <ContactField id="contact-name" label={t('contact.fields.name', 'Name')} required error={errors.name}>
                       <input
                         ref={nameInputRef}
                         type="text"
@@ -609,12 +648,7 @@ export function ContactModal({
                         name="name"
                         autoComplete="name"
                         data-form-type="contact"
-                        className={cn(
-                          'w-full rounded-lg border px-4 py-3 text-base transition-colors',
-                          'placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary',
-                          'disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed',
-                          errors.name ? 'border-red-500 bg-red-50/50 focus:ring-red-500/20 focus:border-red-500' : 'border-gray-300 bg-white'
-                        )}
+                        className={fieldClass(!!errors.name)}
                         value={formData.name}
                         onChange={(e) => handleInputChange('name', (e.target as HTMLInputElement).value)}
                         onInput={(e) => handleInputChange('name', (e.target as HTMLInputElement).value)}
@@ -624,27 +658,16 @@ export function ContactModal({
                         aria-invalid={!!errors.name}
                         aria-describedby={errors.name ? 'contact-name-error' : undefined}
                       />
-                      {errors.name && (
-                        <p id="contact-name-error" className="text-sm text-red-600 font-medium" role="alert">{errors.name}</p>
-                      )}
-                    </div>
+                    </ContactField>
 
-                    <div className="space-y-1.5">
-                      <label htmlFor="contact-email" className="block text-sm font-medium text-gray-700">
-                        {t('contact.fields.email', 'Email')} <span className="text-red-500">*</span>
-                      </label>
+                    <ContactField id="contact-email" label={t('contact.fields.email', 'Email')} required error={errors.email}>
                       <input
                         type="email"
                         id="contact-email"
                         name="email"
                         autoComplete="off"
                         data-form-type="contact"
-                        className={cn(
-                          'w-full rounded-lg border px-4 py-3 text-base transition-colors',
-                          'placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary',
-                          'disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed',
-                          errors.email ? 'border-red-500 bg-red-50/50 focus:ring-red-500/20 focus:border-red-500' : 'border-gray-300 bg-white'
-                        )}
+                        className={fieldClass(!!errors.email)}
                         value={formData.email}
                         onChange={(e) => handleInputChange('email', (e.target as HTMLInputElement).value)}
                         onInput={(e) => handleInputChange('email', (e.target as HTMLInputElement).value)}
@@ -654,29 +677,25 @@ export function ContactModal({
                         aria-invalid={!!errors.email}
                         aria-describedby={errors.email ? 'contact-email-error' : undefined}
                       />
-                      {errors.email && (
-                        <p id="contact-email-error" className="text-sm text-red-600 font-medium" role="alert">{errors.email}</p>
-                      )}
-                    </div>
+                    </ContactField>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <label htmlFor="contact-phone" className="block text-sm font-medium text-gray-700">
-                        {t('contact.fields.phone', 'Phone')} <span className="text-gray-500 font-normal">({t('contact.fields.phoneHint', 'Optional')})</span>
-                      </label>
+                  <div className="contact-letter__row">
+                    <ContactField
+                      id="contact-phone"
+                      label={t('contact.fields.phone', 'Phone')}
+                      optionalLabel={t('contact.fields.optional', 'Optional')}
+                      error={errors.phone}
+                      hint={t('contact.fields.phoneExample', 'E.164 format')}
+                      hintId="contact-phone-hint"
+                    >
                       <input
                         type="tel"
                         id="contact-phone"
                         name="phone"
                         autoComplete="tel"
                         data-form-type="contact"
-                        className={cn(
-                          'w-full rounded-lg border px-4 py-3 text-base transition-colors',
-                          'placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary',
-                          'disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed',
-                          errors.phone ? 'border-red-500 bg-red-50/50' : 'border-gray-300 bg-white'
-                        )}
+                        className={fieldClass(!!errors.phone)}
                         value={formData.phone}
                         onChange={(e) => handleInputChange('phone', (e.target as HTMLInputElement).value)}
                         onInput={(e) => handleInputChange('phone', (e.target as HTMLInputElement).value)}
@@ -685,28 +704,15 @@ export function ContactModal({
                         aria-invalid={!!errors.phone}
                         aria-describedby={errors.phone ? 'contact-phone-error' : 'contact-phone-hint'}
                       />
-                      {errors.phone ? (
-                        <p id="contact-phone-error" className="text-sm text-red-600 font-medium" role="alert">{errors.phone}</p>
-                      ) : (
-                        <p id="contact-phone-hint" className="text-xs text-gray-500">{t('contact.fields.phoneExample', 'E.164 format')}</p>
-                      )}
-                    </div>
+                    </ContactField>
 
-                    <div className="space-y-1.5">
-                      <label htmlFor="contact-subject" className="block text-sm font-medium text-gray-700">
-                        {t('contact.fields.subject', 'Subject')} <span className="text-red-500">*</span>
-                      </label>
+                    <ContactField id="contact-subject" label={t('contact.fields.subject', 'Subject')} required error={errors.subject}>
                       <input
                         type="text"
                         id="contact-subject"
                         name="subject"
                         autoComplete="off"
-                        className={cn(
-                          'w-full rounded-lg border px-4 py-3 text-base transition-colors',
-                          'placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary',
-                          'disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed',
-                          errors.subject ? 'border-red-500 bg-red-50/50 focus:ring-red-500/20 focus:border-red-500' : 'border-gray-300 bg-white'
-                        )}
+                        className={fieldClass(!!errors.subject)}
                         value={formData.subject}
                         onChange={(e) => handleInputChange('subject', (e.target as HTMLInputElement).value)}
                         onInput={(e) => handleInputChange('subject', (e.target as HTMLInputElement).value)}
@@ -717,41 +723,44 @@ export function ContactModal({
                         aria-describedby={errors.subject ? 'contact-subject-error' : undefined}
                         placeholder={t('contact.fields.subjectPlaceholder', 'What is this regarding?')}
                       />
-                      {errors.subject && (
-                        <p id="contact-subject-error" className="text-sm text-red-600 font-medium" role="alert">{errors.subject}</p>
-                      )}
-                    </div>
+                    </ContactField>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <label htmlFor="contact-company-name" className="block text-sm font-medium text-gray-700">
-                        {t('contact.fields.companyName', 'Company Name')} <span className="text-gray-500 font-normal">({t('contact.fields.optional', 'Optional')})</span>
-                      </label>
+                  <p className="contact-letter__chapter">{t('contact.organisation', 'Organisation')}</p>
+
+                  <div className="contact-letter__row">
+                    <ContactField
+                      id="contact-company-name"
+                      label={t('contact.fields.companyName', 'Company Name')}
+                      optionalLabel={t('contact.fields.optional', 'Optional')}
+                    >
                       <input
                         type="text"
                         id="contact-company-name"
                         name="companyName"
                         autoComplete="organization"
-                        className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-base placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed transition-colors"
+                        className="contact-field__control"
                         value={formData.companyName}
                         onChange={(e) => handleInputChange('companyName', (e.target as HTMLInputElement).value)}
                         onInput={(e) => handleInputChange('companyName', (e.target as HTMLInputElement).value)}
                         disabled={isSubmitting}
                         placeholder={t('contact.fields.companyNamePlaceholder', 'Your company name')}
                       />
-                    </div>
+                    </ContactField>
 
-                    <div className="space-y-1.5">
-                      <label htmlFor="contact-company-identifier" className="block text-sm font-medium text-gray-700">
-                        {t('contact.fields.companyIdentifier', 'Company ID')} <span className="text-gray-500 font-normal">({t('contact.fields.optional', 'Optional')})</span>
-                      </label>
+                    <ContactField
+                      id="contact-company-identifier"
+                      label={t('contact.fields.companyIdentifier', 'Company ID')}
+                      optionalLabel={t('contact.fields.optional', 'Optional')}
+                      hint={t('contact.fields.companyIdentifierHint', 'VAT or tax ID')}
+                      hintId="contact-company-identifier-hint"
+                    >
                       <input
                         type="text"
                         id="contact-company-identifier"
                         name="companyIdentifier"
                         autoComplete="off"
-                        className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-base placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed transition-colors"
+                        className="contact-field__control"
                         value={formData.companyIdentifier}
                         onChange={(e) => handleInputChange('companyIdentifier', (e.target as HTMLInputElement).value)}
                         onInput={(e) => handleInputChange('companyIdentifier', (e.target as HTMLInputElement).value)}
@@ -759,46 +768,58 @@ export function ContactModal({
                         placeholder={t('contact.fields.companyIdentifierPlaceholder', 'VAT/Tax ID')}
                         aria-describedby="contact-company-identifier-hint"
                       />
-                      <p id="contact-company-identifier-hint" className="text-xs text-gray-500">{t('contact.fields.companyIdentifierHint', 'VAT or tax ID')}</p>
-                    </div>
+                    </ContactField>
                   </div>
 
-                  <div className="space-y-1.5">
-                    <label htmlFor="contact-message" className="block text-sm font-medium text-gray-700">
-                      {t('contact.fields.message', 'Message')} <span className="text-red-500">*</span>
-                    </label>
+                  <ContactField
+                    id="contact-message"
+                    label={t('contact.fields.message', 'Message')}
+                    required
+                    error={errors.message}
+                    hint={t('contact.fields.wordCount', '{{count}} / {{max}} words')
+                      .replace('{{count}}', String(wordCount))
+                      .replace('{{max}}', String(MAX_WORDS))}
+                    hintId="contact-message-hint"
+                  >
                     <textarea
                       id="contact-message"
                       name="message"
                       autoComplete="off"
                       className={cn(
-                        'w-full rounded-lg border px-4 py-3 text-base resize-y min-h-[120px] transition-colors',
-                        'placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary',
-                        'disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed',
-                        (errors.message || wordCount > MAX_WORDS) ? 'border-red-500 bg-red-50/50 focus:ring-red-500/20 focus:border-red-500' : 'border-gray-300 bg-white'
+                        'contact-field__control contact-field__control--area',
+                        (errors.message || wordCount > MAX_WORDS) && 'is-invalid'
                       )}
                       value={formData.message}
                       onChange={(e) => handleInputChange('message', (e.target as HTMLTextAreaElement).value)}
                       onInput={(e) => handleInputChange('message', (e.target as HTMLTextAreaElement).value)}
                       disabled={isSubmitting}
                       required
-                      rows={4}
+                      rows={5}
                       aria-required="true"
                       aria-invalid={!!errors.message || wordCount > MAX_WORDS}
                       aria-describedby={errors.message ? 'contact-message-error' : 'contact-message-hint'}
                     />
-                    <div className="flex items-center justify-between">
-                      <p id="contact-message-hint" className={cn('text-xs', wordCount > MAX_WORDS ? 'text-red-600 font-medium' : 'text-gray-500')}>
-                        {t('contact.fields.wordCount', '{{count}} / {{max}} words').replace('{{count}}', String(wordCount)).replace('{{max}}', String(MAX_WORDS))}
-                      </p>
-                    </div>
-                    {errors.message && (
-                      <p id="contact-message-error" className="text-sm text-red-600 font-medium" role="alert">{errors.message}</p>
-                    )}
-                  </div>
+                  </ContactField>
                 </>
               )}
             </div>
+
+            {!submitSuccess ? (
+              <div className="contact-letter__sign">
+                <Button
+                  type="submit"
+                  form="contact-form"
+                  variant="ghost"
+                  size="md"
+                  className="contact-letter__send"
+                  disabled={isSubmitting}
+                  loading={isSubmitting}
+                  aria-label={t('contact.submit', 'Send Message')}
+                >
+                  {isSubmitting ? t('contact.submitting', 'Sending...') : t('contact.submit', 'Send Message')}
+                </Button>
+              </div>
+            ) : null}
           </form>
         </div>
       </div>

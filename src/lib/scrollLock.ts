@@ -5,7 +5,7 @@
  *
  * **Layout shift (horizontal):** Vertical scroll lives on `html` (see `base.css`). Fixing `body`
  * removes overflow from the scroll root, so the classic scrollbar can disappear and the layout
- * viewport widens by ~15–17px — the page behind the modal would jump right without compensation.
+ * viewport widens by ~15–17px: the page behind the modal would jump right without compensation.
  * We measure `innerWidth - documentElement.clientWidth` **before** fixing the body and apply matching
  * `padding-right` on `body` (in-flow content) plus `html[data-scroll-locked]` + `--scrollbar-compensation`
  * for `position: fixed` chrome (`#portfolio-nav` uses the viewport as CB, so it ignores body padding).
@@ -14,7 +14,7 @@
  *
  * **Restore contract:** `html { scroll-behavior: smooth }` (see `src/css/base.css`) applies to
  * user-driven navigation. Per CSSOM, `window.scrollTo({ behavior: 'auto' })` still consults that
- * property and may **animate** restoration — same “top then smooth scroll back” bug. Fix: temporarily
+ * property and may **animate** restoration; same “top then smooth scroll back” bug. Fix: temporarily
  * set `document.documentElement.style.scrollBehavior = 'auto'` around the programmatic `scrollTo`,
  * then restore the previous inline value (or remove the property) so nav/anchors keep smooth scroll.
  */

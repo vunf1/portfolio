@@ -19,10 +19,13 @@
 @import './css/components/skills.css';
 @import './css/components/skeleton.css';
 @import './css/components/testimonials.css';
+@import './css/components/portfolio-page.css';
+@import './css/components/project-case-study-modal.css';
 @import './css/responsive.css';
 @import './css/performance.css';
 @import './css/fab.css';
 @import './css/landing.css';
+@import './css/motion.css';
 @import './css/page-transition.css';
 
 @tailwind base;
@@ -32,6 +35,19 @@
 /* Base Styles */
 * {
   box-sizing: border-box;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-primary) 28%, white);
+  color: var(--color-gray-900);
+}
+
+html {
+  scrollbar-color: color-mix(in srgb, var(--color-primary) 45%, var(--color-gray-300)) transparent;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
 }
 
 /* Body base styles - scroll rules are handled in landing/_layout.css and base.css */
@@ -87,22 +103,31 @@ body {
 
 .hero-cta-primary,
 .hero-cta-contact {
-  transition: box-shadow 0.2s ease !important;
+  transition:
+    box-shadow var(--motion-fast) var(--ease-out-expo),
+    transform var(--motion-fast) var(--ease-out-expo) !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-cta-primary:hover,
+  .hero-cta-contact:hover,
+  .about-cta-primary:hover {
+    transform: translateY(-2px) !important;
+  }
+
+  .hero-cta-primary:active,
+  .hero-cta-contact:active,
+  .about-cta-primary:active {
+    transform: translateY(0) scale(0.985) !important;
+  }
 }
 
 .hero-cta-primary:hover {
-  transform: none !important;
-  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3) !important;
+  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.28) !important;
 }
 
 .hero-cta-contact:hover {
-  transform: none !important;
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.25) !important;
-}
-
-.hero-cta-primary:active,
-.hero-cta-contact:active {
-  transform: none !important;
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.22) !important;
 }
 
 /* About primary CTA: visible in light theme (same as hero-cta-primary) */
@@ -114,8 +139,7 @@ body {
 }
 
 .about-cta-primary:hover {
-  transform: none !important;
-  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3) !important;
+  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.28) !important;
 }
 
 /* Hover for outline/secondary buttons: subtle opacity only */

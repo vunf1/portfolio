@@ -8,7 +8,7 @@ import { NotFoundView } from './components/NotFoundView'
 import { createBrowserHistory } from './utils/browserHistory'
 import './index.css'
 
-/** Tier-2 fallback: no app hooks, Button, or Icon — survives failures in shared UI. */
+/** Tier-2 fallback: no app hooks, Button, or Icon: survives failures in shared UI. */
 class RootErrorBoundary extends Component<{ children: ComponentChildren }, { hasError: boolean }> {
   constructor(props: { children: ComponentChildren }) {
     super(props)

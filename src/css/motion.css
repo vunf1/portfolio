@@ -1,0 +1,35 @@
+/* Hallmark · pre-emit critique: P5 H4 E5 S4 R5 V4 */
+/*
+  Motion thesis (Impeccable animate · Taste MOTION 5 · Experience)
+  Focal: landing → portfolio settle (page-fade-in).
+  Continuity: same keyframe + tokens for lists that appear as a list.
+  Feedback: color/border on hover. No lift carnival, no new library.
+  Budget: transform + opacity only; stagger capped at 8 steps.
+*/
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--page-travel, 8px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .motion-stagger > * {
+    animation: page-fade-in var(--motion-base) var(--ease-out-expo) both;
+  }
+
+  .motion-stagger > *:nth-child(1) { animation-delay: 0ms; }
+  .motion-stagger > *:nth-child(2) { animation-delay: calc(var(--motion-stagger) * 1); }
+  .motion-stagger > *:nth-child(3) { animation-delay: calc(var(--motion-stagger) * 2); }
+  .motion-stagger > *:nth-child(4) { animation-delay: calc(var(--motion-stagger) * 3); }
+  .motion-stagger > *:nth-child(5) { animation-delay: calc(var(--motion-stagger) * 4); }
+  .motion-stagger > *:nth-child(6) { animation-delay: calc(var(--motion-stagger) * 5); }
+  .motion-stagger > *:nth-child(7) { animation-delay: calc(var(--motion-stagger) * 6); }
+  .motion-stagger > *:nth-child(8) { animation-delay: calc(var(--motion-stagger) * 7); }
+  .motion-stagger > *:nth-child(n + 9) { animation-delay: calc(var(--motion-stagger) * 8); }
+}

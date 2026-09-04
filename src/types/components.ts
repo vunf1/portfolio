@@ -194,18 +194,27 @@ export interface PrivacyGateProps extends BaseComponentProps {
   onClose?: () => void
 }
 
-// Navigation Component Props
-export interface NavigationProps extends BaseComponentProps {
-  items: Array<{
-    id: string
-    label: string
-    icon?: string
-  }>
+export interface PortfolioHeaderItem {
+  id: string
+  label: string
+  icon?: string
+}
+
+/** Portfolio page header: identity, section links, and narrow-viewport menu. */
+export interface PortfolioHeaderProps extends BaseComponentProps {
+  items: PortfolioHeaderItem[]
   activeId?: string
   onNavigate?: (id: string) => void
   showBackButton?: boolean
   onBackClick?: () => void
+  /** Person name in the header identity. Falls back to `navigation.brand`. */
+  brandName?: string
+  /** Short role under the name. Falls back to `hero.title`. */
+  brandRole?: string
 }
+
+/** @deprecated Use `PortfolioHeaderProps`. */
+export type NavigationProps = PortfolioHeaderProps
 
 // Hero Component Props
 export interface HeroProps extends BaseComponentProps {

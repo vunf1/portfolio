@@ -176,7 +176,7 @@ describe('N8nClient Integration Tests', () => {
 
     try {
       await client.sendToWebhook(testPayload)
-    } catch (error) {
+    } catch {
       // We expect this might fail due to CORS, network, or server config
       // But we can still verify headers were captured before the request
     }

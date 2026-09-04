@@ -77,16 +77,24 @@
   --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
   
   /* Page transition – single source of truth (values match src/config/pageTransitions.ts) */
-  --page-fadeout-duration: 0.35s;
-  --page-fadein-duration: 0.45s;
-  --page-transition-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --page-fadeout-duration: 0.28s;
+  --page-fadein-duration: 0.52s;
+  --page-transition-easing: cubic-bezier(0.16, 1, 0.3, 1);
+  --page-travel: 8px;
 
   /* Advanced Transitions */
-  --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-colors: color 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-opacity: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-shadow: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-transform: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-exit: cubic-bezier(0.4, 0, 1, 1);
+  --motion-instant: 120ms;
+  --motion-fast: 180ms;
+  --motion-base: 320ms;
+  --motion-slow: 560ms;
+  --motion-stagger: 40ms;
+  --transition-all: all var(--motion-base) var(--ease-out-expo);
+  --transition-colors: color var(--motion-base) var(--ease-out-expo), background-color var(--motion-base) var(--ease-out-expo), border-color var(--motion-base) var(--ease-out-expo);
+  --transition-opacity: opacity var(--motion-base) var(--ease-out-expo);
+  --transition-shadow: box-shadow var(--motion-base) var(--ease-out-expo);
+  --transition-transform: transform var(--motion-base) var(--ease-out-expo);
   
   /* Advanced Border Radius */
   --radius-none: 0;
@@ -109,6 +117,17 @@
   --z-tooltip: 1070;
   --z-toast: 1080;
   
+  /* Skill proficiency (legend + catalogue share these) */
+  --skill-foundational: #c2410c;
+  --skill-foundational-soft: rgb(194 65 12 / 0.14);
+  --skill-proficient: #0369a1;
+  --skill-proficient-soft: rgb(3 105 161 / 0.14);
+  --skill-advanced: #15803d;
+  --skill-advanced-soft: rgb(21 128 61 / 0.14);
+  --skill-expert: #6d28d9;
+  --skill-expert-soft: rgb(109 40 217 / 0.14);
+  --skill-on-mark: #ffffff;
+
   /* Navbar Height */
   --navbar-height: 80px;
   

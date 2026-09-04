@@ -10,7 +10,7 @@ import {
   PAGE_FADEIN_DURATION_MS
 } from './config/pageTransitions'
 import { NotFoundView } from './components/NotFoundView'
-import { Navigation } from './components/Navigation'
+import { PortfolioHeader } from './components/Navigation'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { PortfolioErrorFallback } from './components/PortfolioErrorFallback'
 import { Toaster } from './components/ui/Toaster'
@@ -33,7 +33,6 @@ const logWarning = (message: string, detail: unknown) => {
 
 // Lazy load non-critical components
 const Experience = lazy(() => import('./components/Experience').then(module => ({ default: module.Experience })))
-const Education = lazy(() => import('./components/Education').then(module => ({ default: module.Education })))
 const Skills = lazy(() => import('./components/Skills').then(module => ({ default: module.Skills })))
 const Projects = lazy(() => import('./components/Projects').then(module => ({ default: module.Projects })))
 const Certifications = lazy(() => import('./components/Certifications').then(module => ({ default: module.Certifications })))
@@ -463,16 +462,17 @@ export function App() {
             ref={portfolioRef}
             className={`page-transition page-transition-portfolio ${isExitingPortfolio ? 'page-fade-out' : isPortfolioPath(initialPath) ? 'page-visible' : 'page-fade-in'}`}
           >
-        <Navigation
+        <PortfolioHeader
+          brandName={portfolioData.personal.name}
+          brandRole={String(t('hero.title'))}
           items={[
-            { id: 'experience', label: String(t('navigation.experience')), icon: 'fa-solid fa-briefcase' },
-            { id: 'education', label: String(t('navigation.education')), icon: 'fa-solid fa-graduation-cap' },
-            { id: 'skills', label: String(t('navigation.skills')), icon: 'fa-solid fa-code' },
-            ...(projectsInArea.length > 0 ? [{ id: 'projects', label: String(t('navigation.projects')), icon: 'fa-solid fa-folder' }] : []),
-            ...(portfolioData.certifications && portfolioData.certifications.length > 0 ? [{ id: 'certifications', label: String(t('navigation.certifications')), icon: 'fa-solid fa-certificate' }] : []),
-            ...(portfolioData.testimonials && portfolioData.testimonials.length > 0 ? [{ id: 'testimonials', label: String(t('navigation.testimonials')), icon: 'fa-solid fa-quote-left' }] : []),
-            ...(portfolioData.interests && portfolioData.interests.length > 0 ? [{ id: 'interests', label: String(t('navigation.interests')), icon: 'fa-solid fa-heart' }] : []),
-            ...(portfolioData.awards && portfolioData.awards.length > 0 ? [{ id: 'awards', label: String(t('navigation.awards')), icon: 'fa-solid fa-trophy' }] : []),
+            { id: 'experience', label: String(t('experience.title')), icon: 'briefcase' },
+            { id: 'skills', label: String(t('skills.title')), icon: 'code' },
+            ...(projectsInArea.length > 0 ? [{ id: 'projects', label: String(t('projects.title')), icon: 'folder' }] : []),
+            ...(portfolioData.certifications && portfolioData.certifications.length > 0 ? [{ id: 'certifications', label: String(t('certifications.title')), icon: 'certificate' }] : []),
+            ...(portfolioData.testimonials && portfolioData.testimonials.length > 0 ? [{ id: 'testimonials', label: String(t('testimonials.title')), icon: 'quote-left' }] : []),
+            ...(portfolioData.interests && portfolioData.interests.length > 0 ? [{ id: 'interests', label: String(t('interests.title')), icon: 'heart' }] : []),
+            ...(portfolioData.awards && portfolioData.awards.length > 0 ? [{ id: 'awards', label: String(t('awards.title')), icon: 'trophy' }] : []),
           ]}
           activeId={activeSection}
           onNavigate={setActiveSection}
@@ -480,15 +480,10 @@ export function App() {
           onBackClick={handleBackToHome}
         />
         
-        <div className={`portfolio-container ${isLanguageTransitioning ? 'language-transitioning' : ''}`}>
+        <div className={`cv-layout ${isLanguageTransitioning ? 'language-transitioning' : ''}`}>
           {/* Experience Section */}
           <Suspense fallback={<SectionPlaceholder />}>
             <Experience experiences={portfolioData.experience} id="experience" />
-          </Suspense>
-          
-          {/* Education Section */}
-          <Suspense fallback={<SectionPlaceholder />}>
-            <Education education={portfolioData.education} />
           </Suspense>
           
           {/* Skills Section */}
