@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "blockedProjectIds": [
+    "nirvanamed-wordpress-operations",
+    "saas-contract-builder"
+  ],
+  "blockedLocalRepoFolders": [
+    "SaaS_Contract_Builder",
+    "nirvanamed-wordpress-operations"
+  ],
+  "attachedReleaseRepos": {
+    "stream-futebol-dashboard": {
+      "githubRepo": "vunf1/Stream_Futebol_Artifacts",
+      "releasesUrl": "https://github.com/vunf1/Stream_Futebol_Artifacts/releases",
+      "localFolder": "Stream_Futebol_Artifacts",
+      "primaryCodebaseFolder": "Stream_Futebol_Dashboard",
+      "summary": "Public GitHub Releases for Apito Final desktop builds, theme assets, and official crest bundles; consumed by the dashboard Update hub (not a separate portfolio case study)."
+    }
+  }
+}

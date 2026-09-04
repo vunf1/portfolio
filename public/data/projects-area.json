@@ -1,7 +1,6 @@
 {
   "effigy-credit-brokerage": "on",
   "contecnica-landing-platform": "on",
-  "nirvanamed-wordpress-operations": "off",
   "ecommerce-vendure-next": "off",
   "effigy-fiscal-rates-addon": "off",
   "licensehub-php-preact": "off",
@@ -11,7 +10,7 @@
   "n8n-docker-self-host": "off",
   "site-backup-packaging": "off",
   "stream-cs2-overlay-platform": "off",
-  "stream-futebol-scoreboard": "on",
+  "stream-futebol-scoreboard": "off",
   "stream-futebol-dashboard": "on",
   "php-version-manager-tauri": "on",
   "lol-catalog-nexus-tauri": "on",
