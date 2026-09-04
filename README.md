@@ -893,7 +893,21 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📝 **Changelog**
 
-### **v3.3.0 - Landing projects filter, static assets, error UX** (Latest — April 2026)
+### **v3.4.0 - CV layout, project registry, brand, and design toolchain** (Latest — September 2026)
+- 🪪 **Portfolio header**: Identity block (name + role), section links without Education on the CV route, and a narrow-viewport menu; **`PortfolioHeader`** replaces the previous nav chrome
+- 🏳️ **Locale flags**: EN / pt-PT switchers use **`LanguageFlagIcon`** and committed **`public/img/flags/`** SVGs (FAB and landing)
+- 🏷️ **Brand mark**: Canonical logo path **`public/img/brand/logo_landscape_circle.png`** via **`src/config/brand.ts`** (email header, Organization schema, OG generator, `.env.example`)
+- 📋 **Projects registry**: **`public/data/projects-registry.json`** blocks maintainer-excluded ids and keeps attached release repos on the parent case study; **`npm run validate:projects`** is part of **`ci:test`**
+- 🚫 **Catalogue**: NirvanaMed case study removed from manifests, area map, and locale JSON; Apito Final scoreboard set to **`off`** in **`projects-area.json`**
+- 🧰 **Showcase**: Compact card titles, language-first tech tags, and case-study open labels; one failed project JSON no longer fails the whole catalogue
+- 🎨 **Surfaces**: Skills catalogue, case-study modal, contact sheet, landing hero/footer, and CV section panels restyled against shared motion tokens
+- 🎞️ **Motion**: **`src/css/motion.css`** plus **`--ease-out-expo`** / **`--motion-*`** tokens; page fade timing aligned with **`pageTransitions.ts`**; **`prefers-reduced-motion`** zeroes durations
+- ✍️ **Copy**: EN / pt-PT project, skills, experience, and UI strings refreshed; em dash lint via **`npm run lint:em-dash`**
+- 🧪 **Tests**: Header, flags, Skills, showcase title/tech, internal-path clicks, and page-transition constants
+- 🛠️ **Agent toolchain**: Hallmark / Taste / Impeccable skill packs, Cursor rules, **`design.md`**, **`npm run install:design-skills`**
+- 📦 **Tooling**: Vite 6, Vitest 3, typescript-eslint 8; **`.nojekyll`** written in the Vite **`closeBundle`** hook instead of **`copy-data.cjs`**
+
+### **v3.3.0 - Landing projects filter, static assets, error UX** (April 2026)
 - 🗂️ **`projects-area.json`**: Locale-agnostic visibility map (`on` / `off`) merged into each project; **`filterProjectsForProjectsArea`** drives the landing showcase and portfolio **Projects** section
 - 🖼️ **Static images**: `public/img/` committed (favicons, profile, OG, **`public/img/projects/`** SVG/PNG); `.gitignore` updated so assets deploy to GitHub Pages
 - 🎨 **Projects UI**: Grid and **ProjectCaseStudyModal** updates; **`projectInitials`**, **`projectPlaceholderImage`**, **`getSharedDataUrl`**
@@ -949,4 +963,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **Built with ❤️ and enterprise-grade security in mind**
-

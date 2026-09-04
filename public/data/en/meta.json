@@ -1,6 +1,6 @@
 {
   "author": "João Maia",
-  "lastUpdated": "2025-09-01",
+  "lastUpdated": "2026-09-04",
   "seo": {
     "description": "JMSIT is the professional brand of João Maia, a Full-Stack Engineer & Network Engineer specializing in back-end operations, network infrastructure, AI solutions, and automation. Expert in software development, cybersecurity, DevOps, and cloud solutions. Based in Porto, Portugal.",
     "keywords": [
@@ -189,5 +189,5 @@
     "ogImage": "https://jmsit.cloud/img/og-image.jpg",
     "title": "JMSIT - Full-Stack Engineer & IT Solutions Specialist"
   },
-  "version": "3.2.0"
+  "version": "3.4.0"
 }

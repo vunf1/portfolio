@@ -180,7 +180,7 @@ const mockMetaData = {
     ogImage: "test.jpg",
     title: "Test Title"
   },
-  version: "3.2.0"
+  version: "3.4.0"
 }
 
 const mockUIData = {

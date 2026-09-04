@@ -1,6 +1,6 @@
 {
   "author": "João Maia",
-  "lastUpdated": "2025-09-01",
+  "lastUpdated": "2026-09-04",
   "seo": {
     "description": "JMSIT é a marca profissional de João Maia, um Desenvolvedor Full-Stack e Engenheiro de Redes especializado em operações back-end, infraestrutura de redes, soluções de IA e automação. Especialista em desenvolvimento de software, cibersegurança, DevOps e soluções cloud. Baseado no Porto, Portugal.",
     "keywords": [
@@ -205,5 +205,5 @@
     "ogImage": "https://jmsit.cloud/img/og-image.jpg",
     "title": "JMSIT - Engenheiro Full-Stack e Especialista em Soluções de TI"
   },
-  "version": "3.2.0"
+  "version": "3.4.0"
 }
